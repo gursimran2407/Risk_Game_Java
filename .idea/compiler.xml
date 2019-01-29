@@ -9,8 +9,5 @@
         <module name="APPRiskGame2019Winter" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="APPRiskGame2019Winter" target="8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
