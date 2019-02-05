@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Country {
-    String countryName;
-    Player countryOwner;
-    List<Country> adjacentCountriesList = new ArrayList<Country>();
+    private String countryName;
+    private Player countryOwner;
+    private List<Country> adjacentCountriesList = new ArrayList<Country>();
+    private CountryCoordinates countryCoordinates;
 
 }

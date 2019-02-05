@@ -3,10 +3,10 @@ package com.risk.model;
 import java.util.ArrayList;
 
 public class Continent {
-    String continentName;
-    int controlValue;
-    int noOfCountries;
-    ArrayList<Country> countryList= new ArrayList<Country>();
+    private String continentName;
+    private int controlValue;
+    private int noOfCountries;
+    private ArrayList<Country> countryList = new ArrayList<Country>();
 
     public Continent(String continentName, int controlValue, int noOfCountries, ArrayList<Country> countryList) {
         this.continentName = continentName;
