@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="APPRiskGame2019Winter" />
+        <module name="appriskgame2019winter" />
       </profile>
     </annotationProcessing>
   </component>
