@@ -4,7 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PlayerModel {
+public class Player {
     private String playerName;
     //private String typeOfPlayer;
     private ArrayList<Country> playerCountryList = new ArrayList<Country>();
@@ -12,7 +12,7 @@ public class PlayerModel {
     private Color playerColor;
     private ArrayList<Card> playerCards = new ArrayList<Card>();
 
-    public PlayerModel(String playerName, ArrayList<Country> playerCountryList, int numberofArmies, Color playerColor, ArrayList<Card> playerCards) {
+    public Player(String playerName, ArrayList<Country> playerCountryList, int numberofArmies, Color playerColor, ArrayList<Card> playerCards) {
         this.playerName = playerName;
         //this.typeOfPlayer = typeOfPlayer;
         this.playerCountryList = playerCountryList;
