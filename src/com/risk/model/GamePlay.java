@@ -23,6 +23,8 @@ public class GamePlay extends Observable
     /** if country owned*/
     private boolean ifCountryOwned = false;
 
+    private String PhaseOfGame = null;
+
     /**
      * Default Constructor.
      */
@@ -34,5 +36,43 @@ public class GamePlay extends Observable
         this.ifCountryOwned = ifCountryOwned;
     }
 
+    public MapRisk getMapRiskObj() {
+        return mapRiskObj;
+    }
 
+    public void setMapRiskObj(MapRisk mapRiskObj) {
+        this.mapRiskObj = mapRiskObj;
+    }
+
+    public ArrayList<Player> getCurrentPlayers() {
+        return currentPlayers;
+    }
+
+    public void setCurrentPlayers(ArrayList<Player> currentPlayers) {
+        this.currentPlayers = currentPlayers;
+    }
+
+    public ArrayList<Card> getDeckOfCards() {
+        return deckOfCards;
+    }
+
+    public void setDeckOfCards(ArrayList<Card> deckOfCards) {
+        this.deckOfCards = deckOfCards;
+    }
+
+    public boolean isIfCountryOwned() {
+        return ifCountryOwned;
+    }
+
+    public void setIfCountryOwned(boolean ifCountryOwned) {
+        this.ifCountryOwned = ifCountryOwned;
+    }
+
+    public String getPhaseOfGame() {
+        return PhaseOfGame;
+    }
+
+    public void setPhaseOfGame(String phaseOfGame) {
+        PhaseOfGame = phaseOfGame;
+    }
 }
