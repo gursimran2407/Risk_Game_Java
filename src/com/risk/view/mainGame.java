@@ -1,4 +1,4 @@
-package com.risk.controller;
+package com.risk.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +14,11 @@ public class mainGame extends Application {
         launch(args);
     }
 
+
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource(" mainGame.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("mainGame.fxml"));
         primaryStage.setTitle("PLAY RISK!!");
 
         Scene scene = new Scene(root);
@@ -36,3 +37,5 @@ public class mainGame extends Application {
         System.out.println("STop METHOD!");
     }
 }
+
+

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="626.0" xmlns="http://javafx.com/javafx/8"
-            fx:controller="com.risk.controller.mainGame">
+            fx:controller="com.risk.view.mainGameController">
     <children>
         <ImageView fitHeight="400.0" fitWidth="620.0" layoutX="36.0" layoutY="15.0" pickOnBounds="true"
                    preserveRatio="true">
@@ -25,49 +25,49 @@
                 <Font name="Lucida Bright Regular" size="27.0"/>
             </font>
         </Label>
-        <VBox alignment="CENTER">
-            <Button layoutX="279.0" layoutY="114.0" mnemonicParsing="false" text="Start Game">
-                <effect>
-                    <Lighting>
-                        <bumpInput>
-                            <Shadow/>
-                        </bumpInput>
-                        <light>
-                            <Light.Distant/>
-                        </light>
-                    </Lighting>
-                </effect>
-            </Button>
-            <Button layoutX="279.0" layoutY="165.0" mnemonicParsing="false" text="Load Game">
-                <effect>
-                    <Lighting>
-                        <bumpInput>
-                            <Shadow/>
-                        </bumpInput>
-                        <light>
-                            <Light.Distant/>
-                        </light>
-                    </Lighting>
-                </effect>
-            </Button>
-            <Button layoutX="279.0" layoutY="215.0" mnemonicParsing="false" text="Map Editor">
-                <effect>
-                    <Lighting>
-                        <bumpInput>
-                            <Shadow/>
-                        </bumpInput>
-                        <light>
-                            <Light.Distant/>
-                        </light>
-                    </Lighting>
-                </effect>
-            </Button>
-            <Button layoutX="303.0" layoutY="272.0" mnemonicParsing="false" text="Exit">
-                <effect>
-                    <SepiaTone/>
-                </effect>
-            </Button>
-        </VBox>
+        <Button layoutX="279.0" layoutY="114.0" mnemonicParsing="false" text="Start Game">
+            <effect>
+                <Lighting>
+                    <bumpInput>
+                        <Shadow/>
+                    </bumpInput>
+                    <light>
+                        <Light.Distant/>
+                    </light>
+                </Lighting>
+            </effect>
+        </Button>
+        <Button layoutX="279.0" layoutY="165.0" mnemonicParsing="false" text="Load Game">
+            <effect>
+                <Lighting>
+                    <bumpInput>
+                        <Shadow/>
+                    </bumpInput>
+                    <light>
+                        <Light.Distant/>
+                    </light>
+                </Lighting>
+            </effect>
+        </Button>
+        <Button layoutX="279.0" layoutY="215.0" mnemonicParsing="false" text="Map Editor" onAction="#onClickMapEditor"
+                fx:id="MapEditorButton">
+            <effect>
+                <Lighting>
+                    <bumpInput>
+                        <Shadow/>
+                    </bumpInput>
+                    <light>
+                        <Light.Distant/>
+                    </light>
+                </Lighting>
+            </effect>
+        </Button>
+        <Button layoutX="303.0" layoutY="272.0" mnemonicParsing="false" text="Exit">
+            <effect>
+                <SepiaTone/>
+            </effect>
+        </Button>
+
         <MenuBar prefHeight="29.0" prefWidth="626.0">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
