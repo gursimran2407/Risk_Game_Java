@@ -1,26 +1,25 @@
 package com.risk.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MapRisk {
-    private ArrayList<Continent> continentList;
+public class MapRiskMod {
+    private ArrayList<ContinentMod> continentModList;
     private ArrayList<Country> countryList;
     private ArrayList<Player> playerList;
 
-    public MapRisk(ArrayList<Continent> continentList, ArrayList<Country> countryList, ArrayList<Player> playerList) {
-        this.continentList = continentList;
+    public MapRiskMod(ArrayList<ContinentMod> continentModList, ArrayList<Country> countryList, ArrayList<Player> playerList) {
+        this.continentModList = continentModList;
         this.countryList = countryList;
         this.playerList = playerList;
     }
 
 
-    public ArrayList<Continent> getContinentList() {
-        return continentList;
+    public ArrayList<ContinentMod> getContinentModList() {
+        return continentModList;
     }
 
-    public void setContinentList(ArrayList<Continent> continentList) {
-        this.continentList = continentList;
+    public void setContinentModList(ArrayList<ContinentMod> continentModList) {
+        this.continentModList = continentModList;
     }
 
     public ArrayList<Country> getCountryList() {

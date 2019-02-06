@@ -12,7 +12,7 @@ public class GamePlay extends Observable
 {
     /** MapRiskmodel
      */
-    private MapRisk mapRiskObj;
+    private MapRiskMod mapRiskModObj;
 
     /** current players playing the game*/
     private ArrayList<Player> currentPlayers;
@@ -28,20 +28,20 @@ public class GamePlay extends Observable
     /**
      * Default Constructor.
      */
-    public GamePlay(MapRisk mapRiskObj, ArrayList<Player> currentPlayers, ArrayList<Card> deckOfCards, boolean ifCountryOwned)
+    public GamePlay(MapRiskMod mapRiskModObj, ArrayList<Player> currentPlayers, ArrayList<Card> deckOfCards, boolean ifCountryOwned)
     {
-        this.mapRiskObj = mapRiskObj;
+        this.mapRiskModObj = mapRiskModObj;
         this.currentPlayers = currentPlayers;
         this.deckOfCards = deckOfCards;
         this.ifCountryOwned = ifCountryOwned;
     }
 
-    public MapRisk getMapRiskObj() {
-        return mapRiskObj;
+    public MapRiskMod getMapRiskModObj() {
+        return mapRiskModObj;
     }
 
-    public void setMapRiskObj(MapRisk mapRiskObj) {
-        this.mapRiskObj = mapRiskObj;
+    public void setMapRiskModObj(MapRiskMod mapRiskModObj) {
+        this.mapRiskModObj = mapRiskModObj;
     }
 
     public ArrayList<Player> getCurrentPlayers() {

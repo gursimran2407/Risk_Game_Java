@@ -1,6 +1,6 @@
 package com.risk.view;
 
-import com.risk.model.MapRisk;
+import com.risk.model.MapRiskMod;
 import com.risk.model.Player;
 import com.risk.model.GamePlay;
 
@@ -11,7 +11,7 @@ import com.risk.model.GamePlay;
 public class Reinforcement
 {
 
-private MapRisk mapRiskOjb;
+private MapRiskMod mapRiskModOjb;
 
 private Player playerObj;
 
