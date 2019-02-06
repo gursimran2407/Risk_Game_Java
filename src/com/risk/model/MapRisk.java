@@ -14,6 +14,7 @@ public class MapRisk {
         this.playerList = playerList;
     }
 
+
     public ArrayList<Continent> getContinentList() {
         return continentList;
     }

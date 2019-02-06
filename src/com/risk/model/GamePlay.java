@@ -12,16 +12,16 @@ public class GamePlay extends Observable
 {
     /** MapRiskmodel
      */
-    private MapRisk mapRiskObj = new MapRisk();
+    private MapRisk mapRiskObj;
 
     /** current players playing the game*/
-    private ArrayList<Player> currentPlayers = new ArrayList<Player>();
+    private ArrayList<Player> currentPlayers;
 
     /** All the cards*/
-    private ArrayList<Card> deckOfCards = new ArrayList<Card>();
+    private ArrayList<Card> deckOfCards;
 
     /** if country owned*/
-    private boolean ifCountryOwned = false;
+    private boolean ifCountryOwned;
 
     private String PhaseOfGame = null;
 
