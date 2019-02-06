@@ -8,5 +8,4 @@ public class MapRisk {
     private ArrayList<Country> countryList;
     private ArrayList<Player> playerList;
 
-
 }

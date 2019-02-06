@@ -3,6 +3,7 @@ package com.risk.model;
 import java.util.ArrayList;
 import java.awt.Color;
 
+
 public class Player {
     private String playerName;
     //private String typeOfPlayer;
