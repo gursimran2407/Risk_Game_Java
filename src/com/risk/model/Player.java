@@ -1,17 +1,17 @@
 package com.risk.model;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.awt.Color;
 
 public class Player {
     private String playerName;
     //private String typeOfPlayer;
-    private ArrayList<Country> playerCountryList = new ArrayList<Country>();
     private int numberofArmies;
     private Color playerColor;
-    private ArrayList<Card> playerCards = new ArrayList<Card>();
+    private ArrayList<Card> playerCards;
+    private ArrayList<Country> playerCountryList;
+
+
 
     public Player(String playerName, ArrayList<Country> playerCountryList, int numberofArmies, Color playerColor, ArrayList<Card> playerCards) {
         this.playerName = playerName;
