@@ -10,11 +10,11 @@ public class Player {
     private int numberofArmies;
     private Color playerColor;
     private ArrayList<Card> playerCards;
-    private ArrayList<Country> playerCountryList;
+    private ArrayList<CountryMod> playerCountryList;
 
 
 
-    public Player(String playerName, ArrayList<Country> playerCountryList, int numberofArmies, Color playerColor, ArrayList<Card> playerCards) {
+    public Player(String playerName, ArrayList<CountryMod> playerCountryList, int numberofArmies, Color playerColor, ArrayList<Card> playerCards) {
         this.playerName = playerName;
         //this.typeOfPlayer = typeOfPlayer;
         this.playerCountryList = playerCountryList;
@@ -31,11 +31,11 @@ public class Player {
         this.playerName = playerName;
     }
 
-    public ArrayList<Country> getPlayerCountryList() {
+    public ArrayList<CountryMod> getPlayerCountryList() {
         return playerCountryList;
     }
 
-    public void setPlayerCountryList(ArrayList<Country> playerCountryList) {
+    public void setPlayerCountryList(ArrayList<CountryMod> playerCountryList) {
         this.playerCountryList = playerCountryList;
     }
 
