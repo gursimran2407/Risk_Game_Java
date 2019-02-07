@@ -2,21 +2,20 @@ package com.risk.model;
 
 import java.util.ArrayList;
 
-public class ContinentMod {
+public class ContinentModel {
     private String continentName;
     private int controlValue;
     private int noOfCountries;
-    private ArrayList<Country> countryList = new ArrayList<Country>();
+    private ArrayList<CountryModel> countryModelList = new ArrayList<CountryModel>();
 
 
-
-    public ContinentMod(String continentName, int controlValue) {
+    public ContinentModel(String continentName, int controlValue) {
         this.continentName = continentName;
         this.controlValue = controlValue;
 
     }
 /** Default Constructor*/
-    public ContinentMod()
+public ContinentModel()
     {
     }
 
@@ -45,11 +44,11 @@ public class ContinentMod {
         this.noOfCountries = noOfCountries;
     }
 
-    public ArrayList<Country> getCountryList() {
-        return countryList;
+    public ArrayList<CountryModel> getCountryModelList() {
+        return countryModelList;
     }
 
-    public void setCountryList(ArrayList<Country> countryList) {
-        this.countryList = countryList;
+    public void setCountryModelList(ArrayList<CountryModel> countryModelList) {
+        this.countryModelList = countryModelList;
     }
 }

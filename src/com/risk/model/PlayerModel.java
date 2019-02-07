@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.awt.Color;
 
 
-public class Player {
+public class PlayerModel {
     private String playerName;
     //private String typeOfPlayer;
     private int numberofArmies;
     private Color playerColor;
-    private ArrayList<Card> playerCards;
-    private ArrayList<CountryMod> playerCountryList;
+    private ArrayList<CardModel> playerCards;
+    private ArrayList<CountryModel> playerCountryModelList;
 
 
-
-    public Player(String playerName, ArrayList<CountryMod> playerCountryList, int numberofArmies, Color playerColor, ArrayList<Card> playerCards) {
+    public PlayerModel(String playerName, ArrayList<CountryModel> playerCountryModelList, int numberofArmies, Color playerColor, ArrayList<CardModel> playerCards) {
         this.playerName = playerName;
         //this.typeOfPlayer = typeOfPlayer;
-        this.playerCountryList = playerCountryList;
+        this.playerCountryModelList = playerCountryModelList;
         this.numberofArmies = numberofArmies;
         this.playerColor = playerColor;
         this.playerCards = playerCards;
@@ -31,12 +30,12 @@ public class Player {
         this.playerName = playerName;
     }
 
-    public ArrayList<CountryMod> getPlayerCountryList() {
-        return playerCountryList;
+    public ArrayList<CountryModel> getPlayerCountryModelList() {
+        return playerCountryModelList;
     }
 
-    public void setPlayerCountryList(ArrayList<CountryMod> playerCountryList) {
-        this.playerCountryList = playerCountryList;
+    public void setPlayerCountryModelList(ArrayList<CountryModel> playerCountryModelList) {
+        this.playerCountryModelList = playerCountryModelList;
     }
 
     public int getNumberofArmies() {
@@ -55,11 +54,11 @@ public class Player {
         this.playerColor = playerColor;
     }
 
-    public ArrayList<Card> getPlayerCards() {
+    public ArrayList<CardModel> getPlayerCards() {
         return playerCards;
     }
 
-    public void setPlayerCards(ArrayList<Card> playerCards) {
+    public void setPlayerCards(ArrayList<CardModel> playerCards) {
         this.playerCards = playerCards;
     }
 }

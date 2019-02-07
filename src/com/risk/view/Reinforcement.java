@@ -1,8 +1,8 @@
 package com.risk.view;
 
-import com.risk.model.MapRiskMod;
-import com.risk.model.Player;
-import com.risk.model.GamePlay;
+import com.risk.model.MapRiskModel;
+import com.risk.model.PlayerModel;
+import com.risk.model.GamePlayModel;
 
 
 /** this is the view that is going to be used for the reinforcement phase of the game.
@@ -11,10 +11,10 @@ import com.risk.model.GamePlay;
 public class Reinforcement
 {
 
-private MapRiskMod mapRiskModOjb;
+    private MapRiskModel mapRiskModelModOjb;
 
-private Player playerObj;
+    private PlayerModel playerModelObj;
 
-private GamePlay gamePlayObj;
+    private GamePlayModel gamePlayObj;
 
 }

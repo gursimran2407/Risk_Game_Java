@@ -1,4 +1,4 @@
 package com.risk.model;
 
-public class Card {
+public class CardModel {
 }

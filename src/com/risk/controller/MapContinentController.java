@@ -3,26 +3,25 @@ package com.risk.controller;
 
 import javafx.application.Application;
 import java.util.Scanner;
-import com.risk.model.ContinentMod;
-import com.risk.model.MapRiskMod;
+
+import com.risk.model.ContinentModel;
+import com.risk.model.MapRiskModel;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-/** this is the Continent creation controller which will help update the data in the Model of the map using the Continent Model and
+/** this is the ContinentModel creation controller which will help update the data in the Model of the map using the ContinentModel Model and
  * will update the view whenever the data is changed.
  * @author Karan
  */
-public class MapContinentCont extends Application {
+public class MapContinentController extends Application {
 
 
-    private MapRiskMod mapRiskMod;
-    ContinentMod continentModVarTemp;
+    private MapRiskModel mapRiskMod;
+    //ContinentModel continentModVarTemp = new MapContinentController(this.)
 
-    continentModVarTemp = new MapContinentCont(this.)
-
-    public MapContinentCont() {
-        this.mapRiskMod = new MapRiskMod();
+    public MapContinentController() {
+        // this.mapRiskMod = new MapRiskModel();
 
     }
 // this is my testing function to understand if the flow that i have decided is working on not./
@@ -33,10 +32,10 @@ public class MapContinentCont extends Application {
         System.out.println("Please enter the names of the continents that you want to enter");
         Scanner sc = new Scanner(System.in);
 
-        continentModVarTemp = new ContinentMod(this.createContinentView.continentValue.methodname());
+        // continentModVarTemp = new ContinentModel(this.createContinentView.continentValue.methodname());
         // this is taking the value from the continent view once it is set up.
-        this.mapRiskMod.getContinentModList().add(sc.next());
-        this.mapRiskMod.setContinentModList(this.mapRiskMod.getContinentModList());
+        // this.mapRiskMod.getContinentModelModList().add(sc.next());
+        this.mapRiskMod.setContinentModelModList(this.mapRiskMod.getContinentModelModList());
 
     }
 

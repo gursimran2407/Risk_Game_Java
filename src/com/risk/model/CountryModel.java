@@ -1,22 +1,21 @@
 package com.risk.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class CountryMod {
+public class CountryModel {
 
     private String countryName;
-    private Player countryOwner;
+    private PlayerModel countryOwner;
     private String continentName;
-    private ArrayList<CountryMod> linkCountry =  new ArrayList<>();
+    private ArrayList<CountryModel> linkCountryModel = new ArrayList<>();
     private int numberofArmies;
 
 
-    public CountryMod(String countryName, Player countryOwner, String continentName, ArrayList<CountryMod> linkCountry, int numberofArmies) {
+    public CountryModel(String countryName, PlayerModel countryOwner, String continentName, ArrayList<CountryModel> linkCountryModel, int numberofArmies) {
         this.countryName = countryName;
         this.countryOwner = countryOwner;
         this.continentName = continentName;
-        this.linkCountry = linkCountry;
+        this.linkCountryModel = linkCountryModel;
         this.numberofArmies = numberofArmies;
     }
 
@@ -24,7 +23,7 @@ public class CountryMod {
         return countryName;
     }
 
-    public Player getCountryOwner() {
+    public PlayerModel getCountryOwner() {
         return countryOwner;
     }
 
@@ -32,8 +31,8 @@ public class CountryMod {
         return continentName;
     }
 
-    public ArrayList<CountryMod> getLinkCountry() {
-        return linkCountry;
+    public void setCountryOwner(PlayerModel countryOwner) {
+        this.countryOwner = countryOwner;
     }
 
     public int getNumberofArmies() {
@@ -44,16 +43,16 @@ public class CountryMod {
         this.countryName = countryName;
     }
 
-    public void setCountryOwner(Player countryOwner) {
-        this.countryOwner = countryOwner;
+    public ArrayList<CountryModel> getLinkCountryModel() {
+        return linkCountryModel;
     }
 
     public void setContinentName(String continentName) {
         this.continentName = continentName;
     }
 
-    public void setLinkCountry(ArrayList<CountryMod> linkCountry) {
-        this.linkCountry = linkCountry;
+    public void setLinkCountryModel(ArrayList<CountryModel> linkCountryModel) {
+        this.linkCountryModel = linkCountryModel;
     }
 
     public void setNumberofArmies(int numberofArmies) {

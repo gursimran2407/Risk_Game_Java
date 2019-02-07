@@ -1,10 +1,10 @@
 package com.risk.model;
 
-public class CountryCoordinates {
+public class CountryCoordinatesModel {
     private int x_coordinate;
     private int y_coordinate;
 
-    public CountryCoordinates(int x_coordinate, int y_coordinate) {
+    public CountryCoordinatesModel(int x_coordinate, int y_coordinate) {
         this.x_coordinate = x_coordinate;
         this.y_coordinate = y_coordinate;
     }

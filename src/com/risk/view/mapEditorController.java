@@ -16,7 +16,7 @@ public class mapEditorController extends Application {
     TextField continentNameTextField;
 
     public void onAddContinentButtonClicked() {
-        System.out.println("Continent" + continentNameTextField.getText());
+        System.out.println("ContinentModel" + continentNameTextField.getText());
     }
 
     @Override
