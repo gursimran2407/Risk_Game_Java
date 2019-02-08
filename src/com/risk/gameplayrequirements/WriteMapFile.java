@@ -20,6 +20,9 @@ public class WriteMapFile {
     
     /**
      *  This method writes map to a file
+     * @param fileName
+     * @param gameMapModel
+     *
      */
  public void mapToFile(String fileName, MapRiskModel gameMapModel){
      
@@ -29,7 +32,7 @@ public class WriteMapFile {
      System.out.println(writeFile);
      try {
          // Create new file
-         String content = null;
+         String content;
          File file = writeFile;
 
          FileWriter fw = new FileWriter(file.getAbsoluteFile());
@@ -121,6 +124,6 @@ public class WriteMapFile {
             content = content + country;
         }
         return content;*/
-        return null;
+        return "";
     }
 }
