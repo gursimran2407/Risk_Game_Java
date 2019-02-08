@@ -20,8 +20,8 @@ public class WriteMapFile {
     
     /**
      *  This method writes map to a file
-     * @param fileName
-     * @param gameMapModel
+     * @param fileName name of the file
+     * @param gameMapModel model game map
      *
      */
  public void mapToFile(String fileName, MapRiskModel gameMapModel){
@@ -89,7 +89,7 @@ public class WriteMapFile {
 
     /**
      * Get the continent name with its control value
-     * @param continentModel
+     * @param continentModel model continent
      * @return continent name
      */
     private static String getContinentName(ContinentModel continentModel) {
@@ -102,7 +102,7 @@ public class WriteMapFile {
 
     /**
      * Get the country name
-     * @param countryModel
+     * @param countryModel model country
      * @return country name
      */
     private static String getCountryName(CountryModel countryModel) {
