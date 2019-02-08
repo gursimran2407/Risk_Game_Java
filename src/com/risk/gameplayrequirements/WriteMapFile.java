@@ -16,7 +16,7 @@ import java.util.List;
 
 public class WriteMapFile {
 
-    File writeFile;
+    private File writeFile;
     
     /**
      *  This method writes map to a file
@@ -82,7 +82,7 @@ public class WriteMapFile {
          // Close connection
          bufferedWriter.close();
      } catch (Exception e) {
-         System.out.println(e);
+         e.printStackTrace();
      }
 
     }
@@ -92,7 +92,7 @@ public class WriteMapFile {
      * @param continentModel
      * @return continent name
      */
-    public static String getContinentName(ContinentModel continentModel) {
+    private static String getContinentName(ContinentModel continentModel) {
         String content = null;
         if (!"".equals(continentModel.getContinentName())) {
             content = continentModel.getContinentName() + "=" + continentModel.getControlValue();
@@ -105,7 +105,7 @@ public class WriteMapFile {
      * @param countryModel
      * @return country name
      */
-    public static String getCountryName(CountryModel countryModel) {
+    private static String getCountryName(CountryModel countryModel) {
         //Commented out this code as we don't know whether will use x or y coordinates in javafx or not.
         // returning null as the method is of type string
 
