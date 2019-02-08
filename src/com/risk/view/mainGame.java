@@ -34,7 +34,7 @@ public class mainGame extends Application {
 
     @Override
     public void stop() throws Exception {
-        System.out.println("\nStop METHOD!");
+        System.out.println("\n Stop METHOD!");
     }
 }
 
