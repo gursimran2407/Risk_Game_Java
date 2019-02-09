@@ -19,6 +19,10 @@ public class CountryModel {
         this.numberofArmies = numberofArmies;
     }
 
+    public CountryModel() {
+
+    }
+
     public String getCountryName() {
         return countryName;
     }
@@ -57,6 +61,17 @@ public class CountryModel {
 
     public void setNumberofArmies(int numberofArmies) {
         this.numberofArmies = numberofArmies;
+    }
+
+    @Override
+    public String toString() {
+        return "CountryModel{" +
+                "countryName='" + countryName + '\'' +
+                ", countryOwner=" + countryOwner +
+                ", continentName='" + continentName + '\'' +
+                ", linkCountryModel=" + linkCountryModel +
+                ", numberofArmies=" + numberofArmies +
+                '}';
     }
 }
 
