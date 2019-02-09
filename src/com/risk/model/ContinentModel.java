@@ -51,11 +51,9 @@ public class ContinentModel {
 
     @Override
     public String toString() {
-        return "ContinentModel{" +
-                "continentName='" + continentName + '\'' +
-                ", controlValue=" + controlValue +
-                ", noOfCountries=" + noOfCountries +
-                ", countryModelList=" + countryModelList +
-                '}';
+        StringBuilder sb = new StringBuilder("Continent Name:\n");
+        sb.append(continentName + "\n");
+        sb.append("Control Value: " + controlValue);
+        return sb.toString();
     }
 }

@@ -12,7 +12,7 @@
             prefHeight="400.0" prefWidth="600.0" fx:id="mapEditorBorderPane">
 
     <top>
-        <Label text="Enter the names of the Continents to add along with their control values" VBox.vgrow="ALWAYS"/>
+        <Label text="Enter the names of the Continents to add along with their control values"/>
     </top>
 
     <right>

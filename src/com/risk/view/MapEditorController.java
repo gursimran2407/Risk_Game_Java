@@ -21,6 +21,7 @@ public class MapEditorController {
 
 
     public void initialize() {
+        //Updating listview when app is initialized
         continentListView.setItems(ContinentData.getInstance().getContinents());
 
     }
