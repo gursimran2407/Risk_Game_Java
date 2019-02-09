@@ -20,5 +20,7 @@ public class AddCountryDialogController {
         this.countryModel.setContinentName(continentName);
 
         System.out.println(countryModel.toString());
+        CountryData.getInstance().addCountryModell(countryModel);
+
     }
 }

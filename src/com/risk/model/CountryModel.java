@@ -65,13 +65,10 @@ public class CountryModel {
 
     @Override
     public String toString() {
-        return "CountryModel{" +
-                "countryName='" + countryName + '\'' +
-                ", countryOwner=" + countryOwner +
-                ", continentName='" + continentName + '\'' +
-                ", linkCountryModel=" + linkCountryModel +
-                ", numberofArmies=" + numberofArmies +
-                '}';
+        StringBuilder sb = new StringBuilder("Continent Name:\n");
+        sb.append(continentName + "\n");
+        sb.append("Country Name " + countryName);
+        return sb.toString();
     }
 }
 

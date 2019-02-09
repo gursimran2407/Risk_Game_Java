@@ -2,6 +2,7 @@ package com.risk.view;
 
 
 import com.risk.model.ContinentModel;
+import com.risk.model.CountryModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -26,6 +27,7 @@ public class MapEditorController {
     private Button addContinentButton;
 
     private ContinentModel continentModel;
+    private CountryModel countryModel;
 
 
     public void initialize() {
@@ -42,7 +44,11 @@ public class MapEditorController {
         continentListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         continentListView.getSelectionModel().selectFirst();
 
-
+        //Updating the CountryList View
+        countryListView.setItems(CountryData.getInstance().getCountry());
+        countryListView.getSelectionModel().setSelectionMode(null);
+        countryListView.setMouseTransparent(true);
+        countryListView.setFocusTraversable(false);
 
     }
 

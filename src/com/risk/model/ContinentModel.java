@@ -1,5 +1,7 @@
 package com.risk.model;
 
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,7 @@ public class ContinentModel {
     private String continentName;
     private int controlValue;
     private int noOfCountries;
-    private List<CountryModel> countryModelList = new ArrayList<CountryModel>();
+    private ObservableList<CountryModel> countryModelList;
 
 
     public ContinentModel(String continentName, int controlValue) {
@@ -41,11 +43,11 @@ public class ContinentModel {
         this.noOfCountries = noOfCountries;
     }
 
-    public List<CountryModel> getCountryModelList() {
+    public ObservableList<CountryModel> getCountryModelList() {
         return countryModelList;
     }
 
-    public void setCountryModelList(ArrayList<CountryModel> countryModelList) {
+    public void setCountryModelList(ObservableList<CountryModel> countryModelList) {
         this.countryModelList = countryModelList;
     }
 
