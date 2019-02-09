@@ -1,12 +1,13 @@
 package com.risk.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContinentModel {
     private String continentName;
     private int controlValue;
     private int noOfCountries;
-    private ArrayList<CountryModel> countryModelList = new ArrayList<CountryModel>();
+    private List<CountryModel> countryModelList = new ArrayList<CountryModel>();
 
 
     public ContinentModel(String continentName, int controlValue) {
@@ -14,13 +15,9 @@ public class ContinentModel {
         this.controlValue = controlValue;
 
     }
-/** Default Constructor*/
-public ContinentModel()
-    {
-    }
 
 
-        public String getContinentName() {
+    public String getContinentName() {
         return continentName;
     }
 
@@ -44,11 +41,21 @@ public ContinentModel()
         this.noOfCountries = noOfCountries;
     }
 
-    public ArrayList<CountryModel> getCountryModelList() {
+    public List<CountryModel> getCountryModelList() {
         return countryModelList;
     }
 
     public void setCountryModelList(ArrayList<CountryModel> countryModelList) {
         this.countryModelList = countryModelList;
+    }
+
+    @Override
+    public String toString() {
+        return "ContinentModel{" +
+                "continentName='" + continentName + '\'' +
+                ", controlValue=" + controlValue +
+                ", noOfCountries=" + noOfCountries +
+                ", countryModelList=" + countryModelList +
+                '}';
     }
 }

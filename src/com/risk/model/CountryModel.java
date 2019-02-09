@@ -7,7 +7,7 @@ public class CountryModel {
     private String countryName;
     private PlayerModel countryOwner;
     private String continentName;
-    private ArrayList<CountryModel> linkCountryModel = new ArrayList<>();
+    private ArrayList<CountryModel> linkCountryModel;
     private int numberofArmies;
 
 
