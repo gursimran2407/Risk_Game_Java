@@ -15,17 +15,26 @@
         <Label text="Enter the names of the Continents to add along with their control values"/>
     </top>
 
-    <right>
-        <ListView fx:id="continentListView">
-
-        </ListView>
-    </right>
-
     <center>
         <VBox>
-            <GridPane vgap="10" hgap="10">
-                <Button text="Add Continents" fx:id="addButton" onAction="#handleAddDialog"/>
+            <GridPane vgap="20" hgap="10">
+                <Button text="Add Continents" GridPane.rowIndex="0" GridPane.columnIndex="0" fx:id="addContinentButton"
+                        onAction="#handleAddDialog"/>
+                <Button text="Add Countries. First Select the continent from right side." GridPane.rowIndex="1"
+                        GridPane.columnIndex="0" fx:id="addCountryButton" onAction="#handleAddDialog"/>
+
             </GridPane>
+            <Label text="Country List" alignment="CENTER_LEFT"/>
+            <Label text="Continent List" alignment="BASELINE_RIGHT"/>
+            <HBox>
+                <ListView fx:id="countryListView">
+
+                </ListView>
+                <ListView fx:id="continentListView">
+
+                </ListView>
+
+            </HBox>
         </VBox>
     </center>
 

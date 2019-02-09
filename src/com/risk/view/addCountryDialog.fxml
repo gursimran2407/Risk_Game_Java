@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane xmlns:fx="http://javafx.com/fxml"
+            xmlns="http://javafx.com/javafx"
+            fx:controller="com.risk.view.AddCountryDialogController"
+            prefHeight="400.0" prefWidth="600.0">
+    <headerText>
+        Add New Country
+    </headerText>
+    <content>
+        <GridPane hgap="10" vgap="10">
+            <Label text="Country Name: " GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="countryNameTextField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        </GridPane>
+    </content>
+
+</DialogPane>
