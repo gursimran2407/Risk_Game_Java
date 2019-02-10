@@ -6,16 +6,24 @@ import javafx.collections.ObservableList;
 /**
  * @author gursimransingh
  */
-public class ContinentData {
-    private static ContinentData instance = new ContinentData();
+public class MapEditorData {
+    private static MapEditorData instance = new MapEditorData();
     private ObservableList<ContinentModel> continents;
+    private ObservableList<CountryModel> countrys;
 
-    private ContinentData() {
+
+    private MapEditorData() {
         continents = FXCollections.observableArrayList();
+        countrys = FXCollections.observableArrayList();
     }
 
-    public static ContinentData getInstance() {
+    public static MapEditorData getInstance() {
         return instance;
+    }
+
+
+    public void addCountryModel(CountryModel countryModel) {
+        countrys.add(countryModel);
     }
 
     public void addContinentModel(ContinentModel continentModel) {
@@ -24,5 +32,9 @@ public class ContinentData {
 
     public ObservableList<ContinentModel> getContinents() {
         return continents;
+    }
+
+    public ObservableList<CountryModel> getCountry() {
+        return countrys;
     }
 }

@@ -1,6 +1,6 @@
 package com.risk.controller;
 
-import com.risk.model.ContinentData;
+import com.risk.model.MapEditorData;
 import com.risk.model.ContinentModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -21,7 +21,7 @@ public class AddContinentDIalogController {
         ContinentModel continentModel = new ContinentModel(continentName, controlValue);
         System.out.println(continentModel.toString());
 
-        ContinentData.getInstance().addContinentModel(continentModel);
+        MapEditorData.getInstance().addContinentModel(continentModel);
 
     }
 }

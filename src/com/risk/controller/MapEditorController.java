@@ -1,7 +1,7 @@
 package com.risk.controller;
 
 
-import com.risk.model.ContinentData;
+import com.risk.model.MapEditorData;
 import com.risk.model.ContinentModel;
 import com.risk.model.CountryData;
 import javafx.beans.value.ChangeListener;
@@ -41,12 +41,12 @@ public class MapEditorController {
             }
         });
         //Updating continentlistview when app is initialized
-        continentListView.setItems(ContinentData.getInstance().getContinents());
+        continentListView.setItems(MapEditorData.getInstance().getContinents());
         continentListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         continentListView.getSelectionModel().selectFirst();
 
         //Updating the CountryList View
-        countryListView.setItems(CountryData.getInstance().getCountry());
+        countryListView.setItems(MapEditorData.getInstance().getCountry());
         countryListView.getSelectionModel().setSelectionMode(null);
         countryListView.setMouseTransparent(true);
         countryListView.setFocusTraversable(false);

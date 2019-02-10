@@ -1,7 +1,7 @@
 package com.risk.controller;
 
-import com.risk.model.CountryData;
 import com.risk.model.CountryModel;
+import com.risk.model.MapEditorData;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -21,7 +21,7 @@ public class AddCountryDialogController {
         this.countryModel.setContinentName(continentName);
 
         System.out.println(countryModel.toString());
-        CountryData.getInstance().addCountryModel(countryModel);
+        MapEditorData.getInstance().addCountryModel(countryModel);
 
     }
 }
