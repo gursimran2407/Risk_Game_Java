@@ -13,12 +13,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 
 public class MainGameController {
+    @FXML
+    private Button mapEditorLoadbutton;
     @FXML
     private Button startGameButton;
     @FXML
@@ -45,6 +49,16 @@ public class MainGameController {
             // gridpane.getChildren().setAll(FXMLLoader.load(getClass().getResource("mapEditor.fxml")));
         } else if (actionEvent.getSource() == startGameButton) {
 //           CODE HERE
+        } else if (actionEvent.getSource() == mapEditorLoadbutton) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Map", "*.map")
+            );
+            File file = fileChooser.showOpenDialog(gridpane.getScene().getWindow());
+            if (file != null) {
+                System.out.println("The file is opened to edit. Path is:" + file.getAbsoluteFile());
+            } else System.out.println("File not opened");
+
         } else Platform.exit();
 
 

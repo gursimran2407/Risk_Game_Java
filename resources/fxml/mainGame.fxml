@@ -13,7 +13,9 @@
 
         <Button text="Start Game" GridPane.rowIndex="0" GridPane.columnIndex="0" fx:id="startGameButton"
                 onAction="#onClickMainButton"/>
-        <Button text="Map Editor" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="mapEditorbutton"
+    <Button text="Map Editor-> Create New Map" GridPane.rowIndex="1" GridPane.columnIndex="0" fx:id="mapEditorbutton"
+            onAction="#onClickMainButton"/>
+    <Button text="Map Editor-> Edit a Map" GridPane.rowIndex="2" GridPane.columnIndex="0" fx:id="mapEditorLoadbutton"
                 onAction="#onClickMainButton"/>
         <Button text="Exit" GridPane.rowIndex="3" GridPane.columnIndex="0" fx:id="exitButton"
                 onAction="#onClickMainButton"/>

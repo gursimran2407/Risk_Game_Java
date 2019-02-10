@@ -18,7 +18,7 @@ public class CountryData {
         return instance;
     }
 
-    public void addCountryModell(CountryModel countryModel) {
+    public void addCountryModel(CountryModel countryModel) {
         country.add(countryModel);
     }
 

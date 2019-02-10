@@ -9,7 +9,7 @@ public class ContinentModel {
     private String continentName;
     private int controlValue;
     private int noOfCountries;
-    private ObservableList<CountryModel> countryModelList;
+    private List<CountryModel> countryModelList;
 
 
     public ContinentModel(String continentName, int controlValue) {
@@ -43,11 +43,11 @@ public class ContinentModel {
         this.noOfCountries = noOfCountries;
     }
 
-    public ObservableList<CountryModel> getCountryModelList() {
+    public List<CountryModel> getCountryModelList() {
         return countryModelList;
     }
 
-    public void setCountryModelList(ObservableList<CountryModel> countryModelList) {
+    public void setCountryModelList(List<CountryModel> countryModelList) {
         this.countryModelList = countryModelList;
     }
 
