@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
  *
  */
-
 public class MapCountryController {
 
     private MapRiskModel mapRiskModel;
