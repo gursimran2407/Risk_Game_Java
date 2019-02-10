@@ -1,5 +1,8 @@
 package com.risk.model;
 
+import com.risk.gameplayrequirements.ReadMapFile;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class MapRiskModel {
@@ -12,6 +15,24 @@ public class MapRiskModel {
         this.countryModelList = countryModelList;
         this.playerModelList = playerModelList;
     }
+
+    /**
+     * This constructor helps to edit the map
+     *
+     * @param file to edit
+     */
+    public MapRiskModel(File file) {
+        ReadMapFile readMapFile = new ReadMapFile();
+        try {
+            readMapFile.setMapFile(file);
+            continentModelModList = readMapFile.getMapContinentDetails();
+            //countryModelList = readMapFile.getMapCountryDetails();
+            //this.countriesInContinent();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     public ArrayList<ContinentModel> getContinentModelModList() {
