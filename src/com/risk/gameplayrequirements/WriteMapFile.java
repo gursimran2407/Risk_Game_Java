@@ -73,8 +73,8 @@ public class WriteMapFile {
          bufferedWriter.write(content);
          bufferedWriter.newLine();
 
-         for (int i = 0; i < countriesList.size(); i++) {
-             content = getCountryName(countriesList.get(i));
+         for(CountryModel str : countriesList){
+             content = getCountryName(str);
              bufferedWriter.write(content);
              bufferedWriter.newLine();
          }
