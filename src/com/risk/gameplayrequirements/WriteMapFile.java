@@ -11,84 +11,86 @@ import java.util.List;
 
 /**
  * This class writes to Map file
+ *
  * @author Namita Faujdar
  */
 
 public class WriteMapFile {
 
     private File writeFile;
-    
+
     /**
-     *  This method writes map to a file
-     * @param fileName name of the file
-     * @param gameMapModel model game map
+     * This method writes map to a file
      *
+     * @param fileName     name of the file
+     * @param gameMapModel model game map
      */
- public void mapToFile(String fileName, MapRiskModel gameMapModel){
-     
-     List<ContinentModel> continentsList = gameMapModel.getContinentModelModList();
-     List<CountryModel> countriesList = gameMapModel.getCountryModelList();
-     //writeFile = new File(System.getProperty("user.dir") + "//mapfiles//" + fileName + ".map");
-     System.out.println(writeFile);
-     try {
-         // Create new file
-         String content;
-         File file = writeFile;
+    public void mapToFile(String fileName, MapRiskModel gameMapModel) {
 
-         FileWriter fw = new FileWriter(file.getAbsoluteFile());
-         BufferedWriter bufferedWriter = new BufferedWriter(fw);
+        List<ContinentModel> continentsList = gameMapModel.getContinentModelModList();
+        List<CountryModel> countriesList = gameMapModel.getCountryModelList();
+        //writeFile = new File(System.getProperty("user.dir") + "//mapfiles//" + fileName + ".map");
+        System.out.println(writeFile);
+        try {
+            // Create new file
+            String content;
+            File file = writeFile;
 
-         // Write in file
-         // Map content
-         content = "[Map]";
-         bufferedWriter.write(content);
-         bufferedWriter.newLine();
-         content = "author=";
-         bufferedWriter.write(content);
-         bufferedWriter.newLine();
-         content = "image=new.bmp";
-         bufferedWriter.write(content);
-         bufferedWriter.newLine();
-         content = "\n";
-         bufferedWriter.write(content);
-         bufferedWriter.newLine();
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bufferedWriter = new BufferedWriter(fw);
 
-         // Continent content
-         content = "[Continents]";
-         bufferedWriter.write(content);
-         bufferedWriter.newLine();
+            // Write in file
+            // Map content
+            content = "[Map]";
+            bufferedWriter.write(content);
+            bufferedWriter.newLine();
+            content = "author=";
+            bufferedWriter.write(content);
+            bufferedWriter.newLine();
+            content = "image=new.bmp";
+            bufferedWriter.write(content);
+            bufferedWriter.newLine();
+            content = "\n";
+            bufferedWriter.write(content);
+            bufferedWriter.newLine();
 
-         for (int i = 0; i < continentsList.size(); i++) {
-             content = getContinentName(continentsList.get(i));
-             bufferedWriter.write(content);
-             bufferedWriter.newLine();
-         }
+            // Continent content
+            content = "[Continents]";
+            bufferedWriter.write(content);
+            bufferedWriter.newLine();
 
-         content = "\n";
-         bufferedWriter.write(content);
-         bufferedWriter.newLine();
+            for (ContinentModel str : continentsList) {
+                content = getContinentName(str);
+                bufferedWriter.write(content);
+                bufferedWriter.newLine();
+            }
 
-         // Country content
-         content = "[Territories]";
-         bufferedWriter.write(content);
-         bufferedWriter.newLine();
+            content = "\n";
+            bufferedWriter.write(content);
+            bufferedWriter.newLine();
 
-         for(CountryModel str : countriesList){
-             content = getCountryName(str);
-             bufferedWriter.write(content);
-             bufferedWriter.newLine();
-         }
+            // Country content
+            content = "[Territories]";
+            bufferedWriter.write(content);
+            bufferedWriter.newLine();
 
-         // Close connection
-         bufferedWriter.close();
-     } catch (Exception e) {
-         e.printStackTrace();
-     }
+            for (CountryModel str : countriesList) {
+                content = getCountryName(str);
+                bufferedWriter.write(content);
+                bufferedWriter.newLine();
+            }
+
+            // Close connection
+            bufferedWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
     /**
      * Get the continent name with its control value
+     *
      * @param continentModel model continent
      * @return continent name
      */
@@ -102,6 +104,7 @@ public class WriteMapFile {
 
     /**
      * Get the country name
+     *
      * @param countryModel model country
      * @return country name
      */
