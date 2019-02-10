@@ -1,6 +1,7 @@
 package com.risk.gameplayrequirements;
 
 import com.risk.model.ContinentModel;
+import com.risk.model.CountryModel;
 
 import java.io.*;
 import java.util.*;
@@ -10,7 +11,7 @@ import java.util.*;
  */
 
 public class ReadMapFile {
-    private static  File FILE;
+    private static File FILE;
 
     /**
      * This method reads the map file and returns continent name and
@@ -49,6 +50,17 @@ public class ReadMapFile {
         }
 
         return continentsList;
+    }
+
+    /**
+     * This method reads the map file and returns country name,
+     * position, continent that it belongs to, and countries list that it is
+     * connected to.
+     *
+     * @return the array list of countries
+     */
+    public ArrayList<CountryModel> getMapCountryDetails() {
+        return null;
     }
 
     public File getMapFile() {
