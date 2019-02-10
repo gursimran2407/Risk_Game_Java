@@ -8,7 +8,7 @@
 
 <GridPane xmlns:fx="http://javafx.com/fxml"
           xmlns="http://javafx.com/javafx"
-          fx:controller="com.risk.view.MainGameController"
+          fx:controller="com.risk.controller.MainGameController"
           prefHeight="400.0" prefWidth="600.0" hgap="10" vgap="10" alignment="CENTER" fx:id="gridpane">
 
         <Button text="Start Game" GridPane.rowIndex="0" GridPane.columnIndex="0" fx:id="startGameButton"

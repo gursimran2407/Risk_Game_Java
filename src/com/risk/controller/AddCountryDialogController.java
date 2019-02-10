@@ -1,5 +1,6 @@
-package com.risk.view;
+package com.risk.controller;
 
+import com.risk.model.CountryData;
 import com.risk.model.CountryModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

@@ -1,4 +1,4 @@
-package com.risk.view;
+package com.risk.controller;
 /**
  * @author gursimransingh
  * Refererences: https://stackoverflow.com/questions/18736986/autocompletion-of-author-in-intellij
@@ -33,7 +33,7 @@ public class MainGameController {
 
         if (actionEvent.getSource() == mapEditorbutton) {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("mapEditor.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("/fxml/mapEditor.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             System.out.println(actionEvent.getSource());
             Stage stage = new Stage();

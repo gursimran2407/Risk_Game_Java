@@ -1,8 +1,9 @@
-package com.risk.view;
+package com.risk.controller;
 
 
+import com.risk.model.ContinentData;
 import com.risk.model.ContinentModel;
-import com.risk.model.CountryModel;
+import com.risk.model.CountryData;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -27,10 +28,10 @@ public class MapEditorController {
     private Button addContinentButton;
 
     private ContinentModel continentModel;
-    private CountryModel countryModel;
 
 
     public void initialize() {
+        System.out.println("==================MAP EDITOR INITIALIZED==================");
         continentListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -61,7 +62,7 @@ public class MapEditorController {
             dialog.setTitle("Add Continents!");
             dialog.setHeaderText("Add continents to the game along with their control values");
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("addContinentDIalog.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("/fxml/addContinentDIalog.fxml"));
 
             try {
                 dialog.getDialogPane().setContent(fxmlLoader.load());
@@ -86,9 +87,9 @@ public class MapEditorController {
                 Dialog<ButtonType> dialog = new Dialog<>();
                 dialog.initOwner(mapEditorBorderPane.getScene().getWindow());
                 dialog.setTitle("Add Continents!");
-                dialog.setHeaderText("Add continents to the game along with their control values");
+                dialog.setHeaderText("Add Countries for Continent: " + continentModel.getContinentName());
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("addCountryDialog.fxml"));
+                fxmlLoader.setLocation(getClass().getResource("/fxml/addCountryDialog.fxml"));
 
                 try {
                     dialog.getDialogPane().setContent(fxmlLoader.load());

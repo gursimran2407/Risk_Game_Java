@@ -18,7 +18,7 @@ public class MainGame extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("mainGame.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainGame.fxml"));
         primaryStage.setTitle("PLAY RISK!!");
 
         Scene scene = new Scene(root);

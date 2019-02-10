@@ -1,7 +1,5 @@
-package com.risk.view;
+package com.risk.model;
 
-import com.risk.model.ContinentModel;
-import com.risk.model.CountryModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
