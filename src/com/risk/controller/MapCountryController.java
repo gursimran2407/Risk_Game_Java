@@ -34,5 +34,7 @@ public class MapCountryController {
         return countryModelArrayList;
     }
 
-    /* This controller will connect through view , map editor view which is in production.*/
+    /* This controller will connect through view , map editor view which is in production.
+    * Processing on logic for country linking*/
+
 }
