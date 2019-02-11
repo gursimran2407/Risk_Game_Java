@@ -20,8 +20,8 @@ public class Reinforcement {
      * This updateWindow method is called whenever the model is updated. It updates
      * the Screen for Reinforcement Phase
      *
-     * @param gamePlayModel
-     * @param playerModel
+     * @param gamePlayModel play Model
+     * @param playerModel play Model
      */
     public void updateWindow(GamePlayModel gamePlayModel, PlayerModel playerModel) {
 
