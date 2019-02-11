@@ -3,7 +3,6 @@ package com.risk.controller;
 
 import com.risk.model.MapEditorData;
 import com.risk.model.ContinentModel;
-import com.risk.model.CountryData;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
