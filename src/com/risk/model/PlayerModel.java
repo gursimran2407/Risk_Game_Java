@@ -1,5 +1,7 @@
 package com.risk.model;
 
+import com.risk.helperInterfaces.StrategyInterface;
+
 import java.util.ArrayList;
 import java.awt.Color;
 
@@ -11,6 +13,7 @@ public class PlayerModel {
     private Color playerColor;
     private ArrayList<CardModel> playerCards;
     private ArrayList<CountryModel> playerCountryModelList;
+    private StrategyInterface strategy;
 
 
     public PlayerModel(String playerName, ArrayList<CountryModel> playerCountryModelList, int numberofArmies, Color playerColor, ArrayList<CardModel> playerCards) {
@@ -60,5 +63,17 @@ public class PlayerModel {
 
     public void setPlayerCards(ArrayList<CardModel> playerCards) {
         this.playerCards = playerCards;
+    }
+
+    public void executeReinforcement() {
+        strategy.reinforcementPhase();
+    }
+
+    public void executeAttack() {
+        strategy.attackPhase();
+    }
+
+    public void executeFortification() {
+        strategy.fortificationPhase();
     }
 }
