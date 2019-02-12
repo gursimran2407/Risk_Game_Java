@@ -13,6 +13,7 @@ public class GamePlayModel extends Observable
     /** MapRiskmodel
      */
     private MapRiskModel mapRiskModelModObj;
+    //private GameMapModel gameMapModel =  new GameMapModel() ;
 
     /** current players playing the game*/
     private ArrayList<PlayerModel> currentPlayerModels;
@@ -20,10 +21,14 @@ public class GamePlayModel extends Observable
     /** All the cards*/
     private ArrayList<CardModel> deckOfCards;
 
+    private StringBuilder consoleOutput;
+
     /** if country owned*/
     private boolean ifCountryOwned;
 
     private String PhaseOfGame = null;
+
+    private ArrayList<PlayerModel> playersList = new ArrayList<PlayerModel>();
 
     /**
      * Default Constructor.
@@ -74,5 +79,21 @@ public class GamePlayModel extends Observable
 
     public void setPhaseOfGame(String phaseOfGame) {
         PhaseOfGame = phaseOfGame;
+    }
+
+    public ArrayList<PlayerModel> getPlayersList() {
+        return playersList;
+    }
+
+    public void setPlayersList(ArrayList<PlayerModel> playersList) {
+        this.playersList = playersList;
+    }
+
+    public StringBuilder getConsoleOutput() {
+        return consoleOutput;
+    }
+
+    public void setConsoleOutput(StringBuilder consoleOutput) {
+        this.consoleOutput = consoleOutput;
     }
 }

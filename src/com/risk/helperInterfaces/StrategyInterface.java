@@ -7,9 +7,9 @@ package com.risk.helperInterfaces;
 
 public interface StrategyInterface {
 
-    public void fortificationPhase();
+     void fortificationPhase();
 
-    public void reinforcementPhase();
+     void reinforcementPhase();
 
-    public void attackPhase();
+     void attackPhase();
 }

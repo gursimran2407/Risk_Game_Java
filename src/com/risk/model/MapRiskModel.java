@@ -9,6 +9,8 @@ public class MapRiskModel {
     private ArrayList<ContinentModel> continentModelModList;
     private ArrayList<CountryModel> countryModelList;
     private ArrayList<PlayerModel> playerModelList;
+    private int indexOfPlayer;
+    private PlayerModel playerTurn;
 
     public MapRiskModel(ArrayList<ContinentModel> continentModelModList, ArrayList<CountryModel> countryModelList, ArrayList<PlayerModel> playerModelList) {
         this.continentModelModList = continentModelModList;
@@ -57,5 +59,21 @@ public class MapRiskModel {
 
     public void setPlayerModelList(ArrayList<PlayerModel> playerModelList) {
         this.playerModelList = playerModelList;
+    }
+
+    public PlayerModel getPlayerTurn() {
+        return playerTurn;
+    }
+
+    public void setPlayerTurn(PlayerModel playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+
+    public int getIndexOfPlayer() {
+        return indexOfPlayer;
+    }
+
+    public void setIndexOfPlayer(int indexOfPlayer) {
+        this.indexOfPlayer = indexOfPlayer;
     }
 }

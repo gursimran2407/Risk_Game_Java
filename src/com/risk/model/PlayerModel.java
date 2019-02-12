@@ -1,12 +1,14 @@
 package com.risk.model;
 
+import com.risk.controller.PlayerHumanController;
 import com.risk.helperInterfaces.StrategyInterface;
 
 import java.util.ArrayList;
 import java.awt.Color;
+import java.util.Observable;
 
 
-public class PlayerModel {
+public class PlayerModel extends Observable {
     private String playerName;
     //private String typeOfPlayer;
     private int numberofArmies;
@@ -14,6 +16,7 @@ public class PlayerModel {
     private ArrayList<CardModel> playerCards;
     private ArrayList<CountryModel> playerCountryModelList;
     private StrategyInterface strategy;
+    private String playerType;
 
 
     public PlayerModel(String playerName, ArrayList<CountryModel> playerCountryModelList, int numberofArmies, Color playerColor, ArrayList<CardModel> playerCards) {
@@ -65,6 +68,18 @@ public class PlayerModel {
         this.playerCards = playerCards;
     }
 
+    public String getPlayerType() {
+        return playerType;
+    }
+
+    public void setPlayerType(String playerType) {
+        this.playerType = playerType;
+    }
+
+    public void setStrategy(StrategyInterface strategyInterface) {
+        strategy = strategyInterface;
+    }
+
     public void executeReinforcement() {
         strategy.reinforcementPhase();
     }
@@ -75,5 +90,14 @@ public class PlayerModel {
 
     public void executeFortification() {
         strategy.fortificationPhase();
+    }
+
+    /**
+     * Calling Observer.
+     */
+    public void callObservers() {
+        setChanged();
+        notifyObservers(this);
+
     }
 }
