@@ -3,6 +3,11 @@ package com.risk.controller;
 import com.risk.helperInterfaces.StrategyInterface;
 import com.risk.model.GamePlayModel;
 
+/**
+ * This class is for Human player type
+ *
+ * @author Namita
+ */
 public class PlayerHumanController implements StrategyInterface {
     private GamePlayModel gamePlayModel;
     /**

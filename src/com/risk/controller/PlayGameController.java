@@ -5,6 +5,9 @@ import com.risk.model.GamePlayModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * @author Namita Faujdar
+ */
 public class PlayGameController implements ActionListener {
 
     private GamePlayModel gamePlayModel = null;
