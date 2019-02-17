@@ -72,7 +72,7 @@ public class MainGame implements ActionListener {
      * show create map window
      */
     private void showCreateMapWindow() {
-        // new CreateContinentController();
+        new MapCreateContinentController();
         this.d_mainGameView.dispose();
     }
 }
