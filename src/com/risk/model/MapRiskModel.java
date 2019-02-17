@@ -47,12 +47,12 @@ public class MapRiskModel extends Observable {
 
 
 
-    public ArrayList<ContinentModel> getContinentModelModList() {
+    public ArrayList<ContinentModel> getContinentModelList() {
         return d_continentModelList;
     }
 
-    public void setContinentModelModList(ArrayList<ContinentModel> continentModelModList) {
-        d_continentModelList = continentModelModList;
+    public void setContinentModelModList(ArrayList<ContinentModel> continentModelList) {
+        d_continentModelList = continentModelList;
         callObservers();
     }
 

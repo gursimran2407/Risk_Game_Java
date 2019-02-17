@@ -1,6 +1,8 @@
 package com.risk.view;
 
 import com.risk.helperInterfaces.ViewInterface;
+import com.risk.model.ContinentModel;
+import com.risk.model.MapRiskModel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -79,7 +81,7 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
      *
      * @param listOfContinentModel
      */
-    public void updateScreen(List<ContinentsModel> listOfContinentModel) {
+    public void updateScreen(List<ContinentModel> listOfContinentModel) {
 
         StringBuilder textAreaText = new StringBuilder("------------------------------------------------");
 
@@ -89,7 +91,7 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
             textAreaText.setLength(0);
             for (int i = 0; i < listOfContinentModel.size(); i++) {
                 textAreaText.append("Continent name : " + listOfContinentModel.get(i).getContinentName()
-                        + " ,Control Value : " + listOfContinentModel.get(i).getValueControl() + "\n");
+                        + " ,Control Value : " + listOfContinentModel.get(i).getControlValue() + "\n");
             }
         }
 
@@ -119,9 +121,7 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
     }
 
     /**
-     * Sets actions to "addButton" and "nextButton"
-     *
-     * @see app.helper.View#setActionListener(java.awt.event.ActionListener)
+     * sets actions to JButton variables
      */
     @Override
     public void setActionListener(ActionListener actionListener) {
@@ -130,20 +130,13 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
     }
 
     /**
-     * Update the view based on observer
-     *
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     * Listens to notifyObservers of Observable classes
      */
     @Override
     public void update(Observable obs, Object arg) {
-        List<ContinentsModel> listOfContinentModel = ((GameMapModel) obs).getContinents();
+        List<ContinentModel> listOfContinentModel = ((MapRiskModel) obs).getContinentModelList();
         this.updateScreen(listOfContinentModel);
         this.revalidate();
         this.repaint();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }
