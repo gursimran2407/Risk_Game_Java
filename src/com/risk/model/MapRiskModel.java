@@ -45,8 +45,6 @@ public class MapRiskModel extends Observable {
         }
     }
 
-
-
     public ArrayList<ContinentModel> getContinentModelList() {
         return d_continentModelList;
     }
