@@ -27,7 +27,7 @@ public class WriteMapFile {
      */
     public void mapToFile(String fileName, MapRiskModel gameMapModel) {
 
-        List<ContinentModel> continentsList = gameMapModel.getContinentModelModList();
+        List<ContinentModel> continentsList = gameMapModel.getContinentModelList();
         List<CountryModel> countriesList = gameMapModel.getCountryModelList();
         //writeFile = new File(System.getProperty("user.dir") + "//mapfiles//" + fileName + ".map");
         System.out.println(writeFile);

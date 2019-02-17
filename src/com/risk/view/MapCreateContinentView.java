@@ -83,15 +83,15 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
      */
     public void updateScreen(List<ContinentModel> listOfContinentModel) {
 
-        StringBuilder textAreaText = new StringBuilder("------------------------------------------------");
+        StringBuilder textAreaText = new StringBuilder("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
         if (listOfContinentModel == null) {
             textArea.setText(textAreaText.toString());
         } else {
             textAreaText.setLength(0);
             for (int i = 0; i < listOfContinentModel.size(); i++) {
-                textAreaText.append("Continent name : " + listOfContinentModel.get(i).getContinentName()
-                        + " ,Control Value : " + listOfContinentModel.get(i).getControlValue() + "\n");
+                textAreaText.append("Continent Name : " + listOfContinentModel.get(i).getContinentName()
+                        + " || Control Value : " + listOfContinentModel.get(i).getControlValue() + "\n");
             }
         }
 
@@ -100,10 +100,10 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
         mainPanel.add(textArea);
-        textArea.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "Continents added list:"));
+        textArea.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "ADDED Continents"));
         textArea.setBounds(520, 0, 260, 650);
 
-        Color main = new Color(230, 230, 255);
+        Color main = new Color(115, 255, 238);
         Color secondary = new Color(0, 0, 26);
         textArea.setBackground(main);
         textArea.setForeground(secondary);
