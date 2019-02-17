@@ -4,18 +4,28 @@ import com.risk.gameplayrequirements.ReadMapFile;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class MapRiskModel {
-    private ArrayList<ContinentModel> continentModelModList;
-    private ArrayList<CountryModel> countryModelList;
-    private ArrayList<PlayerModel> playerModelList;
-    private int indexOfPlayer;
-    private PlayerModel playerTurn;
+public class MapRiskModel extends Observable {
 
-    public MapRiskModel(ArrayList<ContinentModel> continentModelModList, ArrayList<CountryModel> countryModelList, ArrayList<PlayerModel> playerModelList) {
-        this.continentModelModList = continentModelModList;
-        this.countryModelList = countryModelList;
-        this.playerModelList = playerModelList;
+    private ArrayList<ContinentModel> d_continentModelList;
+    private ArrayList<CountryModel> d_countryModelList;
+    private ArrayList<PlayerModel> d_playerModelList;
+    private int d_indexOfPlayer;
+    private PlayerModel d_playerTurn;
+
+    public MapRiskModel(ArrayList<ContinentModel> new_continentModelModList, ArrayList<CountryModel> new_countryModelList, ArrayList<PlayerModel> new_playerModelList) {
+        d_continentModelList = new_continentModelModList;
+        d_countryModelList = new_countryModelList;
+        d_playerModelList = new_playerModelList;
+    }
+
+    /**
+     * Default constructor to make new map
+     */
+    public MapRiskModel() {
+        d_continentModelList = new ArrayList<>();
+        d_countryModelList = new ArrayList<>();
     }
 
     /**
@@ -27,7 +37,7 @@ public class MapRiskModel {
         ReadMapFile readMapFile = new ReadMapFile();
         try {
             readMapFile.setMapFile(file);
-            continentModelModList = readMapFile.getMapContinentDetails();
+            d_continentModelList = readMapFile.getMapContinentDetails();
             //countryModelList = readMapFile.getMapCountryDetails();
             //this.countriesInContinent();
         } catch (Exception e) {
@@ -38,42 +48,52 @@ public class MapRiskModel {
 
 
     public ArrayList<ContinentModel> getContinentModelModList() {
-        return continentModelModList;
+        return d_continentModelList;
     }
 
     public void setContinentModelModList(ArrayList<ContinentModel> continentModelModList) {
-        this.continentModelModList = continentModelModList;
+        d_continentModelList = continentModelModList;
+        callObservers();
     }
 
     public ArrayList<CountryModel> getCountryModelList() {
-        return countryModelList;
+        return d_countryModelList;
     }
 
     public void setCountryModelList(ArrayList<CountryModel> countryModelList) {
-        this.countryModelList = countryModelList;
+        d_countryModelList = countryModelList;
+        callObservers();
     }
 
     public ArrayList<PlayerModel> getPlayerModelList() {
-        return playerModelList;
+        return d_playerModelList;
     }
 
     public void setPlayerModelList(ArrayList<PlayerModel> playerModelList) {
-        this.playerModelList = playerModelList;
+        d_playerModelList = playerModelList;
+        callObservers();
     }
 
     public PlayerModel getPlayerTurn() {
-        return playerTurn;
+        return d_playerTurn;
     }
 
     public void setPlayerTurn(PlayerModel playerTurn) {
-        this.playerTurn = playerTurn;
+        d_playerTurn = playerTurn;
+        callObservers();
     }
 
     public int getIndexOfPlayer() {
-        return indexOfPlayer;
+        return d_indexOfPlayer;
     }
 
     public void setIndexOfPlayer(int indexOfPlayer) {
-        this.indexOfPlayer = indexOfPlayer;
+        d_indexOfPlayer = indexOfPlayer;
+        callObservers();
+    }
+
+    public void callObservers() {
+        setChanged();
+        notifyObservers(this);
     }
 }
