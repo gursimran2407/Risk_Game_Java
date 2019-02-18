@@ -13,7 +13,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- *
+ * MapCountryConnectView Class represents a view for players to connect a
+ * country to any other one during map creation. It contains buttons, labels,
+ * and lists
  * @author Shriyans
  */
 public class MapCountryConnectView extends JFrame implements ViewInterface, Observer  {
@@ -35,7 +37,7 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
     public MapRiskModel d_mapRiskModel;
 
     /**
-     * Constructor method of ConnectCountryView
+     * Constructor for MapCountryConnectView
      *
      * @param new_mapRiskModel
      */
