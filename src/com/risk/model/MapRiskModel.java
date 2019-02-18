@@ -13,6 +13,8 @@ public class MapRiskModel extends Observable {
     private ArrayList<PlayerModel> d_playerModelList;
     private int d_indexOfPlayer;
     private PlayerModel d_playerTurn;
+    private int leftModelIndex = 0;
+    private int rightModelIndex = 0;
 
     public MapRiskModel(ArrayList<ContinentModel> new_continentModelModList, ArrayList<CountryModel> new_countryModelList, ArrayList<PlayerModel> new_playerModelList) {
         d_continentModelList = new_continentModelModList;
@@ -88,6 +90,34 @@ public class MapRiskModel extends Observable {
     public void setIndexOfPlayer(int indexOfPlayer) {
         d_indexOfPlayer = indexOfPlayer;
         callObservers();
+    }
+
+    /**
+     * @return the leftModelIndex to get
+     */
+    public int getLeftModelIndex() {
+        return leftModelIndex;
+    }
+
+    /**
+     * @param leftModelIndex to set
+     */
+    public void setLeftModelIndex(int leftModelIndex) {
+        this.leftModelIndex = leftModelIndex;
+    }
+
+    /**
+     * @return the rightModelIndex to get
+     */
+    public int getRightModelIndex() {
+        return rightModelIndex;
+    }
+
+    /**
+     * @param rightModelIndex to set
+     */
+    public void setRightModelIndex(int rightModelIndex) {
+        this.rightModelIndex = rightModelIndex;
     }
 
     public void callObservers() {
