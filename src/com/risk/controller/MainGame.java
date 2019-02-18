@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 
 /**
- * This is the main starting point of the program containig main function
+ * This is the main starting point of the program containing main function
  *
  * @author gursimransingh
  */

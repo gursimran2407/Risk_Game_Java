@@ -54,7 +54,7 @@ public class MapCreateCountryView extends JFrame implements ViewInterface {
 
         textArea = new JTextArea("Default text", 5, 5);
 
-        welcomeLabel = new JLabel("Please add the Countries in the Continents you created:");
+        welcomeLabel = new JLabel("Please add the Countries in the Continents you have created:");
         welcomeLabel.setBounds(100, 0, 600, 100);
 
         countryListText = new JLabel("Country Name: ");

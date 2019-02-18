@@ -34,7 +34,7 @@ public class MapCreateContinentController implements ActionListener {
     }
 
     /**
-     * @param e Performs action whenever there is a change in mapCreatecontinent viwe class
+     * @param e Performs action whenever there is a change in mapCreateContinent view class
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -44,7 +44,7 @@ public class MapCreateContinentController implements ActionListener {
         if (e.getSource().equals(mapCreateContinentView.addButton)) {
             continentModel = new ContinentModel(mapCreateContinentView.continentListText.getText(), Integer.parseInt(mapCreateContinentView.controlValue.getText()));
 
-            //adding this to coninentmodel arraylist
+            //adding this to continentModel arrayList
             mapRiskModel.getContinentModelList().add(continentModel);
             //setting the added continent to update the observers
             mapRiskModel.setContinentModelModList(mapRiskModel.getContinentModelList());
@@ -54,12 +54,12 @@ public class MapCreateContinentController implements ActionListener {
         //Else if next button is clicked
         else if (e.getSource().equals(this.mapCreateContinentView.nextButton)) {
             if (this.mapRiskModel.getCountryModelList().isEmpty()) {
-                JOptionPane.showOptionDialog(null, "Enter atleast one Continent to the list", "Error",
+                JOptionPane.showOptionDialog(null, "Enter at least one Continent to the list", "Error",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
                 return;
             } else {
-                //Creating Arraylist of Arraylist of points
-                //Creating ColorList of Colorlist
+                //Creating ArrayList of ArrayList of points
+                //Creating ColorList of ColorList
                 ArrayList<ArrayList<Point>> pointsList = new ArrayList<>();
                 ArrayList<Color> colorList = new ArrayList<>();
 
