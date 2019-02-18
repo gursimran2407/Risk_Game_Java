@@ -1,5 +1,7 @@
 package com.risk.model;
 
+import com.risk.gameplayrequirements.MapRead;
+
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class MapRiskModel extends Observable {
      * @param file to edit
      */
     public MapRiskModel(File file) {
-        ReadMapFile readMapFile = new ReadMapFile();
+        MapRead readMapFile = new MapRead();
         try {
             readMapFile.setMapFile(file);
             d_continentModelList = readMapFile.getMapContinentDetails();

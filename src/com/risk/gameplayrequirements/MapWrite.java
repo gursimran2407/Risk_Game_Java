@@ -1,18 +1,51 @@
 package com.risk.gameplayrequirements;
 
+import com.risk.model.ContinentModel;
+import com.risk.model.CountryModel;
+import com.risk.model.MapRiskModel;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author gursimransingh
  */
 public class MapWrite {
         File file;
+    //Creating new File
+
+    public static String getContinet(ContinentModel continentsModel) {
+        String content = null;
+        if (!"".equals(continentsModel.getContinentName())) {
+            content = continentsModel.getContinentName() + "=" + continentsModel.getControlValue();
+        }
+        return content;
+    }
+
+    public static String getCountry(CountryModel countryModel) {
+        String content = null;
+        if (!"".equals(countryModel.getCountryName())) {
+            content = countryModel.getCountryName() + "," + countryModel.getXPosition() + ","
+                    + countryModel.getYPosition() + "," + countryModel.getContinentName() + ",";
+            String country = "";
+            for (int i = 0; i < countryModel.getLinkCountryModel().size(); i++) {
+                if (i == countryModel.getLinkCountryModel().size()) {
+                    country = country + countryModel.getLinkCountryModel().get(i).getCountryName();
+                } else {
+                    country = country + countryModel.getLinkCountryModel().get(i).getCountryName() + ",";
+                }
+            }
+            content = content + country;
+        }
+        return content;
+    }
+
         public File createNewFile(String fileName) {
             try {
-                this.file = new File(System.getProperty("user.dir") + "\\mapfiles\\" + fileName);
+                this.file = new File(System.getProperty("user.dir") + "\\maps\\" + fileName);
                 boolean fvar = file.createNewFile();
                 if (fvar) {
                     System.out.println("File has been created successfully");
@@ -28,16 +61,10 @@ public class MapWrite {
             return this.file;
         }
 
-        /**
-         * This method Writes Map to file
-         * @param fileName
-         * @param gMM
-         * @throws Exception
-         */
-        public void writeMapToFile(String fileName, GameMapModel gMM) throws Exception {
-            List<ContinentsModel> listOfContinents = gMM.getContinents();
-            List<CountryModel> listOfCountrys = gMM.getCountries();
-            this.file = new File(System.getProperty("user.dir") + "//mapfiles//" + fileName + ".map");
+    public void writeMapToFile(String fileName, MapRiskModel mapRiskModel) throws Exception {
+        List<ContinentModel> listOfContinents = mapRiskModel.getContinentModelList();
+        List<CountryModel> listOfCountrys = mapRiskModel.getCountryModelList();
+        this.file = new File(System.getProperty("user.dir") + "//map//" + fileName + ".map");
             System.out.println(this.file);
             try {
                 // Create new file
@@ -98,42 +125,6 @@ public class MapWrite {
             } catch (Exception e) {
                 System.out.println(e);
             }
-        }
-
-        /**
-         * Get the continents
-         * @param continentsModel
-         * @return
-         */
-        public static String getContinet(ContinentsModel continentsModel) {
-            String content = null;
-            if (!"".equals(continentsModel.getContinentName())) {
-                content = continentsModel.getContinentName() + "=" + continentsModel.getValueControl();
-            }
-            return content;
-        }
-
-        /**
-         * Get the country
-         * @param countryModel
-         * @return
-         */
-        public static String getCountry(CountryModel countryModel) {
-            String content = null;
-            if (!"".equals(countryModel.getCountryName())) {
-                content = countryModel.getCountryName() + "," + countryModel.getXPosition() + ","
-                        + countryModel.getYPosition() + "," + countryModel.getcontinentName() + ",";
-                String country = "";
-                for (int i = 0; i < countryModel.getLinkedCountries().size(); i++) {
-                    if (i == countryModel.getLinkedCountries().size()) {
-                        country = country + countryModel.getLinkedCountries().get(i).getCountryName();
-                    } else {
-                        country = country + countryModel.getLinkedCountries().get(i).getCountryName() + ",";
-                    }
-                }
-                content = content + country;
-            }
-            return content;
         }
 
     }
