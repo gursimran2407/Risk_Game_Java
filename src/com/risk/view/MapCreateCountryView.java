@@ -88,7 +88,6 @@ public class MapCreateCountryView extends JFrame implements ViewInterface {
     public void updateScreen(List<ContinentModel> listOfContinentModel, List<CountryModel> listOfCountryModel) {
         mainPanel.removeAll();
 
-        JComboBox continentListCombobox;
         Object[] continentListArray;
         CountryViewRenderer continentViewRenderer;
         StringBuilder textAreaText = new StringBuilder("------------------------------------------------");
