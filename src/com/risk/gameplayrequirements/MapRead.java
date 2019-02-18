@@ -52,33 +52,30 @@ public class MapRead {
 
     public ArrayList<CountryModel> getMapCountryDetails() {
         File readFile = getReadFile();
-        Scanner sc = null;
+        BufferedReader bfr;
+        ArrayList<CountryModel> countryModelList;
+        HashMap<String, CountryModel> countriesList = new HashMap<>();
         try {
-            sc = new Scanner(readFile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ArrayList<CountryModel> listOfCountryModel;
-        HashMap<String, CountryModel> listOfCountries = new HashMap<String, CountryModel>();
+            bfr = new BufferedReader(new FileReader(readFile));
 
-        while (sc.hasNextLine()) {
-            String fileData = sc.nextLine();
+        while (bfr.readLine() != null) {
+            String fileData = bfr.readLine();
 
             if (fileData.contains("[Territories]")) {
 
-                while (sc.hasNextLine()) {
-                    String territories = sc.nextLine();
+                while (bfr.readLine() != null) {
+                    String territories = bfr.readLine();
                     territories.trim();
 
                     if (!"".equals(territories)) {
 
                         int indexOfCountryName = territories.indexOf(',');
                         String countryName = territories.substring(0, indexOfCountryName).trim();
-                        CountryModel cm = listOfCountries.get(countryName);
+                        CountryModel cm = countriesList.get(countryName);
                         if (cm == null) {
                             cm = new CountryModel();
                             cm.setCountryName(countryName);
-                            listOfCountries.put(cm.getCountryName(), cm);
+                            countriesList.put(cm.getCountryName(), cm);
                         }
 
                         int indexOfXPos = territories.indexOf(',', (indexOfCountryName + 1));
@@ -104,13 +101,13 @@ public class MapRead {
                         ArrayList<CountryModel> linkedCountriesList = new ArrayList<CountryModel>();
 
                         for (int i = 0; i < listOfNeighbouringCountries.size(); i++) {
-                            if (listOfCountries.containsKey(listOfNeighbouringCountries.get(i).trim())) {
-                                newNeighbour = listOfCountries.get(listOfNeighbouringCountries.get(i).trim());
+                            if (countriesList.containsKey(listOfNeighbouringCountries.get(i).trim())) {
+                                newNeighbour = countriesList.get(listOfNeighbouringCountries.get(i).trim());
                             } else {
                                 newNeighbour = new CountryModel();
                                 newNeighbour.setCountryName(listOfNeighbouringCountries.get(i).trim());
                             }
-                            listOfCountries.put(listOfNeighbouringCountries.get(i).trim(), newNeighbour);
+                            countriesList.put(listOfNeighbouringCountries.get(i).trim(), newNeighbour);
                             linkedCountriesList.add(newNeighbour);
                         }
                         cm.setLinkCountryModel(linkedCountriesList);
@@ -118,9 +115,12 @@ public class MapRead {
                 }
             }
         }
-        Collection<CountryModel> c = (Collection<CountryModel>) listOfCountries.values();
-        listOfCountryModel = new ArrayList<CountryModel>(c);
-        return listOfCountryModel;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Collection<CountryModel> c = countriesList.values();
+        countryModelList = new ArrayList<>(c);
+        return countryModelList;
     }
 
     public static File getReadFile() {
