@@ -20,18 +20,18 @@ import java.util.Observer;
  */
 public class MapCountryConnectView extends JFrame implements ViewInterface, Observer  {
 
-    public JPanel welcomePanel;
-    public JPanel graphicPanel;
-    public JButton saveButton;
-    public JButton addButton;
-    public JButton removeButton;
+    public JPanel panelWelcome;
+    public JPanel panelGraphic;
+    public JButton buttonSave;
+    public JButton buttonAdd;
+    public JButton buttonRemove;
     public JLabel welcomeLabel;
-    public JLabel countryListLabelLeft;
-    public JLabel countryListLabelRight;
-    public JList countryParentListRight;
-    public JList countryParentListLeft;
-    public ListSelectionModel listSelectionModelLeft;
-    public ListSelectionModel listSelectionModelRight;
+    public JLabel countryListLeft;
+    public JLabel countryListRight;
+    public JList rightCountryParentList;
+    public JList leftCountryParentList;
+    public ListSelectionModel leftListSelectionModel;
+    public ListSelectionModel rightListSelectionModel;
     public List<CountryModel> leftCountryList;
     public List<CountryModel> rightCountryList;
     public MapRiskModel d_mapRiskModel;
@@ -45,16 +45,16 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
         d_mapRiskModel = new_mapRiskModel;
         welcomeLabel = new JLabel("Please select the Continents you want in the map and the control value");
 
-        saveButton = new JButton("Save");
-        addButton = new JButton("Add");
-        removeButton = new JButton("Remove");
+        buttonSave = new JButton("Save");
+        buttonAdd = new JButton("Add");
+        buttonRemove = new JButton("Remove");
 
-        welcomePanel = new JPanel();
-        graphicPanel = new JPanel();
-        getContentPane().add(graphicPanel);
-        graphicPanel.setSize(1200, 800);
-        graphicPanel.setBackground(Color.WHITE);
-        graphicPanel.setLayout(null);
+        panelWelcome = new JPanel();
+        panelGraphic = new JPanel();
+        getContentPane().add(panelGraphic);
+        panelGraphic.setSize(1200, 800);
+        panelGraphic.setBackground(Color.WHITE);
+        panelGraphic.setLayout(null);
 
         this.setName("RISK GAME");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,8 +62,8 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
         this.setSize(1400, 800);
         this.setResizable(false);
         this.setVisible(false);
-        welcomePanel.setLayout(null);
-        this.add(welcomePanel);
+        panelWelcome.setLayout(null);
+        this.add(panelWelcome);
         this.updateWindow(new_mapRiskModel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -72,22 +72,20 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
     /**
      * The method "updateWindow" updates the panel view after any change
      *
-     * @param mrr which is a GameMapModel object
+     * @param mrr which is a MapRiskModel object
      */
     private void updateWindow(MapRiskModel mrr) {
-        welcomePanel.removeAll();
-        graphicPanel.removeAll();
-        Font largeFont = new Font("Serif", Font.BOLD, 18);
-        Font mediumFont = new Font("Serif", Font.BOLD, 14);
+        panelWelcome.removeAll();
+        panelGraphic.removeAll();
         Font smallFont = new Font("Serif", Font.BOLD, 12);
 
-        countryListLabelLeft = new JLabel("Country 1");
-        countryListLabelLeft.setBounds(1200, 80, 100, 25);
-        welcomePanel.add(countryListLabelLeft);
+        countryListLeft = new JLabel("Country 1");
+        countryListLeft.setBounds(1200, 80, 100, 25);
+        panelWelcome.add(countryListLeft);
 
-        countryListLabelRight = new JLabel("Country 2");
-        countryListLabelRight.setBounds(1200, 280, 100, 25);
-        welcomePanel.add(countryListLabelRight);
+        countryListRight = new JLabel("Country 2");
+        countryListRight.setBounds(1200, 280, 100, 25);
+        panelWelcome.add(countryListRight);
 
         // left panel
         this.leftCountryList = mrr.getCountryModelList();
@@ -96,21 +94,21 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
             countryModelArrayLeft[i] = this.leftCountryList.get(i);
         }
 
-        countryParentListLeft = new JList<CountryModel>();
+        leftCountryParentList = new JList<CountryModel>();
         if (countryModelArrayLeft.length > 0) {
-            countryParentListLeft.setListData(countryModelArrayLeft);
-            countryParentListLeft.setCellRenderer(new CountryModelRenderer());
+            leftCountryParentList.setListData(countryModelArrayLeft);
+            leftCountryParentList.setCellRenderer(new CountryModelRenderer());
 
         }
 
-        countryParentListLeft.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        JScrollPane countryParentListPaneLeft = new JScrollPane(countryParentListLeft);
+        leftCountryParentList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        JScrollPane countryParentListPaneLeft = new JScrollPane(leftCountryParentList);
 
-        this.listSelectionModelLeft = countryParentListLeft.getSelectionModel();
-        countryParentListLeft.setSelectedIndex(d_mapRiskModel.getLeftModelIndex());
+        this.leftListSelectionModel = leftCountryParentList.getSelectionModel();
+        leftCountryParentList.setSelectedIndex(d_mapRiskModel.getLeftModelIndex());
         countryParentListPaneLeft.setBounds(1200, 100, 150, 150);
 
-        welcomePanel.add(countryParentListPaneLeft);
+        panelWelcome.add(countryParentListPaneLeft);
 
         // Right panel
         this.rightCountryList = mrr.getCountryModelList();
@@ -120,30 +118,30 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
             countryModelArrayRight[i] = this.rightCountryList.get(i);
         }
 
-        countryParentListRight = new JList<CountryModel>();
+        rightCountryParentList = new JList<CountryModel>();
         if (countryModelArrayRight.length > 0) {
-            countryParentListRight.setListData(countryModelArrayRight);
-            countryParentListRight.setCellRenderer(new CountryModelRenderer());
+            rightCountryParentList.setListData(countryModelArrayRight);
+            rightCountryParentList.setCellRenderer(new CountryModelRenderer());
 
         }
-        countryParentListRight.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        this.listSelectionModelRight = countryParentListRight.getSelectionModel();
-        JScrollPane countryParentListPaneRight = new JScrollPane(countryParentListRight);
-        countryParentListRight.setSelectedIndex(d_mapRiskModel.getRightModelIndex());
+        rightCountryParentList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        this.rightListSelectionModel = rightCountryParentList.getSelectionModel();
+        JScrollPane countryParentListPaneRight = new JScrollPane(rightCountryParentList);
+        rightCountryParentList.setSelectedIndex(d_mapRiskModel.getRightModelIndex());
         countryParentListPaneRight.setBounds(1200, 300, 150, 150);
-        welcomePanel.add(countryParentListPaneRight);
+        panelWelcome.add(countryParentListPaneRight);
 
-        addButton.setFont(smallFont);
-        welcomePanel.add(addButton);
-        addButton.setBounds(1200, 250, 100, 20);
+        buttonAdd.setFont(smallFont);
+        panelWelcome.add(buttonAdd);
+        buttonAdd.setBounds(1200, 250, 100, 20);
 
-        saveButton.setFont(smallFont);
-        welcomePanel.add(saveButton);
-        saveButton.setBounds(1200, 460, 100, 20);
+        buttonSave.setFont(smallFont);
+        panelWelcome.add(buttonSave);
+        buttonSave.setBounds(1200, 460, 100, 20);
 
-        removeButton.setFont(smallFont);
-        welcomePanel.add(removeButton);
-        removeButton.setBounds(1300, 250, 100, 20);
+        buttonRemove.setFont(smallFont);
+        panelWelcome.add(buttonRemove);
+        buttonRemove.setBounds(1300, 250, 100, 20);
 
         for (int i = 0; i < this.leftCountryList.size(); i++) {
             CountryModel country = this.leftCountryList.get(i);
@@ -155,7 +153,7 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
             country.setBounds(this.leftCountryList.get(i).getXPosition() * 2,
                     this.leftCountryList.get(i).getYPosition() * 2, 50, 50);
 
-            graphicPanel.add(country);
+            panelGraphic.add(country);
         }
         for (int i = 0; i < this.rightCountryList.size(); i++) {
             CountryModel country = this.rightCountryList.get(i);
@@ -167,22 +165,22 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
             country.setBounds(this.rightCountryList.get(i).getXPosition() * 2,
                     this.rightCountryList.get(i).getYPosition() * 2, 50, 50);
 
-            graphicPanel.add(country);
+            panelGraphic.add(country);
         }
-        graphicPanel.setLayout(null);
+        panelGraphic.setLayout(null);
 
     }
 
     @Override
     public void setActionListener(ActionListener actionListener) {
-        saveButton.addActionListener(actionListener);
-        addButton.addActionListener(actionListener);
-        removeButton.addActionListener(actionListener);
+        buttonSave.addActionListener(actionListener);
+        buttonAdd.addActionListener(actionListener);
+        buttonRemove.addActionListener(actionListener);
     }
 
     public void setListSelectionListener(ListSelectionListener actionListener) {
-        listSelectionModelLeft.addListSelectionListener(actionListener);
-        listSelectionModelRight.addListSelectionListener(actionListener);
+        leftListSelectionModel.addListSelectionListener(actionListener);
+        rightListSelectionModel.addListSelectionListener(actionListener);
     }
 
     @Override
