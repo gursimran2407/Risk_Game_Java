@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Observable;
 
 /**
+ * MapCreateCountryView class is representing a view object for creating a country
+ * view Properties are labels, text fields, buttons, combo-boxes, a  pane and a panel
  *
  * @author Namita Faujdar
  */
@@ -78,7 +80,7 @@ public class MapCreateCountryView extends JFrame implements ViewInterface {
     }
 
     /**
-     * Updates the screen after creating a country
+     * UpdateScreen pushes screen update after creating a country
      *
      * @param listOfContinentModel continents list
      * @param listOfCountryModel countries list
@@ -156,8 +158,7 @@ public class MapCreateCountryView extends JFrame implements ViewInterface {
     }
 
     /**
-     * Inside, getter method that provides us a map model corresponding to a map
-     * name
+     * Inside, getter method that provides us a map model corresponding to a map name
      */
     public class CountryViewRenderer extends BasicComboBoxRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
