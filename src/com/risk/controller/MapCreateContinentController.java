@@ -26,7 +26,7 @@ public class MapCreateContinentController implements ActionListener {
     public MapCreateContinentController() {
         mapRiskModel = new MapRiskModel();
         mapCreateContinentView = new MapCreateContinentView();
-        //Initializing Arraylist to store continent models
+        //Initializing ArraylList to store continent models
 
         mapRiskModel.addObserver(mapCreateContinentView);
         mapCreateContinentView.setActionListener(this);
@@ -90,8 +90,8 @@ public class MapCreateContinentController implements ActionListener {
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
                 return;
             } else {
-                //Creating Arraylist of Arraylist of points
-                //Creating ColorList of Colorlist
+                //Creating ArrayList of ArrayList of points
+                //Creating ColorList of ColorList
                 ArrayList<ArrayList<Point>> pointsList = new ArrayList<>();
                 ArrayList<Color> colorList = new ArrayList<>();
 
@@ -155,10 +155,5 @@ public class MapCreateContinentController implements ActionListener {
                 this.mapCreateContinentView.dispose();
             }
         }
-
-
-
     }
-
-
 }
