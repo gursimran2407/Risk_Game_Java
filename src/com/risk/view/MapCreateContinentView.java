@@ -14,9 +14,16 @@ import java.util.List;
 import java.util.Observable;
 
 /**
+ * "MapCreateContinentView" class in representing a view object for creating continent
+ * These properties are labels, text fields, buttons, a pane, and a panel
+ *
  * @author gursimransingh
  */
 public class MapCreateContinentView extends JFrame implements ViewInterface {
+
+    /**
+     * View Properties
+     */
 
     public JLabel welcomeLabel;
     public JTextField continentValue;
@@ -77,7 +84,7 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
     }
 
     /**
-     * Updates view regarding continents belong to
+     * This method updates view for which continents belong to
      *
      * @param listOfContinentModel
      */
