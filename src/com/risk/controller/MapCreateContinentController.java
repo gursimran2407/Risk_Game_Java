@@ -85,7 +85,7 @@ public class MapCreateContinentController implements ActionListener {
 
         //Else if next button is clicked
         else if (e.getSource().equals(this.mapCreateContinentView.nextButton)) {
-            if (this.mapRiskModel.getCountryModelList().isEmpty()) {
+            if (mapRiskModel.getContinentModelList().isEmpty()) {
                 JOptionPane.showOptionDialog(null, "Enter atleast one Continent to the list", "Error",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
                 return;
