@@ -91,11 +91,11 @@ public class MapCreateCountryController implements ActionListener {
                     int index = d_indexMap.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName());
 
                     System.out.println("==>" + d_mapPointList.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName()).get(index).x);
-                    d_mapRiskModel.getCountryModelList().get(i).setXPosition(d_mapPointList.get(d_mapRiskModel.getCountryModelList().get(i).getcontinentName()).get(index).x);
-                    d_mapRiskModel.getCountryModelList().get(i).setYPosition(d_mapPointList.get(d_mapRiskModel.getCountryModelList().get(i).getcontinentName()).get(index).y);
-                    d_mapRiskModel.getCountryModelList().get(i).setBackgroundColor(d_colorMapList.get(d_mapRiskModel.getCountryModelList().get(i).getcontinentName()));
+                    d_mapRiskModel.getCountryModelList().get(i).setXPosition(d_mapPointList.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName()).get(index).x);
+                    d_mapRiskModel.getCountryModelList().get(i).setYPosition(d_mapPointList.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName()).get(index).y);
+                    d_mapRiskModel.getCountryModelList().get(i).setBackgroundColor(d_colorMapList.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName()));
 
-                    d_indexMap.put(d_mapRiskModel.getCountryModelList().get(i).getContinentName(),d_indexMap.get(d_mapRiskModel.getCountryModelList().get(i).getcontinentName())+1);
+                    d_indexMap.put(d_mapRiskModel.getCountryModelList().get(i).getContinentName(),d_indexMap.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName())+1);
 
                     //	}
 

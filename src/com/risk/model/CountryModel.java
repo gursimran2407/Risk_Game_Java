@@ -13,6 +13,9 @@ public class CountryModel extends JButton {
     private ArrayList<CountryModel> linkCountryModel;
     private int numberofArmies;
     private Color borderColor;
+    private int xPosition;
+    private int yPosition;
+    private Color backgroundColor;
 
 
     public CountryModel(String countryName, PlayerModel countryOwner, String continentName, ArrayList<CountryModel> linkCountryModel, int numberofArmies) {
@@ -22,10 +25,62 @@ public class CountryModel extends JButton {
         this.linkCountryModel = linkCountryModel;
         this.numberofArmies = numberofArmies;
         this.borderColor = Color.BLACK;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+        this.backgroundColor = Color.WHITE;
     }
 
     public CountryModel() {
 
+    }
+
+    /**
+     * @return the X Position Value.
+     */
+    public int getXPosition() {
+        return xPosition;
+    }
+
+    /**
+     * Sets the X Position Value.
+     *
+     * @param xPosition
+     */
+    public void setXPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    /**
+     * @return the Y Position Value.
+     */
+    public int getYPosition() {
+        return yPosition;
+    }
+
+    /**
+     * Sets the Y Position Value.
+     *
+     * @param yPosition
+     */
+    public void setYPosition(int yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    /**
+     * @return the color
+     */
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    /**
+     * Sets the color of the country
+     *
+     * @param color
+     */
+    public void setBackgroundColor(Color color) {
+        this.setBackground(color);
+        this.backgroundColor = color;
     }
 
     public String getCountryName() {
