@@ -5,6 +5,7 @@ import com.risk.gameplayrequirements.MapRead;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 public class MapRiskModel extends Observable {
@@ -134,5 +135,53 @@ public class MapRiskModel extends Observable {
         }
         callObservers();
         System.out.println(this.d_countryModelList);
+    }
+
+    public boolean setNeighbouringCountry(CountryModel leftModel, CountryModel rightModel) {
+        for (int i = 0; i < getCountryModelList().size(); i++) {
+            if (getCountryModelList().get(i).equals(leftModel)) {
+                ArrayList<CountryModel> temp = getCountryModelList().get(i).getLinkCountryModel();
+                if (temp == null) {
+                    temp = new ArrayList<>();
+                }
+                temp.add((CountryModel) rightModel);
+                getCountryModelList().get(i).setLinkCountryModel(temp);
+                this.setLeftModelIndex(i);
+            } else if (getCountryModelList().get(i).equals(rightModel)) {
+                ArrayList<CountryModel> temp = getCountryModelList().get(i).getLinkCountryModel();
+                if (temp == null) {
+                    temp = new ArrayList<CountryModel>();
+                }
+                temp.add((CountryModel) leftModel);
+                getCountryModelList().get(i).setLinkCountryModel(temp);
+                this.setRightModelIndex(i);
+            }
+        }
+        callObservers();
+        return true;
+    }
+    
+    public void removeNeighbouringCountry(CountryModel leftModelCountry, CountryModel rightModelCountry) {
+
+        for (int i = 0; i < getCountryModelList().size(); i++) {
+            if (getCountryModelList().get(i).equals(leftModelCountry)) {
+                java.util.ArrayList<CountryModel> temp = getCountryModelList().get(i).getLinkCountryModel();
+                if (temp == null) {
+                    temp = new ArrayList<>();
+                }
+                temp.remove( rightModelCountry);
+                this.getCountryModelList().get(i).setLinkCountryModel(temp);
+                this.setLeftModelIndex(i);
+            } else if (this.getCountryModelList().get(i).equals(rightModelCountry)) {
+                ArrayList<CountryModel> temp = this.getCountryModelList().get(i).getLinkCountryModel();
+                if (temp == null) {
+                    temp = new ArrayList<>();
+                }
+                temp.remove(leftModelCountry);
+                this.getCountryModelList().get(i).setLinkCountryModel(temp);
+                this.setRightModelIndex(i);
+            }
+        }
+        callObservers();
     }
 }
