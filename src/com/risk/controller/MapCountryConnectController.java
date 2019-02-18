@@ -68,22 +68,22 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
             int maxRightIndex = listSelectionModel.getMaxSelectionIndex();
             int finalRightModelIndex = 0;
             for (int i = minRightIndex; i <= maxRightIndex; i++) {
-                if (this.mapCountryConnectView.listSelectionModelLeft.isSelectedIndex(i)) {
+                if (this.mapCountryConnectView.leftListSelectionModel.isSelectedIndex(i)) {
                     finalRightModelIndex = i;
                 }
             }
             System.out.println(finalRightModelIndex);
         }
 
-        if (e.getSource().equals(this.mapCountryConnectView.countryParentListLeft)) {
+        if (e.getSource().equals(this.mapCountryConnectView.leftCountryParentList)) {
 
             this.mapRiskModel.setCountryColor(
-                    (CountryModel) this.mapCountryConnectView.countryParentListLeft.getSelectedValue(), Color.GREEN);
+                    (CountryModel) this.mapCountryConnectView.leftCountryParentList.getSelectedValue(), Color.GREEN);
 
-        } else if (e.getSource().equals(this.mapCountryConnectView.countryParentListRight)) {
+        } else if (e.getSource().equals(this.mapCountryConnectView.rightCountryParentList)) {
 
             this.mapRiskModel.setCountryColor(
-                    (CountryModel) this.mapCountryConnectView.countryParentListRight.getSelectedValue(), Color.YELLOW);
+                    (CountryModel) this.mapCountryConnectView.rightCountryParentList.getSelectedValue(), Color.YELLOW);
 
         }
     }
