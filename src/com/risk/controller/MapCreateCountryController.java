@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * MapCreateCountryController updates the view whenever data changes and data goes into the model object
+ * 
  * @author Namita Faujdar 
  */
 
@@ -28,14 +28,6 @@ public class MapCreateCountryController implements ActionListener {
     private HashMap<String, Color> d_colorMapList;
     private  HashMap<String, Integer> d_indexMap;
 
-    /**
-     * Constructor initializes values and sets the screen too visible
-     * @param new_mapRiskModel
-     * @param new_mapPointList
-     * @param new_colorMapList
-     * @param new_indexMap
-     */
-
     public MapCreateCountryController(MapRiskModel new_mapRiskModel, HashMap<String, ArrayList<Point>> new_mapPointList,
                                    HashMap<String, Color> new_colorMapList, HashMap<String, Integer> new_indexMap) {
         d_mapRiskModel = new_mapRiskModel;
@@ -47,11 +39,6 @@ public class MapCreateCountryController implements ActionListener {
         d_mapRiskModel.addObserver(d_mapCreateCountryView);
         d_mapCreateCountryView.setActionListener(this);
     }
-    /**
-     * Listens to notifyObservers of Observable classes
-     *
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -93,6 +80,8 @@ public class MapCreateCountryController implements ActionListener {
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
                 return;
             } else {
+
+
                 for (int i = 0; i < d_mapRiskModel.getCountryModelList().size(); i++) {
 
                     ArrayList<Point> pointList = d_mapPointList.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName());
@@ -110,7 +99,7 @@ public class MapCreateCountryController implements ActionListener {
 
                 }
 
-                //new ConnectCountryController(d_mapRiskModel);
+                new MapCountryConnectController(d_mapRiskModel);
                 d_mapCreateCountryView.dispose();
             }
         }
