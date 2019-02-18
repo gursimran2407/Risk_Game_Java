@@ -14,15 +14,20 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
 
+/**
+ *
+ * @author Namita Faujdar
+ */
+
 public class MapCreateCountryView extends JFrame implements ViewInterface {
 
     private JLabel welcomeLabel;
-    private JTextField countryValue;
-
+    public JTextField countryValue;
+    public JComboBox continentListCombobox;
     private JLabel countryListText;
     private JLabel continentNameLabel;
-    private JButton nextButton;
-    private JButton addButton;
+    public JButton nextButton;
+    public JButton addButton;
     private JPanel mainPanel;
     private JTextArea textArea;
 
@@ -33,12 +38,10 @@ public class MapCreateCountryView extends JFrame implements ViewInterface {
      */
     public MapCreateCountryView(List<ContinentModel> listOfContinents) {
         this.setTitle("Create Country");
-        JButton saveButton;
         welcomeLabel = new JLabel("Please add the Countries in the Continents you created:");
 
         countryListText = new JLabel("Country");
         addButton = new JButton("Add");
-        saveButton = new JButton("Save");
         mainPanel = new JPanel();
 
         this.setName("RISK GAME");
@@ -92,9 +95,9 @@ public class MapCreateCountryView extends JFrame implements ViewInterface {
             textArea.setText(textAreaText.toString());
         } else {
             textAreaText.setLength(0);
-            for (int i = 0; i < listOfCountryModel.size(); i++) {
-                textAreaText.append("Country: " + listOfCountryModel.get(i).getCountryName() + " ,Continent: "
-                        + listOfCountryModel.get(i).getContinentName() + "\n");
+            for(CountryModel obj : listOfCountryModel){
+                textAreaText.append("Country: " + obj.getCountryName() + " ,Continent: "
+                        + obj.getContinentName() + "\n");
             }
         }
         textArea.setText(textAreaText.toString());

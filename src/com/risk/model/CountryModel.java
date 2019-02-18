@@ -1,14 +1,18 @@
 package com.risk.model;
 
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.util.ArrayList;
 
-public class CountryModel {
+public class CountryModel extends JButton {
 
     private String countryName;
     private PlayerModel countryOwner;
     private String continentName;
     private ArrayList<CountryModel> linkCountryModel;
     private int numberofArmies;
+    private Color borderColor;
 
 
     public CountryModel(String countryName, PlayerModel countryOwner, String continentName, ArrayList<CountryModel> linkCountryModel, int numberofArmies) {
@@ -17,6 +21,7 @@ public class CountryModel {
         this.continentName = continentName;
         this.linkCountryModel = linkCountryModel;
         this.numberofArmies = numberofArmies;
+        this.borderColor = Color.BLACK;
     }
 
     public CountryModel() {
@@ -69,6 +74,23 @@ public class CountryModel {
         sb.append(continentName + "\n");
         sb.append("Country Name " + countryName);
         return sb.toString();
+    }
+
+    /**
+     * @return the borderColor
+     */
+    public Color getBorderColor() {
+        return borderColor;
+    }
+
+    /**
+     * Sets the borderColor
+     *
+     * @param borderColor
+     */
+    public void setBorderColor(Color borderColor) {
+        this.setBorder(new LineBorder(borderColor));
+        this.borderColor = borderColor;
     }
 }
 
