@@ -1,7 +1,6 @@
 package com.risk.model;
 
-import com.risk.gameplayrequirements.ReadMapFile;
-
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -123,5 +122,15 @@ public class MapRiskModel extends Observable {
     public void callObservers() {
         setChanged();
         notifyObservers(this);
+    }
+
+    public void setCountryColor(CountryModel country, Color color) {
+        for (int i = 0; i < this.d_countryModelList.size(); i++) {
+            if (this.d_countryModelList.get(i).equals(country)) {
+                this.d_countryModelList.get(i).setBackgroundColor(color);
+            }
+        }
+        callObservers();
+        System.out.println(this.d_countryModelList);
     }
 }

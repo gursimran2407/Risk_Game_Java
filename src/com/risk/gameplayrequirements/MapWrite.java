@@ -4,38 +4,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @author gursimransingh
  */
 public class MapWrite {
-    package app.utilities;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
-
-import app.model.ContinentsModel;
-import app.model.CountryModel;
-import app.model.GameMapModel;
-
-    /**
-     * This Class has validation, creation and writing to map file
-     * @author Suruthi
-     *
-     */
-
-    public class WriteMap {
         File file;
-
-        /**
-         * Create a new File
-         * @param fileName
-         * @return
-         */
         public File createNewFile(String fileName) {
             try {
                 this.file = new File(System.getProperty("user.dir") + "\\mapfiles\\" + fileName);
@@ -164,4 +138,4 @@ import app.model.GameMapModel;
 
     }
 
-}
+
