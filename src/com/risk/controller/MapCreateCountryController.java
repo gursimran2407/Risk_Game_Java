@@ -43,12 +43,12 @@ public class MapCreateCountryController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        CountryModel temp = new CountryModel();
+        CountryModel countryModel = new CountryModel();
 
         if (e.getSource().equals(d_mapCreateCountryView.addButton))
         {
             if (d_mapCreateCountryView.countryValue.getText() != null
-                    && d_mapCreateCountryView.countryValue.getText() != "")
+                    && !d_mapCreateCountryView.countryValue.getText().equals(""))
             {
 
                 if (sameCountryNameValidation()) {
@@ -56,14 +56,13 @@ public class MapCreateCountryController implements ActionListener {
                             JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
                     return;
                 } else {
-                    d_newContinentModel = (ContinentModel) d_mapCreateCountryView.continentListCombobox
-                            .getSelectedItem();
-                    temp.setContinentName(d_newContinentModel.getContinentName());
-                    temp.setCountryName(d_mapCreateCountryView.countryValue.getText());
+                    d_newContinentModel = (ContinentModel) d_mapCreateCountryView.continentListCombobox.getSelectedItem();
+                    countryModel.setContinentName(d_newContinentModel.getContinentName());
+                    countryModel.setCountryName(d_mapCreateCountryView.countryValue.getText());
 
-                    temp.setBackground(Color.WHITE);
-                    temp.setBorderColor(Color.BLACK);
-                    d_mapRiskModel.getCountryModelList().add(temp);
+                    countryModel.setBackground(Color.WHITE);
+                    countryModel.setBorderColor(Color.BLACK);
+                    d_mapRiskModel.getCountryModelList().add(countryModel);
                     d_mapRiskModel.setCountryModelList(d_mapRiskModel.getCountryModelList());
                 }
 
@@ -110,12 +109,13 @@ public class MapCreateCountryController implements ActionListener {
      * @return boolean
      */
     private boolean sameCountryNameValidation() {
-        for (int i = 0; i < d_mapRiskModel.getCountryModelList().size(); i++) {
-            if (d_mapRiskModel.getCountryModelList().get(i).getCountryName()
-                    .equals(d_mapCreateCountryView.countryValue.getText())) {
+
+        for (CountryModel countryModel : d_mapRiskModel.getCountryModelList()
+        ) {
+            if (countryModel.getCountryName().equals(d_mapCreateCountryView.countryValue.getText()))
                 return true;
             }
-        }
+
         return false;
     }
 
