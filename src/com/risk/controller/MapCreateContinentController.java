@@ -34,32 +34,64 @@ public class MapCreateContinentController implements ActionListener {
     }
 
     /**
-     * @param e Performs action whenever there is a change in mapCreateContinent view class
+     * @param e Performs action whenever there is a change in mapCreatecontinent viwe class
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         ContinentModel continentModel;
         //Creating the Continent Model
         //If clicked on AddButton
-        if (e.getSource().equals(mapCreateContinentView.addButton)) {
-            continentModel = new ContinentModel(mapCreateContinentView.continentListText.getText(), Integer.parseInt(mapCreateContinentView.controlValue.getText()));
+        if (e.getSource().equals(mapCreateContinentView.addButton))
+        //Now checking if the input text fields are empty or not.
+        {
+            if (!("".equals(mapCreateContinentView.controlValue.getText()) || mapCreateContinentView.controlValue.getText().isEmpty() || mapCreateContinentView.continentValue.getText().isEmpty()
+                    || "".equals(mapCreateContinentView.continentValue.getText()))) {
+                System.out.println("the input from the view is" + mapCreateContinentView.controlValue.getText()
+                        + mapCreateContinentView.continentValue.getText());
+                continentModel = new ContinentModel(mapCreateContinentView.continentValue.getText(),
+                        Integer.parseInt(mapCreateContinentView.controlValue.getText()));
+                if (0 < Integer.parseInt(mapCreateContinentView.controlValue.getText())
+                        && Integer.parseInt(mapCreateContinentView.controlValue.getText()) < 10) {
+                    if (mapCreateContinentView.continentValue != null) {
+                        for (int index = 0; index < mapRiskModel.getContinentModelList().size(); index++) {
+                            if (mapRiskModel.getContinentModelList().get(index).getContinentName()
+                                    .equals(mapCreateContinentView.continentValue.getText())) {
+                                JOptionPane.showOptionDialog(null, "You have already added this Continent", "Error",
+                                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                                        new Object[]{}, null);
+                                return;
+                            }
+                        }
+                        mapRiskModel.getContinentModelList().add(continentModel);
+                        mapRiskModel.setContinentModelModList(mapRiskModel.getContinentModelList());
 
-            //adding this to continentModel arrayList
-            mapRiskModel.getContinentModelList().add(continentModel);
-            //setting the added continent to update the observers
-            mapRiskModel.setContinentModelModList(mapRiskModel.getContinentModelList());
-
-
+                    } else {
+                        JOptionPane.showOptionDialog(null, "Please enter some country name", "Error",
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{},
+                                null);
+                        return;
+                    }
+                } else {
+                    JOptionPane.showOptionDialog(null, "Please enter a control value between 0 and 10", "Error",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                    return;
+                }
+            } else {
+                JOptionPane.showOptionDialog(null, "Please enter values in all the fields", "Error",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                return;
+            }
         }
+
         //Else if next button is clicked
         else if (e.getSource().equals(this.mapCreateContinentView.nextButton)) {
             if (this.mapRiskModel.getCountryModelList().isEmpty()) {
-                JOptionPane.showOptionDialog(null, "Enter at least one Continent to the list", "Error",
+                JOptionPane.showOptionDialog(null, "Enter atleast one Continent to the list", "Error",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
                 return;
             } else {
-                //Creating ArrayList of ArrayList of points
-                //Creating ColorList of ColorList
+                //Creating Arraylist of Arraylist of points
+                //Creating ColorList of Colorlist
                 ArrayList<ArrayList<Point>> pointsList = new ArrayList<>();
                 ArrayList<Color> colorList = new ArrayList<>();
 
@@ -119,7 +151,7 @@ public class MapCreateContinentController implements ActionListener {
                     indexMap.put(this.mapRiskModel.getContinentModelList().get(i).getContinentName(), 0);
                 }
 
-                //new MapCreateCountryView(this.gameMapModel, mapPointList, colorMapList, indexMap);
+                new MapCreateContinentController(mapRiskModel, mapPointList, colorMapList, indexMap);
                 this.mapCreateContinentView.dispose();
             }
         }
