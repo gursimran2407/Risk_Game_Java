@@ -15,6 +15,9 @@ import java.awt.event.ActionListener;
 public class MainGame implements ActionListener {
     private MainGameView d_mainGameView;
 
+    /**
+     * This Constructor initializes the values and sets the screen to visible.
+     */
     public MainGame() {
         d_mainGameView = new MainGameView();
         d_mainGameView.setActionListener(this);
@@ -25,8 +28,11 @@ public class MainGame implements ActionListener {
         //launch(args);
         MainGame mainGame = new MainGame();
     }
-
-
+    /**
+     * Method performs action, by Listening the action event set in view.
+     *
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(d_mainGameView.createMapButton)) {
@@ -46,7 +52,7 @@ public class MainGame implements ActionListener {
 
 
     /**
-     *
+     * exit the game
      */
     private void exitGame() {
         this.d_mainGameView.dispose();
@@ -76,5 +82,3 @@ public class MainGame implements ActionListener {
         this.d_mainGameView.dispose();
     }
 }
-
-
