@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Map continent Controller
@@ -89,7 +88,7 @@ public class MapCreateContinentController implements ActionListener {
                 JOptionPane.showOptionDialog(null, "Enter atleast one Continent to the list", "Error",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
                 return;
-            } else {
+            }
                 //Creating Arraylist of Arraylist of points
                 //Creating ColorList of Colorlist
                 ArrayList<ArrayList<Point>> pointsList = new ArrayList<>();
@@ -151,9 +150,9 @@ public class MapCreateContinentController implements ActionListener {
                     indexMap.put(this.mapRiskModel.getContinentModelList().get(i).getContinentName(), 0);
                 }
 
-                new MapCreateContinentController(mapRiskModel, mapPointList, colorMapList, indexMap);
+            new MapCreateCountryController(mapRiskModel, mapPointList, colorMapList, indexMap);
                 this.mapCreateContinentView.dispose();
-            }
+
         }
 
 
