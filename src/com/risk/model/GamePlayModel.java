@@ -18,9 +18,6 @@ public class GamePlayModel extends Observable
     /** current players playing the game*/
     private ArrayList<PlayerModel> currentPlayerModels;
 
-    /** All the cards*/
-    private ArrayList<CardModel> deckOfCards;
-
     private StringBuilder consoleOutput;
 
     /** if country owned*/
@@ -33,11 +30,10 @@ public class GamePlayModel extends Observable
     /**
      * Default Constructor.
      */
-    public GamePlayModel(MapRiskModel mapRiskModelModObj, ArrayList<PlayerModel> currentPlayerModels, ArrayList<CardModel> deckOfCards, boolean ifCountryOwned)
+    public GamePlayModel(MapRiskModel mapRiskModelModObj, ArrayList<PlayerModel> currentPlayerModels, boolean ifCountryOwned)
     {
         this.mapRiskModelModObj = mapRiskModelModObj;
         this.currentPlayerModels = currentPlayerModels;
-        this.deckOfCards = deckOfCards;
         this.ifCountryOwned = ifCountryOwned;
     }
 
@@ -57,13 +53,6 @@ public class GamePlayModel extends Observable
         this.currentPlayerModels = currentPlayerModels;
     }
 
-    public ArrayList<CardModel> getDeckOfCards() {
-        return deckOfCards;
-    }
-
-    public void setDeckOfCards(ArrayList<CardModel> deckOfCards) {
-        this.deckOfCards = deckOfCards;
-    }
 
     public boolean isIfCountryOwned() {
         return ifCountryOwned;

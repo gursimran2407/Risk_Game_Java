@@ -1,10 +1,10 @@
 package com.risk.controller;
 
+import com.risk.gameplayrequirements.MapValidation;
 import com.risk.gameplayrequirements.MapWrite;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
 import com.risk.view.MapCountryConnectView;
-import sun.applet.Main;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -57,16 +57,16 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
 
             }
         } else if (e.getSource().equals(this.mapCountryConnectView.buttonSave)) {
-            Validation MapValidation = new Validation();
-            boolean flag1 = MapValidation.emptyLinkCountryValidation(d_mapRiskModel);
+            MapValidation mapValidation = new MapValidation();
+            boolean flag1 = mapValidation.emptyLinkCountryValidation(d_mapRiskModel);
 
-            boolean flag3 = MapValidation.emptyContinentValidation(d_mapRiskModel);
-            boolean flag2 = MapValidation.checkInterlinkedContinent(d_mapRiskModel);
+            boolean flag3 = mapValidation.emptyContinentValidation(d_mapRiskModel);
+            boolean flag2 = mapValidation.checkInterlinkedContinent(d_mapRiskModel);
             System.out.println(flag1 + " " + flag2 + " " + flag3);
-            if (!(MapValidation.emptyLinkCountryValidation(d_mapRiskModel))) {
-                if ((!MapValidation.checkInterlinkedContinent(d_mapRiskModel))) {
-                    if (!(MapValidation.emptyContinentValidation(d_mapRiskModel))) {
-                        if (!(MapValidation.unlinkedContinentValidation(d_mapRiskModel))) {
+            if (!(mapValidation.emptyLinkCountryValidation(d_mapRiskModel))) {
+                if ((!mapValidation.checkInterlinkedContinent(d_mapRiskModel))) {
+                    if (!(mapValidation.emptyContinentValidation(d_mapRiskModel))) {
+                        if (!(mapValidation.continentLinkValidation(d_mapRiskModel))) {
 
                             System.out.println(" All the map validations are correct");
                             filename = JOptionPane.showInputDialog("File Name");
