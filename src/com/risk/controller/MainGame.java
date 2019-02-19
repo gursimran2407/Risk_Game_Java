@@ -70,7 +70,7 @@ public class MainGame implements ActionListener {
      * show edit game window
      */
     private void showEditGameWindow() {
-        //new EditContinentController();
+        new MapEditController();
         this.d_mainGameView.dispose();
     }
 

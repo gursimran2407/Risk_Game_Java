@@ -13,19 +13,18 @@ public class PlayerModel extends Observable {
     //private String typeOfPlayer;
     private int numberofArmies;
     private Color playerColor;
-    private ArrayList<CardModel> playerCards;
     private ArrayList<CountryModel> playerCountryModelList;
     private StrategyInterface strategy;
     private String playerType;
 
 
-    public PlayerModel(String playerName, ArrayList<CountryModel> playerCountryModelList, int numberofArmies, Color playerColor, ArrayList<CardModel> playerCards) {
+    public PlayerModel(String playerName, ArrayList<CountryModel> playerCountryModelList, int numberofArmies, Color playerColor) {
         this.playerName = playerName;
         //this.typeOfPlayer = typeOfPlayer;
         this.playerCountryModelList = playerCountryModelList;
         this.numberofArmies = numberofArmies;
         this.playerColor = playerColor;
-        this.playerCards = playerCards;
+
     }
 
     public String getPlayerName() {
@@ -60,13 +59,6 @@ public class PlayerModel extends Observable {
         this.playerColor = playerColor;
     }
 
-    public ArrayList<CardModel> getPlayerCards() {
-        return playerCards;
-    }
-
-    public void setPlayerCards(ArrayList<CardModel> playerCards) {
-        this.playerCards = playerCards;
-    }
 
     public String getPlayerType() {
         return playerType;
