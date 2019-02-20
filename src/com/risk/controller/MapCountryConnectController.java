@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class MapCountryConnectController implements ListSelectionListener, ActionListener  {
 
-    private MapRiskModel d_mapRiskModel;
+    private MapRiskModel mapRiskModel;
     private MapCountryConnectView mapCountryConnectView;
     private CountryModel countryModel;
     private String filename = null;
@@ -30,7 +30,7 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
     private List<CountryModel> countryLinks;
 
     public MapCountryConnectController(MapRiskModel d_mapRiskModel) {
-        d_mapRiskModel = d_mapRiskModel;
+        mapRiskModel = d_mapRiskModel;
         this.countryModelList = d_mapRiskModel.getCountryModelList();
         this.countryLinks = new ArrayList<CountryModel>();
 
@@ -38,7 +38,7 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
         this.mapCountryConnectView.setActionListener(this);
         this.mapCountryConnectView.setListSelectionListener(this);
         this.mapCountryConnectView.setVisible(true);
-        d_mapRiskModel.addObserver(this.mapCountryConnectView);
+        mapRiskModel.addObserver(this.mapCountryConnectView);
     }
 
     @Override
@@ -51,29 +51,29 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
                 return;
             } else {
 
-                d_mapRiskModel.setNeighbouringCountry(
+                mapRiskModel.setNeighbouringCountry(
                         (CountryModel) this.mapCountryConnectView.leftCountryParentList.getSelectedValue(),
                         (CountryModel) this.mapCountryConnectView.rightCountryParentList.getSelectedValue());
 
             }
         } else if (e.getSource().equals(this.mapCountryConnectView.buttonSave)) {
             MapValidation mapValidation = new MapValidation();
-            boolean flag1 = mapValidation.emptyLinkCountryValidation(d_mapRiskModel);
+            boolean flag1 = mapValidation.emptyLinkCountryValidation(mapRiskModel);
 
-            boolean flag3 = mapValidation.emptyContinentValidation(d_mapRiskModel);
-            boolean flag2 = mapValidation.checkInterlinkedContinent(d_mapRiskModel);
+            boolean flag3 = mapValidation.emptyContinentValidation(mapRiskModel);
+            boolean flag2 = mapValidation.checkInterlinkedContinent(mapRiskModel);
             System.out.println(flag1 + " " + flag2 + " " + flag3);
-            if (!(mapValidation.emptyLinkCountryValidation(d_mapRiskModel))) {
-                if ((!mapValidation.checkInterlinkedContinent(d_mapRiskModel))) {
-                    if (!(mapValidation.emptyContinentValidation(d_mapRiskModel))) {
-                        if (!(mapValidation.continentLinkValidation(d_mapRiskModel))) {
+            if (!(mapValidation.emptyLinkCountryValidation(mapRiskModel))) {
+                if ((!mapValidation.checkInterlinkedContinent(mapRiskModel))) {
+                    if (!(mapValidation.emptyContinentValidation(mapRiskModel))) {
+                        if (!(mapValidation.continentLinkValidation(mapRiskModel))) {
 
                             System.out.println(" All the map validations are correct");
                             filename = JOptionPane.showInputDialog("File Name");
                             try {
                                 System.out.println(filename);
                                 mapWrite = new MapWrite();
-                                mapWrite.writeMapToFile(filename, d_mapRiskModel);
+                                mapWrite.writeMapToFile(filename, mapRiskModel);
                                 JOptionPane.showMessageDialog(null, "Map has been created select it before you play");
                                 new MainGame();
                                 this.mapCountryConnectView.dispose();
@@ -108,7 +108,7 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
 
         } else if (e.getSource().equals(this.mapCountryConnectView.buttonRemove)) {
 
-            d_mapRiskModel.removeNeighbouringCountry(
+            mapRiskModel.removeNeighbouringCountry(
                     (CountryModel) this.mapCountryConnectView.leftCountryParentList.getSelectedValue(),
                     (CountryModel) this.mapCountryConnectView.rightCountryParentList.getSelectedValue());
 
@@ -143,12 +143,12 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
 
         if (e.getSource().equals(this.mapCountryConnectView.leftCountryParentList)) {
 
-            d_mapRiskModel.setCountryColor(
+            mapRiskModel.setCountryColor(
                     (CountryModel) this.mapCountryConnectView.leftCountryParentList.getSelectedValue(), Color.GREEN);
 
         } else if (e.getSource().equals(this.mapCountryConnectView.rightCountryParentList)) {
 
-            d_mapRiskModel.setCountryColor(
+            mapRiskModel.setCountryColor(
                     (CountryModel) this.mapCountryConnectView.rightCountryParentList.getSelectedValue(), Color.YELLOW);
 
         }
