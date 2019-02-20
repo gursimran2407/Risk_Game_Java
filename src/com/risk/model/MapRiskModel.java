@@ -144,7 +144,7 @@ public class MapRiskModel extends Observable {
                 if (temp == null) {
                     temp = new ArrayList<>();
                 }
-                temp.add((CountryModel) rightModel);
+                temp.add(rightModel);
                 getCountryModelList().get(i).setConnectedCountryList(temp);
                 this.setLeftModelIndex(i);
             } else if (getCountryModelList().get(i).equals(rightModel)) {
@@ -152,7 +152,7 @@ public class MapRiskModel extends Observable {
                 if (temp == null) {
                     temp = new ArrayList<CountryModel>();
                 }
-                temp.add((CountryModel) leftModel);
+                temp.add(leftModel);
                 getCountryModelList().get(i).setConnectedCountryList(temp);
                 this.setRightModelIndex(i);
             }
