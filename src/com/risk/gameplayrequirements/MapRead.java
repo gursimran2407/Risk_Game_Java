@@ -110,7 +110,7 @@ public class MapRead {
                             countriesList.put(listOfNeighbouringCountries.get(i).trim(), newNeighbour);
                             linkedCountriesList.add(newNeighbour);
                         }
-                        cm.setLinkCountryModel(linkedCountriesList);
+                        cm.setConnectedCountryList(linkedCountriesList);
                     }
                 }
             }

@@ -140,20 +140,20 @@ public class MapRiskModel extends Observable {
     public boolean setNeighbouringCountry(CountryModel leftModel, CountryModel rightModel) {
         for (int i = 0; i < getCountryModelList().size(); i++) {
             if (getCountryModelList().get(i).equals(leftModel)) {
-                ArrayList<CountryModel> temp = getCountryModelList().get(i).getLinkCountryModel();
+                ArrayList<CountryModel> temp = getCountryModelList().get(i).getConnectedCountryList();
                 if (temp == null) {
                     temp = new ArrayList<>();
                 }
                 temp.add((CountryModel) rightModel);
-                getCountryModelList().get(i).setLinkCountryModel(temp);
+                getCountryModelList().get(i).setConnectedCountryList(temp);
                 this.setLeftModelIndex(i);
             } else if (getCountryModelList().get(i).equals(rightModel)) {
-                ArrayList<CountryModel> temp = getCountryModelList().get(i).getLinkCountryModel();
+                ArrayList<CountryModel> temp = getCountryModelList().get(i).getConnectedCountryList();
                 if (temp == null) {
                     temp = new ArrayList<CountryModel>();
                 }
                 temp.add((CountryModel) leftModel);
-                getCountryModelList().get(i).setLinkCountryModel(temp);
+                getCountryModelList().get(i).setConnectedCountryList(temp);
                 this.setRightModelIndex(i);
             }
         }
@@ -165,20 +165,20 @@ public class MapRiskModel extends Observable {
 
         for (int i = 0; i < getCountryModelList().size(); i++) {
             if (getCountryModelList().get(i).equals(leftModelCountry)) {
-                java.util.ArrayList<CountryModel> temp = getCountryModelList().get(i).getLinkCountryModel();
+                java.util.ArrayList<CountryModel> temp = getCountryModelList().get(i).getConnectedCountryList();
                 if (temp == null) {
                     temp = new ArrayList<>();
                 }
                 temp.remove( rightModelCountry);
-                this.getCountryModelList().get(i).setLinkCountryModel(temp);
+                this.getCountryModelList().get(i).setConnectedCountryList(temp);
                 this.setLeftModelIndex(i);
             } else if (this.getCountryModelList().get(i).equals(rightModelCountry)) {
-                ArrayList<CountryModel> temp = this.getCountryModelList().get(i).getLinkCountryModel();
+                ArrayList<CountryModel> temp = this.getCountryModelList().get(i).getConnectedCountryList();
                 if (temp == null) {
                     temp = new ArrayList<>();
                 }
                 temp.remove(leftModelCountry);
-                this.getCountryModelList().get(i).setLinkCountryModel(temp);
+                this.getCountryModelList().get(i).setConnectedCountryList(temp);
                 this.setRightModelIndex(i);
             }
         }

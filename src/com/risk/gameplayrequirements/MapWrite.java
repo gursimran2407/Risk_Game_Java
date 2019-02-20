@@ -31,11 +31,11 @@ public class MapWrite {
             content = countryModel.getCountryName() + "," + countryModel.getXPosition() + ","
                     + countryModel.getYPosition() + "," + countryModel.getContinentName() + ",";
             String country = "";
-            for (int i = 0; i < countryModel.getLinkCountryModel().size(); i++) {
-                if (i == countryModel.getLinkCountryModel().size()) {
-                    country = country + countryModel.getLinkCountryModel().get(i).getCountryName();
+            for (int i = 0; i < countryModel.getConnectedCountryList().size(); i++) {
+                if (i == countryModel.getConnectedCountryList().size()) {
+                    country = country + countryModel.getConnectedCountryList().get(i).getCountryName();
                 } else {
-                    country = country + countryModel.getLinkCountryModel().get(i).getCountryName() + ",";
+                    country = country + countryModel.getConnectedCountryList().get(i).getCountryName() + ",";
                 }
             }
             content = content + country;

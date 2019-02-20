@@ -10,7 +10,7 @@ public class CountryModel extends JButton {
     private String countryName;
     private PlayerModel countryOwner;
     private String continentName;
-    private ArrayList<CountryModel> linkCountryModel;
+    private ArrayList<CountryModel> connectedCountryList;
     private int numberofArmies;
     private Color borderColor;
     private int xPosition;
@@ -22,7 +22,7 @@ public class CountryModel extends JButton {
         this.countryName = countryName;
         this.countryOwner = countryOwner;
         this.continentName = continentName;
-        this.linkCountryModel = linkCountryModel;
+        this.connectedCountryList = linkCountryModel;
         this.numberofArmies = numberofArmies;
         this.borderColor = Color.BLACK;
         this.xPosition = xPosition;
@@ -107,16 +107,16 @@ public class CountryModel extends JButton {
         this.countryName = countryName;
     }
 
-    public ArrayList<CountryModel> getLinkCountryModel() {
-        return linkCountryModel;
+    public ArrayList<CountryModel> getConnectedCountryList() {
+        return connectedCountryList;
     }
 
     public void setContinentName(String continentName) {
         this.continentName = continentName;
     }
 
-    public void setLinkCountryModel(ArrayList<CountryModel> linkCountryModel) {
-        this.linkCountryModel = linkCountryModel;
+    public void setConnectedCountryList(ArrayList<CountryModel> linkCountryModel) {
+        this.connectedCountryList = linkCountryModel;
     }
 
     public void setNumberofArmies(int numberofArmies) {

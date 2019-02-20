@@ -28,7 +28,7 @@ public class MapValidation {
             Iterator it = listOfCountriesInContinent.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<CountryModel, CountryModel> pair = (Map.Entry<CountryModel, CountryModel>) it.next();
-                listOfLinkedCountries = pair.getValue().getLinkCountryModel();
+                listOfLinkedCountries = pair.getValue().getConnectedCountryList();
                 int counter = 0;
                 for (int k = 0; k < listOfLinkedCountries.size(); k++) {
                     if (listOfCountriesInContinent.containsValue((listOfLinkedCountries.get(k)))) {
@@ -50,7 +50,7 @@ public class MapValidation {
         List<CountryModel> listOfCountrys = mapRiskModel.getCountryModelList();
         List<CountryModel> linkedCountry;
         for (int j = 0; j < listOfCountrys.size(); j++) {
-            linkedCountry = listOfCountrys.get(j).getLinkCountryModel();
+            linkedCountry = listOfCountrys.get(j).getConnectedCountryList();
             if (linkedCountry == null || linkedCountry.isEmpty()) {
                 return true;
             }
@@ -63,25 +63,25 @@ public class MapValidation {
 
         String continent = "";
         List<ContinentModel> listOfContinents = mapModel.getContinentModelList();
-        List<CountryModel> listOfCountrys = mapModel.getCountryModelList();
+        List<CountryModel> listOfCountries = mapModel.getCountryModelList();
         List<String> Countryname = new ArrayList<String>();
-        ;
+
         int numb;
         boolean emptyLinkContinent = false;
         for (int j = 0; j < listOfContinents.size(); j++) {
             continent = listOfContinents.get(j).getContinentName();
             numb = 0;
-            for (int i = 0; i < listOfCountrys.size(); i++) {
-                if (continent.equals(listOfCountrys.get(i).getContinentName())) {
-                    Countryname.add(listOfCountrys.get(i).getCountryName());
+            for (int i = 0; i < listOfCountries.size(); i++) {
+                if (continent.equals(listOfCountries.get(i).getContinentName())) {
+                    Countryname.add(listOfCountries.get(i).getCountryName());
                 }
             }
             for (int i = 0; i < Countryname.size(); i++) {
-                for (int k = 0; k < listOfCountrys.size(); k++) {
-                    if (!continent.equals(listOfCountrys.get(k).getContinentName())) {
-                        for (int a = 0; a < listOfCountrys.get(k).getLinkCountryModel().size(); a++) {
+                for (int k = 0; k < listOfCountries.size(); k++) {
+                    if (!continent.equals(listOfCountries.get(k).getContinentName())) {
+                        for (int a = 0; a < listOfCountries.get(k).getConnectedCountryList().size(); a++) {
                             if (Countryname.get(i)
-                                    .equals(listOfCountrys.get(k).getLinkCountryModel().get(a).getCountryName())) {
+                                    .equals(listOfCountries.get(k).getConnectedCountryList().get(a).getCountryName())) {
                                 numb++;
                             }
                         }
@@ -170,8 +170,8 @@ public class MapValidation {
             int n;
 
             List<Integer> m = new ArrayList<Integer>();
-            for (int l = 0; l < mapRiskModel.getCountryModelList().get(s).getLinkCountryModel().size(); l++) {
-                m.add(mapOfCountries.get(mapRiskModel.getCountryModelList().get(s).getLinkCountryModel().get(l)));
+            for (int l = 0; l < mapRiskModel.getCountryModelList().get(s).getConnectedCountryList().size(); l++) {
+                m.add(mapOfCountries.get(mapRiskModel.getCountryModelList().get(s).getConnectedCountryList().get(l)));
             }
 
             i = m.listIterator();
