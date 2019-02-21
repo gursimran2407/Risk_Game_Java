@@ -13,6 +13,13 @@ public class MapRead {
 
     private static File READ_FILE;
 
+    /**
+     * This method reads the map file and returns continent details such as name and
+     * its value-control.
+     *
+     * @return the array list of continents
+     */
+
     public ArrayList<ContinentModel> getMapContinentDetails() {
 
         File readFile = getReadFile();
@@ -49,6 +56,14 @@ public class MapRead {
         }
         return continentsList;
     }
+
+    /**
+     * This method reads the map file and returns country details such as name,
+     * position, continent that it belongs to, and list of countries that it is
+     * connected to.
+     *
+     * @return the array list of countries
+     */
 
     public ArrayList<CountryModel> getMapCountryDetails() {
         File readFile = getReadFile();
@@ -123,9 +138,21 @@ public class MapRead {
         return countryModelList;
     }
 
+    /**
+     * Getting File
+     *
+     * @return
+     */
+
     public static File getReadFile() {
         return READ_FILE;
     }
+
+    /**
+     * Setting Set file
+     *
+     * @param readFile
+     */
 
     public static void setReadFile(File readFile) {
         READ_FILE = readFile;
