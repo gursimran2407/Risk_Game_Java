@@ -16,6 +16,11 @@ import java.util.List;
 public class MapWrite {
         File file;
     //Creating new File
+    /**
+     * Create a new File
+     * @param file
+     * @return
+     */
 
     public static String getContinet(ContinentModel continentsModel) {
         String content = null;
@@ -60,6 +65,13 @@ public class MapWrite {
             }
             return this.file;
         }
+
+    /**
+     * This method Writes Map to file
+     * @param fileName
+     * @param mapRiskModel
+     * @throws Exception
+     */
 
     public void writeMapToFile(String fileName, MapRiskModel mapRiskModel) throws Exception {
         List<ContinentModel> listOfContinents = mapRiskModel.getContinentModelList();
