@@ -63,7 +63,7 @@ public class MapWrite {
 
     public void writeMapToFile(String fileName, MapRiskModel mapRiskModel) throws Exception {
         List<ContinentModel> listOfContinents = mapRiskModel.getContinentModelList();
-        List<CountryModel> listOfCountrys = mapRiskModel.getCountryModelList();
+        List<CountryModel> listOfCountries = mapRiskModel.getCountryModelList();
         this.file = new File(System.getProperty("user.dir") + "//map//" + fileName + ".map");
             System.out.println(this.file);
             try {
@@ -114,8 +114,8 @@ public class MapWrite {
                 bw.write(content);
                 bw.newLine();
 
-                for (int i = 0; i < listOfCountrys.size(); i++) {
-                    content = getCountry(listOfCountrys.get(i));
+                for (int i = 0; i < listOfCountries.size(); i++) {
+                    content = getCountry(listOfCountries.get(i));
                     bw.write(content);
                     bw.newLine();
                 }
