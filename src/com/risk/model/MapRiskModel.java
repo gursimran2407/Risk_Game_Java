@@ -18,7 +18,8 @@ public class MapRiskModel extends Observable {
     private int leftModelIndex = 0;
     private int rightModelIndex = 0;
 
-    public MapRiskModel(ArrayList<ContinentModel> new_continentModelModList, ArrayList<CountryModel> new_countryModelList, ArrayList<PlayerModel> new_playerModelList) {
+    public MapRiskModel(ArrayList<ContinentModel> new_continentModelModList, ArrayList<CountryModel> new_countryModelList,
+                        ArrayList<PlayerModel> new_playerModelList) {
         d_continentModelList = new_continentModelModList;
         d_countryModelList = new_countryModelList;
         d_playerModelList = new_playerModelList;
