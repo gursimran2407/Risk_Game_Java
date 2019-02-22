@@ -5,7 +5,6 @@ import com.risk.gameplayrequirements.MapRead;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 
 public class MapRiskModel extends Observable {
@@ -151,7 +150,7 @@ public class MapRiskModel extends Observable {
             } else if (getCountryModelList().get(i).equals(rightModel)) {
                 ArrayList<CountryModel> temp = getCountryModelList().get(i).getConnectedCountryList();
                 if (temp == null) {
-                    temp = new ArrayList<CountryModel>();
+                    temp = new ArrayList<>();
                 }
                 temp.add(leftModel);
                 getCountryModelList().get(i).setConnectedCountryList(temp);

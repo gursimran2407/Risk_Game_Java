@@ -32,7 +32,7 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
     public MapCountryConnectController(MapRiskModel d_mapRiskModel) {
         mapRiskModel = d_mapRiskModel;
         this.countryModelList = d_mapRiskModel.getCountryModelList();
-        this.countryLinks = new ArrayList<CountryModel>();
+        this.countryLinks = new ArrayList<>();
 
         this.mapCountryConnectView = new MapCountryConnectView(d_mapRiskModel);
         this.mapCountryConnectView.setActionListener(this);
@@ -44,16 +44,13 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(mapCountryConnectView.buttonAdd)) {
-            if (mapCountryConnectView.leftCountryParentList.getSelectedValue()
-                    .equals(mapCountryConnectView.rightCountryParentList.getSelectedValue())) {
+            if (mapCountryConnectView.leftCountryParentList.getSelectedValue().equals(mapCountryConnectView.rightCountryParentList.getSelectedValue())) {
                 JOptionPane.showOptionDialog(null, "Cannot create a self link", "Invalid", JOptionPane.DEFAULT_OPTION,
                         JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
                 return;
             } else {
 
-                mapRiskModel.setNeighbouringCountry(
-                        (CountryModel) this.mapCountryConnectView.leftCountryParentList.getSelectedValue(),
-                        (CountryModel) this.mapCountryConnectView.rightCountryParentList.getSelectedValue());
+                mapRiskModel.setNeighbouringCountry((CountryModel) mapCountryConnectView.leftCountryParentList.getSelectedValue(), (CountryModel) this.mapCountryConnectView.rightCountryParentList.getSelectedValue());
 
             }
         } else if (e.getSource().equals(this.mapCountryConnectView.buttonSave)) {

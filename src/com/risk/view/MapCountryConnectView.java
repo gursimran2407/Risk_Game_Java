@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -72,9 +73,9 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
     /**
      * The method "updateWindow" updates the panel view after any change
      *
-     * @param mrr which is a MapRiskModel object
+     * @param mapRiskModel which is a MapRiskModel object
      */
-    private void updateWindow(MapRiskModel mrr) {
+    private void updateWindow(MapRiskModel mapRiskModel) {
         panelWelcome.removeAll();
         panelGraphic.removeAll();
         Font smallFont = new Font("Serif", Font.BOLD, 12);
@@ -88,10 +89,10 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
         panelWelcome.add(countryListRight);
 
         // left panel
-        this.leftCountryList = mrr.getCountryModelList();
-        CountryModel[] countryModelArrayLeft = new CountryModel[this.leftCountryList.size()];
-        for (int i = 0; i < this.leftCountryList.size(); i++) {
-            countryModelArrayLeft[i] = this.leftCountryList.get(i);
+        leftCountryList = mapRiskModel.getCountryModelList();
+        CountryModel[] countryModelArrayLeft = new CountryModel[leftCountryList.size()];
+        for (int i = 0; i < leftCountryList.size(); i++) {
+            countryModelArrayLeft[i] = leftCountryList.get(i);
         }
 
         leftCountryParentList = new JList<CountryModel>();
@@ -104,18 +105,18 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
         leftCountryParentList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         JScrollPane countryParentListPaneLeft = new JScrollPane(leftCountryParentList);
 
-        this.leftListSelectionModel = leftCountryParentList.getSelectionModel();
+        leftListSelectionModel = leftCountryParentList.getSelectionModel();
         leftCountryParentList.setSelectedIndex(d_mapRiskModel.getLeftModelIndex());
         countryParentListPaneLeft.setBounds(1200, 100, 150, 150);
 
         panelWelcome.add(countryParentListPaneLeft);
 
         // Right panel
-        this.rightCountryList = mrr.getCountryModelList();
+        rightCountryList = mapRiskModel.getCountryModelList();
 
-        CountryModel[] countryModelArrayRight = new CountryModel[this.rightCountryList.size()];
-        for (int i = 0; i < this.rightCountryList.size(); i++) {
-            countryModelArrayRight[i] = this.rightCountryList.get(i);
+        CountryModel[] countryModelArrayRight = new CountryModel[rightCountryList.size()];
+        for (int i = 0; i < rightCountryList.size(); i++) {
+            countryModelArrayRight[i] = rightCountryList.get(i);
         }
 
         rightCountryParentList = new JList<CountryModel>();
@@ -225,5 +226,34 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
 
             return this;
         }
+    }
+
+    public void paint(final Graphics g) {
+
+        super.paint(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        Point[] connectorPoints = new Point[d_mapRiskModel.getCountryModelList().size()];
+
+        for (int i = 0; i < d_mapRiskModel.getCountryModelList().size(); i++) {
+            connectorPoints[i] = SwingUtilities.convertPoint(d_mapRiskModel.getCountryModelList().get(i), 0, 0, this);
+
+        }
+
+        for (int k = 0; k < d_mapRiskModel.getCountryModelList().size(); k++) {
+            if (d_mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
+                ArrayList<CountryModel> neighbourCountries = (ArrayList<CountryModel>) d_mapRiskModel.getCountryModelList().get(k).getConnectedCountryList();
+
+                for (int j = 0; j < neighbourCountries.size(); j++) {
+                    for (int i = 0; i < d_mapRiskModel.getCountryModelList().size(); i++)
+                        if (neighbourCountries.get(j).equals(d_mapRiskModel.getCountryModelList().get(i)))
+                            g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
+                                    connectorPoints[k].y + 25);
+
+                }
+            }
+        }
+
     }
 }
