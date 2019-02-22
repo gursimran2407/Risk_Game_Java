@@ -80,7 +80,7 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
         nextButton = new JButton("Next");
         nextButton.setBounds(200, 300, 100, 40);
 
-        updateScreen(null);
+        updateUI(null);
     }
 
     /**
@@ -88,7 +88,7 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
      *
      * @param listOfContinentModel
      */
-    public void updateScreen(List<ContinentModel> listOfContinentModel) {
+    public void updateUI(List<ContinentModel> listOfContinentModel) {
 
         StringBuilder textAreaText = new StringBuilder("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
@@ -142,7 +142,7 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
     @Override
     public void update(Observable obs, Object arg) {
         List<ContinentModel> listOfContinentModel = ((MapRiskModel) obs).getContinentModelList();
-        this.updateScreen(listOfContinentModel);
+        this.updateUI(listOfContinentModel);
         this.revalidate();
         this.repaint();
     }

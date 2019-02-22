@@ -144,7 +144,7 @@ public class MapRead {
      * @return
      */
 
-    public static File getReadFile() {
+    public File getReadFile() {
         return READ_FILE;
     }
 
@@ -154,7 +154,7 @@ public class MapRead {
      * @param readFile
      */
 
-    public static void setReadFile(File readFile) {
+    public void setReadFile(File readFile) {
         READ_FILE = readFile;
     }
 }
