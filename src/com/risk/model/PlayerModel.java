@@ -53,13 +53,13 @@ public class PlayerModel extends Observable {
         this.numberofArmies = numberofArmies;
     }
 
-    public Color getPlayerColor() {
-        return playerColor;
-    }
-
-    public void setPlayerColor(Color playerColor) {
-        this.playerColor = playerColor;
-    }
+//    public Color getPlayerColor() {
+//        return playerColor;
+//    }
+//
+//    public void setPlayerColor(Color playerColor) {
+//        this.playerColor = playerColor;
+//    }
 
 
     public String getPlayerType() {

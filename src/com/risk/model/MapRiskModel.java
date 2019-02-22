@@ -141,10 +141,10 @@ public class MapRiskModel extends Observable {
         for (int i = 0; i < getCountryModelList().size(); i++) {
             if (getCountryModelList().get(i).equals(leftModel)) {
                 ArrayList<CountryModel> temp = getCountryModelList().get(i).getConnectedCountryList();
-                if (temp == null) {
+                if (temp == null) { // checking the null validation
                     temp = new ArrayList<>();
                 }
-                temp.add(rightModel);
+                temp.add(rightModel); // here the second country that is selected to be added is being added to the first selected country
                 getCountryModelList().get(i).setConnectedCountryList(temp);
                 this.setLeftModelIndex(i);
             } else if (getCountryModelList().get(i).equals(rightModel)) {
