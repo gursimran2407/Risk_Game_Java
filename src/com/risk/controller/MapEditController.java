@@ -37,12 +37,13 @@ public class MapEditController implements ActionListener {
         mapRiskModel.setContinentModelModList(continentModelList);
         mapRiskModel.callObservers();
         //updating the continent model list
-        updateContinentModelList = new ArrayList<ContinentsModel>();
-        continentList = this.mapModel.getContinents();
-        this.editContinentView = new EditContinentView(continentList);
-        this.editContinentView.setActionListener(this);
-        this.editContinentView.setVisible(true);
-        this.mapModel.addObserver(this.editContinentView);
+        updateContinentModelList = new ArrayList<>();
+        continentModelList = mapRiskModel.getContinentModelList();
+        //calling view constructor
+        mapEditView = new MapEditView(continentModelList);
+        mapEditView.setActionListener(this);
+        mapEditView.setVisible(true);
+        mapRiskModel.addObserver(mapEditView);
     }
 
 
