@@ -190,4 +190,20 @@ public class MapRiskModel extends Observable {
         d_continentModelList.remove(continentModel);
         callObservers();
     }
+
+    //updating countries when added
+    public MapRiskModel updateCountries(MapRiskModel mapRiskModel) {
+        ArrayList<CountryModel> newCountryModelArrayList = new ArrayList<>();
+
+        for (int i = 0; i < mapRiskModel.d_continentModelList.size(); i++) {
+            for (int j = 0; j < mapRiskModel.d_countryModelList.size(); j++) {
+                if (mapRiskModel.d_countryModelList.get(j).getContinentName().equals(mapRiskModel.d_countryModelList.get(i).getContinentName())) {
+                    newCountryModelArrayList.add(mapRiskModel.d_countryModelList.get(j));
+                }
+            }
+        }
+        mapRiskModel.d_countryModelList = null;
+        mapRiskModel.d_countryModelList = newCountryModelArrayList;
+        return mapRiskModel;
+    }
 }
