@@ -49,7 +49,7 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
                         JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
                 return;
             } else {
-
+                //If adding connection between two countries then setneighbouring countries to all the countries
                 mapRiskModel.setNeighbouringCountry((CountryModel) mapCountryConnectView.leftCountryParentList.getSelectedValue(), (CountryModel) this.mapCountryConnectView.rightCountryParentList.getSelectedValue());
 
             }
