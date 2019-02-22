@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author gursimransingh
@@ -82,9 +81,9 @@ public class MapEditController implements ActionListener {
                 if (0 < Integer.parseInt(mapEditView.controlValue.getText()) && Integer.parseInt(mapEditView.controlValue.getText()) < 10) {
                     if (!updateContinentModelList.isEmpty()) {
                         mapRiskModel.setContinentModelModList(updateContinentModelList);
-                        mapRiskModel = mapRiskModel. (this.mapModel);
-                        new ConnectCountryController(this.mapModel);
-                        this.editContinentView.dispose();
+                        mapRiskModel = mapRiskModel.updateCountries(mapRiskModel);
+                        new MapCountryConnectController(mapRiskModel);
+                        mapEditView.dispose();
                         // open connectCountries Controller and pass the map model
                     } else {
                         JOptionPane.showOptionDialog(null, "Please add atleast one continent first.", "Invalid",
