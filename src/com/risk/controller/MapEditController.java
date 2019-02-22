@@ -26,6 +26,7 @@ public class MapEditController implements ActionListener {
     private File file;
     private ContinentModel continentModel;
     private List<ContinentModel> updateContinentModelList;
+    private ContinentModel updatedContinentModel;
 
 
     public MapEditController() {
@@ -51,7 +52,28 @@ public class MapEditController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //if add button is clicked
         if (e.getSource().equals(mapEditView.addButton)) {
+            if (mapEditView.controlValue.getText() != null && !mapEditView.controlValue.getText().isEmpty()) {
+                if (0 < Integer.parseInt(mapEditView.controlValue.getText()) && Integer.parseInt(mapEditView.controlValue.getText()) < 10) {
 
+                    updatedContinentModel = (ContinentModel) mapEditView.continentListCombobox.getSelectedItem();
+                    //removing the selected continent from continent model
+                    mapRiskModel.removeContinent(updatedContinentModel);
+
+                    updatedContinentModel.getControlValue((Integer.parseInt(mapEditView.controlValue.getText()));
+                    updateContinentModelList.add(updatedContinentModel);
+
+                    System.out.println(updateContinentModelList);
+
+                } else {
+                    JOptionPane.showOptionDialog(null, "Please enter a control value between 0 and 10", "Invalid",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                    return;
+                }
+            } else {
+                JOptionPane.showOptionDialog(null, "Please enter at least one control value", "Invalid",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                return;
+            }
         }
 
     }

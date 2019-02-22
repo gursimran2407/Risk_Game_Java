@@ -185,4 +185,9 @@ public class MapRiskModel extends Observable {
         }
         callObservers();
     }
+
+    public void removeContinent(ContinentModel continentModel) {
+        d_continentModelList.remove(continentModel);
+        callObservers();
+    }
 }
