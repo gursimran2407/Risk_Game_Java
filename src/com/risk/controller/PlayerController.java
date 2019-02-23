@@ -26,7 +26,7 @@ public class PlayerController implements ActionListener, ItemListener {
     private GamePlayModel gamePlayObj;
 
     /**
-     * The Reinforcement view
+     * The ReinforcementController view
      */
     private Reinforcement reinforcementViewObj;
 
