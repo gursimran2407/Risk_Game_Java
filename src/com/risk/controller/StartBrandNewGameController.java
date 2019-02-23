@@ -2,12 +2,11 @@ package com.risk.controller;
 
 import com.risk.view.BrandNewGameView;
 import com.risk.model.PlayerModel;
-import com.risk.model.MapRiskModel
+import com.risk.model.MapRiskModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -19,10 +18,15 @@ import java.util.ArrayList;
  */
 public class StartBrandNewGameController implements ActionListener {
     private BrandNewGameView brandNewGameViewobj;
-    private ArrayList<PlayerModel> listOfPlayers = new ArrayList<PlayerModel>();
+    private ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
     private MapRiskModel mapRiskModelobj = new MapRiskModel();
     private int totalNumberOfPlayersInGame;
 
+    public StartBrandNewGameController() {
+        brandNewGameViewobj = new BrandNewGameView();
+        brandNewGameViewobj.setActionListener(this);
+        brandNewGameViewobj.setVisible(true);
+    }
 
     /**
      * This method is used to validate the new player entered that is going to play the game.
@@ -36,7 +40,7 @@ public class StartBrandNewGameController implements ActionListener {
                 PlayerModel playerModelobj = new PlayerModel(nameOfPlayer, 0, 0, "");
                 listOfPlayers.add(playerModelobj);
             }
-            new StartUpController(listOfPlayers, mapRiskModelobj); // we are yet to create the StartUpController. It is still in conception.
+            new StartupController(listOfPlayers, mapRiskModelobj);
             this.brandNewGameViewobj.dispose();
         } else {
             JOptionPane.showMessageDialog(brandNewGameViewobj,
@@ -48,26 +52,26 @@ public class StartBrandNewGameController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(BrandNewGameView.browseMapButton)) {
-            int value = BrandNewGameView.chooseMap.showOpenDialog(brandNewGameViewobj);
-            if (value == JFileChooser.APPROVE_OPTION) {
-                try {
-                    File mapFile = brandNewGameViewobj.chooseMap.getSelectedFile();
-                    mapRiskModelobj = new MapRiskModel(mapFile);
-                    JOptionPane.showMessageDialog(brandNewGameViewobj, "File Loaded Successfully! Click Next to Play!", "Map Loaded", JOptionPane.INFORMATION_MESSAGE);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        } else if (actionEvent.getSource().equals(brandNewGameViewobj.nextButton)) {
-            totalNumberOfPlayersInGame = (int) brandNewGameViewobj.numOfPlayers.getSelectedItem(); // number of players
-            // here are coming from the BrandMewGameView
-            validateThePlayer(); // this is to be created yet.
-
-        } else if (actionEvent.getSource().equals(BrandNewGameView.cancelButton)) {
-            new MainGame();
-            this.totalNumberOfPlayersInGame.dispose();
-        }
+//        if (actionEvent.getSource().equals(BrandNewGameView.browseMapButton)) {
+//            int value = BrandNewGameView.chooseMap.showOpenDialog(brandNewGameViewobj);
+//            if (value == JFileChooser.APPROVE_OPTION) {
+//                try {
+//                    File mapFile = brandNewGameViewobj.chooseMap.getSelectedFile();
+//                    mapRiskModelobj = new MapRiskModel(mapFile);
+//                    JOptionPane.showMessageDialog(brandNewGameViewobj, "File Loaded Successfully! Click Next to Play!", "Map Loaded", JOptionPane.INFORMATION_MESSAGE);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        } else if (actionEvent.getSource().equals(brandNewGameViewobj.nextButton)) {
+//            totalNumberOfPlayersInGame = (int) brandNewGameViewobj.numOfPlayers.getSelectedItem(); // number of players
+//            // here are coming from the BrandMewGameView
+//            validateThePlayer(); // this is to be created yet.
+//
+//        } else if (actionEvent.getSource().equals(BrandNewGameView.cancelButton)) {
+//            new MainGame();
+//            this.totalNumberOfPlayersInGame.dispose();
+//        }
 
     }
 }
