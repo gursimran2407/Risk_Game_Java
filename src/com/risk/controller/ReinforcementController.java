@@ -9,6 +9,10 @@ import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
 import com.risk.view.ReinforcementView;
 
+/**
+ * @author Karandeep
+ *
+ */
 public class ReinforcementController implements ActionListener {
 
     private ReinforcementView reinforcementView;
