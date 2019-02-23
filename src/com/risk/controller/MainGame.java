@@ -62,7 +62,8 @@ public class MainGame implements ActionListener {
      * show play game window
      */
     private void showPlayGameWindow() {
-        //new NewGameController();
+        //Starting a new game
+        new StartBrandNewGameController();
         this.d_mainGameView.dispose();
     }
 
