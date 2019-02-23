@@ -24,16 +24,16 @@ public class MapRead {
 
         File readFile = getReadFile();
         ArrayList<ContinentModel> continentsList = null;
-        BufferedReader bfr;
+        Scanner scanner = null;
         try {
-            bfr = new BufferedReader(new FileReader(readFile));
+            scanner = new Scanner(new FileReader(readFile));
 
             continentsList = new ArrayList<>();
 
-            while (bfr.readLine() != null) {
-                String bfr1 = bfr.readLine();
+            while (scanner.hasNextLine()) {
+                String bfr1 = scanner.nextLine();
                 if (bfr1.contains("[Continents]")) {
-                    String bfr2 = bfr.readLine();
+                    String bfr2 = scanner.nextLine();
                     bfr2.trim();
                     while (!"".equals(bfr2)) {
                         int positionEqual = bfr2.indexOf('=');
@@ -46,7 +46,7 @@ public class MapRead {
 
                         ContinentModel tempMyContinents = new ContinentModel(bfr3, result);
                         continentsList.add(tempMyContinents);
-                        bfr2 = bfr.readLine();
+                        bfr2 = scanner.nextLine();
                         bfr2.trim();
                     }
                 }

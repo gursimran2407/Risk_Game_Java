@@ -54,6 +54,7 @@ public class StartBrandNewGameController implements ActionListener {
         }
 
     }
+
     /**
      * This method is used to validate the new player entered that is going to play the game.
      */
@@ -61,8 +62,7 @@ public class StartBrandNewGameController implements ActionListener {
         if (mapRiskModelobj.getCountryModelList().size() > totalNumberOfPlayersInGame) {
             System.out.println("Number of players");
             String NamePlayer = "";
-            for (int i = 0; i < totalNumberOfPlayersInGame; i++)
-            {
+            for (int i = 0; i < totalNumberOfPlayersInGame; i++) {
                 NamePlayer = "Player" + (i + 1);
                 PlayerModel playerModelobj = new PlayerModel(NamePlayer, 0, 0, "");
                 listOfPlayers.add(playerModelobj);

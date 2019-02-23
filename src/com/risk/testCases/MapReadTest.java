@@ -1,4 +1,4 @@
-package com.risk.gameplayrequirements;
+package com.risk.testCases;
 
 import static org.junit.jupiter.api.Assertions.*;
 
