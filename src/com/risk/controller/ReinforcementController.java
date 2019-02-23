@@ -18,21 +18,21 @@ import com.risk.view.ReinforcementView;
 public class ReinforcementController implements ActionListener {
 
     private ReinforcementView reinforcementView;
-    private ArrayList<CountryModel> listOfCountrys = new ArrayList<CountryModel>();
+    private ArrayList<CountryModel> countryList = new ArrayList<CountryModel>();
     private ArrayList<PlayerModel> listOfPlayers = new ArrayList<PlayerModel>();
-    private MapRiskModel mapRiskModel = null;
+    private MapRiskModel d_mapRiskModel;
     private int noOfPlayers;
 
-    public ReinforcementController(MapRiskModel mapRiskModel) {
-        this.mapRiskModel = mapRiskModel;
-        this.mapRiskModel.getPlayerTurn().setmyPlayer(this.calculateArmies());
-        reinforcementView = new ReinforcementView(this.mapRiskModel);
+    public ReinforcementController(MapRiskModel new_mapRiskModel) {
+        d_mapRiskModel = new_mapRiskModel;
+        d_mapRiskModel.getPlayerTurn().setmyPlayer(calculateArmies());
+        reinforcementView = new ReinforcementView(d_mapRiskModel);
         reinforcementView.setActionListener(this);
         reinforcementView.setVisible(true);
 
-        this.mapRiskModel.addObserver(reinforcementView);
+        d_mapRiskModel.addObserver(reinforcementView);
         for (int i = 0; i < noOfPlayers; i++) {
-            this.listOfPlayers.get(i).addObserver(this.reinforcementView);
+            listOfPlayers.get(i).addObserver(reinforcementView);
         }
     }
 /**
@@ -44,13 +44,14 @@ public class ReinforcementController implements ActionListener {
         public int calculateArmies () {
             int reinforcementArmies = 0;
 
-            for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
-                if (this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().equals(this.mapRiskModel.getPlayerTurn())) {
-                    this.listOfCountrys.add(this.mapRiskModel.getCountryModelList().get(i));
+            for (int i = 0; i < d_mapRiskModel.getCountryModelList().size(); i++) {
+                if (d_mapRiskModel.getCountryModelList().get(i).getCountryOwner().equals(d_mapRiskModel.getPlayerTurn())) {
+                    countryList.add(d_mapRiskModel.getCountryModelList().get(i));
                 }
             }
-            if (listOfCountrys.size() > 3) {
-                reinforcementArmies = 3 + Math.round(listOfCountrys.size() / 3);
+            if (countryList.size() > 3) {
+                Double d = Math.floor(countryList.size() / 3);
+                reinforcementArmies = 3 + d.intValue();
             } else {
                 reinforcementArmies = 3;
             }
@@ -61,15 +62,15 @@ public class ReinforcementController implements ActionListener {
         }
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(this.reinforcementView.addButton)) {
+        if (actionEvent.getSource().equals(this.reinforcementView.buttonAdd)) {
             int selectedArmies = 0;
-            if (reinforcementView.numOfTroopsComboBox.getSelectedItem() != null) {
-                selectedArmies = (int) reinforcementView.numOfTroopsComboBox.getSelectedItem();
+            if (reinforcementView.noOfArmiesComboBox.getSelectedItem() != null) {
+                selectedArmies = (int) reinforcementView.noOfArmiesComboBox.getSelectedItem();
                 CountryModel countryName = (CountryModel) reinforcementView.countryListComboBox.getSelectedItem();
-                this.mapRiskModel.setSelectedArmiesToCountries(selectedArmies, countryName);
+                d_mapRiskModel.setSelectedArmiesToCountries(selectedArmies, countryName);
             } else {
 
-                new FortificationController(this.gameMapModel);
+                //new FortificationController(d_mapRiskModel);
                 this.reinforcementView.dispose();
             }
         }

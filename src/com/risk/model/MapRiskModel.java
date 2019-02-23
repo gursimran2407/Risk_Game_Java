@@ -123,6 +123,18 @@ public class MapRiskModel extends Observable {
         this.rightModelIndex = rightModelIndex;
     }
 
+    public void setSelectedArmiesToCountries(int selectedArmies, CountryModel countryName) {
+        for (int i = 0; i < getCountryModelList().size(); i++) {
+            if (getCountryModelList().get(i).equals(countryName)) {
+                getCountryModelList().get(i).setNumberofArmies(getCountryModelList().get(i).getNumberofArmies() + selectedArmies);
+                getCountryModelList().get(i).getCountryOwner()
+                        .setNumberofArmies(getCountryModelList().get(i).getCountryOwner().getNumberofArmies() - selectedArmies);
+                this.getPlayerTurn().setNumberofArmies(this.getPlayerTurn().getNumberofArmies() - selectedArmies);
+            }
+        }
+        callObservers();
+    }
+
     public void callObservers() {
         setChanged();
         notifyObservers(this);
