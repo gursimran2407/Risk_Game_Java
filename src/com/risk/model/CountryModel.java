@@ -14,6 +14,12 @@ public class CountryModel extends JButton {
     private int numberofArmies;
     private Color borderColor;
     private int xPosition;
+
+    @Override
+    public void setText(String text) {
+        super.setText(text);
+    }
+
     private int yPosition;
     private Color backgroundColor;
 
