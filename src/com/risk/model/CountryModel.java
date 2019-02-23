@@ -83,6 +83,7 @@ public class CountryModel extends JButton {
         this.backgroundColor = color;
     }
 
+
     public String getCountryName() {
         return countryName;
     }

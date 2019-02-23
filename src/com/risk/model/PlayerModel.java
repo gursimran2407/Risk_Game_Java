@@ -10,20 +10,15 @@ import java.util.Observable;
 
 public class PlayerModel extends Observable {
     private String playerName;
-    //private String typeOfPlayer;
     private int numberofArmies;
     private int  remainingNumberOfArmies;
     private String playerColor;
-    private ArrayList<CountryModel> playerCountryModelList;
-    private StrategyInterface strategy;
-    private String playerType;
 
 
     public PlayerModel(String playerName, int numberOfArmies ,int remainingNumberOfArmies, String playerColor) {
         this.playerName = playerName;
         this.remainingNumberOfArmies = remainingNumberOfArmies;
         //this.typeOfPlayer = typeOfPlayer;
-        this.playerCountryModelList = playerCountryModelList;
         this.numberofArmies = numberOfArmies;
         this.playerColor = playerColor;
 
@@ -37,14 +32,6 @@ public class PlayerModel extends Observable {
         this.playerName = playerName;
     }
 
-    public ArrayList<CountryModel> getPlayerCountryModelList() {
-        return playerCountryModelList;
-    }
-
-    public void setPlayerCountryModelList(ArrayList<CountryModel> playerCountryModelList) {
-        this.playerCountryModelList = playerCountryModelList;
-    }
-
     public int getNumberofArmies() {
         return numberofArmies;
     }
@@ -53,37 +40,20 @@ public class PlayerModel extends Observable {
         this.numberofArmies = numberofArmies;
     }
 
-//    public Color getPlayerColor() {
-//        return playerColor;
-//    }
-//
-//    public void setPlayerColor(Color playerColor) {
-//        this.playerColor = playerColor;
-//    }
-
-
-    public String getPlayerType() {
-        return playerType;
+    public int getRemainingNumberOfArmies() {
+        return remainingNumberOfArmies;
     }
 
-    public void setPlayerType(String playerType) {
-        this.playerType = playerType;
+    public void setRemainingNumberOfArmies(int remainingNumberOfArmies) {
+        this.remainingNumberOfArmies = remainingNumberOfArmies;
     }
 
-    public void setStrategy(StrategyInterface strategyInterface) {
-        strategy = strategyInterface;
+    public String getPlayerColor() {
+        return playerColor;
     }
 
-    public void executeReinforcement() {
-        strategy.reinforcementPhase();
-    }
-
-    public void executeAttack() {
-        strategy.attackPhase();
-    }
-
-    public void executeFortification() {
-        strategy.fortificationPhase();
+    public void setPlayerColor(String playerColor) {
+        this.playerColor = playerColor;
     }
 
     /**
