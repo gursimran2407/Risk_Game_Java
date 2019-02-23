@@ -105,15 +105,15 @@ public class MapValidation {
      */
     public boolean emptyContinentValidation(MapRiskModel mapRiskModel) {
         List<ContinentModel> listOfContinents = mapRiskModel.getContinentModelList();
-        List<CountryModel> listOfCountrys = mapRiskModel.getCountryModelList();
+        List<CountryModel> listOfCountries = mapRiskModel.getCountryModelList();
         String continentName = " ";
         int numb;
 
         for (int i = 0; i < listOfContinents.size(); i++) {
             continentName = listOfContinents.get(i).getContinentName();
             numb = 0;
-            for (int j = 0; j < listOfCountrys.size(); j++) {
-                if (continentName.equals(listOfCountrys.get(j).getContinentName())) {
+            for (int j = 0; j < listOfCountries.size(); j++) {
+                if (continentName.equals(listOfCountries.get(j).getContinentName())) {
                     numb++;
                 }
             }

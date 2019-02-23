@@ -12,17 +12,19 @@ public class PlayerModel extends Observable {
     private String playerName;
     //private String typeOfPlayer;
     private int numberofArmies;
-    private Color playerColor;
+    private int  remainingNumberOfArmies;
+    private String playerColor;
     private ArrayList<CountryModel> playerCountryModelList;
     private StrategyInterface strategy;
     private String playerType;
 
 
-    public PlayerModel(String playerName, ArrayList<CountryModel> playerCountryModelList, int numberofArmies, Color playerColor) {
+    public PlayerModel(String playerName, int numberOfArmies ,int remainingNumberOfArmies, String playerColor) {
         this.playerName = playerName;
+        this.remainingNumberOfArmies = remainingNumberOfArmies;
         //this.typeOfPlayer = typeOfPlayer;
         this.playerCountryModelList = playerCountryModelList;
-        this.numberofArmies = numberofArmies;
+        this.numberofArmies = numberOfArmies;
         this.playerColor = playerColor;
 
     }
@@ -51,13 +53,13 @@ public class PlayerModel extends Observable {
         this.numberofArmies = numberofArmies;
     }
 
-    public Color getPlayerColor() {
-        return playerColor;
-    }
-
-    public void setPlayerColor(Color playerColor) {
-        this.playerColor = playerColor;
-    }
+//    public Color getPlayerColor() {
+//        return playerColor;
+//    }
+//
+//    public void setPlayerColor(Color playerColor) {
+//        this.playerColor = playerColor;
+//    }
 
 
     public String getPlayerType() {
