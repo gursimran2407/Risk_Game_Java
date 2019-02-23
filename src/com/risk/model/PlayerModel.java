@@ -8,19 +8,34 @@ public class PlayerModel extends Observable {
     private int numberofArmies;
     private int  remainingNumberOfArmies;
     private String playerColor;
+    private int myPlayer;
 
 
-    public PlayerModel(String playerName, int numberOfArmies ,int remainingNumberOfArmies, String playerColor) {
+    public PlayerModel(String playerName, int numberOfArmies ,int remainingNumberOfArmies, String playerColor, int myPlayer) {
         this.playerName = playerName;
         this.remainingNumberOfArmies = remainingNumberOfArmies;
         //this.typeOfPlayer = typeOfPlayer;
         this.numberofArmies = numberOfArmies;
         this.playerColor = playerColor;
+        this.myPlayer = myPlayer;
 
     }
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public int getmyPlayer() {
+        return myPlayer;
+    }
+
+    /**
+     * Sets the value Control.
+     *
+     * @param myPlayer
+     */
+    public void setmyPlayer(int myPlayer) {
+        this.myPlayer = myPlayer;
     }
 
     public void setPlayerName(String playerName) {
