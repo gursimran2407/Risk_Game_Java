@@ -5,6 +5,7 @@ import com.risk.gameplayrequirements.MapRead;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 public class MapRiskModel extends Observable {
@@ -125,6 +126,45 @@ public class MapRiskModel extends Observable {
     public void callObservers() {
         setChanged();
         notifyObservers(this);
+    }
+
+    public void checkForRemainArmies(int loopvlaue, List<PlayerModel> listOfPlayers) {
+        loopvlaue++;
+
+        while (loopvlaue < listOfPlayers.size()) {
+
+            if (listOfPlayers.get(loopvlaue).getRemainingNumberOfArmies() == 0) {
+                loopvlaue++;
+            } else {
+                loopvlaue--;
+                break;
+            }
+        }
+    }
+
+    public void remainingArmiesRobinAssign(int loopvlaue, String namePlayer, CountryModel Country, int selectedArmies,
+                                           List<PlayerModel> listOfPlayers) {
+        System.out.println("selectedArmies " + selectedArmies);
+        for (int i = 0; i < d_countryModelList.size(); i++) {
+            if (Country.getCountryName().equals(d_countryModelList.get(i).getCountryName())) {
+                int prevArmies;
+                System.out.println("namePlayer " + namePlayer);
+                for (int j = 0; j < listOfPlayers.size(); j++) {
+                    if (namePlayer.equals(listOfPlayers.get(j).getPlayerName())) {
+                        if (listOfPlayers.get(j).getRemainingNumberOfArmies() > 0) {
+                            int remainTroops = listOfPlayers.get(j).getRemainingNumberOfArmies() - selectedArmies;
+                            System.out.println("remainArmies[i] " + remainTroops);
+                            prevArmies = d_countryModelList.get(i).getNumberofArmies();
+                            d_countryModelList.get(i).setNumberofArmies(prevArmies + selectedArmies);
+                            listOfPlayers.get(j).setRemainingNumberOfArmies(remainTroops);
+                        } else {
+                            checkForRemainArmies(loopvlaue, listOfPlayers);
+                        }
+                    }
+                }
+            }
+        }
+        callObservers();
     }
 
     public void setCountryColor(CountryModel country, Color color) {
