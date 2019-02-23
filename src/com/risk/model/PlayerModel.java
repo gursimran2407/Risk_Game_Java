@@ -21,6 +21,9 @@ public class PlayerModel extends Observable {
 
     }
 
+    public PlayerModel(String nameOfPlayer, int i, int i1, String s) {
+    }
+
     public String getPlayerName() {
         return playerName;
     }
