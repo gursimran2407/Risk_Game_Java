@@ -1,10 +1,5 @@
 package com.risk.model;
 
-import com.risk.controller.PlayerHumanController;
-import com.risk.helperInterfaces.StrategyInterface;
-
-import java.util.ArrayList;
-import java.awt.Color;
 import java.util.Observable;
 
 

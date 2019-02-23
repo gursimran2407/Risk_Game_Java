@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author gursimransingh
+ * @author Namita Faujdar
  */
 public class StartupController {
-    private StartupView startupView;
-    private List<CountryModel> countryModelArrayList = new ArrayList<>();
+    private StartupView startUpView;
+    private List<CountryModel> countryList = new ArrayList<>();
     private ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
     private MapRiskModel mapRiskModel;
     private int numberOfPlayers;
@@ -26,34 +26,134 @@ public class StartupController {
     private int initial = 0;
 
 
-    public StartupController(ArrayList<PlayerModel> listOfPlayers, MapRiskModel mapRiskModelobj) {
-        this.listOfPlayers = listOfPlayers;
-        this.mapRiskModel = mapRiskModelobj;
+    public StartupController(ArrayList<PlayerModel> new_listOfPlayers, MapRiskModel new_mapRiskModel) {
+        listOfPlayers = new_listOfPlayers;
+        mapRiskModel = new_mapRiskModel;
 
-        countryModelArrayList = this.mapRiskModel.getCountryModelList();
+        countryList = mapRiskModel.getCountryModelList();
         numberOfPlayers = listOfPlayers.size();
 
         allocateArmies();
         checkForOverallArmies();
         initial = 1;
 
-        if (armiesNull == false) {
-            while (listOfPlayers.get(loopValue).getremainTroop() == 0) {
+        if (armiesNull) {
+            while (listOfPlayers.get(loopValue).getRemainingNumberOfArmies() == 0) {
                 loopValue++;
                 if (loopValue > listOfPlayers.size()) {
                     loopValue = 0;
                     break;
                 }
             }
-            this.theStartUpView = new StartUpView(this.gameMapModel, this.listOfPlayers.get(loopValue));
-            this.theStartUpView.setActionListener(this);
-            for (int i = 0; i < noOfPlayers; i++) {
-                this.listOfPlayers.get(i).addObserver(this.theStartUpView);
-            }
-            this.gameMapModel.addObserver(theStartUpView);
-            this.theStartUpView.setVisible(true);
-        }
-        this.gameMapModel.setListOfPlayers(listOfPlayers);
+            startUpView = new StartupView(mapRiskModel, listOfPlayers.get(loopValue));
+            startUpView.setActionListener(this);
 
+            for (int i = 0; i < numberOfPlayers; i++) {
+                listOfPlayers.get(i).addObserver(startUpView);
+            }
+            mapRiskModel.addObserver(startUpView);
+            startUpView.setVisible(true);
+        }
+        mapRiskModel.setPlayerModelList(listOfPlayers);
+
+    }
+
+    public void allocateArmies() {
+
+        noOfCountryForRuler[0] = 0;
+        noOfCountryForRuler[1] = 0;
+        noOfCountryForRuler[2] = 0;
+        noOfCountryForRuler[3] = 0;
+        noOfCountryForRuler[4] = 0;
+
+        colorForRuler[0] = "green";
+        colorForRuler[1] = "grey";
+        colorForRuler[2] = "yellow";
+        colorForRuler[3] = "blue";
+        colorForRuler[4] = "red";
+
+        for (int i = 0; i < countryList.size(); i++) {
+            int playerNumber = getRandomBetweenRange(1, numberOfPlayers);
+            System.out.println("playerNumber " + playerNumber);
+            String namePlayer = "Player" + playerNumber;
+            PlayerModel tempMyPlayers = new PlayerModel(namePlayer, 0, 0, colorForRuler[playerNumber - 1]);
+            countryList.get(i).setCountryOwner(tempMyPlayers);
+            countryList.get(i).setNumberofArmies(1);
+            switch (namePlayer) {
+                case "Player1":
+                    noOfCountryForRuler[0]++;
+                    break;
+                case "Player2":
+                    noOfCountryForRuler[1]++;
+                    break;
+                case "Player3":
+                    noOfCountryForRuler[2]++;
+                    break;
+                case "Player4":
+                    noOfCountryForRuler[3]++;
+                    break;
+                case "Player5":
+                    noOfCountryForRuler[4]++;
+                    break;
+                default:
+                    break;
+            }
+            System.out.println("player " + noOfCountryForRuler[0] + " " + noOfCountryForRuler[1] + " "
+                    + noOfCountryForRuler[2] + " " + noOfCountryForRuler[3]);
+        }
+
+        for (int i = 0; i < numberOfPlayers; i++) {
+            if (noOfCountryForRuler[i] >= 3) {
+                int tempPlayerTrop = (noOfCountryForRuler[i] / 3);
+                totalArmiesPlayer[i] = noOfCountryForRuler[i] + (tempPlayerTrop - 1);
+                remainArmies[i] = totalArmiesPlayer[i] - noOfCountryForRuler[i];
+            } else {
+                totalArmiesPlayer[i] = noOfCountryForRuler[i];
+            }
+        }
+
+        System.out.println("armies " + totalArmiesPlayer[0] + " " + totalArmiesPlayer[1] + " " + totalArmiesPlayer[2]
+                + " " + totalArmiesPlayer[3]);
+
+        assignPlayerModel();
+        for (int i = 0; i < countryList.size(); i++) {
+            System.out.println(countryList.get(i).getCountryName());
+            System.out.println(countryList.get(i).getCountryOwner());
+            System.out.println(countryList.get(i).getNumberofArmies());
+        }
+    }
+
+    public void assignPlayerModel() {
+        for (int i = 0; i < numberOfPlayers; i++) {
+            listOfPlayers.get(i).setPlayerColor(colorForRuler[i]);
+            listOfPlayers.get(i).setNumberofArmies(totalArmiesPlayer[i]);
+            listOfPlayers.get(i).setRemainingNumberOfArmies(remainArmies[i]);
+        }
+        for (int i = 0; i < listOfPlayers.size(); i++) {
+            System.out.println(
+                    "player Model " + listOfPlayers.get(i).getPlayerName() + " " + listOfPlayers.get(i).getNumberofArmies());
+        }
+    }
+
+    public int getRandomBetweenRange(double min, double max) {
+        int x = (int) ((Math.random() * ((max - min) + 1)) + min);
+        return x;
+    }
+
+    private void checkForOverallArmies() {
+        int numb = 0;
+        for (int i = 0; i < listOfPlayers.size(); i++) {
+            if (listOfPlayers.get(i).getRemainingNumberOfArmies() != 0) {
+                numb++;
+            }
+        }
+        if (numb == 0) {
+            mapRiskModel.setIndexOfPlayer(0);
+            armiesNull = true;
+            //new GamePlayController(mapRiskModel, listOfPlayers);
+            if (initial == 1) {
+                this.startUpView.dispose();
+            }
+        }
     }
 }
