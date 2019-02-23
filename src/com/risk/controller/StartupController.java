@@ -5,13 +5,15 @@ import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
 import com.risk.view.StartupView;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Namita Faujdar
  */
-public class StartupController {
+public class StartupController implements ActionListener {
     private StartupView startUpView;
     private List<CountryModel> countryList = new ArrayList<>();
     private ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
@@ -150,10 +152,52 @@ public class StartupController {
         if (numb == 0) {
             mapRiskModel.setIndexOfPlayer(0);
             armiesNull = true;
-            //new GamePlayController(mapRiskModel, listOfPlayers);
+            new PlayerGameController(mapRiskModel, listOfPlayers);
             if (initial == 1) {
                 this.startUpView.dispose();
             }
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(startUpView.addButton)) {
+            if (startUpView.numOfTroopsComboBox.getSelectedItem() != null) {
+                int selectedArmies = (int) startUpView.numOfTroopsComboBox.getSelectedItem();
+                CountryModel countryName = (CountryModel) startUpView.countryListComboBox.getSelectedItem();
+                System.out.println("selectedArmies " + selectedArmies);
+
+                System.out.println("loopValue " + loopValue);
+                System.out.println("playerName " + this.listOfPlayers.get(loopValue).getPlayerName());
+
+                mapRiskModel.remainingArmiesRobinAssign(loopValue, this.listOfPlayers.get(loopValue).getPlayerName(),
+                        countryName, selectedArmies, listOfPlayers);
+            }
+            loopValue++;
+
+            if (loopValue < listOfPlayers.size()) {
+                System.out.println("loopValue - " + loopValue);
+                startUpView.welcomeLabel
+                        .setText("It's " + this.listOfPlayers.get(loopValue).getPlayerName() + "'s turn");
+                this.listOfPlayers.get(loopValue).callObservers();
+
+            } else {
+                System.out.println("here");
+                armiesNull = false;
+                checkForOverallArmies();
+                if (armiesNull) {
+                    loopValue = 0;
+                    System.out.println("loopValue -> " + loopValue);
+                    startUpView.welcomeLabel
+                            .setText("It's " + this.listOfPlayers.get(loopValue).getPlayerName() + "'s turn");
+                    this.listOfPlayers.get(loopValue).callObservers();
+                }
+            }
+
+        } else if (e.getSource().equals(startUpView.nextButton)) {
+            mapRiskModel.setIndexOfPlayer(0);
+            new PlayerGameController(mapRiskModel, listOfPlayers);
+            startUpView.dispose();
         }
     }
 }
