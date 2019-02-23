@@ -8,7 +8,7 @@ import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
 
 /**
- * In GamePlayController, the data flow into model object and updates the view
+ * In PlayerGameController, the data flow into model object and updates the view
  * whenever data changes.
  *
  * @author Karandeep
