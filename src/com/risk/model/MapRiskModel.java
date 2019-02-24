@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+/**
+ * @author Gursimran Singh
+ * Default constructor to make new map
+ */
+
 public class MapRiskModel extends Observable {
 
     private ArrayList<ContinentModel> d_continentModelList;
