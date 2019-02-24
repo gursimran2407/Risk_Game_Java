@@ -71,6 +71,7 @@ public class MapRiskModel extends Observable {
     public ArrayList<PlayerModel> getPlayerModelList() {
         return d_playerModelList;
     }
+    private int selectedComboBoxIndex;
 
     public void setPlayerModelList(ArrayList<PlayerModel> playerModelList) {
         d_playerModelList = playerModelList;
@@ -235,6 +236,36 @@ public class MapRiskModel extends Observable {
             }
         }
         callObservers();
+    }
+
+    /**
+     * Assign moving armies in fortification
+     *
+     * @param armies
+     * @param fromCountryName
+     * @param toCountryName
+     */
+    public void setMovingArmies(int armies, CountryModel fromCountryName, CountryModel toCountryName) {
+        int previousArmies = 0;
+        for (int i = 0; i < this.getCountryModelList().size(); i++) {
+            if (fromCountryName.equals(this.getCountryModelList().get(i))) {
+                previousArmies = this.getCountryModelList().get(i).getNumberofArmies();
+                this.getCountryModelList().get(i).setNumberofArmies(previousArmies - armies);
+            }
+            if (toCountryName.equals(this.getCountryModelList().get(i))) {
+                previousArmies = this.getCountryModelList().get(i).getNumberofArmies();
+                this.getCountryModelList().get(i).setNumberofArmies(previousArmies + armies);
+            }
+        }
+    }
+    public void setSelectedComboBoxIndex(int selectedComboBoxIndex) {
+        this.selectedComboBoxIndex = selectedComboBoxIndex;
+        callObservers();
+
+    }
+
+    public int getSelectedComboBoxIndex() {
+        return this.selectedComboBoxIndex;
     }
 
     public void removeContinent(ContinentModel continentModel) {

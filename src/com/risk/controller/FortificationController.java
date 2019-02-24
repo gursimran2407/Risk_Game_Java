@@ -2,6 +2,8 @@ package com.risk.controller;
 
 import com.risk.gameplayrequirements.MapValidation;
 import com.risk.model.MapRiskModel;
+import com.risk.view.Fortification;
+import com.risk.model.CountryModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,7 +19,7 @@ import java.awt.event.ItemListener;
 
     public class FortificationController implements ActionListener, ItemListener {
 
-        private FortificationView fortificationView;
+        private Fortification fortification;
         private MapRiskModel mapRiskModel = null;
 
         /**
@@ -27,11 +29,11 @@ import java.awt.event.ItemListener;
          */
         public FortificationController(MapRiskModel mapRiskModel) {
             this.mapRiskModel = mapRiskModel;
-            fortificationView = new FortificationView(this.mapRiskModel);
-            fortificationView.setActionListener(this);
-            fortificationView.setItemListener(this);
-            fortificationView.setVisible(true);
-            this.mapRiskModel.addObserver(this.fortificationView);
+            fortification = new Fortification(this.mapRiskModel);
+            fortification.setActionListener(this);
+            fortification.setItemListener(this);
+            fortification.setVisible(true);
+            this.mapRiskModel.addObserver(this.fortification);
         }
 
         /**
@@ -41,37 +43,36 @@ import java.awt.event.ItemListener;
          */
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            if (actionEvent.getSource().equals(this.fortificationView.moveButton)) {
+            if (actionEvent.getSource().equals(this.fortification.moveButton)) {
 
                 // BFS
                 MapValidation val = new MapValidation();
                 if (val.checkIfValidMove(mapRiskModel,
-                        (CountryModel) this.fortificationView.fromCountryListComboBox.getSelectedItem(),
-                        (CountryModel) this.fortificationView.toCountryListComboBox.getSelectedItem())) {
+                        (CountryModel) this.fortification.fromCountryListComboBox.getSelectedItem(),
+                        (CountryModel) this.fortification.toCountryListComboBox.getSelectedItem())) {
                     this.mapRiskModel.setMovingArmies(
-                            (Integer) this.fortificationView.numOfTroopsComboBox.getSelectedItem(),
-                            (CountryModel) this.fortificationView.fromCountryListComboBox.getSelectedItem(),
-                            (CountryModel) this.fortificationView.toCountryListComboBox.getSelectedItem());
+                            (Integer) this.fortification.numOfTroopsComboBox.getSelectedItem(),
+                            (CountryModel) this.fortification.fromCountryListComboBox.getSelectedItem(),
+                            (CountryModel) this.fortification.toCountryListComboBox.getSelectedItem());
                 }
 
-                int index = this.mapRiskModel.getPlayerIndex();
+                int index = this.mapRiskModel.getIndexOfPlayer();
                 index++;
-                if (this.mapRiskModel.getListOfPlayers().size() > index) {
-                    this.mapRiskModel.setPlayerIndex(index);
-                    this.mapRiskModel.getListOfPlayers().get(index).callObservers();
-                    new GamePlayController(this.gameMapModel, this.mapRiskModel.getListOfPlayers());
-                    this.fortificationView.dispose();
+                if (this.mapRiskModel.getPlayerModelList().size() > index) {
+                    this.mapRiskModel.setIndexOfPlayer(index);
+                    this.mapRiskModel.getPlayerModelList().get(index).callObservers();
+                    new PlayerGameController(this.mapRiskModel, this.mapRiskModel.getPlayerModelList());
+                    this.fortification.dispose();
                 } else {
                     JOptionPane.showOptionDialog(null, "Bravo! Game is over! No one won!", "Valid",
                             JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
-                    this.fortificationView.dispose();
+                    this.fortification.dispose();
                 }
 
-            } else if (actionEvent.getSource().equals(this.fortificationView.fromCountryListComboBox)) {
+            } else if (actionEvent.getSource().equals(this.fortification.fromCountryListComboBox)) {
                 this.mapRiskModel
-                        .setSelectedComboBoxIndex(this.fortificationView.fromCountryListComboBox.getSelectedIndex());
+                        .setSelectedComboBoxIndex(this.fortification.fromCountryListComboBox.getSelectedIndex());
             }
-
         }
 
         /**
@@ -81,9 +82,9 @@ import java.awt.event.ItemListener;
          */
         @Override
         public void itemStateChanged(ItemEvent itemEvent) {
-            if (itemEvent.getSource().equals(this.fortificationView.fromCountryListComboBox)) {
+            if (itemEvent.getSource().equals(this.fortification.fromCountryListComboBox)) {
                 this.mapRiskModel
-                        .setSelectedComboBoxIndex(this.fortificationView.fromCountryListComboBox.getSelectedIndex());
+                        .setSelectedComboBoxIndex(this.fortification.fromCountryListComboBox.getSelectedIndex());
             }
 
         }
