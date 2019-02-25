@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
+ * This View provides the reinforcementView of the Game Play. It also provides
+ * the observer pattern when the data is modified
  * @author Namita Faujdar
  */
 

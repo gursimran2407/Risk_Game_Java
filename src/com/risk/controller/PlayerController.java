@@ -1,9 +1,9 @@
 package com.risk.controller;
 
 import com.risk.model.GamePlayModel;
-import com.risk.view.Reinforcement;
 import com.risk.view.Attack;
 import com.risk.view.Fortification;
+import com.risk.view.ReinforcementView;
 
 
 import java.awt.event.ActionListener;
@@ -28,7 +28,7 @@ public class PlayerController implements ActionListener, ItemListener {
     /**
      * The ReinforcementController view
      */
-    private Reinforcement reinforcementViewObj;
+    private ReinforcementView reinforcementViewObj;
 
     /**
      * the Attack view
