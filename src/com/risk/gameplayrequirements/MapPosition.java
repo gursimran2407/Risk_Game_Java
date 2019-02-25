@@ -6,8 +6,7 @@ import javax.swing.JButton;
 import com.risk.model.CountryModel;
 
 /**
- * "MapButton" class gives the positioning of the country
- *
+ * This class gives the positioning of the country
  * @author Karandeep
  */
 
