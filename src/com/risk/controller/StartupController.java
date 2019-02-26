@@ -15,13 +15,13 @@ import java.util.List;
  */
 public class StartupController implements ActionListener {
     private StartupView startUpView;
-    private List<CountryModel> countryList = new ArrayList<>();
-    private ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
+    private List<CountryModel> countryList;
+    private ArrayList<PlayerModel> listOfPlayers;
     private MapRiskModel mapRiskModel;
     private int numberOfPlayers;
-    private int[] noOfCountryForRuler = new int[5];
+    private int[] numberOfCountriesPerPlayer = new int[5];
     private String[] colorForRuler = new String[5];
-    private int[] totalArmiesPlayer = new int[5];
+    private int[] numberOfArmiesPerPlayer = new int[5];
     private int[] remainArmies = new int[5];
     private int loopValue = 0;
     private boolean armiesNull = false;
@@ -39,7 +39,7 @@ public class StartupController implements ActionListener {
         checkForOverallArmies();
         initial = 1;
 
-        if (armiesNull) {
+        if (!armiesNull) {
             while (listOfPlayers.get(loopValue).getRemainingNumberOfArmies() == 0) {
                 loopValue++;
                 if (loopValue > listOfPlayers.size()) {
@@ -65,11 +65,11 @@ public class StartupController implements ActionListener {
 
     public void allocateArmies() {
 
-        noOfCountryForRuler[0] = 0;
-        noOfCountryForRuler[1] = 0;
-        noOfCountryForRuler[2] = 0;
-        noOfCountryForRuler[3] = 0;
-        noOfCountryForRuler[4] = 0;
+        numberOfCountriesPerPlayer[0] = 0;
+        numberOfCountriesPerPlayer[1] = 0;
+        numberOfCountriesPerPlayer[2] = 0;
+        numberOfCountriesPerPlayer[3] = 0;
+        numberOfCountriesPerPlayer[4] = 0;
 
         colorForRuler[0] = "green";
         colorForRuler[1] = "grey";
@@ -78,47 +78,49 @@ public class StartupController implements ActionListener {
         colorForRuler[4] = "red";
 
         for (int i = 0; i < countryList.size(); i++) {
+            //Initializing players randomly
             int playerNumber = getRandomBetweenRange(1, numberOfPlayers);
             System.out.println("playerNumber " + playerNumber);
-            String namePlayer = "Player" + playerNumber;
-            PlayerModel tempMyPlayers = new PlayerModel(namePlayer, 0, 0, colorForRuler[playerNumber - 1]);
+            String PlayerName = "Player" + playerNumber;
+            PlayerModel tempMyPlayers = new PlayerModel(PlayerName, 0, 0, colorForRuler[playerNumber - 1]);
             countryList.get(i).setCountryOwner(tempMyPlayers);
             countryList.get(i).setNumberofArmies(1);
-            switch (namePlayer) {
+
+            switch (PlayerName) {
                 case "Player1":
-                    noOfCountryForRuler[0]++;
+                    numberOfCountriesPerPlayer[0]++;
                     break;
                 case "Player2":
-                    noOfCountryForRuler[1]++;
+                    numberOfCountriesPerPlayer[1]++;
                     break;
                 case "Player3":
-                    noOfCountryForRuler[2]++;
+                    numberOfCountriesPerPlayer[2]++;
                     break;
                 case "Player4":
-                    noOfCountryForRuler[3]++;
+                    numberOfCountriesPerPlayer[3]++;
                     break;
                 case "Player5":
-                    noOfCountryForRuler[4]++;
+                    numberOfCountriesPerPlayer[4]++;
                     break;
                 default:
                     break;
             }
-            System.out.println("player " + noOfCountryForRuler[0] + " " + noOfCountryForRuler[1] + " "
-                    + noOfCountryForRuler[2] + " " + noOfCountryForRuler[3]);
+            System.out.println("player " + numberOfCountriesPerPlayer[0] + " " + numberOfCountriesPerPlayer[1] + " "
+                    + numberOfCountriesPerPlayer[2] + " " + numberOfCountriesPerPlayer[3]);
         }
 
         for (int i = 0; i < numberOfPlayers; i++) {
-            if (noOfCountryForRuler[i] >= 3) {
-                int tempPlayerTrop = (noOfCountryForRuler[i] / 3);
-                totalArmiesPlayer[i] = noOfCountryForRuler[i] + (tempPlayerTrop - 1);
-                remainArmies[i] = totalArmiesPlayer[i] - noOfCountryForRuler[i];
+            if (numberOfCountriesPerPlayer[i] >= 3) {
+                int tempPlayerTrop = (numberOfCountriesPerPlayer[i] / 3);
+                numberOfArmiesPerPlayer[i] = numberOfCountriesPerPlayer[i] + (tempPlayerTrop - 1);
+                remainArmies[i] = numberOfArmiesPerPlayer[i] - numberOfCountriesPerPlayer[i];
             } else {
-                totalArmiesPlayer[i] = noOfCountryForRuler[i];
+                numberOfArmiesPerPlayer[i] = numberOfCountriesPerPlayer[i];
             }
         }
 
-        System.out.println("armies " + totalArmiesPlayer[0] + " " + totalArmiesPlayer[1] + " " + totalArmiesPlayer[2]
-                + " " + totalArmiesPlayer[3]);
+        System.out.println("armies " + numberOfArmiesPerPlayer[0] + " " + numberOfArmiesPerPlayer[1] + " " + numberOfArmiesPerPlayer[2]
+                + " " + numberOfArmiesPerPlayer[3]);
 
         assignPlayerModel();
         for (int i = 0; i < countryList.size(); i++) {
@@ -133,7 +135,7 @@ public class StartupController implements ActionListener {
     public void assignPlayerModel() {
         for (int i = 0; i < numberOfPlayers; i++) {
             listOfPlayers.get(i).setPlayerColor(colorForRuler[i]);
-            listOfPlayers.get(i).setNumberofArmies(totalArmiesPlayer[i]);
+            listOfPlayers.get(i).setNumberofArmies(numberOfArmiesPerPlayer[i]);
             listOfPlayers.get(i).setRemainingNumberOfArmies(remainArmies[i]);
         }
         for (int i = 0; i < listOfPlayers.size(); i++) {

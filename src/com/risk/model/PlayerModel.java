@@ -11,17 +11,15 @@ public class PlayerModel extends Observable {
     private int myPlayer;
 
 
-    public PlayerModel(String playerName, int numberOfArmies ,int remainingNumberOfArmies, String playerColor, int myPlayer) {
+    public PlayerModel(String playerName, int numberOfArmies, int remainingNumberOfArmies, String playerColor) {
         this.playerName = playerName;
         this.remainingNumberOfArmies = remainingNumberOfArmies;
-        //this.typeOfPlayer = typeOfPlayer;
         this.numberofArmies = numberOfArmies;
         this.playerColor = playerColor;
-        this.myPlayer = myPlayer;
 
     }
 
-    public PlayerModel(String nameOfPlayer, int i, int i1, String s) {
+    public PlayerModel() {
     }
 
     public String getPlayerName() {

@@ -18,8 +18,8 @@ import com.risk.model.PlayerModel;
 
 public class PlayerGameController implements ActionListener {
 
-    private ArrayList<PlayerModel> listOfPlayers = new ArrayList<PlayerModel>();
-    public MapRiskModel mapRiskModel = null;
+    public MapRiskModel mapRiskModel;
+    private ArrayList<PlayerModel> listOfPlayers;
 
     public PlayerGameController(MapRiskModel mapRiskModel, ArrayList<PlayerModel> listOfPlayers) {
         this.mapRiskModel = mapRiskModel;

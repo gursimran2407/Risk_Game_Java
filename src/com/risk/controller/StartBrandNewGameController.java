@@ -47,12 +47,12 @@ public class StartBrandNewGameController implements ActionListener {
             totalNumberOfPlayersInGame = (int) brandNewGameViewobj.numberOfPlayersComboBox.getSelectedItem(); // number of players
 
             if (mapRiskModelobj.getCountryModelList().size() > totalNumberOfPlayersInGame) {
-                System.out.println("Number of players");
-                String NamePlayer = "";
+                System.out.println("Number of players: " + totalNumberOfPlayersInGame);
+                String NamePlayer;
                 for (int i = 0; i < totalNumberOfPlayersInGame; i++) {
                     NamePlayer = "Player" + (i + 1);
-                    PlayerModel playerModelobj = new PlayerModel(NamePlayer, 0, 0, "");
-                    listOfPlayers.add(playerModelobj);
+                    PlayerModel playerModel = new PlayerModel(NamePlayer, 0, 0, "");
+                    listOfPlayers.add(playerModel);
                 }
                 new StartupController(listOfPlayers, mapRiskModelobj);
                 this.brandNewGameViewobj.dispose();
