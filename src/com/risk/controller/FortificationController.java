@@ -2,8 +2,8 @@ package com.risk.controller;
 
 import com.risk.gameplayrequirements.MapValidation;
 import com.risk.model.MapRiskModel;
-import com.risk.view.Fortification;
 import com.risk.model.CountryModel;
+import com.risk.view.FortificationView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,7 +20,7 @@ import java.awt.event.ItemListener;
 
 public class FortificationController implements ActionListener, ItemListener {
 
-    private Fortification theFortificationView;
+    private FortificationView theFortificationView;
     private MapRiskModel mapRiskModel = null;
 
     /**
@@ -30,7 +30,7 @@ public class FortificationController implements ActionListener, ItemListener {
      */
     public FortificationController(MapRiskModel mapRiskModel) {
         this.mapRiskModel = mapRiskModel;
-        theFortificationView = new Fortification(this.mapRiskModel);
+        theFortificationView = new FortificationView(this.mapRiskModel);
         theFortificationView.setActionListener(this);
         theFortificationView.setItemListener(this);
         theFortificationView.setVisible(true);

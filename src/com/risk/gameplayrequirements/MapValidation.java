@@ -169,7 +169,7 @@ public class MapValidation {
 
             int n;
 
-            List<Integer> m = new ArrayList<Integer>();
+            List<Integer> m = new ArrayList<>();
             for (int l = 0; l < mapRiskModel.getCountryModelList().get(s).getConnectedCountryList().size(); l++) {
                 m.add(mapOfCountries.get(mapRiskModel.getCountryModelList().get(s).getConnectedCountryList().get(l)));
             }

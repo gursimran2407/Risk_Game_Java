@@ -192,34 +192,34 @@ public class StartupView extends JFrame implements ViewInterface {
         }
     }
 
-    public void paint(final Graphics g) {
-
-        super.paint(g);
-
-        Graphics2D g2 = (Graphics2D) g;
-
-        Point[] connectorPoints = new Point[this.mapRiskModel.getCountryModelList().size()];
-
-        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
-            connectorPoints[i] = SwingUtilities.convertPoint(this.mapRiskModel.getCountryModelList().get(i), 0, 0, this);
-
-        }
-
-        for (int k = 0; k < this.mapRiskModel.getCountryModelList().size(); k++) {
-            if (this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
-                ArrayList<CountryModel> neighbourCountries = this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList();
-
-                for (int j = 0; j < neighbourCountries.size(); j++) {
-                    for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++)
-                        if (neighbourCountries.get(j).equals(this.mapRiskModel.getCountryModelList().get(i)))
-                            g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
-                                    connectorPoints[k].y + 25);
-
-                }
-            }
-        }
-
-    }
+//    public void paint(final Graphics g) {
+//
+//        super.paint(g);
+//
+//        Graphics2D g2 = (Graphics2D) g;
+//
+//        Point[] connectorPoints = new Point[this.mapRiskModel.getCountryModelList().size()];
+//
+//        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
+//            connectorPoints[i] = SwingUtilities.convertPoint(this.mapRiskModel.getCountryModelList().get(i), 0, 0, this);
+//
+//        }
+//
+//        for (int k = 0; k < this.mapRiskModel.getCountryModelList().size(); k++) {
+//            if (this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
+//                ArrayList<CountryModel> neighbourCountries = this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList();
+//
+//                for (int j = 0; j < neighbourCountries.size(); j++) {
+//                    for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++)
+//                        if (neighbourCountries.get(j).equals(this.mapRiskModel.getCountryModelList().get(i)))
+//                            g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
+//                                    connectorPoints[k].y + 25);
+//
+//                }
+//            }
+//        }
+//
+//    }
 
     public class CountryViewRenderer extends BasicComboBoxRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,

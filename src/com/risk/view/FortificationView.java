@@ -1,7 +1,9 @@
 package com.risk.view;
 
 import com.risk.helperInterfaces.ViewInterface;
-import com.risk.model.*;
+import com.risk.model.CountryModel;
+import com.risk.model.MapRiskModel;
+import com.risk.model.PlayerModel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -14,11 +16,11 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
- * @author Gursimran Singh
+ * @author gursimransingh
  */
-public class Fortification extends JFrame implements ViewInterface {
+public class FortificationView extends JFrame implements ViewInterface {
 
-    public MapRiskModel mapRiskModel;
+    public MapRiskModel gameMapModel;
     public PlayerModel playerModel;
 
     public JPanel welcomePanel;
@@ -36,20 +38,14 @@ public class Fortification extends JFrame implements ViewInterface {
     public JComboBox<Object> fromCountryListComboBox;
     public JComboBox<Object> toCountryListComboBox;
     public Object[] fromCountryListArray;
-    private CountryViewRenderer fromCountriesViewRenderer;
     public Object[] toCountryListArray;
-    private CountryViewRenderer toCountriesViewRenderer;
-
     public JButton[] button;
+    private CountryViewRenderer fromCountriesViewRenderer;
+    private CountryViewRenderer toCountriesViewRenderer;
     private ActionListener actionListener;
 
-    /**
-     * Constructor of Fortification
-     *
-     * @param mapRiskModel
-     */
-    public Fortification(MapRiskModel mapRiskModel) {
-        this.mapRiskModel = mapRiskModel;
+    public FortificationView(MapRiskModel gameMapModel) {
+        this.gameMapModel = gameMapModel;
         this.setTitle("Fortification Phase");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(300, 200);
@@ -65,20 +61,35 @@ public class Fortification extends JFrame implements ViewInterface {
         graphicPanel.setLayout(null);
 
         this.add(welcomePanel);
-        this.playerModel = this.mapRiskModel.getPlayerTurn();
+        this.playerModel = this.gameMapModel.getPlayerTurn();
         this.moveButton = new JButton("Move");
-        updateWindow(this.mapRiskModel, this.playerModel);
+        updateWindow(this.gameMapModel, this.playerModel);
         welcomePanel.setLayout(null);
         graphicPanel.setLayout(null);
     }
 
-    /**
-     * Updates the window based on new data in fortification phase
-     *
-     * @param mapRiskModel
-     * @param playerModel
-     */
-    public void updateWindow(MapRiskModel mapRiskModel, PlayerModel playerModel) {
+    public static Color stringToColor(final String value) {
+        if (value == null) {
+            return Color.black;
+        }
+        try {
+            // get color by hex or octal value
+            return Color.decode(value);
+        } catch (NumberFormatException nfe) {
+            // if we can't decode lets try to get it by name
+            try {
+                // try to get a color by name using reflection
+                final Field f = Color.class.getField(value);
+
+                return (Color) f.get(null);
+            } catch (Exception ce) {
+                // if we can't get any color return black
+                return Color.black;
+            }
+        }
+    }
+
+    public void updateWindow(MapRiskModel gameMapModel, PlayerModel playerModel) {
 
         welcomePanel.removeAll();
         graphicPanel.removeAll();
@@ -86,7 +97,7 @@ public class Fortification extends JFrame implements ViewInterface {
         Font mediumFont = new Font("Serif", Font.BOLD, 14);
         Font smallFont = new Font("Serif", Font.BOLD, 12);
 
-        this.mapRiskModel = mapRiskModel;
+        this.gameMapModel = gameMapModel;
         this.playerModel = playerModel;
 
         this.welcomeLabel = new JLabel("It's " + playerModel.getPlayerName() + "'s turn");
@@ -100,17 +111,17 @@ public class Fortification extends JFrame implements ViewInterface {
 
         // from country comboBox
         ArrayList<CountryModel> fromListOfCountries = new ArrayList<CountryModel>();
-        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
-            if (playerModel.getPlayerName().equals(this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().getPlayerName())
-                    && this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies() >= 2) {
-                fromListOfCountries.add(this.mapRiskModel.getCountryModelList().get(i));
+        for (int i = 0; i < this.gameMapModel.getCountryModelList().size(); i++) {
+            if (playerModel.getPlayerName().equals(this.gameMapModel.getCountryModelList().get(i).getCountryOwner().getPlayerName())
+                    && this.gameMapModel.getCountryModelList().get(i).getNumberofArmies() >= 2) {
+                fromListOfCountries.add(this.gameMapModel.getCountryModelList().get(i));
             }
         }
         fromCountriesViewRenderer = new CountryViewRenderer();
         fromCountryListArray = fromListOfCountries.toArray();
 
         fromCountryListComboBox = new JComboBox(fromCountryListArray);
-        fromCountryListComboBox.setSelectedIndex(this.mapRiskModel.getSelectedComboBoxIndex());
+        fromCountryListComboBox.setSelectedIndex(this.gameMapModel.getSelectedComboBoxIndex());
         welcomePanel.add(this.fromCountryListComboBox);
 
         this.toCountryListLabel = new JLabel("To Country :");
@@ -119,10 +130,10 @@ public class Fortification extends JFrame implements ViewInterface {
 
         // to country comboBox
         ArrayList<CountryModel> toListOfCountries = new ArrayList<CountryModel>();
-        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
+        for (int i = 0; i < this.gameMapModel.getCountryModelList().size(); i++) {
             if (playerModel.getPlayerName()
-                    .equals(this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().getPlayerName())) {
-                toListOfCountries.add(this.mapRiskModel.getCountryModelList().get(i));
+                    .equals(this.gameMapModel.getCountryModelList().get(i).getCountryOwner().getPlayerName())) {
+                toListOfCountries.add(this.gameMapModel.getCountryModelList().get(i));
             }
         }
         toCountriesViewRenderer = new CountryViewRenderer();
@@ -159,21 +170,21 @@ public class Fortification extends JFrame implements ViewInterface {
         this.moveButton.setBounds(1300, 330, 150, 25);
         welcomePanel.add(this.moveButton);
 
-        int n = this.mapRiskModel.getCountryModelList().size();
+        int n = this.gameMapModel.getCountryModelList().size();
         button = new JButton[n];
 
         // graphicPanel.add(button[0]);
-        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
+        for (int i = 0; i < this.gameMapModel.getCountryModelList().size(); i++) {
 
             button[i] = new JButton();
-            button[i].setText(this.mapRiskModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
-            button[i].setBackground(this.mapRiskModel.getCountryModelList().get(i).getBackgroundColor());
-            button[i].setToolTipText("Troops: " + this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
+            button[i].setText(this.gameMapModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
+            button[i].setBackground(this.gameMapModel.getCountryModelList().get(i).getBackgroundColor());
+            button[i].setToolTipText("Troops: " + this.gameMapModel.getCountryModelList().get(i).getNumberofArmies());
             button[i].setBorder(
-                    new LineBorder(stringToColor(this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().getPlayerColor()), 3));
+                    new LineBorder(stringToColor(this.gameMapModel.getCountryModelList().get(i).getCountryOwner().getPlayerColor()), 3));
             button[i].setOpaque(true);
-            button[i].setBounds(this.mapRiskModel.getCountryModelList().get(i).getXPosition() * 2,
-                    this.mapRiskModel.getCountryModelList().get(i).getYPosition() * 2, 50, 50);
+            button[i].setBounds(this.gameMapModel.getCountryModelList().get(i).getXPosition() * 2,
+                    this.gameMapModel.getCountryModelList().get(i).getYPosition() * 2, 50, 50);
 
             graphicPanel.add(button[i]);
         }
@@ -183,32 +194,27 @@ public class Fortification extends JFrame implements ViewInterface {
 
     }
 
-    /**
-     * Paint the button and links in the panel
-     *
-     * @see java.awt.Window#paint(java.awt.Graphics)
-     */
     public void paint(final Graphics g) {
 
         super.paint(g);
 
         Graphics2D g2 = (Graphics2D) g;
 
-        Point[] connectorPoints = new Point[this.mapRiskModel.getCountryModelList().size()];
+        Point[] connectorPoints = new Point[this.gameMapModel.getCountryModelList().size()];
 
-        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
-            connectorPoints[i] = SwingUtilities.convertPoint(this.mapRiskModel.getCountryModelList().get(i), 0, 0, this);
+        for (int i = 0; i < this.gameMapModel.getCountryModelList().size(); i++) {
+            connectorPoints[i] = SwingUtilities.convertPoint(this.gameMapModel.getCountryModelList().get(i), 0, 0, this);
 
         }
 
-        for (int k = 0; k < this.mapRiskModel.getCountryModelList().size(); k++) {
-            if (this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
-                ArrayList<CountryModel> neighbourCountries = (ArrayList<CountryModel>) this.mapRiskModel.getCountryModelList()
+        for (int k = 0; k < this.gameMapModel.getCountryModelList().size(); k++) {
+            if (this.gameMapModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
+                ArrayList<CountryModel> neighbourCountries = (ArrayList<CountryModel>) this.gameMapModel.getCountryModelList()
                         .get(k).getConnectedCountryList();
 
                 for (int j = 0; j < neighbourCountries.size(); j++) {
-                    for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++)
-                        if (neighbourCountries.get(j).equals(this.mapRiskModel.getCountryModelList().get(i)))
+                    for (int i = 0; i < this.gameMapModel.getCountryModelList().size(); i++)
+                        if (neighbourCountries.get(j).equals(this.gameMapModel.getCountryModelList().get(i)))
                             g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
                                     connectorPoints[k].y + 25);
 
@@ -218,11 +224,27 @@ public class Fortification extends JFrame implements ViewInterface {
 
     }
 
-    /**
-     * Provides a dynamic comboBox of country names
-     *
-     * @author Karandeep
-     */
+    @Override
+    public void setActionListener(ActionListener actionListener) {
+        this.actionListener = actionListener;
+        this.moveButton.addActionListener(actionListener);
+        this.fromCountryListComboBox.addActionListener(actionListener);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+        this.updateWindow(((MapRiskModel) o), this.playerModel);
+        this.revalidate();
+        this.repaint();
+
+    }
+
+    public void setItemListener(ItemListener itemListener) {
+        this.fromCountryListComboBox.addItemListener(itemListener);
+
+    }
+
     public class CountryViewRenderer extends BasicComboBoxRenderer {
 
         /*
@@ -242,55 +264,6 @@ public class Fortification extends JFrame implements ViewInterface {
 
             return this;
         }
-    }
-    // }
-
-    /**
-     *
-     */
-    @Override
-    public void update(Observable obs, Object arg) {
-
-        this.updateWindow(((MapRiskModel) obs), this.playerModel);
-        this.revalidate();
-        this.repaint();
-
-    }
-
-    /**
-     * Sets "moveButton" action
-     */
-    @Override
-    public void setActionListener(ActionListener actionListener) {
-        this.actionListener = actionListener;
-        this.moveButton.addActionListener(actionListener);
-        this.fromCountryListComboBox.addActionListener(actionListener);
-    }
-
-    public static Color stringToColor(final String value) {
-        if (value == null) {
-            return Color.black;
-        }
-        try {
-            // get color by hex or octal value
-            return Color.decode(value);
-        } catch (NumberFormatException nfe) {
-            // if we can't decode lets try to get it by name
-            try {
-                // try to get a color by name using reflection
-                final Field f = Color.class.getField(value);
-
-                return (Color) f.get(null);
-            } catch (Exception ce) {
-                // if we can't get any color return black
-                return Color.black;
-            }
-        }
-    }
-
-    public void setItemListener(ItemListener itemListener) {
-        this.fromCountryListComboBox.addItemListener(itemListener);
-
     }
 
 }

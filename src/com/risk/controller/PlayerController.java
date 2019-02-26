@@ -2,7 +2,6 @@ package com.risk.controller;
 
 import com.risk.model.GamePlayModel;
 import com.risk.view.Attack;
-import com.risk.view.Fortification;
 import com.risk.view.ReinforcementView;
 
 

@@ -52,7 +52,7 @@ public class StartupController implements ActionListener {
         checkForOverallArmies();
         initial = 1;
 
-        if (armiesNull == false) {
+        if (!armiesNull) {
             while (listOfPlayers.get(loopValue).getRemainingNumberOfArmies() == 0) {
                 loopValue++;
                 if (loopValue > listOfPlayers.size()) {
