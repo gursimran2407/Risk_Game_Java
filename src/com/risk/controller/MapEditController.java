@@ -13,6 +13,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
+ * In MapEditController, the data flow into model object and updates the
+ * view whenever data changes.
  * @author gursimransingh
  */
 public class MapEditController implements ActionListener {
@@ -27,6 +29,9 @@ public class MapEditController implements ActionListener {
     private ArrayList<ContinentModel> updateContinentModelList;
     private ContinentModel updatedContinentModel;
 
+    /**
+     * Constructor initializes values and sets the screen to visible
+     */
 
     public MapEditController() {
         file = openFileToEdit();
@@ -45,7 +50,9 @@ public class MapEditController implements ActionListener {
         mapEditView.setVisible(true);
         mapRiskModel.addObserver(mapEditView);
     }
-
+    /**
+     * @param e Performs action whenever there is a change in MapEditView class
+     */
 
     @Override
     public void actionPerformed(ActionEvent e) {
