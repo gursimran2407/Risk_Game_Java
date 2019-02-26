@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * In MapConutryConnectController, the data flow into model object and updates the
+ * In MapCountryConnectController, the data flow into model object and updates the
  * view whenever data changes.
  * @author gursimransingh
  */
