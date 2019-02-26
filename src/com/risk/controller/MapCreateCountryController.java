@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 
+ * Map country Controller
  * @author Namita Faujdar 
  */
 
@@ -28,6 +28,14 @@ public class MapCreateCountryController implements ActionListener {
     private HashMap<String, Color> d_colorMapList;
     private  HashMap<String, Integer> d_indexMap;
 
+    /**
+     * Constructor initializes values and sets the screen to visible
+     * @param new_mapRiskModel
+     * @param new_mapPointList
+     * @param new_colorMapList
+     * @param new_indexMap
+     */
+
     public MapCreateCountryController(MapRiskModel new_mapRiskModel, HashMap<String, ArrayList<Point>> new_mapPointList,
                                    HashMap<String, Color> new_colorMapList, HashMap<String, Integer> new_indexMap) {
         d_mapRiskModel = new_mapRiskModel;
@@ -39,7 +47,10 @@ public class MapCreateCountryController implements ActionListener {
         d_mapRiskModel.addObserver(d_mapCreateCountryView);
         d_mapCreateCountryView.setActionListener(this);
     }
-
+    /**
+     * @param e Performs action whenever there is a change in MapCreateCountryView class
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
