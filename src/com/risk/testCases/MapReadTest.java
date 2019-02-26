@@ -1,3 +1,4 @@
+/*
 package com.risk.testCases;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,4 +20,4 @@ class MapReadTest {
     @org.junit.jupiter.api.Test
     void setReadFile() {
     }
-}
+}*/

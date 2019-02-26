@@ -16,25 +16,21 @@ public class MainGameView extends JFrame implements ViewInterface {
     public JButton editMapButton = new JButton("Edit Map");
     public JButton playMapButton = new JButton("Play");
     public JButton exitButton = new JButton("Exit");
-    MainGameView mainGameView;
-    private String welcomeText = "<html>Welcome to the risky game of \"RISK\"</html>";
-    private JLabel welcomeLabel = new JLabel(welcomeText);
-    private String questionText = "<html>Select the required Option.</html>";
-    private JLabel questionLabel = new JLabel(questionText);
 
     /**
      * Constructor to create welcome screen that is start of the game.
      */
     public MainGameView() throws HeadlessException {
+        JLabel welcomeLabel = new JLabel("<html><font color='red'>Welcome to the risky game of \"RISK\"</font></html>");
+        JLabel questionLabel = new JLabel("<html><font color='red'>Select the required Option.</font></html>");
         JPanel panel = new JPanel();
         this.setName("Risk Game");
-        this.setName("RISK GAME");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(300, 200);
-        this.setSize(800, 700);
+        this.setSize(700, 500);
         this.setResizable(false);
         this.setVisible(false);
-
+        panel.setBackground(Color.CYAN);
         panel.setLayout(null);
         this.add(panel);
 
@@ -51,20 +47,24 @@ public class MainGameView extends JFrame implements ViewInterface {
         questionLabel.setBounds(100, 50, 500, 200);
 
         createMapButton.setFont(smallFont);
+        createMapButton.setBackground(Color.GRAY);
         panel.add(createMapButton);
         createMapButton.setBounds(100, 200, 200, 40);
 
         editMapButton.setFont(smallFont);
+        editMapButton.setBackground(Color.GRAY);
         panel.add(editMapButton);
-        editMapButton.setBounds(100, 300, 200, 40);
+        editMapButton.setBounds(350, 200, 200, 40);
 
         playMapButton.setFont(smallFont);
+        playMapButton.setBackground(Color.GRAY);
         panel.add(playMapButton);
-        playMapButton.setBounds(100, 400, 200, 40);
+        playMapButton.setBounds(100, 300, 200, 40);
 
         exitButton.setFont(smallFont);
+        exitButton.setBackground(Color.GRAY);
         panel.add(exitButton);
-        exitButton.setBounds(100, 500, 200, 40);
+        exitButton.setBounds(350, 300, 200, 40);
 
     }
 
