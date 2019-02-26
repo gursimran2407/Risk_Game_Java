@@ -72,7 +72,7 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
             if (!(mapValidation.emptyLinkCountryValidation(mapRiskModel))) {
                 if ((!mapValidation.checkInterlinkedContinent(mapRiskModel))) {
                     if (!(mapValidation.emptyContinentValidation(mapRiskModel))) {
-                        if (!(mapValidation.continentLinkValidation(mapRiskModel))) {
+                        if (!(mapValidation.unlinkedContinentValidation(mapRiskModel))) {
 
                             System.out.println(" All the map validations are correct");
                             filename = JOptionPane.showInputDialog("File Name");

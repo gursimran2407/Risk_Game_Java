@@ -10,16 +10,23 @@ import java.util.*;
  * @author gursimransingh
  */
 public class MapValidation {
-    public boolean continentLinkValidation(MapRiskModel mapRiskModel) {
+
+    /**
+     * Check on un linked Continent Validation
+     *
+     * @param mapModel
+     * @return
+     */
+    public boolean unlinkedContinentValidation(MapRiskModel mapModel) {
         boolean flag = true;
-        List<CountryModel> listOfCountrys = mapRiskModel.getCountryModelList();
+        List<CountryModel> listOfCountrys = mapModel.getCountryModelList();
         List<CountryModel> listOfLinkedCountries;
 
         HashMap<CountryModel, CountryModel> listOfCountriesInContinent = new HashMap<CountryModel, CountryModel>();
 
-        for (int i = 0; i < mapRiskModel.getContinentModelList().size(); i++) {
+        for (int i = 0; i < mapModel.getContinentModelList().size(); i++) {
             for (int j = 0; j < listOfCountrys.size(); j++) {
-                if (mapRiskModel.getContinentModelList().get(i).getContinentName()
+                if (mapModel.getContinentModelList().get(i).getContinentName()
                         .equals(listOfCountrys.get(j).getContinentName())) {
                     listOfCountriesInContinent.put(listOfCountrys.get(j), listOfCountrys.get(j));
                 }
@@ -45,9 +52,14 @@ public class MapValidation {
         return flag;
     }
 
-
-    public boolean emptyLinkCountryValidation(MapRiskModel mapRiskModel) {
-        List<CountryModel> listOfCountrys = mapRiskModel.getCountryModelList();
+    /**
+     * Check on empty link Country Validation
+     *
+     * @param mapModel
+     * @return boolean
+     */
+    public boolean emptyLinkCountryValidation(MapRiskModel mapModel) {
+        List<CountryModel> listOfCountrys = mapModel.getCountryModelList();
         List<CountryModel> linkedCountry;
         for (int j = 0; j < listOfCountrys.size(); j++) {
             linkedCountry = listOfCountrys.get(j).getConnectedCountryList();
@@ -58,30 +70,35 @@ public class MapValidation {
         return false;
     }
 
-
+    /**
+     * Check on Inter Linked Contient
+     *
+     * @param mapModel
+     * @return boolean
+     */
     public boolean checkInterlinkedContinent(MapRiskModel mapModel) {
 
         String continent = "";
         List<ContinentModel> listOfContinents = mapModel.getContinentModelList();
-        List<CountryModel> listOfCountries = mapModel.getCountryModelList();
+        List<CountryModel> listOfCountrys = mapModel.getCountryModelList();
         List<String> Countryname = new ArrayList<String>();
-
+        ;
         int numb;
         boolean emptyLinkContinent = false;
         for (int j = 0; j < listOfContinents.size(); j++) {
             continent = listOfContinents.get(j).getContinentName();
             numb = 0;
-            for (int i = 0; i < listOfCountries.size(); i++) {
-                if (continent.equals(listOfCountries.get(i).getContinentName())) {
-                    Countryname.add(listOfCountries.get(i).getCountryName());
+            for (int i = 0; i < listOfCountrys.size(); i++) {
+                if (continent.equals(listOfCountrys.get(i).getContinentName())) {
+                    Countryname.add(listOfCountrys.get(i).getCountryName());
                 }
             }
             for (int i = 0; i < Countryname.size(); i++) {
-                for (int k = 0; k < listOfCountries.size(); k++) {
-                    if (!continent.equals(listOfCountries.get(k).getContinentName())) {
-                        for (int a = 0; a < listOfCountries.get(k).getConnectedCountryList().size(); a++) {
+                for (int k = 0; k < listOfCountrys.size(); k++) {
+                    if (!continent.equals(listOfCountrys.get(k).getContinentName())) {
+                        for (int a = 0; a < listOfCountrys.get(k).getConnectedCountryList().size(); a++) {
                             if (Countryname.get(i)
-                                    .equals(listOfCountries.get(k).getConnectedCountryList().get(a).getCountryName())) {
+                                    .equals(listOfCountrys.get(k).getConnectedCountryList().get(a).getCountryName())) {
                                 numb++;
                             }
                         }
@@ -100,20 +117,20 @@ public class MapValidation {
     /**
      * Check on empty Continent Validation
      *
-     * @param mapRiskModel
+     * @param mapModel
      * @return boolean
      */
-    public boolean emptyContinentValidation(MapRiskModel mapRiskModel) {
-        List<ContinentModel> listOfContinents = mapRiskModel.getContinentModelList();
-        List<CountryModel> listOfCountries = mapRiskModel.getCountryModelList();
+    public boolean emptyContinentValidation(MapRiskModel mapModel) {
+        List<ContinentModel> listOfContinents = mapModel.getContinentModelList();
+        List<CountryModel> listOfCountrys = mapModel.getCountryModelList();
         String continentName = " ";
         int numb;
 
         for (int i = 0; i < listOfContinents.size(); i++) {
             continentName = listOfContinents.get(i).getContinentName();
             numb = 0;
-            for (int j = 0; j < listOfCountries.size(); j++) {
-                if (continentName.equals(listOfCountries.get(j).getContinentName())) {
+            for (int j = 0; j < listOfCountrys.size(); j++) {
+                if (continentName.equals(listOfCountrys.get(j).getContinentName())) {
                     numb++;
                 }
             }
@@ -152,10 +169,10 @@ public class MapValidation {
     }
 
     // prints BFS traversal from a given source s
-    Boolean isReachable(int s, int d, MapRiskModel mapRiskModel, HashMap<CountryModel, Integer> mapOfCountries) {
+    Boolean isReachable(int s, int d, MapRiskModel gameMapModel, HashMap<CountryModel, Integer> mapOfCountries) {
         LinkedList<Integer> temp;
 
-        boolean visited[] = new boolean[mapRiskModel.getCountryModelList().size()];
+        boolean visited[] = new boolean[gameMapModel.getCountryModelList().size()];
 
         // Create a queue for BFS
         LinkedList<Integer> queue = new LinkedList<Integer>();
@@ -169,9 +186,9 @@ public class MapValidation {
 
             int n;
 
-            List<Integer> m = new ArrayList<>();
-            for (int l = 0; l < mapRiskModel.getCountryModelList().get(s).getConnectedCountryList().size(); l++) {
-                m.add(mapOfCountries.get(mapRiskModel.getCountryModelList().get(s).getConnectedCountryList().get(l)));
+            List<Integer> m = new ArrayList<Integer>();
+            for (int l = 0; l < gameMapModel.getCountryModelList().get(s).getConnectedCountryList().size(); l++) {
+                m.add(mapOfCountries.get(gameMapModel.getCountryModelList().get(s).getConnectedCountryList().get(l)));
             }
 
             i = m.listIterator();
@@ -196,4 +213,5 @@ public class MapValidation {
         // If BFS is complete without visited d
         return false;
     }
+
 }
