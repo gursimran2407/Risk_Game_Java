@@ -25,45 +25,46 @@ public class ReinforcementView extends JFrame implements ViewInterface {
     public MapRiskModel mapRiskModel;
     public PlayerModel playerModel;
 
-    public JPanel panelWelcome;
-    public JPanel panelGraphic;
+    public JPanel welcomePanel;
+    public JPanel graphicPanel;
 
-    public JLabel labelWelcome;
-    public JLabel labelNumberOfArmies;
+    public JLabel welcomeLabel;
+    public JLabel noOfTroopsLabel;
 
-    public JComboBox<Integer> noOfArmiesComboBox;
-    public JButton buttonAdd;
+    public JComboBox<Integer> numOfTroopsComboBox;
+    public JButton addButton;
+    public JLabel listOfCountriesLabel;
 
     public JLabel countryListLabel;
     public JComboBox<Object> countryListComboBox;
-    public Object[] countryList;
-    private CountryViewRenderer countryView;
+    public Object[] countryListArray;
+    private CountryViewRenderer countriesViewRenderer;
 
     public JButton[] button;
 
-    public ReinforcementView(MapRiskModel new_mapRiskModel) {
-        mapRiskModel = new_mapRiskModel;
+    public ReinforcementView(MapRiskModel mapRiskModel) {
+        this.mapRiskModel = mapRiskModel;
         this.setTitle("Reinforcement Phase");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(300, 200);
         this.setSize(1600, 1000);
         this.setResizable(false);
         this.setVisible(false);
-        buttonAdd = new JButton("Add");
-        panelWelcome = new JPanel();
-        panelGraphic = new JPanel();
-        this.add(panelGraphic);
-        panelGraphic.setSize(1200, 1000);
-        panelGraphic.setBackground(Color.WHITE);
+        this.addButton = new JButton("Add");
+        welcomePanel = new JPanel();
+        graphicPanel = new JPanel();
+        this.add(graphicPanel);
+        graphicPanel.setSize(1200, 1000);
+        graphicPanel.setBackground(Color.WHITE);
 
-        buttonAdd = new JButton("Add");
-        this.add(panelWelcome);
+        this.addButton = new JButton("Add");
+        this.add(welcomePanel);
 
-        playerModel = mapRiskModel.getPlayerTurn();
-        labelWelcome = new JLabel("It's " + playerModel.getPlayerName() + "'s turn");
+        this.playerModel = this.mapRiskModel.getPlayerTurn();
+        this.welcomeLabel = new JLabel("It's " + playerModel.getPlayerName() + "'s turn");
 
-        panelWelcome.setLayout(null);
-        panelGraphic.setLayout(null);
+        welcomePanel.setLayout(null);
+        graphicPanel.setLayout(null);
 
         updateWindow(mapRiskModel, playerModel);
     }
@@ -72,76 +73,76 @@ public class ReinforcementView extends JFrame implements ViewInterface {
      * This updateWindow method is called whenever the model is updated. It updates
      * the Screen for Reinforcement Phase
      *
-     * @param new_mapRiskModel object of MapRiskModel
-     * @param playerModel object of PlayerModel
+     * @param mapRiskModel
+     * @param playerModel
      */
-    public void updateWindow(MapRiskModel new_mapRiskModel, PlayerModel playerModel) {
+    public void updateWindow(MapRiskModel mapRiskModel, PlayerModel playerModel) {
 
         Font largeFont = new Font("Serif", Font.BOLD, 18);
-        /*Font mediumFont = new Font("Serif", Font.BOLD, 14);
-        Font smallFont = new Font("Serif", Font.BOLD, 12);*/
+        Font mediumFont = new Font("Serif", Font.BOLD, 14);
+        Font smallFont = new Font("Serif", Font.BOLD, 12);
 
-        mapRiskModel = new_mapRiskModel;
-        this.playerModel = mapRiskModel.getPlayerTurn();
+        this.mapRiskModel = mapRiskModel;
+        this.playerModel = this.mapRiskModel.getPlayerTurn();
 
-        labelWelcome.setBounds(1300, 80, 300, 25);
-        labelWelcome.setFont(largeFont);
-        panelWelcome.add(labelWelcome);
+        welcomeLabel.setBounds(1300, 80, 300, 25);
+        welcomeLabel.setFont(largeFont);
+        welcomePanel.add(welcomeLabel);
 
-        this.labelNumberOfArmies = new JLabel("Number of Troops :");
-        labelNumberOfArmies.setBounds(1300, 140, 150, 25);
-        panelWelcome.add(labelNumberOfArmies);
+        this.noOfTroopsLabel = new JLabel("Number of Troops :");
+        noOfTroopsLabel.setBounds(1300, 140, 150, 25);
+        welcomePanel.add(noOfTroopsLabel);
 
-        Integer[] troops = new Integer[mapRiskModel.getPlayerTurn().getNumberofArmies()];
-        for (int i = 0; i < mapRiskModel.getPlayerTurn().getNumberofArmies(); i++) {
+        Integer[] troops = new Integer[this.mapRiskModel.getPlayerTurn().getNumberofArmies()];
+        for (int i = 0; i < this.mapRiskModel.getPlayerTurn().getNumberofArmies(); i++) {
             troops[i] = i + 1;
         }
 
-        noOfArmiesComboBox = new JComboBox(troops);
-        noOfArmiesComboBox.setBounds(1300, 170, 150, 25);
-        panelWelcome.add(noOfArmiesComboBox);
+        numOfTroopsComboBox = new JComboBox(troops);
+        numOfTroopsComboBox.setBounds(1300, 170, 150, 25);
+        welcomePanel.add(numOfTroopsComboBox);
 
         this.countryListLabel = new JLabel("Select Country :");
         countryListLabel.setBounds(1300, 230, 150, 25);
-        panelWelcome.add(this.countryListLabel);
+        welcomePanel.add(this.countryListLabel);
 
         ArrayList<CountryModel> listOfCountries = new ArrayList<CountryModel>();
-        for (int i = 0; i < mapRiskModel.getCountryModelList().size(); i++) {
+        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
             if (playerModel.getPlayerName()
-                    .equals(mapRiskModel.getCountryModelList().get(i).getCountryOwner().getPlayerName())) {
-                listOfCountries.add(mapRiskModel.getCountryModelList().get(i));
+                    .equals(this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().getPlayerName())) {
+                listOfCountries.add(this.mapRiskModel.getCountryModelList().get(i));
             }
         }
 
-        countryView = new CountryViewRenderer();
-        countryList = listOfCountries.toArray();
-        countryListComboBox = new JComboBox(countryList);
-        panelWelcome.add(this.countryListComboBox);
+        countriesViewRenderer = new CountryViewRenderer();
+        countryListArray = listOfCountries.toArray();
+        countryListComboBox = new JComboBox(countryListArray);
+        welcomePanel.add(this.countryListComboBox);
 
-        if (countryList.length > 0) {
-            countryListComboBox.setRenderer(countryView);
+        if (countryListArray.length > 0) {
+            countryListComboBox.setRenderer(countriesViewRenderer);
         }
         countryListComboBox.setBounds(1300, 260, 150, 25);
 
-        this.buttonAdd.setBounds(1300, 300, 150, 25);
-        panelWelcome.add(this.buttonAdd);
+        this.addButton.setBounds(1300, 300, 150, 25);
+        welcomePanel.add(this.addButton);
 
-        int n = mapRiskModel.getCountryModelList().size();
+        int n = this.mapRiskModel.getCountryModelList().size();
         button = new JButton[n];
 
-        for (int i = 0; i < mapRiskModel.getCountryModelList().size(); i++) {
+        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
 
             button[i] = new JButton();
-            button[i].setText(mapRiskModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
-            button[i].setBackground(mapRiskModel.getCountryModelList().get(i).getBackgroundColor());
-            button[i].setToolTipText("Troops: " + mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
+            button[i].setText(this.mapRiskModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
+            button[i].setBackground(this.mapRiskModel.getCountryModelList().get(i).getBackgroundColor());
+            button[i].setToolTipText("Troops: " + this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
             button[i].setBorder(
-                    new LineBorder(stringToColor(mapRiskModel.getCountryModelList().get(i).getCountryOwner().getPlayerColor()), 3));
+                    new LineBorder(stringToColor(this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().getPlayerColor()), 3));
             button[i].setOpaque(true);
-            button[i].setBounds(mapRiskModel.getCountryModelList().get(i).getXPosition() * 2,
-                    mapRiskModel.getCountryModelList().get(i).getYPosition() * 2, 50, 50);
+            button[i].setBounds(this.mapRiskModel.getCountryModelList().get(i).getXPosition() * 2,
+                    this.mapRiskModel.getCountryModelList().get(i).getYPosition() * 2, 50, 50);
 
-            panelGraphic.add(button[i]);
+            graphicPanel.add(button[i]);
         }
 
     }
@@ -157,21 +158,21 @@ public class ReinforcementView extends JFrame implements ViewInterface {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        Point[] connectorPoints = new Point[mapRiskModel.getCountryModelList().size()];
+        Point[] connectorPoints = new Point[this.mapRiskModel.getCountryModelList().size()];
 
-        for (int i = 0; i < mapRiskModel.getCountryModelList().size(); i++) {
-            connectorPoints[i] = SwingUtilities.convertPoint(mapRiskModel.getCountryModelList().get(i), 0, 0, this);
+        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
+            connectorPoints[i] = SwingUtilities.convertPoint(this.mapRiskModel.getCountryModelList().get(i), 0, 0, this);
 
         }
 
-        for (int k = 0; k < mapRiskModel.getCountryModelList().size(); k++) {
-            if (mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
-                ArrayList<CountryModel> neighbourCountries = (ArrayList<CountryModel>) mapRiskModel.getCountryModelList()
+        for (int k = 0; k < this.mapRiskModel.getCountryModelList().size(); k++) {
+            if (this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
+                ArrayList<CountryModel> neighbourCountries = (ArrayList<CountryModel>) this.mapRiskModel.getCountryModelList()
                         .get(k).getConnectedCountryList();
 
                 for (int j = 0; j < neighbourCountries.size(); j++) {
-                    for (int i = 0; i < mapRiskModel.getCountryModelList().size(); i++)
-                        if (neighbourCountries.get(j).equals(mapRiskModel.getCountryModelList().get(i)))
+                    for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++)
+                        if (neighbourCountries.get(j).equals(this.mapRiskModel.getCountryModelList().get(i)))
                             g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
                                     connectorPoints[k].y + 25);
 
@@ -210,14 +211,14 @@ public class ReinforcementView extends JFrame implements ViewInterface {
     @Override
     public void update(Observable obs, Object arg) {
 
-        panelWelcome.removeAll();
-        panelGraphic.removeAll();
+        welcomePanel.removeAll();
+        graphicPanel.removeAll();
         if (obs instanceof MapRiskModel) {
-            mapRiskModel = (MapRiskModel) obs;
+            this.mapRiskModel = (MapRiskModel) obs;
         } else if (obs instanceof PlayerModel) {
             this.playerModel = (PlayerModel) obs;
         }
-        this.updateWindow(mapRiskModel, this.playerModel);
+        this.updateWindow(this.mapRiskModel, this.playerModel);
         this.revalidate();
         this.repaint();
 
@@ -228,14 +229,14 @@ public class ReinforcementView extends JFrame implements ViewInterface {
      */
     @Override
     public void setActionListener(ActionListener actionListener) {
-        this.buttonAdd.addActionListener(actionListener);
+        this.addButton.addActionListener(actionListener);
     }
 
     /**
      * This method convert string to color
      *
-     * @param value setting color
-     * @return color
+     * @param value
+     * @return
      */
     public static Color stringToColor(final String value) {
         if (value == null) {
