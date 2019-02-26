@@ -70,7 +70,7 @@ public class ReinforcementController implements ActionListener {
                 d_mapRiskModel.setSelectedArmiesToCountries(selectedArmies, countryName);
             } else {
 
-                //new FortificationController(d_mapRiskModel);
+                new FortificationController(d_mapRiskModel);
                 this.reinforcementView.dispose();
             }
         }
