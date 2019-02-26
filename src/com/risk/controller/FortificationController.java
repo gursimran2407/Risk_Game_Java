@@ -24,7 +24,7 @@ import java.awt.event.ItemListener;
         private MapRiskModel mapRiskModel = null;
 
         /**
-         * Constructor
+         * Constructor of Fortification controller class
          *
          * @param mapRiskModel
          */
