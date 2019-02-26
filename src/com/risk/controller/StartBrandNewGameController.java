@@ -45,35 +45,28 @@ public class StartBrandNewGameController implements ActionListener {
             }
         } else if (actionEvent.getSource().equals(brandNewGameViewobj.nextButton)) {
             totalNumberOfPlayersInGame = (int) brandNewGameViewobj.numberOfPlayersComboBox.getSelectedItem(); // number of players
-            // here are coming from the BrandNewGameView
-            validateThePlayer(); // this is to be created yet.
+
+            if (mapRiskModelobj.getCountryModelList().size() > totalNumberOfPlayersInGame) {
+                System.out.println("Number of players");
+                String NamePlayer = "";
+                for (int i = 0; i < totalNumberOfPlayersInGame; i++) {
+                    NamePlayer = "Player" + (i + 1);
+                    PlayerModel playerModelobj = new PlayerModel(NamePlayer, 0, 0, "");
+                    listOfPlayers.add(playerModelobj);
+                }
+                new StartupController(listOfPlayers, mapRiskModelobj);
+                this.brandNewGameViewobj.dispose();
+            } else {
+                JOptionPane.showMessageDialog(brandNewGameViewobj,
+                        "Mismatch between the number of maps and the number of Players. Please select matching values or number of maps at least equal to or more than the number of players.",
+                        "The selected Map has been Loaded", JOptionPane.INFORMATION_MESSAGE);
+            }
 
         } else if (actionEvent.getSource().equals(brandNewGameViewobj.cancelButton)) {
             new MainGame();
             this.brandNewGameViewobj.dispose();
         }
 
-    }
-
-    /**
-     * This method is used to validate the new player entered that is going to play the game.
-     */
-    public void validateThePlayer() {
-        if (mapRiskModelobj.getCountryModelList().size() > totalNumberOfPlayersInGame) {
-            System.out.println("Number of players");
-            String NamePlayer = "";
-            for (int i = 0; i < totalNumberOfPlayersInGame; i++) {
-                NamePlayer = "Player" + (i + 1);
-                PlayerModel playerModelobj = new PlayerModel(NamePlayer, 0, 0, "");
-                listOfPlayers.add(playerModelobj);
-            }
-            new StartupController(listOfPlayers, mapRiskModelobj);
-            this.brandNewGameViewobj.dispose();
-        } else {
-            JOptionPane.showMessageDialog(brandNewGameViewobj,
-                    "Mismatch between the number of maps and the number of Players. Please select matching values or number of maps at least equal to or more than the number of players.",
-                    "The selected Map has been Loaded", JOptionPane.INFORMATION_MESSAGE);
-        }
     }
 
 }
