@@ -59,6 +59,9 @@ public class StartupController implements ActionListener {
         mapRiskModel.setPlayerModelList(listOfPlayers);
 
     }
+    /**
+     * This method allocates Player and Armies to the country to start the game play
+     */
 
     public void allocateArmies() {
 
@@ -124,7 +127,9 @@ public class StartupController implements ActionListener {
             System.out.println(countryList.get(i).getNumberofArmies());
         }
     }
-
+    /**
+     * Method assigns Player to PlayerModel
+     */
     public void assignPlayerModel() {
         for (int i = 0; i < numberOfPlayers; i++) {
             listOfPlayers.get(i).setPlayerColor(colorForRuler[i]);
@@ -137,11 +142,22 @@ public class StartupController implements ActionListener {
         }
     }
 
+/**
+ * This method gives the Random generation of numbers within two values
+ *
+ * @param min
+ * @param max
+ */
+
     public int getRandomBetweenRange(double min, double max) {
         int x = (int) ((Math.random() * ((max - min) + 1)) + min);
         return x;
     }
 
+    /**
+     * Check if the remaining armies allocated to each player has been reached to
+     * zero.
+     */
     private void checkForOverallArmies() {
         int numb = 0;
         for (int i = 0; i < listOfPlayers.size(); i++) {
