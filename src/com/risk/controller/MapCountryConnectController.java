@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * In MapConutryConnectController, the data flow into model object and updates the
+ * view whenever data changes.
  * @author gursimransingh
  */
 public class MapCountryConnectController implements ListSelectionListener, ActionListener  {
@@ -29,6 +31,9 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
     private List<CountryModel> countryModelList;
     private List<CountryModel> countryLinks;
 
+    /**Constructor initializes values and sets the screen to visible
+     * @param d_mapRiskModel
+     */
     public MapCountryConnectController(MapRiskModel d_mapRiskModel) {
         mapRiskModel = d_mapRiskModel;
         this.countryModelList = d_mapRiskModel.getCountryModelList();
@@ -41,6 +46,10 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
         mapRiskModel.addObserver(this.mapCountryConnectView);
     }
 
+    /**
+     * Listener for action event set in view.
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource().equals(mapCountryConnectView.buttonAdd)) {
@@ -112,7 +121,11 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
         }
 
     }
-
+    /**
+     * To check whether the values in the list is changed
+     *
+     * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
+     */
     @Override
     public void valueChanged(ListSelectionEvent e) {
         ListSelectionModel listSelectionModel = (ListSelectionModel) e.getSource();
