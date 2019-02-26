@@ -14,6 +14,7 @@ import java.awt.event.ItemListener;
 /**
  * In FortificationController, the data flow into model object and updates the
  * view whenever data changes.
+ *
  * @author Karandeep
  */
 
@@ -23,7 +24,7 @@ import java.awt.event.ItemListener;
         private MapRiskModel mapRiskModel = null;
 
         /**
-         * Constructor initializes values and sets the screen too visible
+         * Constructor
          *
          * @param mapRiskModel
          */
@@ -37,7 +38,7 @@ import java.awt.event.ItemListener;
         }
 
         /**
-         * This method performs action, by Listening the action event set in view.
+         * @param actionEvent Performs action whenever there is a change in fortification view class
          *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
@@ -76,7 +77,7 @@ import java.awt.event.ItemListener;
         }
 
         /**
-         * Item Listener
+         * Listener for item state and updates
          *
          * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
          */
