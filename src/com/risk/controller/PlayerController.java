@@ -2,6 +2,7 @@ package com.risk.controller;
 
 import com.risk.model.GamePlayModel;
 import com.risk.view.Attack;
+import com.risk.view.FortificationView;
 import com.risk.view.ReinforcementView;
 
 
@@ -37,7 +38,7 @@ public class PlayerController implements ActionListener, ItemListener {
     /**
      * The Fortication view
      */
-    private Fortification forticationviewObj;
+    private FortificationView forticationviewObj;
 
 
     /**

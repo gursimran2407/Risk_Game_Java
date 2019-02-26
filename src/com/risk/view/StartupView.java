@@ -37,12 +37,19 @@ public class StartupView extends JFrame implements ViewInterface {
     public JLabel countryListLabel;
     public JComboBox<Object> countryListComboBox;
     public Object[] countryListArray;
+    private CountryViewRenderer countriesViewRenderer;
+
     public JButton[] button;
     public JButton nextButton;
     public JButton button2;
     public JButton button3;
-    private CountryViewRenderer countriesViewRenderer;
 
+    /**
+     * constructor for Start Up Phase View where the variables are initialized
+     *
+     * @param mapRiskModel
+     * @param playerModel
+     */
     public StartupView(MapRiskModel mapRiskModel, PlayerModel playerModel) {
 
         this.setTitle("Startup Phase");
@@ -69,42 +76,13 @@ public class StartupView extends JFrame implements ViewInterface {
         graphicPanel.setLayout(null);
     }
 
-    public static Color stringToColor(final String value) {
-        if (value == null) {
-            return Color.black;
-        }
-        try {
-            return Color.decode(value);
-        } catch (NumberFormatException nfe) {
-            try {
-                final Field f = Color.class.getField(value);
-
-                return (Color) f.get(null);
-            } catch (Exception ce) {
-                return Color.black;
-            }
-        }
-    }
-
-    @Override
-    public void setActionListener(ActionListener actionListener) {
-        this.addButton.addActionListener(actionListener);
-        this.nextButton.addActionListener(actionListener);
-
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof MapRiskModel) {
-            this.mapRiskModel = (MapRiskModel) o;
-        } else if (o instanceof PlayerModel) {
-            this.playerModel = (PlayerModel) o;
-        }
-        this.updateWindow(this.mapRiskModel, this.playerModel);
-        this.revalidate();
-        this.repaint();
-    }
-
+    /**
+     * This updateWindow method is called whenever the model is updated. It updates
+     * the Screen for Start Up Phase
+     *
+     * @param mapRiskModel
+     * @param playerModel
+     */
     public void updateWindow(MapRiskModel mapRiskModel, PlayerModel playerModel) {
 
         welcomePanel.removeAll();
@@ -178,7 +156,8 @@ public class StartupView extends JFrame implements ViewInterface {
             country.setToolTipText("Troops: " + this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
             country.setFont(smallFont);
 
-            Border border = BorderFactory.createLineBorder(stringToColor(this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().getPlayerColor()), 3);
+            Border border = BorderFactory
+                    .createLineBorder(stringToColor(this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().getPlayerColor()), 3);
 
             country.setBorder(border);
 
@@ -192,34 +171,45 @@ public class StartupView extends JFrame implements ViewInterface {
         }
     }
 
-//    public void paint(final Graphics g) {
-//
-//        super.paint(g);
-//
-//        Graphics2D g2 = (Graphics2D) g;
-//
-//        Point[] connectorPoints = new Point[this.mapRiskModel.getCountryModelList().size()];
-//
-//        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
-//            connectorPoints[i] = SwingUtilities.convertPoint(this.mapRiskModel.getCountryModelList().get(i), 0, 0, this);
-//
-//        }
-//
-//        for (int k = 0; k < this.mapRiskModel.getCountryModelList().size(); k++) {
-//            if (this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
-//                ArrayList<CountryModel> neighbourCountries = this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList();
-//
-//                for (int j = 0; j < neighbourCountries.size(); j++) {
-//                    for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++)
-//                        if (neighbourCountries.get(j).equals(this.mapRiskModel.getCountryModelList().get(i)))
-//                            g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
-//                                    connectorPoints[k].y + 25);
-//
-//                }
-//            }
-//        }
-//
-//    }
+    /**
+     * Countries are rendered as button and linked with Swing using Graphics.
+     *
+     * @see java.awt.Window#paint(java.awt.Graphics)
+     */
+    public void paint(final Graphics g) {
+
+        super.paint(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        Point[] connectorPoints = new Point[this.mapRiskModel.getCountryModelList().size()];
+
+        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
+            connectorPoints[i] = SwingUtilities.convertPoint(this.mapRiskModel.getCountryModelList().get(i), 0, 0, this);
+
+        }
+
+        for (int k = 0; k < this.mapRiskModel.getCountryModelList().size(); k++) {
+            if (this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
+                ArrayList<CountryModel> neighbourCountries = (ArrayList<CountryModel>) this.mapRiskModel.getCountryModelList()
+                        .get(k).getConnectedCountryList();
+
+                for (int j = 0; j < neighbourCountries.size(); j++) {
+                    for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++)
+                        if (neighbourCountries.get(j).equals(this.mapRiskModel.getCountryModelList().get(i)))
+                            g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
+                                    connectorPoints[k].y + 25);
+
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Getter method that provides us a map model corresponding to a map name
+     *
+     */
 
     public class CountryViewRenderer extends BasicComboBoxRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
@@ -233,4 +223,58 @@ public class StartupView extends JFrame implements ViewInterface {
             return this;
         }
     }
+
+    /**
+     * Update method is to Update the start up Phase. This is declared as
+     * observable. so when the values are changed the view is updated automatically
+     * by notifying the observer.
+     *
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
+    @Override
+    public void update(Observable obs, Object arg) {
+
+        if (obs instanceof MapRiskModel) {
+            this.mapRiskModel = (MapRiskModel) obs;
+        } else if (obs instanceof PlayerModel) {
+            this.playerModel = (PlayerModel) obs;
+        }
+        this.updateWindow(this.mapRiskModel, this.playerModel);
+        this.revalidate();
+        this.repaint();
+
+    }
+
+    /**
+     * This is actionListener method to listen the action events in the screen
+     */
+    @Override
+    public void setActionListener(ActionListener actionListener) {
+        this.addButton.addActionListener(actionListener);
+        this.nextButton.addActionListener(actionListener);
+    }
+
+    /**
+     * This method convert string to color
+     *
+     * @param value
+     * @return color
+     */
+    public static Color stringToColor(final String value) {
+        if (value == null) {
+            return Color.black;
+        }
+        try {
+            return Color.decode(value);
+        } catch (NumberFormatException nfe) {
+            try {
+                final Field f = Color.class.getField(value);
+
+                return (Color) f.get(null);
+            } catch (Exception ce) {
+                return Color.black;
+            }
+        }
+    }
+
 }
