@@ -183,4 +183,28 @@ public class MapRead {
      return true;
     }
 
+    public boolean validateReadContinent(List<ContinentModel> list, List<ContinentModel> arrayList)
+    {
+        int counter  = 0;
+        for(int i=0;i<list.size();i++)
+        {
+            for(int j = 0;j < arrayList.size();j++)
+            {
+                if(list.get(i).getContinentName().equals(arrayList.get(j).getContinentName()))
+                {
+                    counter++;
+                }
+            }
+            if(counter == 1)
+            {
+                counter = 0;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
