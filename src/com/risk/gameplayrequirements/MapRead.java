@@ -7,6 +7,7 @@ import java.io.*;
 import java.util.*;
 
 /**
+ * This class reads map file and returns details of countries and continents
  * @author Namita Faujdar 
  */
 public class MapRead {
@@ -15,7 +16,7 @@ public class MapRead {
 
     /**
      * This method reads the map file and returns continent details such as name and
-     * its value-control.
+     * its value control.
      *
      * @return the array list of continents
      */
@@ -59,8 +60,7 @@ public class MapRead {
 
     /**
      * This method reads the map file and returns country details such as name,
-     * position, continent that it belongs to, and list of countries that it is
-     * connected to.
+     * position, continent that it belongs to, and list of connected countries.
      *
      * @return the array list of countries
      */
@@ -139,7 +139,7 @@ public class MapRead {
     }
 
     /**
-     * Getting File
+     * Get file to read
      *
      * @return
      */
@@ -149,7 +149,7 @@ public class MapRead {
     }
 
     /**
-     * Setting Set file
+     * Sets the file to read
      *
      * @param readFile
      */
