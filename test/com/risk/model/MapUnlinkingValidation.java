@@ -2,44 +2,46 @@ package com.risk.model;
 
 import com.risk.gameplayrequirements.Constants;
 import com.risk.gameplayrequirements.MapRead;
+import com.risk.gameplayrequirements.MapValidation;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-/**
- * @author gursimransingh
- */
-public class MapRiskModelSetNeighbouringCountryTest {
+public class MapUnlinkingValidation {
+
     private static boolean setUpIsDone = false;
-    List<ContinentModel> continentList;
-    List<CountryModel> countryList;
+    GamePlayModel gamePlayModel;
     MapRiskModel mapRiskModel;
+    MapValidation mapValidation;
     MapRead mapRead;
     File file;
 
+
     @Before
-    public void setUp() {
-        if (setUpIsDone) {
+    public void setUp()
+    {
+        if (setUpIsDone)
+        {
             return;
         }
-        // do the setup
+        /** for setup these parameters are needed */
         mapRead = new MapRead();
         file = new File(Constants.filePath.toUri());
         System.out.println(file.toString() + "FILEREAD");
         mapRead.setReadFile(file);
-        continentList = mapRead.getMapContinentDetails();
-        countryList = mapRead.getMapCountryDetails();
+        mapValidation = new MapValidation();
         mapRiskModel = new MapRiskModel();
         setUpIsDone = true;
-    }
 
-    //Connecting countries of index 0 and 1.
+    }
+    /**Test for un-linking continent validation */
+
     @Test
-    public void setNeighbouringCountry() {
-        assertEquals(true, mapRiskModel.setNeighbouringCountry(countryList.get(0), countryList.get(1)));
+    public void testMapUnlinkingValidation()
+    {
+        assertFalse(mapValidation.unlinkedContinentValidation(mapRiskModel));
     }
 }
