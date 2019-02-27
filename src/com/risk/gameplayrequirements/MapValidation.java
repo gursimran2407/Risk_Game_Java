@@ -17,6 +17,7 @@ public class MapValidation {
      * Check of validation of continents
      *
      * @param mapModel
+     *
      */
     public boolean unlinkedContinentValidation(MapRiskModel mapModel) {
         boolean flag = true;

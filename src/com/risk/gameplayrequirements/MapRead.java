@@ -157,4 +157,30 @@ public class MapRead {
     public void setReadFile(File readFile) {
         READ_FILE = readFile;
     }
+
+
+    public boolean validateReadCountry(List<CountryModel> list, List<CountryModel> arrayList)
+    {
+        int counter  = 0;
+        for(int i=0;i<list.size();i++)
+        {
+            for(int j = 0;j < arrayList.size();j++)
+            {
+                if(list.get(i).getCountryName().equals(arrayList.get(j).getCountryName()))
+                {
+                    counter++;
+                }
+            }
+            if(counter == 1)
+            {
+                counter = 0;
+            }
+            else
+            {
+                return false;
+            }
+        }
+     return true;
+    }
+
 }

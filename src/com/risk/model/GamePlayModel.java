@@ -1,8 +1,10 @@
 package com.risk.model;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Observable;
+
 /**
  * "GamePlayModel" model basically consists of an object that consist of the current map that the game is being played upon
  * and the players that are playing the game.
@@ -10,7 +12,7 @@ import java.util.Observable;
 
 public class GamePlayModel extends Observable
 {
-    /** MapRiskmodel
+    /** MapRiskModel
      */
     private MapRiskModel mapRiskModelModObj;
     //private GameMapModel gameMapModel =  new GameMapModel() ;
@@ -35,6 +37,9 @@ public class GamePlayModel extends Observable
         this.mapRiskModelModObj = mapRiskModelModObj;
         this.currentPlayerModels = currentPlayerModels;
         this.ifCountryOwned = ifCountryOwned;
+    }
+
+    public GamePlayModel(File file) {
     }
 
     public MapRiskModel getMapRiskModelModObj() {
@@ -85,4 +90,5 @@ public class GamePlayModel extends Observable
     public void setConsoleOutput(StringBuilder consoleOutput) {
         this.consoleOutput = consoleOutput;
     }
+
 }
