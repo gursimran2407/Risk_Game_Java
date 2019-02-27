@@ -11,17 +11,18 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author gursimransingh
+ * This class has checks for validation, writing to map and creating a map file.
+ *
+ * @author Karandeep
  */
 public class MapWrite {
-        File file;
-    //Creating new File
-    /**
-     * Create a new File
-     * @param
-     * @return
-     */
+        File file;    //Creating new File
 
+    /**
+     * Get the continents
+     * @param continentsModel
+     * @return content
+     */
     public static String getContinet(ContinentModel continentsModel) {
         String content = null;
         if (!"".equals(continentsModel.getContinentName())) {
@@ -30,6 +31,11 @@ public class MapWrite {
         return content;
     }
 
+    /**
+     * Get the country
+     * @param countryModel
+     * @return content
+     */
     public static String getCountry(CountryModel countryModel) {
         String content = null;
         if (!"".equals(countryModel.getCountryName())) {
@@ -47,7 +53,11 @@ public class MapWrite {
         }
         return content;
     }
-
+    /**
+     * Create a new File
+     * @param fileName
+     * @return file
+     */
         public File createNewFile(String fileName) {
             try {
                 this.file = new File(System.getProperty("user.dir") + "\\maps\\" + fileName);
