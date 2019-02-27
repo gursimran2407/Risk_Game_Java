@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import com.risk.model.CountryModel;
 
 /**
- * This class gives the positioning of the country
+ * This class tells the position of the country
  * @author Karandeep
  */
 
@@ -18,7 +18,7 @@ public class MapPosition extends JButton {
     private Color color;
 
     /**
-     * @return the xPos
+     * @return the x Position
      */
     public int getxPos() {
         return xPos;
@@ -27,14 +27,14 @@ public class MapPosition extends JButton {
     /**
      * Sets x
      *
-     * @param xPos
+     * @param xPos the position of x
      */
     public void setxPos(int xPos) {
         this.xPos = xPos;
     }
 
     /**
-     * @return the yPos
+     * @return the y position
      */
     public int getyPos() {
         return yPos;
@@ -73,7 +73,7 @@ public class MapPosition extends JButton {
     }
 
     /**
-     * Sets the color
+     * Method to set the color
      *
      * @param color
      */
