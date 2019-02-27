@@ -7,15 +7,16 @@ import com.risk.model.MapRiskModel;
 import java.util.*;
 
 /**
+ * This class is to check the validation of the map
+ *
  * @author gursimransingh
  */
 public class MapValidation {
 
     /**
-     * Check on un linked Continent Validation
+     * Check of validation of continents
      *
      * @param mapModel
-     * @return
      */
     public boolean unlinkedContinentValidation(MapRiskModel mapModel) {
         boolean flag = true;
@@ -53,7 +54,7 @@ public class MapValidation {
     }
 
     /**
-     * Check on empty link Country Validation
+     * check for link is empty for continents
      *
      * @param mapModel
      * @return boolean
@@ -71,7 +72,7 @@ public class MapValidation {
     }
 
     /**
-     * Check on Inter Linked Contient
+     * Check for Inter Linked Continent
      *
      * @param mapModel
      * @return boolean
@@ -143,12 +144,12 @@ public class MapValidation {
 
 
     /**
-     * Check on valid move for fortification
+     * Check if valid move for fortification
      *
      * @param gameMapModel
      * @param fromCountryModel
      * @param toCountryModel
-     * @return
+     * @return boolean
      */
     public boolean checkIfValidMove(MapRiskModel gameMapModel, CountryModel fromCountryModel,
                                     CountryModel toCountryModel) {
