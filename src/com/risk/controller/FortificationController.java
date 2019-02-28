@@ -66,7 +66,7 @@ public class FortificationController implements ActionListener, ItemListener {
                 this.theFortificationView.dispose();
             } else {
                 JOptionPane.showOptionDialog(null, "Bravo! Game is over! No one won!", "Valid",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
                 this.theFortificationView.dispose();
             }
 
@@ -74,7 +74,6 @@ public class FortificationController implements ActionListener, ItemListener {
             this.mapRiskModel
                     .setSelectedComboBoxIndex(this.theFortificationView.fromCountryListComboBox.getSelectedIndex());
         }
-
     }
 
     /**
@@ -88,6 +87,5 @@ public class FortificationController implements ActionListener, ItemListener {
             this.mapRiskModel
                     .setSelectedComboBoxIndex(this.theFortificationView.fromCountryListComboBox.getSelectedIndex());
         }
-
     }
 }
