@@ -34,11 +34,11 @@ public class NoOfArmyReinforcementTest {
 
     private static final boolean False = false;
     MapRiskModel mapRiskModel;
-    ReinforcementController reinCon;
+    ReinforcementController rC;
     MapRead mapRead;
     File file;
-    int rArmies;
-    private ArrayList<CountryModel> listOfCountries = new ArrayList<CountryModel>();
+    int reinforceArmies;
+    private ArrayList<CountryModel> listOfCountrys = new ArrayList<CountryModel>();
 
     private static boolean setUpIsDone = false;
 
@@ -57,19 +57,19 @@ public class NoOfArmyReinforcementTest {
         System.out.println(file.toString() + "FILEREAD");
         mapRead.setReadFile(file);
         mapRiskModel = new MapRiskModel(file);
-        reinCon = new ReinforcementController(mapRiskModel);
+        rC = new ReinforcementController(mapRiskModel);
         for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
             if (this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().equals(this.mapRiskModel.getPlayerTurn())) {
-                this.listOfCountries.add(this.mapRiskModel.getCountryModelList().get(i));
+                this.listOfCountrys.add(this.mapRiskModel.getCountryModelList().get(i));
             }
         }
-        if (listOfCountries.size() > 3) {
-            rArmies = 3 + Math.round(listOfCountries.size() / 3);
+        if (listOfCountrys.size() > 3) {
+            reinforceArmies = 3 + Math.round(listOfCountrys.size() / 3);
         } else {
-            rArmies = 3;
+            reinforceArmies = 3;
         }
-        if (rArmies > 12) {
-            rArmies = 12;
+        if (reinforceArmies > 12) {
+            reinforceArmies = 12;
         }
         setUpIsDone = true;
     }
@@ -79,7 +79,7 @@ public class NoOfArmyReinforcementTest {
     @Test
     public void testUnlinkedContinentValidation()
     {
-        assertEquals(rArmies,reinCon.calculateArmies());
+        assertEquals(reinforceArmies,rC.calculateArmies());
     }
 
 }
