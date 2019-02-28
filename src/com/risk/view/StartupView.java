@@ -260,6 +260,7 @@ public class StartupView extends JFrame implements ViewInterface {
      * @param value
      * @return color
      */
+
     public static Color stringToColor(final String value) {
         if (value == null) {
             return Color.black;
