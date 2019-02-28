@@ -49,7 +49,6 @@ public class MapRiskModel extends Observable {
             readMapFile.setReadFile(file);
             d_continentModelList = readMapFile.getMapContinentDetails();
             d_countryModelList = readMapFile.getMapCountryDetails();
-            //this.countriesInContinent();
         } catch (Exception e) {
             e.printStackTrace();
         }

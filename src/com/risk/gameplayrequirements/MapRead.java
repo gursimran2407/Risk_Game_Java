@@ -23,39 +23,38 @@ public class MapRead {
 
     public ArrayList<ContinentModel> getMapContinentDetails() {
 
-        File readFile = getReadFile();
-        ArrayList<ContinentModel> continentsList = null;
-        Scanner scanner = null;
+        File file = getReadFile();
+        Scanner sc = null;
         try {
-            scanner = new Scanner(new FileReader(readFile));
-
-            continentsList = new ArrayList<>();
-
-            while (scanner.hasNextLine()) {
-                String bfr1 = scanner.nextLine();
-                if (bfr1.contains("[Continents]")) {
-                    String bfr2 = scanner.nextLine();
-                    bfr2.trim();
-                    while (!"".equals(bfr2)) {
-                        int positionEqual = bfr2.indexOf('=');
-                        String bfr3 = bfr2.substring(0, positionEqual);
-                        System.out.println("Continents: " + bfr3);
-
-                        String bfr4 = bfr2.substring(positionEqual + 1);
-                        int result = Integer.parseInt(bfr4);
-                        System.out.println("Value: " + bfr4);
-
-                        ContinentModel tempMyContinents = new ContinentModel(bfr3, result);
-                        continentsList.add(tempMyContinents);
-                        bfr2 = scanner.nextLine();
-                        bfr2.trim();
-                    }
-                }
-            }
-        }catch (IOException e) {
+            sc = new Scanner(file);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return continentsList;
+
+        ArrayList<ContinentModel> listOfContinents = new ArrayList<>();
+
+        while (sc.hasNextLine()) {
+            String sc1 = sc.nextLine();
+            if (sc1.contains("[Continents]")) {
+                String sc2 = sc.nextLine();
+                sc2.trim();
+                while (!"".equals(sc2)) {
+                    int positionEqual = sc2.indexOf('=');
+                    String sc3 = sc2.substring(0, positionEqual);
+                    System.out.println("Continents: " + sc3);
+
+                    String sc4 = sc2.substring(positionEqual + 1);
+                    int result = Integer.parseInt(sc4);
+                    System.out.println("Value: " + sc4);
+
+                    ContinentModel tempMyContinents = new ContinentModel(sc3, result);
+                    listOfContinents.add(tempMyContinents);
+                    sc2 = sc.nextLine();
+                    sc2.trim();
+                }
+            }
+        }
+        return listOfContinents;
     }
 
     /**
@@ -66,31 +65,35 @@ public class MapRead {
      */
 
     public ArrayList<CountryModel> getMapCountryDetails() {
-        File readFile = getReadFile();
-        BufferedReader bfr;
-        ArrayList<CountryModel> countryModelList;
-        HashMap<String, CountryModel> countriesList = new HashMap<>();
+        File file = getReadFile();
+        Scanner sc = null;
         try {
-            bfr = new BufferedReader(new FileReader(readFile));
+            sc = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        ArrayList<CountryModel> listOfCountryModel;
+        HashMap<String, CountryModel> listOfCountries = new HashMap<String, CountryModel>();
 
-        while (bfr.readLine() != null) {
-            String fileData = bfr.readLine();
+        while (sc.hasNextLine()) {
+            String fileData = sc.nextLine();
 
             if (fileData.contains("[Territories]")) {
 
-                while (bfr.readLine() != null) {
-                    String territories = bfr.readLine();
+                while (sc.hasNextLine()) {
+                    String territories = sc.nextLine();
                     territories.trim();
 
                     if (!"".equals(territories)) {
 
                         int indexOfCountryName = territories.indexOf(',');
                         String countryName = territories.substring(0, indexOfCountryName).trim();
-                        CountryModel cm = countriesList.get(countryName);
+                        CountryModel cm = listOfCountries.get(countryName);
                         if (cm == null) {
                             cm = new CountryModel();
                             cm.setCountryName(countryName);
-                            countriesList.put(cm.getCountryName(), cm);
+                            listOfCountries.put(cm.getCountryName(), cm);
                         }
 
                         int indexOfXPos = territories.indexOf(',', (indexOfCountryName + 1));
@@ -116,13 +119,13 @@ public class MapRead {
                         ArrayList<CountryModel> linkedCountriesList = new ArrayList<CountryModel>();
 
                         for (int i = 0; i < listOfNeighbouringCountries.size(); i++) {
-                            if (countriesList.containsKey(listOfNeighbouringCountries.get(i).trim())) {
-                                newNeighbour = countriesList.get(listOfNeighbouringCountries.get(i).trim());
+                            if (listOfCountries.containsKey(listOfNeighbouringCountries.get(i).trim())) {
+                                newNeighbour = listOfCountries.get(listOfNeighbouringCountries.get(i).trim());
                             } else {
                                 newNeighbour = new CountryModel();
                                 newNeighbour.setCountryName(listOfNeighbouringCountries.get(i).trim());
                             }
-                            countriesList.put(listOfNeighbouringCountries.get(i).trim(), newNeighbour);
+                            listOfCountries.put(listOfNeighbouringCountries.get(i).trim(), newNeighbour);
                             linkedCountriesList.add(newNeighbour);
                         }
                         cm.setConnectedCountryList(linkedCountriesList);
@@ -130,12 +133,9 @@ public class MapRead {
                 }
             }
         }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Collection<CountryModel> c = countriesList.values();
-        countryModelList = new ArrayList<>(c);
-        return countryModelList;
+        Collection<CountryModel> c = (Collection<CountryModel>) listOfCountries.values();
+        listOfCountryModel = new ArrayList<CountryModel>(c);
+        return listOfCountryModel;
     }
 
     /**

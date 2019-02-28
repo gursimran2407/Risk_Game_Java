@@ -22,14 +22,14 @@ public class CountryModel extends JButton {
     private int numberofArmies;
     private Color borderColor;
     private int xPosition;
+    private int yPosition;
+    private Color backgroundColor;
 
     @Override
     public void setText(String text) {
         super.setText(text);
     }
 
-    private int yPosition;
-    private Color backgroundColor;
     /**
      * Constructor of CountryModel with parameters
      *
@@ -40,16 +40,16 @@ public class CountryModel extends JButton {
      * @param numberofArmies
      */
 
-    public CountryModel(String countryName, PlayerModel countryOwner,
+    public CountryModel(String countryName, int xPosition, int yPosition, PlayerModel countryOwner,
                         String continentName, ArrayList<CountryModel> linkCountryModel, int numberofArmies) {
         this.countryName = countryName;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
         this.countryOwner = countryOwner;
         this.continentName = continentName;
         this.connectedCountryList = linkCountryModel;
         this.numberofArmies = numberofArmies;
         this.borderColor = Color.BLACK;
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
         this.backgroundColor = Color.WHITE;
     }
 
