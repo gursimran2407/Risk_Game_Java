@@ -115,8 +115,8 @@ public class StartupController implements ActionListener {
 
         for (int i = 0; i < noOfPlayers; i++) {
             if (noOfCountryForOwner[i] >= 3) {
-                int tempPlayerTrop = (noOfCountryForOwner[i] / 3);
-                totalArmiesPerPlayer[i] = noOfCountryForOwner[i] + (tempPlayerTrop - 1);
+                int tempPlayerArmies = (noOfCountryForOwner[i] / 3);
+                totalArmiesPerPlayer[i] = noOfCountryForOwner[i] + (tempPlayerArmies - 1);
                 remainingArmies[i] = totalArmiesPerPlayer[i] - noOfCountryForOwner[i];
             } else {
                 totalArmiesPerPlayer[i] = noOfCountryForOwner[i];

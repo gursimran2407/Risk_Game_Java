@@ -46,7 +46,7 @@ public class StartupView extends JFrame implements ViewInterface {
     public JButton button3;
 
     /**
-     * constructor for Start Up Phase View where the variables are initialized
+     * This is the constructor for Start Up Phase View where the variables are initialized
      *
      * @param mapRiskModel
      * @param playerModel
