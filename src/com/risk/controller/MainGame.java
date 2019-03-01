@@ -5,13 +5,11 @@ import com.risk.view.MainGameView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 /**
  * This is the main starting point of the program containing main function
  *
  * @author gursimransingh
  */
-
 public class MainGame implements ActionListener {
     private MainGameView d_mainGameView;
 
@@ -28,6 +26,7 @@ public class MainGame implements ActionListener {
         //launch(args);
         MainGame mainGame = new MainGame();
     }
+
     /**
      * Method performs action, by Listening the action event set in view.
      *
@@ -49,7 +48,6 @@ public class MainGame implements ActionListener {
             this.exitGame();
         }
     }
-
 
     /**
      * exit the game
