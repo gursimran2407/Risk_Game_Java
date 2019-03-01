@@ -8,7 +8,8 @@ import org.junit.Test;
 
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.Assert.assertFalse;
+
 
 public class EmptyContinentValidation {
     private static boolean setUpIsDone = false;
