@@ -18,55 +18,71 @@ import java.util.ArrayList;
  * @author Karan
  */
 public class StartBrandNewGameController implements ActionListener {
-    private BrandNewGameView brandNewGameViewobj;
-    private ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
-    private MapRiskModel mapRiskModelobj = new MapRiskModel();
-    private int totalNumberOfPlayersInGame;
 
+    private BrandNewGameView theView;
+    private ArrayList<PlayerModel> listOfPlayers = new ArrayList<PlayerModel>();
+    private MapRiskModel mapRiskModel = new MapRiskModel();
+    private int noOfPlayers;
+
+    /**
+     * Constructor initializes values and sets the screen too visible
+     */
     public StartBrandNewGameController() {
-        brandNewGameViewobj = new BrandNewGameView();
-        brandNewGameViewobj.setActionListener(this);
-        brandNewGameViewobj.setVisible(true);
+        this.theView = new BrandNewGameView();
+        this.theView.setActionListener(this);
+        this.theView.setVisible(true);
+
     }
 
-
+    /**
+     * This method performs action, by Listening the action event set in view.
+     *
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(brandNewGameViewobj.openMapButton)) {
-            int value = brandNewGameViewobj.openMapFileChooser.showOpenDialog(brandNewGameViewobj);
-            if (value == JFileChooser.APPROVE_OPTION) {
+        if (actionEvent.getSource().equals(theView.browseMapButton)) {
+            int value = theView.chooseMap.showOpenDialog(theView);
+            if(value == JFileChooser.APPROVE_OPTION){
                 try {
-                    File mapFile = brandNewGameViewobj.openMapFileChooser.getSelectedFile();
-                    mapRiskModelobj = new MapRiskModel(mapFile);
-                    JOptionPane.showMessageDialog(brandNewGameViewobj, "File Loaded Successfully! Click Next to Play!", "Map Loaded", JOptionPane.INFORMATION_MESSAGE);
+                    File mapFile = theView.chooseMap.getSelectedFile();
+                    mapRiskModel = new MapRiskModel(mapFile);
+                    JOptionPane.showMessageDialog(theView, "File Loaded Successfully! Click Next to Play!","Map Loaded",JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        } else if (actionEvent.getSource().equals(brandNewGameViewobj.nextButton)) {
-            totalNumberOfPlayersInGame = (int) brandNewGameViewobj.numberOfPlayersComboBox.getSelectedItem(); // number of players
+        }else if(actionEvent.getSource().equals(theView.nextButton)) {
+            noOfPlayers = (int) theView.numOfPlayers.getSelectedItem();
+            playerValidation();
 
-            if (mapRiskModelobj.getCountryModelList().size() > totalNumberOfPlayersInGame) {
-                System.out.println("Number of players: " + totalNumberOfPlayersInGame);
-                String NamePlayer;
-                for (int i = 0; i < totalNumberOfPlayersInGame; i++) {
-                    NamePlayer = "Player" + (i + 1);
-                    PlayerModel playerModel = new PlayerModel(NamePlayer, 0, 0, "");
-                    listOfPlayers.add(playerModel);
-                }
-                new StartupController(listOfPlayers, mapRiskModelobj);
-                this.brandNewGameViewobj.dispose();
-            } else {
-                JOptionPane.showMessageDialog(brandNewGameViewobj,
-                        "Mismatch between the number of maps and the number of Players. Please select matching values or number of maps at least equal to or more than the number of players.",
-                        "The selected Map has been Loaded", JOptionPane.INFORMATION_MESSAGE);
-            }
-
-        } else if (actionEvent.getSource().equals(brandNewGameViewobj.cancelButton)) {
+        }else if(actionEvent.getSource().equals(theView.cancelButton)) {
             new MainGame();
-            this.brandNewGameViewobj.dispose();
+            this.theView.dispose();
         }
 
     }
+
+    /**
+     *  Check for the player validation
+     */
+    public void playerValidation() {
+        if ( mapRiskModel.getCountryModelList().size() > noOfPlayers) {
+            System.out.println("no of players");
+            String PlayerName = "";
+            for (int i=0; i<noOfPlayers; i++) {
+                PlayerName = "Player"+ (i+1);
+                PlayerModel pm = new PlayerModel(PlayerName, 0, 0,"");
+                listOfPlayers.add(pm);
+            }
+            new StartupController(listOfPlayers, mapRiskModel);
+            this.theView.dispose();
+        } else {
+            JOptionPane.showMessageDialog(theView,
+                    "Number of cuntry in the Map is less than Number of Players. Select map or player Again!",
+                    "Map Loaded", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
 
 }

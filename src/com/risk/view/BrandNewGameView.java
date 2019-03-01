@@ -8,34 +8,52 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 
 public class BrandNewGameView extends JFrame implements ViewInterface {
-    public JButton openMapButton;
+
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = 1L;
+
+    /** The browse map. */
+    public JButton browseMapButton;
+
+    /** The next button. */
     public JButton nextButton;
+
+    /** The cancel button. */
     public JButton cancelButton;
 
-    public JComboBox<Integer> numberOfPlayersComboBox;
-    public JFileChooser openMapFileChooser;
+    /** The choose map. */
+    public JComboBox<Integer> numOfPlayers;
 
-    public JLabel playerLabel, mapNameLabel;
+    public JFileChooser chooseMap;
 
-    public BrandNewGameView() throws HeadlessException {
+    /** The label map file. */
+    public JLabel labelPlayers, labelMapFile;
+
+    /** The final players. */
+    public int finalPlayers;
+
+    /**
+     * Create the application.
+     */
+    public BrandNewGameView() {
         getContentPane().setLayout(null);
 
-        playerLabel = new JLabel("Number of Players?");
-        playerLabel.setBounds(53, 47, 311, 27);
-        getContentPane().add(playerLabel);
+        labelPlayers = new JLabel("Number of Players?");
+        labelPlayers.setBounds(53, 47, 311, 27);
+        getContentPane().add(labelPlayers);
 
-        Integer[] items = {2, 3, 4, 5};
-        numberOfPlayersComboBox = new JComboBox<>(items);
-        numberOfPlayersComboBox.setBounds(202, 49, 116, 22);
-        getContentPane().add(numberOfPlayersComboBox);
+        Integer[] items = { 2, 3, 4, 5 };
+        numOfPlayers = new JComboBox<>(items);
+        numOfPlayers.setBounds(202, 49, 116, 22);
+        getContentPane().add(numOfPlayers);
 
-        mapNameLabel = new JLabel("Please Select Map File");
-        mapNameLabel.setBounds(53, 133, 157, 27);
-        getContentPane().add(mapNameLabel);
+        labelMapFile = new JLabel("Please Select Map File");
+        labelMapFile.setBounds(53, 133, 157, 27);
+        getContentPane().add(labelMapFile);
 
-        openMapButton = new JButton("Browse");
-        openMapButton.setBounds(202, 134, 116, 27);
-        getContentPane().add(openMapButton);
+        browseMapButton = new JButton("Browse");
+        browseMapButton.setBounds(202, 134, 116, 27);
+        getContentPane().add(browseMapButton);
 
         nextButton = new JButton("Next");
         nextButton.setBounds(202, 237, 116, 25);
@@ -45,23 +63,36 @@ public class BrandNewGameView extends JFrame implements ViewInterface {
         cancelButton.setBounds(53, 237, 97, 25);
         getContentPane().add(cancelButton);
 
-        openMapFileChooser = new JFileChooser();
+        chooseMap = new JFileChooser();
 
         initialize();
+
     }
 
+    /**
+     * Initialize the contents of the frame.
+     */
     private void initialize() {
         setBounds(100, 100, 500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Set the Action Listener
+     *
+     */
     @Override
     public void setActionListener(ActionListener actionListener) {
-        openMapButton.addActionListener(actionListener);
+        browseMapButton.addActionListener(actionListener);
         nextButton.addActionListener(actionListener);
         cancelButton.addActionListener(actionListener);
+
     }
 
+    /**
+     * Update the view based on observer
+     *
+     */
     @Override
     public void update(Observable o, Object arg) {
 
