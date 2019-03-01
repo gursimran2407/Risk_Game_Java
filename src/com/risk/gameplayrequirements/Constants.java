@@ -7,5 +7,5 @@ import java.nio.file.Paths;
  * @author gursimransingh
  */
 public class Constants {
-    public static final Path filePath = Paths.get("map", "opel.map");
+    public static final Path filePath = Paths.get("map", "World.map");
 }
