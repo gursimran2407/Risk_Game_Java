@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
+ * This class represents the armies and countries allocated to player in the starting of the game
  * @author gursimransingh
  */
 public class StartupView extends JFrame implements ViewInterface {
@@ -28,9 +29,9 @@ public class StartupView extends JFrame implements ViewInterface {
 
     public JLabel welcomeLabel;
     public JLabel welcomeLabel1;
-    public JLabel noOfTroopsLabel;
+    public JLabel noOfArmiesLabel;
 
-    public JComboBox<Integer> numOfTroopsComboBox;
+    public JComboBox<Integer> numOfArmiesComboBox;
     public JButton addButton;
     public JLabel listOfCountriesLabel;
 
@@ -98,19 +99,19 @@ public class StartupView extends JFrame implements ViewInterface {
         welcomeLabel.setFont(largeFont);
         welcomePanel.add(welcomeLabel);
 
-        this.noOfTroopsLabel = new JLabel("Number of Troops :");
-        noOfTroopsLabel.setBounds(1300, 140, 150, 25);
-        welcomePanel.add(noOfTroopsLabel);
+        this.noOfArmiesLabel = new JLabel("Number of Amries :");
+        noOfArmiesLabel.setBounds(1300, 140, 150, 25);
+        welcomePanel.add(noOfArmiesLabel);
 
-        Integer[] troops = new Integer[playerModel.getRemainingNumberOfArmies()];
+        Integer[] armies = new Integer[playerModel.getRemainingNumberOfArmies()];
         for (int i = 0; i < playerModel.getRemainingNumberOfArmies(); i++) {
-            troops[i] = i + 1;
+            armies[i] = i + 1;
         }
 
-        numOfTroopsComboBox = new JComboBox(troops);
-        numOfTroopsComboBox.setBounds(1300, 170, 150, 25);
-        numOfTroopsComboBox.setEnabled(false);
-        welcomePanel.add(numOfTroopsComboBox);
+        numOfArmiesComboBox = new JComboBox(armies);
+        numOfArmiesComboBox.setBounds(1300, 170, 150, 25);
+        numOfArmiesComboBox.setEnabled(false);
+        welcomePanel.add(numOfArmiesComboBox);
 
         welcomeLabel1 = new JLabel("Remaining Armies: " + playerModel.getRemainingNumberOfArmies());
         welcomeLabel1.setBounds(1450, 170, 300, 25);
@@ -153,7 +154,7 @@ public class StartupView extends JFrame implements ViewInterface {
 
             country.setBackground(this.mapRiskModel.getCountryModelList().get(i).getBackgroundColor());
             country.setText(this.mapRiskModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
-            country.setToolTipText("Troops: " + this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
+            country.setToolTipText("Armies: " + this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
             country.setFont(smallFont);
 
             Border border = BorderFactory

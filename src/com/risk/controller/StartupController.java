@@ -169,8 +169,8 @@ public class StartupController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(this.startupView.addButton)) {
-            if (this.startupView.numOfTroopsComboBox.getSelectedItem() != null) {
-                int selectedArmies = (int) this.startupView.numOfTroopsComboBox.getSelectedItem();
+            if (this.startupView.numOfArmiesComboBox.getSelectedItem() != null) {
+                int selectedArmies = (int) this.startupView.numOfArmiesComboBox.getSelectedItem();
                 CountryModel countryName = (CountryModel) this.startupView.countryListComboBox.getSelectedItem();
                 System.out.println("selectedArmies " + selectedArmies);
 
