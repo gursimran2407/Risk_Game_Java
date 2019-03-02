@@ -19,8 +19,8 @@ import java.util.ArrayList;
  */
 public class StartBrandNewGameController implements ActionListener {
 
-    private BrandNewGameView theView;
-    private ArrayList<PlayerModel> listOfPlayers = new ArrayList<PlayerModel>();
+    private BrandNewGameView brandNewGameView;
+    private ArrayList<PlayerModel> playersList = new ArrayList<>();
     private MapRiskModel mapRiskModel = new MapRiskModel();
     private int noOfPlayers;
 
@@ -28,9 +28,9 @@ public class StartBrandNewGameController implements ActionListener {
      * Constructor initializes values and sets the screen too visible
      */
     public StartBrandNewGameController() {
-        this.theView = new BrandNewGameView();
-        this.theView.setActionListener(this);
-        this.theView.setVisible(true);
+        brandNewGameView = new BrandNewGameView();
+        brandNewGameView.setActionListener(this);
+        brandNewGameView.setVisible(true);
 
     }
 
@@ -41,48 +41,41 @@ public class StartBrandNewGameController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(theView.browseMapButton)) {
-            int value = theView.chooseMap.showOpenDialog(theView);
+        if (actionEvent.getSource().equals(brandNewGameView.browse)) {
+            int value = brandNewGameView.chooseMap.showOpenDialog(brandNewGameView);
             if(value == JFileChooser.APPROVE_OPTION){
                 try {
-                    File mapFile = theView.chooseMap.getSelectedFile();
+                    File mapFile = brandNewGameView.chooseMap.getSelectedFile();
                     mapRiskModel = new MapRiskModel(mapFile);
-                    JOptionPane.showMessageDialog(theView, "File Loaded Successfully! Click Next to Play!","Map Loaded",JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(brandNewGameView, "File Loaded Successfully! Click Next to Play!","Map Loaded",JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }else if(actionEvent.getSource().equals(theView.nextButton)) {
-            noOfPlayers = (int) theView.numOfPlayers.getSelectedItem();
-            playerValidation();
+        }else if(actionEvent.getSource().equals(brandNewGameView.nextButton)) {
+            noOfPlayers = (int) brandNewGameView.numOfPlayers.getSelectedItem();
 
-        }else if(actionEvent.getSource().equals(theView.cancelButton)) {
-            new MainGame();
-            this.theView.dispose();
-        }
-
-    }
-
-    /**
-     *  Check for the player validation
-     */
-    public void playerValidation() {
-        if ( mapRiskModel.getCountryModelList().size() > noOfPlayers) {
-            System.out.println("no of players");
-            String PlayerName = "";
-            for (int i=0; i<noOfPlayers; i++) {
-                PlayerName = "Player"+ (i+1);
-                PlayerModel pm = new PlayerModel(PlayerName, 0, 0,"");
-                listOfPlayers.add(pm);
+            if ( mapRiskModel.getCountryModelList().size() > noOfPlayers) {
+                System.out.println("no of players");
+                String PlayerName = "";
+                for (int i=0; i<noOfPlayers; i++) {
+                    PlayerName = "Player"+ (i+1);
+                    PlayerModel pm = new PlayerModel(PlayerName, 0, 0,"");
+                    playersList.add(pm);
+                }
+                new StartupController(playersList, mapRiskModel);
+                brandNewGameView.dispose();
+            } else {
+                JOptionPane.showMessageDialog(brandNewGameView,
+                        "Number of cuntry in the Map is less than Number of Players. Select map or player Again!",
+                        "Map Loaded", JOptionPane.INFORMATION_MESSAGE);
             }
-            new StartupController(listOfPlayers, mapRiskModel);
-            this.theView.dispose();
-        } else {
-            JOptionPane.showMessageDialog(theView,
-                    "Number of cuntry in the Map is less than Number of Players. Select map or player Again!",
-                    "Map Loaded", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
 
+        }else if(actionEvent.getSource().equals(brandNewGameView.cancelButton)) {
+            new MainGame();
+            brandNewGameView.dispose();
+        }
+
+    }
 
 }

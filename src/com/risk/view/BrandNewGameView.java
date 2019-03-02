@@ -9,11 +9,8 @@ import java.util.Observable;
 
 public class BrandNewGameView extends JFrame implements ViewInterface {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 1L;
-
     /** The browse map. */
-    public JButton browseMapButton;
+    public JButton browse;
 
     /** The next button. */
     public JButton nextButton;
@@ -51,9 +48,9 @@ public class BrandNewGameView extends JFrame implements ViewInterface {
         labelMapFile.setBounds(53, 133, 157, 27);
         getContentPane().add(labelMapFile);
 
-        browseMapButton = new JButton("Browse");
-        browseMapButton.setBounds(202, 134, 116, 27);
-        getContentPane().add(browseMapButton);
+        browse = new JButton("Browse");
+        browse.setBounds(202, 134, 116, 27);
+        getContentPane().add(browse);
 
         nextButton = new JButton("Next");
         nextButton.setBounds(202, 237, 116, 25);
@@ -83,7 +80,7 @@ public class BrandNewGameView extends JFrame implements ViewInterface {
      */
     @Override
     public void setActionListener(ActionListener actionListener) {
-        browseMapButton.addActionListener(actionListener);
+        browse.addActionListener(actionListener);
         nextButton.addActionListener(actionListener);
         cancelButton.addActionListener(actionListener);
 
