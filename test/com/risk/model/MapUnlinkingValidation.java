@@ -34,7 +34,7 @@ public class MapUnlinkingValidation {
         System.out.println(file.toString() + "FILEREAD");
         mapRead.setReadFile(file);
         mapValidation = new MapValidation();
-        mapRiskModel = new MapRiskModel();
+        mapRiskModel = new MapRiskModel(file);
         setUpIsDone = true;
 
     }
