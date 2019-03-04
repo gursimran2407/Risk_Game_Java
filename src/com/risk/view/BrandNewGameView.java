@@ -7,6 +7,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
+/**
+ * This class is to represents the start of th game and updates the view
+ */
+
 public class BrandNewGameView extends JFrame implements ViewInterface {
 
     /** The browse map. */
