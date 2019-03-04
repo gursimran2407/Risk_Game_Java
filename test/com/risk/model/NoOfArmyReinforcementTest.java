@@ -72,8 +72,6 @@ public class NoOfArmyReinforcementTest {
             mapRiskModel.getCountryModelList().get(i+1).setCountryOwner(pm);
             i++;
         }
-        //pgc = new PlayerGameController(mapRiskModel, mapRiskModel.getPlayerModelList());
-        //in reinforcementcontroller getPlayerTurn is always null as we are loading map and taking info of countries and continents
 
         rC = new ReinforcementController(mapRiskModel);
         for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
