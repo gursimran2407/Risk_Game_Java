@@ -57,7 +57,7 @@ public class StartBrandNewGameController implements ActionListener {
 
             if ( mapRiskModel.getCountryModelList().size() > noOfPlayers) {
                 System.out.println("no of players");
-                String PlayerName = "";
+                String PlayerName ;
                 for (int i=0; i<noOfPlayers; i++) {
                     PlayerName = "Player"+ (i+1);
                     PlayerModel pm = new PlayerModel(PlayerName, 0, 0,"");

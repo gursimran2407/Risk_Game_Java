@@ -55,7 +55,8 @@ public class ReinforcementController implements ActionListener {
             }
         }
         if (listOfCountrys.size() > 3) {
-            reinforceArmies = 3 + Math.round(listOfCountrys.size() / 3);
+            Double d = Math.floor(listOfCountrys.size() / 3);
+            reinforceArmies = 3 + d.intValue();
         } else {
             reinforceArmies = 3;
         }

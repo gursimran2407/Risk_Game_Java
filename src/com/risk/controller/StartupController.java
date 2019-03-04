@@ -32,25 +32,25 @@ public class StartupController implements ActionListener {
     /**
      * Constructor initializes values and sets the screen too visible
      *
-     * @param playersList
-     * @param mapRiskModel
+     * @param new_playersList
+     * @param new_mapRiskModel
      */
-    public StartupController(ArrayList<PlayerModel> playersList, MapRiskModel mapRiskModel) {
+    public StartupController(ArrayList<PlayerModel> new_playersList, MapRiskModel new_mapRiskModel) {
 
-        this.playersList = playersList;
-        mapRiskModel = mapRiskModel;
+        this.playersList = new_playersList;
+        mapRiskModel = new_mapRiskModel;
 
         countriesList = mapRiskModel.getCountryModelList();
-        noOfPlayers = playersList.size();
+        noOfPlayers = new_playersList.size();
 
         allocateArmies();
         checkForOverallArmies();
         initial = 1;
 
         if (!armiesNull) {
-            while (playersList.get(loopValue).getRemainingNumberOfArmies() == 0) {
+            while (new_playersList.get(loopValue).getRemainingNumberOfArmies() == 0) {
                 loopValue++;
-                if (loopValue > playersList.size()) {
+                if (loopValue > new_playersList.size()) {
                     loopValue = 0;
                     break;
                 }
@@ -63,7 +63,7 @@ public class StartupController implements ActionListener {
             mapRiskModel.addObserver(startupView);
             this.startupView.setVisible(true);
         }
-        mapRiskModel.setPlayerModelList(playersList);
+        mapRiskModel.setPlayerModelList(new_playersList);
     }
 
     /**

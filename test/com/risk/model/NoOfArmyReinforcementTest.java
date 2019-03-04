@@ -1,4 +1,5 @@
 package com.risk.model;
+import com.risk.controller.PlayerGameController;
 import org.junit.Test;
 
 import com.risk.controller.ReinforcementController;
@@ -34,11 +35,14 @@ public class NoOfArmyReinforcementTest {
 
     private static final boolean False = false;
     MapRiskModel mapRiskModel;
+    ArrayList<PlayerModel> playersList = new ArrayList<>();
+    PlayerModel pm;
+    PlayerGameController pgc;
     ReinforcementController rC;
     MapRead mapRead;
     File file;
     int reinforceArmies;
-    private ArrayList<CountryModel> listOfCountrys = new ArrayList<CountryModel>();
+    private ArrayList<CountryModel> countriesList = new ArrayList<>();
 
     private static boolean setUpIsDone = false;
 
@@ -57,20 +61,35 @@ public class NoOfArmyReinforcementTest {
         System.out.println(file.toString() + "FILEREAD");
         mapRead.setReadFile(file);
         mapRiskModel = new MapRiskModel(file);
+        PlayerModel pm = new PlayerModel("Player1", 0, 0,"");
+        PlayerModel pm1 = new PlayerModel("Player2", 0, 0,"");
+        playersList.add(pm);
+        playersList.add(pm1);
+        mapRiskModel.setPlayerModelList(playersList);
+        mapRiskModel.setPlayerTurn(mapRiskModel.getPlayerModelList().get(mapRiskModel.getIndexOfPlayer()));
+        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
+            mapRiskModel.getCountryModelList().get(i).setCountryOwner(pm);
+            mapRiskModel.getCountryModelList().get(i+1).setCountryOwner(pm);
+            i++;
+        }
+        //pgc = new PlayerGameController(mapRiskModel, mapRiskModel.getPlayerModelList());
+        //in reinforcementcontroller getPlayerTurn is always null as we are loading map and taking info of countries and continents
+
         rC = new ReinforcementController(mapRiskModel);
         for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
             if (this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().equals(this.mapRiskModel.getPlayerTurn())) {
-                this.listOfCountrys.add(this.mapRiskModel.getCountryModelList().get(i));
+                this.countriesList.add(this.mapRiskModel.getCountryModelList().get(i));
             }
         }
-        if (listOfCountrys.size() > 3) {
-            reinforceArmies = 3 + Math.round(listOfCountrys.size() / 3);
+        if (countriesList.size() > 3) {
+            reinforceArmies = 3 + Math.round(countriesList.size() / 3);
         } else {
             reinforceArmies = 3;
         }
         if (reinforceArmies > 12) {
             reinforceArmies = 12;
         }
+        
         setUpIsDone = true;
     }
     /**
