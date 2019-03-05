@@ -1,9 +1,8 @@
-package com.risk.view.awt.game;
+package com.risk.view.awt;
 
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
-import com.risk.view.awt.AWTAbstractView;
 import com.risk.view.game.IStartupView;
 
 import javax.swing.*;
