@@ -1,118 +1,103 @@
 package com.risk.controller.map.createcountry;
 
+import com.risk.Environment;
 import com.risk.controller.map.countryconnect.MapCountryConnectController;
 import com.risk.model.ContinentModel;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
-import com.risk.view.awt.map.createcountry.MapCreateCountryView;
+import com.risk.view.map.createcountry.IMapCreateCountryView;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Map country Controller
- * @author Namita Faujdar 
+ * @author Namita Faujdar
  */
 
-public class MapCreateCountryController implements ActionListener {
+public class MapCreateCountryController {
 
-    private MapRiskModel d_mapRiskModel;
-    private MapCreateCountryView d_mapCreateCountryView;
-    private ContinentModel d_newContinentModel;
+    private final Environment environment;
 
-    private HashMap<String, ArrayList<Point>> d_mapPointList;
-    private HashMap<String, Color> d_colorMapList;
-    private  HashMap<String, Integer> d_indexMap;
+    private final MapRiskModel mapRiskModel;
+    private final IMapCreateCountryView view;
+
+    private final Map<String, List<Point>> mapPointList;
+    private final Map<String, Color> colorMapList;
+    private final Map<String, Integer> indexMap;
 
     /**
      * Constructor initializes values and sets the screen to visible
-     * @param new_mapRiskModel
-     * @param new_mapPointList
-     * @param new_colorMapList
-     * @param new_indexMap
+     * @param mapRiskModel
+     * @param mapPointList
+     * @param colorMapList
+     * @param indexMap
      */
 
-    public MapCreateCountryController(MapRiskModel new_mapRiskModel, HashMap<String, ArrayList<Point>> new_mapPointList,
-                                   HashMap<String, Color> new_colorMapList, HashMap<String, Integer> new_indexMap) {
-        d_mapRiskModel = new_mapRiskModel;
-        d_mapPointList = new_mapPointList;
-        d_colorMapList = new_colorMapList;
-        d_indexMap = new_indexMap;
-        d_mapCreateCountryView = new MapCreateCountryView(d_mapRiskModel.getContinentModelList());
-        d_mapCreateCountryView.setVisible(true);
-        d_mapRiskModel.addObserver(d_mapCreateCountryView);
-        d_mapCreateCountryView.setActionListener(this);
+    public MapCreateCountryController(
+            final Environment environment,
+            final MapRiskModel mapRiskModel,
+            final Map<String, List<Point>> mapPointList,
+            final Map<String, Color> colorMapList,
+            final Map<String, Integer> indexMap) {
+        this.environment = environment;
+
+        this.mapRiskModel = mapRiskModel;
+
+        this.mapPointList = mapPointList;
+        this.colorMapList = colorMapList;
+        this.indexMap = indexMap;
+
+        view = environment.getViewManager().createMapCreateCountryView(this.mapRiskModel.getContinentModelList());
+        view.showView();
+
+        this.mapRiskModel.addObserver(view);
+        view.addCountryListener(this::addCountry);
+        view.addShowMapCountryConnectListener(e -> showMapCountryConnect());
     }
-    /**
-     * @param e Performs action whenever there is a change in MapCreateCountryView class
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
-        CountryModel countryModel = new CountryModel();
-
-        if (e.getSource().equals(d_mapCreateCountryView.addButton))
-        {
-            if (d_mapCreateCountryView.countryValue.getText() != null
-                    && !d_mapCreateCountryView.countryValue.getText().equals(""))
-            {
-
-                if (sameCountryNameValidation()) {
-                    JOptionPane.showOptionDialog(null, "Please enter a different country", "Invalid",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
-                    return;
-                } else {
-                    d_newContinentModel = (ContinentModel) d_mapCreateCountryView.continentListCombobox.getSelectedItem();
-                    countryModel.setContinentName(d_newContinentModel.getContinentName());
-                    countryModel.setCountryName(d_mapCreateCountryView.countryValue.getText());
-
-                    countryModel.setBackground(Color.WHITE);
-                    countryModel.setBorderColor(Color.BLACK);
-                    d_mapRiskModel.getCountryModelList().add(countryModel);
-                    d_mapRiskModel.setCountryModelList(d_mapRiskModel.getCountryModelList());
-                }
-
-            }
-            else
-            {
-                JOptionPane.showOptionDialog(null, "Please enter a valid input", "Invalid", JOptionPane.DEFAULT_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
-                return;
-            }
-        } else if (e.getSource().equals(d_mapCreateCountryView.nextButton)) {
-            if (emptyContinentNameValidation()) {
-                JOptionPane.showOptionDialog(null, "Please enter at least one country for each continent", "Invalid",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
-                return;
+    private void addCountry(final String countryValue, final ContinentModel continentModel) {
+        if (countryValue != null && !countryValue.equals("")) {
+            if (sameCountryNameValidation(countryValue)) {
+                view.showMessage("Invalid", "Please enter a different country");
             } else {
+                final CountryModel countryModel = new CountryModel();
+                countryModel.setContinentName(continentModel.getContinentName());
+                countryModel.setCountryName(countryValue);
+                countryModel.setBackground(Color.WHITE);
+                countryModel.setBorderColor(Color.BLACK);
 
-
-                for (int i = 0; i < d_mapRiskModel.getCountryModelList().size(); i++) {
-
-                    ArrayList<Point> pointList = d_mapPointList.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName());
-
-                    int index = d_indexMap.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName());
-
-                    System.out.println("==>" + d_mapPointList.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName()).get(index).x);
-                    d_mapRiskModel.getCountryModelList().get(i).setXPosition(d_mapPointList.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName()).get(index).x);
-                    d_mapRiskModel.getCountryModelList().get(i).setYPosition(d_mapPointList.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName()).get(index).y);
-                    d_mapRiskModel.getCountryModelList().get(i).setBackgroundColor(d_colorMapList.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName()));
-
-                    d_indexMap.put(d_mapRiskModel.getCountryModelList().get(i).getContinentName(),d_indexMap.get(d_mapRiskModel.getCountryModelList().get(i).getContinentName())+1);
-
-                    //	}
-
-                }
-
-                new MapCountryConnectController(d_mapRiskModel);
-                d_mapCreateCountryView.dispose();
+                mapRiskModel.getCountryModelList().add(countryModel);
+                mapRiskModel.setCountryModelList(mapRiskModel.getCountryModelList());
             }
+        } else {
+            view.showMessage("Invalid", "Please enter a valid input");
+        }
+    }
+
+    private void showMapCountryConnect() {
+        if (emptyContinentNameValidation()) {
+            view.showMessage("Invalid", "Please enter at least one country for each continent");
+        } else {
+            for (int i = 0; i < mapRiskModel.getCountryModelList().size(); i++) {
+                int index = indexMap.get(mapRiskModel.getCountryModelList().get(i).getContinentName());
+
+                System.out.println("==>" + mapPointList.get(mapRiskModel.getCountryModelList().get(i).getContinentName()).get(index).x);
+                mapRiskModel.getCountryModelList().get(i).setXPosition(
+                        mapPointList.get(mapRiskModel.getCountryModelList().get(i).getContinentName()).get(index).x);
+                mapRiskModel.getCountryModelList().get(i).setYPosition(
+                        mapPointList.get(mapRiskModel.getCountryModelList().get(i).getContinentName()).get(index).y);
+                mapRiskModel.getCountryModelList().get(i).setBackgroundColor(
+                        colorMapList.get(mapRiskModel.getCountryModelList().get(i).getContinentName()));
+
+                indexMap.put(
+                        mapRiskModel.getCountryModelList().get(i).getContinentName(),
+                        indexMap.get(mapRiskModel.getCountryModelList().get(i).getContinentName()) + 1);
+            }
+
+            new MapCountryConnectController(environment, mapRiskModel);
+            view.hideView();
         }
     }
 
@@ -120,13 +105,12 @@ public class MapCreateCountryController implements ActionListener {
      * Check for same country validation
      * @return boolean
      */
-    private boolean sameCountryNameValidation() {
-
-        for (CountryModel countryModel : d_mapRiskModel.getCountryModelList()
-        ) {
-            if (countryModel.getCountryName().equals(d_mapCreateCountryView.countryValue.getText()))
+    private boolean sameCountryNameValidation(final String countryValue) {
+        for (final CountryModel countryModel : mapRiskModel.getCountryModelList()) {
+            if (countryModel.getCountryName().equals(countryValue)) {
                 return true;
             }
+        }
 
         return false;
     }
@@ -135,12 +119,14 @@ public class MapCreateCountryController implements ActionListener {
      * Check for empty continent Value
      * @return boolean
      */
-    public boolean emptyContinentNameValidation() {
-        java.util.List<ContinentModel> listOfContinents = d_mapRiskModel.getContinentModelList();
-        List<CountryModel> listOfCountries = d_mapRiskModel.getCountryModelList();
+    private boolean emptyContinentNameValidation() {
+        final List<ContinentModel> listOfContinents = mapRiskModel.getContinentModelList();
+        final List<CountryModel> listOfCountries = mapRiskModel.getCountryModelList();
+
         String continentName = " ";
         for (int i = 0; i < listOfContinents.size(); i++) {
             continentName = listOfContinents.get(i).getContinentName();
+
             int count = 0;
             for (int j = 0; j < listOfCountries.size(); j++) {
                 count++;
@@ -149,10 +135,12 @@ public class MapCreateCountryController implements ActionListener {
                     break;
                 }
             }
+
             if (count == listOfCountries.size()) {
                 return true;
             }
         }
+
         return false;
     }
 }

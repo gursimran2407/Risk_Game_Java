@@ -15,9 +15,9 @@ import java.util.Observable;
 
 public class MapRiskModel extends Observable {
 
-    private ArrayList<ContinentModel> d_continentModelList;
+    private List<ContinentModel> d_continentModelList;
     private ArrayList<CountryModel> d_countryModelList;
-    private ArrayList<PlayerModel> d_playerModelList;
+    private List<PlayerModel> d_playerModelList;
     private int d_indexOfPlayer;
     private PlayerModel d_playerTurn;
     private int leftModelIndex = 0;
@@ -54,11 +54,11 @@ public class MapRiskModel extends Observable {
         }
     }
 
-    public ArrayList<ContinentModel> getContinentModelList() {
+    public List<ContinentModel> getContinentModelList() {
         return d_continentModelList;
     }
 
-    public void setContinentModelModList(ArrayList<ContinentModel> continentModelList) {
+    public void setContinentModelModList(List<ContinentModel> continentModelList) {
         d_continentModelList = continentModelList;
         callObservers();
     }
@@ -72,12 +72,12 @@ public class MapRiskModel extends Observable {
         callObservers();
     }
 
-    public ArrayList<PlayerModel> getPlayerModelList() {
+    public List<PlayerModel> getPlayerModelList() {
         return d_playerModelList;
     }
     private int selectedComboBoxIndex;
 
-    public void setPlayerModelList(ArrayList<PlayerModel> playerModelList) {
+    public void setPlayerModelList(List<PlayerModel> playerModelList) {
         d_playerModelList = playerModelList;
         callObservers();
     }

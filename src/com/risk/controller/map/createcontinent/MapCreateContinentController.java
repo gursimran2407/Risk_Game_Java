@@ -1,159 +1,141 @@
 package com.risk.controller.map.createcontinent;
 
+import com.risk.Environment;
 import com.risk.controller.map.createcountry.MapCreateCountryController;
 import com.risk.model.ContinentModel;
 import com.risk.model.MapRiskModel;
-import com.risk.view.awt.map.createcontinent.MapCreateContinentView;
+import com.risk.view.map.createcontinent.IMapCreateContinentView;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Map continent Controller
  * @author gursimransingh
  */
-public class MapCreateContinentController implements ActionListener {
-    private MapRiskModel mapRiskModel;
-    private MapCreateContinentView mapCreateContinentView;
+public class MapCreateContinentController {
+
+    private final Environment environment;
+
+    private MapRiskModel model;
+    private IMapCreateContinentView view;
 
     /**
      * Constructor to create map continent
      */
-    public MapCreateContinentController() {
-        mapRiskModel = new MapRiskModel();
-        mapCreateContinentView = new MapCreateContinentView();
-        //Initializing ArrayList to store continent models
+    public MapCreateContinentController(final Environment environment) {
+        this.environment = environment;
 
-        mapRiskModel.addObserver(mapCreateContinentView);
-        mapCreateContinentView.setActionListener(this);
-        mapCreateContinentView.setVisible(true);
+        model = new MapRiskModel();
+        view = environment.getViewManager().createMapCreateContinentView();
+
+        // Initializing ArrayList to store continent models
+
+        model.addObserver(view);
+        view.addContinentListener(this::addContinent);
+        view.addShowMapCreateCountryListener(e -> showMapCreateCountry());
+        view.showView();
     }
 
-    /**
-     * @param e Performs action whenever there is a change in MapCreateContinentView class
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        ContinentModel continentModel;
-        //Creating the Continent Model
-        //If clicked on AddButton
-        if (e.getSource().equals(mapCreateContinentView.addButton))
-        //Now checking if the input text fields are empty or not.
-        {
-            if (!("".equals(mapCreateContinentView.controlValue.getText()) || mapCreateContinentView.controlValue.getText().isEmpty() || mapCreateContinentView.continentValue.getText().isEmpty()
-                    || "".equals(mapCreateContinentView.continentValue.getText()))) {
-                System.out.println("the input from the view is" + mapCreateContinentView.controlValue.getText()
-                        + mapCreateContinentView.continentValue.getText());
-                continentModel = new ContinentModel(mapCreateContinentView.continentValue.getText(),
-                        Integer.parseInt(mapCreateContinentView.controlValue.getText()));
-                if (0 < Integer.parseInt(mapCreateContinentView.controlValue.getText())
-                        && Integer.parseInt(mapCreateContinentView.controlValue.getText()) < 10) {
-                    if (mapCreateContinentView.continentValue != null) {
-                        for (int index = 0; index < mapRiskModel.getContinentModelList().size(); index++) {
-                            if (mapRiskModel.getContinentModelList().get(index).getContinentName()
-                                    .equals(mapCreateContinentView.continentValue.getText())) {
-                                JOptionPane.showOptionDialog(null, "You have already added this Continent", "Error",
-                                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                                        new Object[]{}, null);
-                                return;
-                            }
+    private void addContinent(final String controlValue, final String continentValue) {
+        if (!("".equals(controlValue) || "".equals(continentValue))) {
+            System.out.println("the input from the view is" + controlValue + continentValue);
+
+            final ContinentModel continentModel = new ContinentModel(continentValue, Integer.parseInt(controlValue));
+            if (0 < Integer.parseInt(controlValue) && Integer.parseInt(controlValue) < 10) {
+                if (continentValue != null) {
+                    for (int index = 0; index < model.getContinentModelList().size(); index++) {
+                        if (model.getContinentModelList().get(index).getContinentName().equals(continentValue)) {
+                            view.showMessage("You have already added this Continent");
+                            return;
                         }
-                        mapRiskModel.getContinentModelList().add(continentModel);
-                        mapRiskModel.setContinentModelModList(mapRiskModel.getContinentModelList());
-
-                    } else {
-                        JOptionPane.showOptionDialog(null, "Please enter some country name", "Error",
-                                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{},
-                                null);
-                        return;
                     }
+
+                    model.getContinentModelList().add(continentModel);
+                    model.setContinentModelModList(model.getContinentModelList());
                 } else {
-                    JOptionPane.showOptionDialog(null, "Please enter a control value between 0 and 10", "Error",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-                    return;
+                    view.showMessage("Please enter some country name");
                 }
             } else {
-                JOptionPane.showOptionDialog(null, "Please enter values in all the fields", "Error",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-                return;
+                view.showMessage("Please enter a control value between 0 and 10");
             }
+        } else {
+            view.showMessage("Please enter values in all the fields");
         }
+    }
 
-        //Else if next button is clicked
-        else if (e.getSource().equals(this.mapCreateContinentView.nextButton)) {
-            if (mapRiskModel.getContinentModelList().isEmpty()) {
-                JOptionPane.showOptionDialog(null, "Enter at least one Continent to the list", "Error",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-                return;
-            } else {
-                //Creating ArrayList of ArrayList of points
-                //Creating ColorList of ColorList
-                ArrayList<ArrayList<Point>> pointsList = new ArrayList<>();
-                ArrayList<Color> colorList = new ArrayList<>();
+    private void showMapCreateCountry() {
+        if (model.getContinentModelList().isEmpty()) {
+            view.showMessage("Enter at least one Continent to the list");
+        } else {
+            // Creating ArrayList of ArrayList of points
+            // Creating ColorList of ColorList
 
-                colorList.add(Color.RED);
-                colorList.add(Color.GREEN);
-                colorList.add(Color.BLUE);
-                colorList.add(Color.CYAN);
-                colorList.add(Color.ORANGE);
+            final List<List<Point>> pointsList = new ArrayList<>();
+            final List<Color> colorList = new ArrayList<>();
 
-                ArrayList<Point> p = new ArrayList<>();
-                p.add(new Point(330, 40));
-                p.add(new Point(300, 95));
-                p.add(new Point(255, 110));
-                p.add(new Point(270, 120));
-                p.add(new Point(325, 130));
-                pointsList.add(p);
+            colorList.add(Color.RED);
+            colorList.add(Color.GREEN);
+            colorList.add(Color.BLUE);
+            colorList.add(Color.CYAN);
+            colorList.add(Color.ORANGE);
 
-                p = new ArrayList<>();
-                p.add(new Point(230, 160));
-                p.add(new Point(265, 150));
-                p.add(new Point(290, 160));
-                p.add(new Point(300, 180));
-                p.add(new Point(270, 195));
-                pointsList.add(p);
+            List<Point> p = new ArrayList<>();
+            p.add(new Point(330, 40));
+            p.add(new Point(300, 95));
+            p.add(new Point(255, 110));
+            p.add(new Point(270, 120));
+            p.add(new Point(325, 130));
+            pointsList.add(p);
 
-                p = new ArrayList<>();
-                p.add(new Point(200, 210));
-                p.add(new Point(240, 200));
-                p.add(new Point(255, 220));
-                p.add(new Point(230, 245));
-                p.add(new Point(275, 225));
-                pointsList.add(p);
+            p = new ArrayList<>();
+            p.add(new Point(230, 160));
+            p.add(new Point(265, 150));
+            p.add(new Point(290, 160));
+            p.add(new Point(300, 180));
+            p.add(new Point(270, 195));
+            pointsList.add(p);
 
-                p = new ArrayList<>();
-                p.add(new Point(300, 210));
-                p.add(new Point(290, 240));
-                p.add(new Point(300, 260));
-                p.add(new Point(260, 285));
-                p.add(new Point(210, 270));
-                pointsList.add(p);
+            p = new ArrayList<>();
+            p.add(new Point(200, 210));
+            p.add(new Point(240, 200));
+            p.add(new Point(255, 220));
+            p.add(new Point(230, 245));
+            p.add(new Point(275, 225));
+            pointsList.add(p);
 
-                p = new ArrayList<>();
-                p.add(new Point(165, 260));
-                p.add(new Point(125, 220));
-                p.add(new Point(120, 260));
-                p.add(new Point(70, 290));
-                p.add(new Point(30, 285));
-                pointsList.add(p);
+            p = new ArrayList<>();
+            p.add(new Point(300, 210));
+            p.add(new Point(290, 240));
+            p.add(new Point(300, 260));
+            p.add(new Point(260, 285));
+            p.add(new Point(210, 270));
+            pointsList.add(p);
 
-                HashMap<String, Color> colorMapList = new HashMap<>();
-                HashMap<String, ArrayList<Point>> mapPointList = new HashMap<>();
-                HashMap<String, Integer> indexMap = new HashMap<>();
+            p = new ArrayList<>();
+            p.add(new Point(165, 260));
+            p.add(new Point(125, 220));
+            p.add(new Point(120, 260));
+            p.add(new Point(70, 290));
+            p.add(new Point(30, 285));
+            pointsList.add(p);
 
-                for (int i = 0; i < this.mapRiskModel.getContinentModelList().size(); i++) {
-                    mapPointList.put(this.mapRiskModel.getContinentModelList().get(i).getContinentName(), pointsList.get(i));
-                    colorMapList.put(this.mapRiskModel.getContinentModelList().get(i).getContinentName(), colorList.get(i));
-                    indexMap.put(this.mapRiskModel.getContinentModelList().get(i).getContinentName(), 0);
-                }
+            Map<String, Color> colorMapList = new HashMap<>();
+            Map<String, List<Point>> mapPointList = new HashMap<>();
+            Map<String, Integer> indexMap = new HashMap<>();
 
-                new MapCreateCountryController(mapRiskModel, mapPointList, colorMapList, indexMap);
-                this.mapCreateContinentView.dispose();
+            for (int i = 0; i < this.model.getContinentModelList().size(); i++) {
+                mapPointList.put(this.model.getContinentModelList().get(i).getContinentName(), pointsList.get(i));
+                colorMapList.put(this.model.getContinentModelList().get(i).getContinentName(), colorList.get(i));
+                indexMap.put(this.model.getContinentModelList().get(i).getContinentName(), 0);
             }
+
+            new MapCreateCountryController(
+                    environment, model, mapPointList, colorMapList, indexMap);
+            view.hideView();
         }
     }
 }
