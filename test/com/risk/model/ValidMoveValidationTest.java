@@ -10,7 +10,7 @@ import java.io.File;
 
 import static org.junit.Assert.assertTrue;
 
-public class MoveValidationTest {
+public class ValidMoveValidationTest {
 
     private static boolean setUpIsDone = false;
     MapRiskModel mapRiskModel;
