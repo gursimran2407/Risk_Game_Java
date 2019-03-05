@@ -1,6 +1,5 @@
 package com.risk.model;
 
-import com.risk.MapRiskModel;
 import com.risk.gameplayrequirements.Constants;
 import com.risk.gameplayrequirements.MapRead;
 import com.risk.gameplayrequirements.MapValidation;
