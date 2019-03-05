@@ -1,50 +1,52 @@
 package com.risk.view;
 
+import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
-import com.risk.view.awt.AWTAbstractView;
-import com.risk.view.game.IStartupView;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Observable;
-import java.util.function.BiConsumer;
 
 /**
+ * This class represents the armies and countries allocated to player in the starting of the game
  * @author gursimransingh
  */
-
-public class StartupView extends AWTAbstractView implements IStartupView {
+public class StartupView extends JFrame implements ViewInterface {
 
     private static final long serialVersionUID = 1L;
-    private MapRiskModel mapRiskModel;
-    private PlayerModel playerModel;
+    public MapRiskModel mapRiskModel;
+    public PlayerModel playerModel;
 
-    private JPanel pnlWelcome;
-    private JPanel pnlGraphic;
+    public JPanel welcomePanel;
+    public JPanel graphicPanel;
 
-    private JLabel lblWelcome;
-    private JLabel lblWelcome1;
-    private JLabel lblNoOfTroops;
+    public JLabel welcomeLabel;
+    public JLabel welcomeLabel1;
+    public JLabel noOfArmiesLabel;
 
-    private JComboBox<Integer> cbxNumOfTroops;
-    private JButton btnAdd;
+    public JComboBox<Integer> numOfArmiesComboBox;
+    public JButton addButton;
+    public JLabel listOfCountriesLabel;
 
-    private JLabel lblCountryList;
-    private JComboBox<Object> cbxCountryList;
-    private Object[] countryListArray;
+    public JLabel countryListLabel;
+    public JComboBox<Object> countryListComboBox;
+    public Object[] countryListArray;
     private CountryViewRenderer countriesViewRenderer;
 
-    private JButton[] button;
-    private JButton btnNext;
+    public JButton[] button;
+    public JButton nextButton;
+    public JButton button2;
+    public JButton button3;
 
     /**
-     * constructor for Start Up Phase View where the variables are initialized
+     * This is the constructor for Start Up Phase View where the variables are initialized
      *
      * @param mapRiskModel
      * @param playerModel
@@ -57,39 +59,22 @@ public class StartupView extends AWTAbstractView implements IStartupView {
         this.setSize(1600, 1000);
         this.setResizable(false);
         this.setVisible(false);
-        this.btnAdd = new JButton("Add");
-        this.btnNext = new JButton("Next");
-        pnlWelcome = new JPanel();
-        pnlGraphic = new JPanel();
-        this.add(pnlGraphic);
-        pnlGraphic.setSize(1200, 1000);
-        pnlGraphic.setBackground(Color.WHITE);
-        pnlGraphic.setLayout(null);
-        this.btnAdd = new JButton("Add");
-        this.add(pnlWelcome);
+        this.addButton = new JButton("Add");
+        this.nextButton = new JButton("Next");
+        welcomePanel = new JPanel();
+        graphicPanel = new JPanel();
+        this.add(graphicPanel);
+        graphicPanel.setSize(1200, 1000);
+        graphicPanel.setBackground(Color.WHITE);
+        graphicPanel.setLayout(null);
+        this.addButton = new JButton("Add");
+        this.add(welcomePanel);
         this.playerModel = playerModel;
-        this.lblWelcome = new JLabel("It's " + playerModel.getPlayerName() + "'s turn");
-        this.lblWelcome1 = new JLabel("Remaining Armies: " + playerModel.getRemainingNumberOfArmies());
+        this.welcomeLabel = new JLabel("It's " + playerModel.getPlayerName() + "'s turn");
+        this.welcomeLabel1 = new JLabel("Remaining Armies: " + playerModel.getRemainingNumberOfArmies());
         updateWindow(mapRiskModel, playerModel);
-        pnlWelcome.setLayout(null);
-        pnlGraphic.setLayout(null);
-    }
-
-    @Override
-    public void setWelcomeMessage(String message) {
-        lblWelcome.setText(message);
-    }
-
-    @Override
-    public void addTroopsListener(BiConsumer<Object, CountryModel> listener) {
-        this.btnAdd.addActionListener(
-                e -> listener.accept(
-                        cbxNumOfTroops.getSelectedItem(), (CountryModel) cbxCountryList.getSelectedItem()));
-    }
-
-    @Override
-    public void addNextListener(ActionListener listener) {
-        this.btnNext.addActionListener(listener);
+        welcomePanel.setLayout(null);
+        graphicPanel.setLayout(null);
     }
 
     /**
@@ -99,10 +84,10 @@ public class StartupView extends AWTAbstractView implements IStartupView {
      * @param mapRiskModel
      * @param playerModel
      */
-    private void updateWindow(MapRiskModel mapRiskModel, PlayerModel playerModel) {
+    public void updateWindow(MapRiskModel mapRiskModel, PlayerModel playerModel) {
 
-        pnlWelcome.removeAll();
-        pnlGraphic.removeAll();
+        welcomePanel.removeAll();
+        graphicPanel.removeAll();
         Font largeFont = new Font("Serif", Font.BOLD, 18);
         Font mediumFont = new Font("Serif", Font.BOLD, 14);
         Font smallFont = new Font("Serif", Font.BOLD, 12);
@@ -110,32 +95,32 @@ public class StartupView extends AWTAbstractView implements IStartupView {
         this.mapRiskModel = mapRiskModel;
         this.playerModel = playerModel;
 
-        lblWelcome.setBounds(1300, 80, 300, 25);
-        lblWelcome.setFont(largeFont);
-        pnlWelcome.add(lblWelcome);
+        welcomeLabel.setBounds(1300, 80, 300, 25);
+        welcomeLabel.setFont(largeFont);
+        welcomePanel.add(welcomeLabel);
 
-        this.lblNoOfTroops = new JLabel("Number of Troops :");
-        lblNoOfTroops.setBounds(1300, 140, 150, 25);
-        pnlWelcome.add(lblNoOfTroops);
+        this.noOfArmiesLabel = new JLabel("Number of Amries :");
+        noOfArmiesLabel.setBounds(1300, 140, 150, 25);
+        welcomePanel.add(noOfArmiesLabel);
 
-        Integer[] troops = new Integer[playerModel.getRemainingNumberOfArmies()];
+        Integer[] armies = new Integer[playerModel.getRemainingNumberOfArmies()];
         for (int i = 0; i < playerModel.getRemainingNumberOfArmies(); i++) {
-            troops[i] = i + 1;
+            armies[i] = i + 1;
         }
 
-        cbxNumOfTroops = new JComboBox(troops);
-        cbxNumOfTroops.setBounds(1300, 170, 150, 25);
-        cbxNumOfTroops.setEnabled(false);
-        pnlWelcome.add(cbxNumOfTroops);
+        numOfArmiesComboBox = new JComboBox(armies);
+        numOfArmiesComboBox.setBounds(1300, 170, 150, 25);
+        numOfArmiesComboBox.setEnabled(false);
+        welcomePanel.add(numOfArmiesComboBox);
 
-        lblWelcome1 = new JLabel("Remaining Armies: " + playerModel.getRemainingNumberOfArmies());
-        lblWelcome1.setBounds(1450, 170, 300, 25);
-        lblWelcome1.setFont(smallFont);
-        pnlWelcome.add(lblWelcome1);
+        welcomeLabel1 = new JLabel("Remaining Armies: " + playerModel.getRemainingNumberOfArmies());
+        welcomeLabel1.setBounds(1450, 170, 300, 25);
+        welcomeLabel1.setFont(smallFont);
+        welcomePanel.add(welcomeLabel1);
 
-        this.lblCountryList = new JLabel("Select Country :");
-        lblCountryList.setBounds(1300, 230, 150, 25);
-        pnlWelcome.add(this.lblCountryList);
+        this.countryListLabel = new JLabel("Select Country :");
+        countryListLabel.setBounds(1300, 230, 150, 25);
+        welcomePanel.add(this.countryListLabel);
 
         ArrayList<CountryModel> listOfCountries = new ArrayList<CountryModel>();
         for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
@@ -147,20 +132,20 @@ public class StartupView extends AWTAbstractView implements IStartupView {
 
         countriesViewRenderer = new CountryViewRenderer();
         countryListArray = listOfCountries.toArray();
-        cbxCountryList = new JComboBox(countryListArray);
-        pnlWelcome.add(this.cbxCountryList);
+        countryListComboBox = new JComboBox(countryListArray);
+        welcomePanel.add(this.countryListComboBox);
 
         if (countryListArray.length > 0) {
-            cbxCountryList.setRenderer(countriesViewRenderer);
+            countryListComboBox.setRenderer(countriesViewRenderer);
         }
-        cbxCountryList.setBounds(1300, 260, 150, 25);
-        pnlWelcome.add(cbxCountryList);
+        countryListComboBox.setBounds(1300, 260, 150, 25);
+        welcomePanel.add(countryListComboBox);
 
-        this.btnAdd.setBounds(1300, 300, 150, 25);
-        pnlWelcome.add(this.btnAdd);
+        this.addButton.setBounds(1300, 300, 150, 25);
+        welcomePanel.add(this.addButton);
 
-        this.btnNext.setBounds(1400, 600, 150, 25);
-        pnlWelcome.add(this.btnNext);
+        this.nextButton.setBounds(1400, 600, 150, 25);
+        welcomePanel.add(this.nextButton);
 
         int n = this.mapRiskModel.getCountryModelList().size();
         button = new JButton[n];
@@ -169,7 +154,7 @@ public class StartupView extends AWTAbstractView implements IStartupView {
 
             country.setBackground(this.mapRiskModel.getCountryModelList().get(i).getBackgroundColor());
             country.setText(this.mapRiskModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
-            country.setToolTipText("Troops: " + this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
+            country.setToolTipText("Armies: " + this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
             country.setFont(smallFont);
 
             Border border = BorderFactory
@@ -183,7 +168,7 @@ public class StartupView extends AWTAbstractView implements IStartupView {
 
             country.setMargin(new Insets(0, 0, 0, 0));
 
-            pnlGraphic.add(country);
+            graphicPanel.add(country);
         }
     }
 
@@ -249,15 +234,25 @@ public class StartupView extends AWTAbstractView implements IStartupView {
      */
     @Override
     public void update(Observable obs, Object arg) {
+
         if (obs instanceof MapRiskModel) {
             this.mapRiskModel = (MapRiskModel) obs;
         } else if (obs instanceof PlayerModel) {
             this.playerModel = (PlayerModel) obs;
         }
-
         this.updateWindow(this.mapRiskModel, this.playerModel);
         this.revalidate();
         this.repaint();
+
+    }
+
+    /**
+     * This is actionListener method to listen the action events in the screen
+     */
+    @Override
+    public void setActionListener(ActionListener actionListener) {
+        this.addButton.addActionListener(actionListener);
+        this.nextButton.addActionListener(actionListener);
     }
 
     /**
@@ -267,16 +262,17 @@ public class StartupView extends AWTAbstractView implements IStartupView {
      * @return color
      */
 
-    private static Color stringToColor(final String value) {
+    public static Color stringToColor(final String value) {
         if (value == null) {
             return Color.black;
         }
-
         try {
             return Color.decode(value);
         } catch (NumberFormatException nfe) {
             try {
-                return (Color) Color.class.getField(value).get(null);
+                final Field f = Color.class.getField(value);
+
+                return (Color) f.get(null);
             } catch (Exception ce) {
                 return Color.black;
             }

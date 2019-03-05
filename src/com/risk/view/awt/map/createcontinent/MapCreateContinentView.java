@@ -1,18 +1,17 @@
 package com.risk.view.awt.map.createcontinent;
 
+import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.ContinentModel;
 import com.risk.model.MapRiskModel;
-import com.risk.view.awt.AWTAbstractView;
-import com.risk.view.map.createcontinent.IMapCreateContinentView;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
-import java.util.function.BiConsumer;
 
 /**
  * "MapCreateContinentView" class in representing a view object for creating continent
@@ -20,91 +19,68 @@ import java.util.function.BiConsumer;
  *
  * @author gursimransingh
  */
-public class MapCreateContinentView extends AWTAbstractView implements IMapCreateContinentView {
+public class MapCreateContinentView extends JFrame implements ViewInterface {
 
     /**
      * View Properties
      */
 
-    private JTextField tfContinentValue = null;
-    private JTextField tfControlValue = null;
-
-    private JButton btnNext = null;
-    private JButton btnAdd = null;
-
-    private JTextArea textArea = null;
+    public JLabel welcomeLabel;
+    public JTextField continentValue;
+    public JTextField controlValue;
+    public JLabel continentListText;
+    public JLabel controlValueText;
+    public JLabel controlValueInfoText;
+    public JTextArea observerList;
+    public JButton nextButton;
+    public JButton addButton;
+    public JTextArea consoleTextArea;
+    public JTextArea consoleMainPanel;
+    public JScrollPane consolePanel;
+    public JPanel mainPanel;
+    JTextArea textArea;
 
     /**
      * Construction of CreateContinentView
      */
     public MapCreateContinentView() {
-        createUI();
-        updateUI(null);
-    }
-
-    private void createUI() {
         this.setTitle("Create Continent");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(300, 200);
-        this.setSize(800, 500);
+        this.setSize(800, 700);
         this.setResizable(false);
         this.setVisible(false);
 
-        final JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         mainPanel.setLayout(null);
-        this.add(mainPanel);
 
         textArea = new JTextArea("Default text", 5, 5);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        textArea.setEditable(false);
-        textArea.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "ADDED Continents"));
-        textArea.setBounds(520, 15, 260, 450);
-        textArea.setBackground(new Color(115, 255, 238));
-        textArea.setForeground(new Color(0, 0, 26));
-        mainPanel.add(textArea);
 
-        final JLabel lblWelcome = new JLabel("Please name the Continents you want in the map and their control values");
-        lblWelcome.setBounds(25, 0, 600, 100);
-        mainPanel.add(lblWelcome);
+        welcomeLabel = new JLabel("Please name the Continents you want in the map and their control values");
+        welcomeLabel.setBounds(100, 0, 600, 100);
 
-        final JLabel continentListText = new JLabel("Continent Name: ");
-        continentListText.setBounds(25, 75, 120, 40);
-        mainPanel.add(continentListText);
+        continentListText = new JLabel("Continent Name: ");
+        continentListText.setBounds(100, 100, 200, 40);
 
-        tfContinentValue = new JTextField();
-        tfContinentValue.setBounds(145, 75, 200, 40);
-        mainPanel.add(tfContinentValue);
+        continentValue = new JTextField();
+        continentValue.setBounds(200, 100, 200, 40);
 
-        final JLabel controlValueText = new JLabel("Control Value: ");
-        controlValueText.setBounds(25, 125, 120, 40);
-        mainPanel.add(controlValueText);
+        controlValueText = new JLabel("Control Value: ");
+        controlValueText.setBounds(100, 200, 200, 40);
 
-        tfControlValue = new JTextField();
-        tfControlValue.setBounds(145, 125, 200, 40);
-        mainPanel.add(tfControlValue);
+        controlValue = new JTextField();
+        controlValue.setBounds(200, 200, 200, 40);
 
-        final JLabel controlValueInfoText = new JLabel("(0 to 10)");
-        controlValueInfoText.setBounds(350, 125, 100, 40);
-        mainPanel.add(controlValueInfoText);
+        controlValueInfoText = new JLabel("(0 to 10)");
+        controlValueInfoText.setBounds(411, 200, 100, 40);
 
-        btnAdd = new JButton("Add");
-        btnAdd.setBounds(20, 175, 100, 40);
-        mainPanel.add(btnAdd);
+        addButton = new JButton("Add");
+        addButton.setBounds(100, 300, 100, 40);
 
-        btnNext = new JButton("Next");
-        btnNext.setBounds(125, 175, 100, 40);
-        mainPanel.add(btnNext);
-    }
+        nextButton = new JButton("Next");
+        nextButton.setBounds(200, 300, 100, 40);
 
-    @Override
-    public void addContinentListener(BiConsumer<String, String> listener) {
-        btnAdd.addActionListener(e -> listener.accept(tfControlValue.getText(), tfContinentValue.getText()));
-    }
-
-    @Override
-    public void addShowMapCreateCountryListener(ActionListener listener) {
-        btnNext.addActionListener(listener);
+        updateUI(null);
     }
 
     /**
@@ -112,19 +88,52 @@ public class MapCreateContinentView extends AWTAbstractView implements IMapCreat
      *
      * @param listOfContinentModel
      */
-    private void updateUI(List<ContinentModel> listOfContinentModel) {
-        final StringBuilder textAreaText = new StringBuilder("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+    public void updateUI(List<ContinentModel> listOfContinentModel) {
 
-        if (listOfContinentModel != null) {
+        StringBuilder textAreaText = new StringBuilder("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+
+        if (listOfContinentModel == null) {
+            textArea.setText(textAreaText.toString());
+        } else {
             textAreaText.setLength(0);
-            for (final ContinentModel continentModel : listOfContinentModel) {
-                textAreaText.append(
-                        "Continent Name : " + continentModel.getContinentName()
-                                + " || Control Value : " + continentModel.getControlValue() + "\n");
+            for (int i = 0; i < listOfContinentModel.size(); i++) {
+                textAreaText.append("Continent Name : " + listOfContinentModel.get(i).getContinentName()
+                        + " || Control Value : " + listOfContinentModel.get(i).getControlValue() + "\n");
             }
         }
 
         textArea.setText(textAreaText.toString());
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setEditable(false);
+        mainPanel.add(textArea);
+        textArea.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "ADDED Continents"));
+        textArea.setBounds(520, 0, 260, 650);
+
+        Color main = new Color(115, 255, 238);
+        Color secondary = new Color(0, 0, 26);
+        textArea.setBackground(main);
+        textArea.setForeground(secondary);
+
+        this.add(mainPanel);
+        mainPanel.add(welcomeLabel);
+        mainPanel.add(addButton);
+        mainPanel.add(nextButton);
+        mainPanel.add(continentListText);
+        mainPanel.add(continentValue);
+        mainPanel.add(controlValue);
+        mainPanel.add(controlValueText);
+        mainPanel.add(controlValueInfoText);
+
+    }
+
+    /**
+     * sets actions to JButton variables
+     */
+    @Override
+    public void setActionListener(ActionListener actionListener) {
+        this.addButton.addActionListener(actionListener);
+        this.nextButton.addActionListener(actionListener);
     }
 
     /**
@@ -132,8 +141,7 @@ public class MapCreateContinentView extends AWTAbstractView implements IMapCreat
      */
     @Override
     public void update(Observable obs, Object arg) {
-        final List<ContinentModel> listOfContinentModel = ((MapRiskModel) obs).getContinentModelList();
-
+        List<ContinentModel> listOfContinentModel = ((MapRiskModel) obs).getContinentModelList();
         this.updateUI(listOfContinentModel);
         this.revalidate();
         this.repaint();

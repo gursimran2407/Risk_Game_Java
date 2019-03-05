@@ -16,6 +16,12 @@ import com.risk.view.game.IBrandNewGameView;
 import java.io.File;
 import java.util.List;
 
+/**
+ * this interface has all view interfaces
+ *
+ * @author Namita Faujdar
+ */
+
 public interface ViewManager {
 
     File openFile();
