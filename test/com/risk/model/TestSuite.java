@@ -8,7 +8,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         ContinentReadTest.class,
         CountryEmptyValidation.class,
-        ContinentReadTest.class,
+        CountryReadTest.class,
         EmptyContinentValidation.class,
         MapRiskModelSetNeighbouringCountryTest.class,
         ValidMoveValidationTest.class,
