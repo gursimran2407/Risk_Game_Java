@@ -1,5 +1,9 @@
 package com.risk;
 
+import com.risk.model.ContinentModel;
+import com.risk.model.CountryModel;
+import com.risk.model.MapRiskModel;
+import com.risk.model.PlayerModel;
 import com.risk.view.ViewManager;
 import com.risk.view.game.*;
 import com.risk.view.main.IMainGameView;
