@@ -32,7 +32,7 @@ public class ContinentReadTest {
     }
 
     @Test
-    public void readCountryFile()
+    public void readContinentTest()
     {
         Assert.assertEquals(true,mapRead.validateReadContinent(mapRiskModel.getContinentModelList(), mapRead.getMapContinentDetails()));
     }
