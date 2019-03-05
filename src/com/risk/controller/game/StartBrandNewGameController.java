@@ -1,15 +1,13 @@
 package com.risk.controller.game;
 
-import com.risk.controller.MainGame;
-import com.risk.view.BrandNewGameView;
+import com.risk.Environment;
+import com.risk.controller.main.MainGameController;
 import com.risk.model.PlayerModel;
 import com.risk.model.MapRiskModel;
+import com.risk.view.game.IBrandNewGameView;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * similar to all other controllers in the project, the StartBrandNewGameController also takes care of the movement of
@@ -18,65 +16,60 @@ import java.util.ArrayList;
  *
  * @author Karan
  */
-public class StartBrandNewGameController implements ActionListener {
+public class StartBrandNewGameController {
 
-    private BrandNewGameView brandNewGameView;
-    private ArrayList<PlayerModel> playersList = new ArrayList<>();
+    private final Environment environment;
+
+    private IBrandNewGameView view;
     private MapRiskModel mapRiskModel = new MapRiskModel();
-    private int noOfPlayers;
 
     /**
      * Constructor initializes values and sets the screen too visible
      */
-    public StartBrandNewGameController() {
-        brandNewGameView = new BrandNewGameView();
-        brandNewGameView.setActionListener(this);
-        brandNewGameView.setVisible(true);
+    public StartBrandNewGameController(final Environment environment) {
+        this.environment = environment;
 
+        this.view = environment.getViewManager().createBrandNewGameView();
+        this.view.addBrowseMapListener(e -> openMap());
+        this.view.addPlayListener(this::playerValidation);
+        this.view.addCancelListener(e -> cancel());
+        this.view.showView();
+    }
+
+    private void openMap() {
+        try {
+            mapRiskModel = new MapRiskModel(environment.getViewManager().openFile());
+            view.showMessage("Map Loaded", "File Loaded Successfully! Click Next to Play!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            view.showMessage(e.getMessage());
+        }
     }
 
     /**
-     * This method performs action, by Listening the action event set in view.
-     *
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     *  Check for the player validation
      */
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(brandNewGameView.browse)) {
-            int value = brandNewGameView.chooseMap.showOpenDialog(brandNewGameView);
-            if(value == JFileChooser.APPROVE_OPTION){
-                try {
-                    File mapFile = brandNewGameView.chooseMap.getSelectedFile();
-                    mapRiskModel = new MapRiskModel(mapFile);
-                    JOptionPane.showMessageDialog(brandNewGameView, "File Loaded Successfully! Click Next to Play!","Map Loaded",JOptionPane.INFORMATION_MESSAGE);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }else if(actionEvent.getSource().equals(brandNewGameView.nextButton)) {
-            noOfPlayers = (int) brandNewGameView.numOfPlayers.getSelectedItem();
+    private void playerValidation(int noOfPlayers) {
+        if (mapRiskModel.getCountryModelList().size() > noOfPlayers) {
+            List<PlayerModel> listOfPlayers = new ArrayList<PlayerModel>();
 
-            if ( mapRiskModel.getCountryModelList().size() > noOfPlayers) {
-                System.out.println("no of players");
-                String PlayerName ;
-                for (int i=0; i<noOfPlayers; i++) {
-                    PlayerName = "Player"+ (i+1);
-                    PlayerModel pm = new PlayerModel(PlayerName, 0, 0,"");
-                    playersList.add(pm);
-                }
-                new StartupController(playersList, mapRiskModel);
-                brandNewGameView.dispose();
-            } else {
-                JOptionPane.showMessageDialog(brandNewGameView,
-                        "Number of cuntry in the Map is less than Number of Players. Select map or player Again!",
-                        "Map Loaded", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("no of players");
+            String PlayerName = "";
+            for (int i=0; i<noOfPlayers; i++) {
+                PlayerName = "Player"+ (i + 1);
+                PlayerModel pm = new PlayerModel(PlayerName, 0, 0,"");
+                listOfPlayers.add(pm);
             }
 
-        }else if(actionEvent.getSource().equals(brandNewGameView.cancelButton)) {
-            new MainGame();
-            brandNewGameView.dispose();
+            new StartupController(environment, listOfPlayers, mapRiskModel);
+            this.view.hideView();
+        } else {
+            view.showMessage("Map Loaded", "Number of country in the Map is less than Number of Players. Select map or player Again!");
         }
-
     }
 
+    private void cancel() {
+        new MainGameController(environment);
+        this.view.hideView();
+    }
 }

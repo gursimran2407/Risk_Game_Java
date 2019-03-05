@@ -1,15 +1,12 @@
 package com.risk.controller.game;
 
+import com.risk.Environment;
 import com.risk.gameplayrequirements.MapValidation;
 import com.risk.model.MapRiskModel;
 import com.risk.model.CountryModel;
-import com.risk.view.FortificationView;
+import com.risk.view.game.IFortificationView;
+import com.risk.view.game.MoveData;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 /**
  * In FortificationController, the data flow into model object and updates the
@@ -18,9 +15,11 @@ import java.awt.event.ItemListener;
  * @author Karandeep
  */
 
-public class FortificationController implements ActionListener, ItemListener {
+public class FortificationController {
 
-    private FortificationView theFortificationView;
+    private final Environment environment;
+
+    private IFortificationView view;
     private MapRiskModel mapRiskModel = null;
 
     /**
@@ -28,64 +27,40 @@ public class FortificationController implements ActionListener, ItemListener {
      *
      * @param mapRiskModel
      */
-    public FortificationController(MapRiskModel mapRiskModel) {
+    public FortificationController(final Environment environment, MapRiskModel mapRiskModel) {
+        this.environment = environment;
+
         this.mapRiskModel = mapRiskModel;
-        theFortificationView = new FortificationView(this.mapRiskModel);
-        theFortificationView.setActionListener(this);
-        theFortificationView.setItemListener(this);
-        theFortificationView.setVisible(true);
-        this.mapRiskModel.addObserver(this.theFortificationView);
+
+        view = environment.getViewManager().createFortificationView(this.mapRiskModel);
+        view.addMoveListener(this::move);
+        view.addFromChangeListener(this::fromChanged);
+        view.showView();
+
+        this.mapRiskModel.addObserver(this.view);
     }
 
-    /**
-     * This method performs action, by Listening the action event set in view.
-     *
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(this.theFortificationView.moveButton)) {
+    private void move(final MoveData moveData) {
+        // BFS
+        MapValidation val = new MapValidation();
+        if (val.checkIfValidMove(mapRiskModel, moveData.getFrom(), moveData.getTo())) {
+            this.mapRiskModel.setMovingArmies(moveData.getNumOfTroops(), moveData.getFrom(), moveData.getTo());
+        }
 
-            // BFS
-            MapValidation val = new MapValidation();
-            if (val.checkIfValidMove(mapRiskModel,
-                    (CountryModel) this.theFortificationView.fromCountryListComboBox.getSelectedItem(),
-                    (CountryModel) this.theFortificationView.toCountryListComboBox.getSelectedItem())) {
-                this.mapRiskModel.setMovingArmies(
-                        (Integer) this.theFortificationView.numOfTroopsComboBox.getSelectedItem(),
-                        (CountryModel) this.theFortificationView.fromCountryListComboBox.getSelectedItem(),
-                        (CountryModel) this.theFortificationView.toCountryListComboBox.getSelectedItem());
-            }
-
-            int index = this.mapRiskModel.getIndexOfPlayer();
-            index++;
-            if (this.mapRiskModel.getPlayerModelList().size() > index) {
-                this.mapRiskModel.setIndexOfPlayer(index);
-                this.mapRiskModel.getPlayerModelList().get(index).callObservers();
-                new PlayerGameController(this.mapRiskModel, this.mapRiskModel.getPlayerModelList());
-                this.theFortificationView.dispose();
-            } else {
-                JOptionPane.showOptionDialog(null, "Bravo! Game is over! No one won!", "Valid",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-                this.theFortificationView.dispose();
-            }
-
-        } else if (actionEvent.getSource().equals(this.theFortificationView.fromCountryListComboBox)) {
-            this.mapRiskModel
-                    .setSelectedComboBoxIndex(this.theFortificationView.fromCountryListComboBox.getSelectedIndex());
+        int index = this.mapRiskModel.getIndexOfPlayer();
+        index++;
+        if (this.mapRiskModel.getPlayerModelList().size() > index) {
+            this.mapRiskModel.setIndexOfPlayer(index);
+            this.mapRiskModel.getPlayerModelList().get(index).callObservers();
+            new PlayerGameController(environment, this.mapRiskModel, this.mapRiskModel.getPlayerModelList());
+            this.view.hideView();
+        } else {
+            view.showMessage("Valid", "Bravo! Game is over! No one won!");
+            this.view.hideView();
         }
     }
 
-    /**
-     * Item Listener
-     *
-     * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
-     */
-    @Override
-    public void itemStateChanged(ItemEvent itemEvent) {
-        if (itemEvent.getSource().equals(this.theFortificationView.fromCountryListComboBox)) {
-            this.mapRiskModel
-                    .setSelectedComboBoxIndex(this.theFortificationView.fromCountryListComboBox.getSelectedIndex());
-        }
+    private void fromChanged(final int selectedComboBoxIndex) {
+        this.mapRiskModel.setSelectedComboBoxIndex(selectedComboBoxIndex);
     }
 }

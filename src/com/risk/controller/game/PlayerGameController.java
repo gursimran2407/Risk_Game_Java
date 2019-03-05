@@ -2,8 +2,9 @@ package com.risk.controller.game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.List;
 
+import com.risk.Environment;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
 
@@ -18,19 +19,23 @@ import com.risk.model.PlayerModel;
 
 public class PlayerGameController implements ActionListener {
 
-    public MapRiskModel mapRiskModel;
-    private ArrayList<PlayerModel> listOfPlayers;
+    private final Environment environment;
 
-    public PlayerGameController(MapRiskModel mapRiskModel, ArrayList<PlayerModel> listOfPlayers) {
+    private MapRiskModel mapRiskModel;
+    private List<PlayerModel> listOfPlayers;
+
+    public PlayerGameController(final Environment environment, MapRiskModel mapRiskModel, List<PlayerModel> listOfPlayers) {
+        this.environment = environment;
         this.mapRiskModel = mapRiskModel;
         this.listOfPlayers = listOfPlayers;
+
         gamePlay();
     }
 
     public void gamePlay() {
-
-        this.mapRiskModel.setPlayerTurn(this.listOfPlayers.get(this.mapRiskModel.getIndexOfPlayer()));
-        new ReinforcementController(this.mapRiskModel);
+        this.mapRiskModel.setPlayerTurn(
+                this.listOfPlayers.get(this.mapRiskModel.getIndexOfPlayer()));
+        new ReinforcementController(environment, this.mapRiskModel);
 
     }
 
@@ -41,7 +46,6 @@ public class PlayerGameController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        // TODO Auto-generated method stub
 
     }
 }
