@@ -1,18 +1,19 @@
 package com.risk.view;
 
-import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
+import com.risk.view.awt.AWTAbstractView;
+import com.risk.view.game.IReinforcementView;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.function.BiConsumer;
 
 /**
  * This View provides the reinforcementView of the Game Play. It also provides
@@ -20,27 +21,27 @@ import java.util.Observable;
  * @author Namita Faujdar
  */
 
-public class ReinforcementView extends JFrame implements ViewInterface {
+public class ReinforcementView extends AWTAbstractView implements IReinforcementView {
 
-    public MapRiskModel mapRiskModel;
-    public PlayerModel playerModel;
+    private MapRiskModel mapRiskModel;
+    private PlayerModel playerModel;
 
-    public JPanel welcomePanel;
-    public JPanel graphicPanel;
+    private JPanel welcomePanel;
+    private JPanel graphicPanel;
 
-    public JLabel welcomeLabel;
-    public JLabel noOfTroopsLabel;
+    private JLabel welcomeLabel;
+    private JLabel noOfTroopsLabel;
 
-    public JComboBox<Integer> numOfTroopsComboBox;
-    public JButton addButton;
-    public JLabel listOfCountriesLabel;
+    private JComboBox<Integer> numOfTroopsComboBox;
+    private JButton addButton;
+    private JLabel listOfCountriesLabel;
 
-    public JLabel countryListLabel;
-    public JComboBox<Object> countryListComboBox;
-    public Object[] countryListArray;
+    private JLabel countryListLabel;
+    private JComboBox<Object> countryListComboBox;
+    private Object[] countryListArray;
     private CountryViewRenderer countriesViewRenderer;
 
-    public JButton[] button;
+    private JButton[] button;
 
     public ReinforcementView(MapRiskModel mapRiskModel) {
         this.mapRiskModel = mapRiskModel;
@@ -69,6 +70,21 @@ public class ReinforcementView extends JFrame implements ViewInterface {
         updateWindow(mapRiskModel, playerModel);
     }
 
+    @Override
+    public void addAddListener(BiConsumer<Object, CountryModel> listener) {
+        addButton.addActionListener(
+                e -> listener.accept(
+                        numOfTroopsComboBox.getSelectedItem(), (CountryModel) countryListComboBox.getSelectedItem()));
+    }
+
+    /**
+     * This is actionListener method to listen the action events in the screen
+     */
+    @Override
+    public void setActionListener(ActionListener actionListener) {
+        this.addButton.addActionListener(actionListener);
+    }
+
     /**
      * This updateWindow method is called whenever the model is updated. It updates
      * the Screen for Reinforcement Phase
@@ -76,7 +92,7 @@ public class ReinforcementView extends JFrame implements ViewInterface {
      * @param mapRiskModel
      * @param playerModel
      */
-    public void updateWindow(MapRiskModel mapRiskModel, PlayerModel playerModel) {
+    private void updateWindow(MapRiskModel mapRiskModel, PlayerModel playerModel) {
 
         Font largeFont = new Font("Serif", Font.BOLD, 18);
         Font mediumFont = new Font("Serif", Font.BOLD, 14);
@@ -210,26 +226,19 @@ public class ReinforcementView extends JFrame implements ViewInterface {
      */
     @Override
     public void update(Observable obs, Object arg) {
-
         welcomePanel.removeAll();
         graphicPanel.removeAll();
+
         if (obs instanceof MapRiskModel) {
             this.mapRiskModel = (MapRiskModel) obs;
         } else if (obs instanceof PlayerModel) {
             this.playerModel = (PlayerModel) obs;
         }
+
         this.updateWindow(this.mapRiskModel, this.playerModel);
         this.revalidate();
         this.repaint();
 
-    }
-
-    /**
-     * This is actionListener method to listen the action events in the screen
-     */
-    @Override
-    public void setActionListener(ActionListener actionListener) {
-        this.addButton.addActionListener(actionListener);
     }
 
     /**
@@ -238,7 +247,7 @@ public class ReinforcementView extends JFrame implements ViewInterface {
      * @param value
      * @return
      */
-    public static Color stringToColor(final String value) {
+    private static Color stringToColor(final String value) {
         if (value == null) {
             return Color.black;
         }
@@ -246,9 +255,7 @@ public class ReinforcementView extends JFrame implements ViewInterface {
             return Color.decode(value);
         } catch (NumberFormatException nfe) {
             try {
-                final Field f = Color.class.getField(value);
-
-                return (Color) f.get(null);
+                return (Color) Color.class.getField(value).get(null);
             } catch (Exception ce) {
                 return Color.black;
             }

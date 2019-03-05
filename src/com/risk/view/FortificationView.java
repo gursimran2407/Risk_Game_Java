@@ -1,9 +1,12 @@
 package com.risk.view;
 
-import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
+import com.risk.view.IView;
+import com.risk.view.awt.AWTAbstractView;
+import com.risk.view.game.IFortificationView;
+import com.risk.view.game.MoveData;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -14,11 +17,13 @@ import java.awt.event.ItemListener;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.function.Consumer;
 
 /**
  * @author gursimransingh
  */
-public class FortificationView extends JFrame implements ViewInterface {
+
+public class FortificationView extends AWTAbstractView implements IFortificationView {
 
     public MapRiskModel gameMapModel;
     public PlayerModel playerModel;
@@ -42,7 +47,10 @@ public class FortificationView extends JFrame implements ViewInterface {
     public JButton[] button;
     private CountryViewRenderer fromCountriesViewRenderer;
     private CountryViewRenderer toCountriesViewRenderer;
-    private ActionListener actionListener;
+
+
+    private Consumer<MoveData> moveListener;
+    private Consumer<Integer> fromChangeListener;
 
     public FortificationView(MapRiskModel gameMapModel) {
         this.gameMapModel = gameMapModel;
@@ -66,6 +74,27 @@ public class FortificationView extends JFrame implements ViewInterface {
         updateWindow(this.gameMapModel, this.playerModel);
         welcomePanel.setLayout(null);
         graphicPanel.setLayout(null);
+    }
+
+    @Override
+    public void addMoveListener(final Consumer<MoveData> listener) {
+        this.moveListener = listener;
+
+        this.moveButton.addActionListener(
+                e -> listener.accept(
+                        new MoveData(
+                                (Integer) numOfTroopsComboBox.getSelectedItem(),
+                                (CountryModel) fromCountryListComboBox.getSelectedItem(),
+                                (CountryModel) toCountryListComboBox.getSelectedItem())));
+    }
+
+    @Override
+    public void addFromChangeListener(Consumer<Integer> listener) {
+        fromChangeListener = listener;
+
+        this.fromCountryListComboBox.addActionListener(e -> listener.accept(fromCountryListComboBox.getSelectedIndex()));
+        // Maybe we will need it
+        // this.fromCountryListComboBox.addItemListener(e -> listener.accept(fromCountryListComboBox.getSelectedIndex()));
     }
 
     public static Color stringToColor(final String value) {
@@ -173,7 +202,7 @@ public class FortificationView extends JFrame implements ViewInterface {
         int n = this.gameMapModel.getCountryModelList().size();
         button = new JButton[n];
 
-        // graphicPanel.add(button[0]);
+        // pnlGraphic.add(button[0]);
         for (int i = 0; i < this.gameMapModel.getCountryModelList().size(); i++) {
 
             button[i] = new JButton();
@@ -188,8 +217,13 @@ public class FortificationView extends JFrame implements ViewInterface {
 
             graphicPanel.add(button[i]);
         }
-        if (null != this.actionListener) {
-            this.setActionListener(this.actionListener);
+
+        if (null != this.moveListener) {
+            this.addMoveListener(this.moveListener);
+        }
+
+        if (null != this.fromChangeListener) {
+            this.addFromChangeListener(this.fromChangeListener);
         }
 
     }
@@ -225,23 +259,10 @@ public class FortificationView extends JFrame implements ViewInterface {
     }
 
     @Override
-    public void setActionListener(ActionListener actionListener) {
-        this.actionListener = actionListener;
-        this.moveButton.addActionListener(actionListener);
-        this.fromCountryListComboBox.addActionListener(actionListener);
-    }
-
-    @Override
     public void update(Observable o, Object arg) {
-
         this.updateWindow(((MapRiskModel) o), this.playerModel);
         this.revalidate();
         this.repaint();
-
-    }
-
-    public void setItemListener(ItemListener itemListener) {
-        this.fromCountryListComboBox.addItemListener(itemListener);
 
     }
 

@@ -1,52 +1,50 @@
 package com.risk.view;
 
-import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
+import com.risk.view.awt.AWTAbstractView;
+import com.risk.view.game.IStartupView;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.function.BiConsumer;
 
 /**
- * This class represents the armies and countries allocated to player in the starting of the game
  * @author gursimransingh
  */
-public class StartupView extends JFrame implements ViewInterface {
+
+public class StartupView extends AWTAbstractView implements IStartupView {
 
     private static final long serialVersionUID = 1L;
-    public MapRiskModel mapRiskModel;
-    public PlayerModel playerModel;
+    private MapRiskModel mapRiskModel;
+    private PlayerModel playerModel;
 
-    public JPanel welcomePanel;
-    public JPanel graphicPanel;
+    private JPanel pnlWelcome;
+    private JPanel pnlGraphic;
 
-    public JLabel welcomeLabel;
-    public JLabel welcomeLabel1;
-    public JLabel noOfArmiesLabel;
+    private JLabel lblWelcome;
+    private JLabel lblWelcome1;
+    private JLabel lblNoOfTroops;
 
-    public JComboBox<Integer> numOfArmiesComboBox;
-    public JButton addButton;
-    public JLabel listOfCountriesLabel;
+    private JComboBox<Integer> cbxNumOfTroops;
+    private JButton btnAdd;
 
-    public JLabel countryListLabel;
-    public JComboBox<Object> countryListComboBox;
-    public Object[] countryListArray;
+    private JLabel lblCountryList;
+    private JComboBox<Object> cbxCountryList;
+    private Object[] countryListArray;
     private CountryViewRenderer countriesViewRenderer;
 
-    public JButton[] button;
-    public JButton nextButton;
-    public JButton button2;
-    public JButton button3;
+    private JButton[] button;
+    private JButton btnNext;
 
     /**
-     * This is the constructor for Start Up Phase View where the variables are initialized
+     * constructor for Start Up Phase View where the variables are initialized
      *
      * @param mapRiskModel
      * @param playerModel
@@ -59,22 +57,39 @@ public class StartupView extends JFrame implements ViewInterface {
         this.setSize(1600, 1000);
         this.setResizable(false);
         this.setVisible(false);
-        this.addButton = new JButton("Add");
-        this.nextButton = new JButton("Next");
-        welcomePanel = new JPanel();
-        graphicPanel = new JPanel();
-        this.add(graphicPanel);
-        graphicPanel.setSize(1200, 1000);
-        graphicPanel.setBackground(Color.WHITE);
-        graphicPanel.setLayout(null);
-        this.addButton = new JButton("Add");
-        this.add(welcomePanel);
+        this.btnAdd = new JButton("Add");
+        this.btnNext = new JButton("Next");
+        pnlWelcome = new JPanel();
+        pnlGraphic = new JPanel();
+        this.add(pnlGraphic);
+        pnlGraphic.setSize(1200, 1000);
+        pnlGraphic.setBackground(Color.WHITE);
+        pnlGraphic.setLayout(null);
+        this.btnAdd = new JButton("Add");
+        this.add(pnlWelcome);
         this.playerModel = playerModel;
-        this.welcomeLabel = new JLabel("It's " + playerModel.getPlayerName() + "'s turn");
-        this.welcomeLabel1 = new JLabel("Remaining Armies: " + playerModel.getRemainingNumberOfArmies());
+        this.lblWelcome = new JLabel("It's " + playerModel.getPlayerName() + "'s turn");
+        this.lblWelcome1 = new JLabel("Remaining Armies: " + playerModel.getRemainingNumberOfArmies());
         updateWindow(mapRiskModel, playerModel);
-        welcomePanel.setLayout(null);
-        graphicPanel.setLayout(null);
+        pnlWelcome.setLayout(null);
+        pnlGraphic.setLayout(null);
+    }
+
+    @Override
+    public void setWelcomeMessage(String message) {
+        lblWelcome.setText(message);
+    }
+
+    @Override
+    public void addTroopsListener(BiConsumer<Object, CountryModel> listener) {
+        this.btnAdd.addActionListener(
+                e -> listener.accept(
+                        cbxNumOfTroops.getSelectedItem(), (CountryModel) cbxCountryList.getSelectedItem()));
+    }
+
+    @Override
+    public void addNextListener(ActionListener listener) {
+        this.btnNext.addActionListener(listener);
     }
 
     /**
@@ -84,10 +99,10 @@ public class StartupView extends JFrame implements ViewInterface {
      * @param mapRiskModel
      * @param playerModel
      */
-    public void updateWindow(MapRiskModel mapRiskModel, PlayerModel playerModel) {
+    private void updateWindow(MapRiskModel mapRiskModel, PlayerModel playerModel) {
 
-        welcomePanel.removeAll();
-        graphicPanel.removeAll();
+        pnlWelcome.removeAll();
+        pnlGraphic.removeAll();
         Font largeFont = new Font("Serif", Font.BOLD, 18);
         Font mediumFont = new Font("Serif", Font.BOLD, 14);
         Font smallFont = new Font("Serif", Font.BOLD, 12);
@@ -95,32 +110,32 @@ public class StartupView extends JFrame implements ViewInterface {
         this.mapRiskModel = mapRiskModel;
         this.playerModel = playerModel;
 
-        welcomeLabel.setBounds(1300, 80, 300, 25);
-        welcomeLabel.setFont(largeFont);
-        welcomePanel.add(welcomeLabel);
+        lblWelcome.setBounds(1300, 80, 300, 25);
+        lblWelcome.setFont(largeFont);
+        pnlWelcome.add(lblWelcome);
 
-        this.noOfArmiesLabel = new JLabel("Number of Amries :");
-        noOfArmiesLabel.setBounds(1300, 140, 150, 25);
-        welcomePanel.add(noOfArmiesLabel);
+        this.lblNoOfTroops = new JLabel("Number of Troops :");
+        lblNoOfTroops.setBounds(1300, 140, 150, 25);
+        pnlWelcome.add(lblNoOfTroops);
 
-        Integer[] armies = new Integer[playerModel.getRemainingNumberOfArmies()];
+        Integer[] troops = new Integer[playerModel.getRemainingNumberOfArmies()];
         for (int i = 0; i < playerModel.getRemainingNumberOfArmies(); i++) {
-            armies[i] = i + 1;
+            troops[i] = i + 1;
         }
 
-        numOfArmiesComboBox = new JComboBox(armies);
-        numOfArmiesComboBox.setBounds(1300, 170, 150, 25);
-        numOfArmiesComboBox.setEnabled(false);
-        welcomePanel.add(numOfArmiesComboBox);
+        cbxNumOfTroops = new JComboBox(troops);
+        cbxNumOfTroops.setBounds(1300, 170, 150, 25);
+        cbxNumOfTroops.setEnabled(false);
+        pnlWelcome.add(cbxNumOfTroops);
 
-        welcomeLabel1 = new JLabel("Remaining Armies: " + playerModel.getRemainingNumberOfArmies());
-        welcomeLabel1.setBounds(1450, 170, 300, 25);
-        welcomeLabel1.setFont(smallFont);
-        welcomePanel.add(welcomeLabel1);
+        lblWelcome1 = new JLabel("Remaining Armies: " + playerModel.getRemainingNumberOfArmies());
+        lblWelcome1.setBounds(1450, 170, 300, 25);
+        lblWelcome1.setFont(smallFont);
+        pnlWelcome.add(lblWelcome1);
 
-        this.countryListLabel = new JLabel("Select Country :");
-        countryListLabel.setBounds(1300, 230, 150, 25);
-        welcomePanel.add(this.countryListLabel);
+        this.lblCountryList = new JLabel("Select Country :");
+        lblCountryList.setBounds(1300, 230, 150, 25);
+        pnlWelcome.add(this.lblCountryList);
 
         ArrayList<CountryModel> listOfCountries = new ArrayList<CountryModel>();
         for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
@@ -132,20 +147,20 @@ public class StartupView extends JFrame implements ViewInterface {
 
         countriesViewRenderer = new CountryViewRenderer();
         countryListArray = listOfCountries.toArray();
-        countryListComboBox = new JComboBox(countryListArray);
-        welcomePanel.add(this.countryListComboBox);
+        cbxCountryList = new JComboBox(countryListArray);
+        pnlWelcome.add(this.cbxCountryList);
 
         if (countryListArray.length > 0) {
-            countryListComboBox.setRenderer(countriesViewRenderer);
+            cbxCountryList.setRenderer(countriesViewRenderer);
         }
-        countryListComboBox.setBounds(1300, 260, 150, 25);
-        welcomePanel.add(countryListComboBox);
+        cbxCountryList.setBounds(1300, 260, 150, 25);
+        pnlWelcome.add(cbxCountryList);
 
-        this.addButton.setBounds(1300, 300, 150, 25);
-        welcomePanel.add(this.addButton);
+        this.btnAdd.setBounds(1300, 300, 150, 25);
+        pnlWelcome.add(this.btnAdd);
 
-        this.nextButton.setBounds(1400, 600, 150, 25);
-        welcomePanel.add(this.nextButton);
+        this.btnNext.setBounds(1400, 600, 150, 25);
+        pnlWelcome.add(this.btnNext);
 
         int n = this.mapRiskModel.getCountryModelList().size();
         button = new JButton[n];
@@ -154,7 +169,7 @@ public class StartupView extends JFrame implements ViewInterface {
 
             country.setBackground(this.mapRiskModel.getCountryModelList().get(i).getBackgroundColor());
             country.setText(this.mapRiskModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
-            country.setToolTipText("Armies: " + this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
+            country.setToolTipText("Troops: " + this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
             country.setFont(smallFont);
 
             Border border = BorderFactory
@@ -168,7 +183,7 @@ public class StartupView extends JFrame implements ViewInterface {
 
             country.setMargin(new Insets(0, 0, 0, 0));
 
-            graphicPanel.add(country);
+            pnlGraphic.add(country);
         }
     }
 
@@ -234,25 +249,15 @@ public class StartupView extends JFrame implements ViewInterface {
      */
     @Override
     public void update(Observable obs, Object arg) {
-
         if (obs instanceof MapRiskModel) {
             this.mapRiskModel = (MapRiskModel) obs;
         } else if (obs instanceof PlayerModel) {
             this.playerModel = (PlayerModel) obs;
         }
+
         this.updateWindow(this.mapRiskModel, this.playerModel);
         this.revalidate();
         this.repaint();
-
-    }
-
-    /**
-     * This is actionListener method to listen the action events in the screen
-     */
-    @Override
-    public void setActionListener(ActionListener actionListener) {
-        this.addButton.addActionListener(actionListener);
-        this.nextButton.addActionListener(actionListener);
     }
 
     /**
@@ -262,17 +267,16 @@ public class StartupView extends JFrame implements ViewInterface {
      * @return color
      */
 
-    public static Color stringToColor(final String value) {
+    private static Color stringToColor(final String value) {
         if (value == null) {
             return Color.black;
         }
+
         try {
             return Color.decode(value);
         } catch (NumberFormatException nfe) {
             try {
-                final Field f = Color.class.getField(value);
-
-                return (Color) f.get(null);
+                return (Color) Color.class.getField(value).get(null);
             } catch (Exception ce) {
                 return Color.black;
             }
