@@ -180,7 +180,7 @@ public class MapRead {
                 return false;
             }
         }
-     return true;
+        return true;
     }
 
     public boolean validateReadContinent(List<ContinentModel> list, List<ContinentModel> arrayList)
