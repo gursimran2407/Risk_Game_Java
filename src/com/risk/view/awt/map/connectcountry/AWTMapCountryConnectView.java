@@ -1,8 +1,9 @@
-package com.risk.view.awt.map.connectcountry;
+package com.risk.view.awt.map.countryconnect;
 
-import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
+import com.risk.view.awt.AWTAbstractView;
+import com.risk.view.map.countryconnect.IMapCountryConnectView;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -11,38 +12,38 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
+import java.util.function.BiConsumer;
 
 /**
- * MapCountryConnectView Class represents a view for players to connect a
+ * AWTMapCountryConnectView Class represents a view for players to connect a
  * country to any other one during map creation. It contains buttons, labels,
  * and lists
  * @author Shriyans
  */
-public class MapCountryConnectView extends JFrame implements ViewInterface, Observer  {
+public class AWTMapCountryConnectView extends AWTAbstractView implements IMapCountryConnectView {
 
-    public JPanel panelWelcome;
-    public JPanel panelGraphic;
-    public JButton buttonSave;
-    public JButton buttonAdd;
-    public JButton buttonRemove;
-    public JLabel welcomeLabel;
-    public JLabel countryListLeft;
-    public JLabel countryListRight;
-    public JList rightCountryParentList;
-    public JList leftCountryParentList;
-    public ListSelectionModel leftListSelectionModel;
-    public ListSelectionModel rightListSelectionModel;
-    public List<CountryModel> leftCountryList;
-    public List<CountryModel> rightCountryList;
-    public MapRiskModel d_mapRiskModel;
+    private JPanel panelWelcome;
+    private JPanel panelGraphic;
+    private JButton buttonSave;
+    private JButton buttonAdd;
+    private JButton buttonRemove;
+    private JLabel welcomeLabel;
+    private JLabel countryListLeft;
+    private JLabel countryListRight;
+    private JList rightCountryParentList;
+    private JList leftCountryParentList;
+    private ListSelectionModel leftListSelectionModel;
+    private ListSelectionModel rightListSelectionModel;
+    private List<CountryModel> leftCountryList;
+    private List<CountryModel> rightCountryList;
+    private MapRiskModel d_mapRiskModel;
 
     /**
-     * Constructor for MapCountryConnectView
+     * Constructor for AWTMapCountryConnectView
      *
      * @param new_mapRiskModel
      */
-    public MapCountryConnectView(MapRiskModel new_mapRiskModel) {
+    public AWTMapCountryConnectView(MapRiskModel new_mapRiskModel) {
         d_mapRiskModel = new_mapRiskModel;
         welcomeLabel = new JLabel("Please select the Continents you want in the map and the control value");
 
@@ -173,15 +174,43 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
     }
 
     @Override
-    public void setActionListener(ActionListener actionListener) {
-        buttonSave.addActionListener(actionListener);
-        buttonAdd.addActionListener(actionListener);
-        buttonRemove.addActionListener(actionListener);
+    public void addAddNeighbouringListener(BiConsumer<CountryModel, CountryModel> listener) {
+        buttonAdd.addActionListener(e -> listener.accept(
+                (CountryModel) leftCountryParentList.getSelectedValue(),
+                (CountryModel) rightCountryParentList.getSelectedValue()));
     }
 
+    @Override
+    public void addRemoveNeighbouringListener(BiConsumer<CountryModel, CountryModel> listener) {
+        buttonRemove.addActionListener(e -> listener.accept(
+                (CountryModel) leftCountryParentList.getSelectedValue(),
+                (CountryModel) rightCountryParentList.getSelectedValue()));
+    }
+
+    @Override
+    public void addSaveListener(ActionListener listener) {
+        buttonSave.addActionListener(listener);
+    }
+
+    @Override
     public void setListSelectionListener(ListSelectionListener actionListener) {
         leftListSelectionModel.addListSelectionListener(actionListener);
         rightListSelectionModel.addListSelectionListener(actionListener);
+    }
+
+    @Override
+    public ListSelectionModel getLeftListSelectionModel() {
+        return leftListSelectionModel;
+    }
+
+    @Override
+    public JList getLeftCountryParentList() {
+        return leftCountryParentList;
+    }
+
+    @Override
+    public JList getRightCountryParentList() {
+        return rightCountryParentList;
     }
 
     @Override
@@ -228,10 +257,6 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
         }
     }
 
-    /**
-     * For Graphics to represent connection points
-     * @param g
-     */
     public void paint(final Graphics g) {
 
         super.paint(g);

@@ -1,14 +1,13 @@
 package com.risk.controller.game;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import com.risk.controller.game.FortificationController;
+import com.risk.Environment;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
-import com.risk.view.ReinforcementView;
+import com.risk.view.game.IReinforcementView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * In Reinforcement Controller, the data flow into model object and updates the
@@ -16,11 +15,13 @@ import com.risk.view.ReinforcementView;
  * @author Karandeep
  *
  */
-public class ReinforcementController implements ActionListener {
+public class ReinforcementController {
 
-    private ReinforcementView theReinforcementView;
-    private ArrayList<CountryModel> listOfCountrys = new ArrayList<CountryModel>();
-    private ArrayList<PlayerModel> listOfPlayers = new ArrayList<PlayerModel>();
+    private final Environment environment;
+
+    private IReinforcementView view;
+    private List<CountryModel> listOfCountrys = new ArrayList<CountryModel>();
+    private List<PlayerModel> listOfPlayers = new ArrayList<PlayerModel>();
     private MapRiskModel mapRiskModel = null;
     private int noOfPlayers;
 
@@ -29,16 +30,30 @@ public class ReinforcementController implements ActionListener {
      *
      * @param mapRiskModel
      */
-    public ReinforcementController(MapRiskModel mapRiskModel) {
+    public ReinforcementController(final Environment environment, MapRiskModel mapRiskModel) {
+        this.environment = environment;
+
         this.mapRiskModel = mapRiskModel;
         this.mapRiskModel.getPlayerTurn().setNumberofArmies(this.calculateArmies());
-        theReinforcementView = new ReinforcementView(this.mapRiskModel);
-        theReinforcementView.setActionListener(this);
-        theReinforcementView.setVisible(true);
 
-        this.mapRiskModel.addObserver(theReinforcementView);
+        view = environment.getViewManager().createReinforcementView(this.mapRiskModel);
+        view.addAddListener(this::setSelectedArmiesToCountries);
+        view.showView();
+
+        this.mapRiskModel.addObserver(view);
         for (int i = 0; i < noOfPlayers; i++) {
-            this.listOfPlayers.get(i).addObserver(this.theReinforcementView);
+            this.listOfPlayers.get(i).addObserver(this.view);
+        }
+    }
+
+    private void setSelectedArmiesToCountries(final Object numOfTroopsAsItem, final CountryModel countryName) {
+        int selectedArmies = 0;
+        if (numOfTroopsAsItem != null) {
+            selectedArmies = (int) numOfTroopsAsItem;
+            this.mapRiskModel.setSelectedArmiesToCountries(selectedArmies, countryName);
+        } else {
+            new FortificationController(environment, this.mapRiskModel);
+            this.view.hideView();
         }
     }
 
@@ -56,35 +71,14 @@ public class ReinforcementController implements ActionListener {
             }
         }
         if (listOfCountrys.size() > 3) {
-            Double d = Math.floor(listOfCountrys.size() / 3);
-            reinforceArmies = 3 + d.intValue();
+            reinforceArmies = 3 + Math.round(listOfCountrys.size() / 3);
         } else {
             reinforceArmies = 3;
         }
         if (reinforceArmies > 12) {
             reinforceArmies = 12;
         }
+
         return reinforceArmies;
-    }
-
-    /**
-     * This method performs action, by Listening the action event set in view.
-     *
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(this.theReinforcementView.addButton)) {
-            int selectedArmies = 0;
-            if (theReinforcementView.numOfTroopsComboBox.getSelectedItem() != null) {
-                selectedArmies = (int) theReinforcementView.numOfTroopsComboBox.getSelectedItem();
-                CountryModel countryName = (CountryModel) theReinforcementView.countryListComboBox.getSelectedItem();
-                this.mapRiskModel.setSelectedArmiesToCountries(selectedArmies, countryName);
-            } else {
-
-                new FortificationController(this.mapRiskModel);
-                this.theReinforcementView.dispose();
-            }
-        }
     }
 }
