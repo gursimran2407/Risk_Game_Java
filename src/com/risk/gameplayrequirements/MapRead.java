@@ -31,7 +31,7 @@ public class MapRead {
             e.printStackTrace();
         }
 
-        ArrayList<ContinentModel> listOfContinents = new ArrayList<>();
+        ArrayList<ContinentModel> listOfContinents = new ArrayList<ContinentModel>();
 
         while (sc.hasNextLine()) {
             String sc1 = sc.nextLine();
