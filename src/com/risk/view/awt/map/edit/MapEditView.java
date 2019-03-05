@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.Observable;
 
 /**
- * @author gursimransingh
  * View class for the Mapedit View Interface
+ * @author gursimransingh
+ *
  */
 public class MapEditView extends JFrame implements ViewInterface {
 
@@ -74,6 +75,10 @@ public class MapEditView extends JFrame implements ViewInterface {
         this.repaint();
     }
 
+    /**
+     *
+     * @param continentModelList
+     */
     private void updateUI(List<ContinentModel> continentModelList) {
         welcomePanel.removeAll();
         Font largeFont = new Font("Serif", Font.BOLD, 18);

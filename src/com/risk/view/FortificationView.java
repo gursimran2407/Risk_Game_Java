@@ -16,8 +16,10 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 /**
+ * Fortification view class representing different fortification phases of the game
  * @author gursimransingh
  */
+
 public class FortificationView extends JFrame implements ViewInterface {
 
     public MapRiskModel gameMapModel;
@@ -44,6 +46,10 @@ public class FortificationView extends JFrame implements ViewInterface {
     private CountryViewRenderer toCountriesViewRenderer;
     private ActionListener actionListener;
 
+    /**
+     * Constructor for fortification view
+     * @param gameMapModel
+     */
     public FortificationView(MapRiskModel gameMapModel) {
         this.gameMapModel = gameMapModel;
         this.setTitle("Fortification Phase");
@@ -68,6 +74,12 @@ public class FortificationView extends JFrame implements ViewInterface {
         graphicPanel.setLayout(null);
     }
 
+    /**
+     * Represent each box with different color
+     * @param value
+     * @return
+     */
+
     public static Color stringToColor(final String value) {
         if (value == null) {
             return Color.black;
@@ -88,6 +100,12 @@ public class FortificationView extends JFrame implements ViewInterface {
             }
         }
     }
+
+    /**
+     * Updates window based on new data from fortification phase
+     * @param gameMapModel
+     * @param playerModel
+     */
 
     public void updateWindow(MapRiskModel gameMapModel, PlayerModel playerModel) {
 
@@ -194,6 +212,11 @@ public class FortificationView extends JFrame implements ViewInterface {
 
     }
 
+    /**
+     * For painting buttons and links in panel
+     * @param g
+     */
+
     public void paint(final Graphics g) {
 
         super.paint(g);
@@ -223,6 +246,11 @@ public class FortificationView extends JFrame implements ViewInterface {
         }
 
     }
+
+    /**
+     * For action performed event related to moveButton
+     * @param actionListener
+     */
 
     @Override
     public void setActionListener(ActionListener actionListener) {

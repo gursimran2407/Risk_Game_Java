@@ -228,6 +228,10 @@ public class MapCountryConnectView extends JFrame implements ViewInterface, Obse
         }
     }
 
+    /**
+     * For Graphics to represent connection points
+     * @param g
+     */
     public void paint(final Graphics g) {
 
         super.paint(g);
