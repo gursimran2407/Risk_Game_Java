@@ -1,4 +1,4 @@
-package com.risk.view.awt.map.countryconnect;
+package com.risk.view.awt.map.connectcountry;
 
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;

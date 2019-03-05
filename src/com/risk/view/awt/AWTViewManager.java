@@ -8,7 +8,7 @@ import com.risk.view.awt.game.AWTFortificationView;
 import com.risk.view.awt.game.AWTReinforcementView;
 import com.risk.view.awt.game.AWTStartupView;
 import com.risk.view.awt.main.AWTMainGameView;
-import com.risk.view.awt.map.countryconnect.AWTMapCountryConnectView;
+import com.risk.view.awt.map.connectcountry.AWTMapCountryConnectView;
 import com.risk.view.awt.map.createcontinent.AWTMapCreateContinentView;
 import com.risk.view.awt.map.createcountry.AWTMapCreateCountryView;
 import com.risk.view.awt.map.edit.AWTMapEditView;
