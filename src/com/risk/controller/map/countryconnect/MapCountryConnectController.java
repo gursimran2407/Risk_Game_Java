@@ -4,7 +4,7 @@ import com.risk.gameplayrequirements.MapValidation;
 import com.risk.gameplayrequirements.MapWrite;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
-import com.risk.view.MapCountryConnectView;
+import com.risk.view.awt.map.connectcountry.MapCountryConnectView;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;

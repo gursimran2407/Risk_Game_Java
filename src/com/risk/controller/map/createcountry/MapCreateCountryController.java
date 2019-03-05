@@ -4,7 +4,7 @@ import com.risk.controller.map.countryconnect.MapCountryConnectController;
 import com.risk.model.ContinentModel;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
-import com.risk.view.MapCreateCountryView;
+import com.risk.view.awt.map.createcountry.MapCreateCountryView;
 
 import javax.swing.*;
 import java.awt.*;

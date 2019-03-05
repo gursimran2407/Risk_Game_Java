@@ -1,4 +1,4 @@
-package com.risk.view;
+package com.risk.view.awt.map.connectcountry;
 
 import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.CountryModel;

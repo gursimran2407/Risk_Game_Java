@@ -4,7 +4,7 @@ import com.risk.controller.map.countryconnect.MapCountryConnectController;
 import com.risk.gameplayrequirements.MapRead;
 import com.risk.model.ContinentModel;
 import com.risk.model.MapRiskModel;
-import com.risk.view.MapEditView;
+import com.risk.view.awt.map.edit.MapEditView;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;

@@ -1,14 +1,9 @@
 package com.risk.model;
-import com.risk.controller.PlayerGameController;
 import org.junit.Test;
 
-import com.risk.controller.ReinforcementController;
-import com.risk.model.ContinentModel;
-import com.risk.model.CountryModel;
-import com.risk.model.MapRiskModel;
+import com.risk.controller.game.ReinforcementController;
 import com.risk.gameplayrequirements.Constants;
 import com.risk.gameplayrequirements.MapRead;
-import com.risk.gameplayrequirements.MapValidation;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,15 +11,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-
-import org.junit.Test;
 
 /**
  * Test for number of armies for reinforcement
@@ -36,8 +24,6 @@ public class NoOfArmyReinforcementTest {
     private static final boolean False = false;
     MapRiskModel mapRiskModel;
     ArrayList<PlayerModel> playersList = new ArrayList<>();
-    PlayerModel pm;
-    PlayerGameController pgc;
     ReinforcementController rC;
     MapRead mapRead;
     File file;
