@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * @author Namita Faujdar
+ * @author gursimransingh
  */
 public class AWTMainGameView extends AWTAbstractView implements IMainGameView {
 
