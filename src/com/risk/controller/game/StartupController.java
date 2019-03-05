@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * In StartUpController, the data flow into model object and updates the view
+ * whenever data changes.
  * @author Namita Faujdar
  */
 public class StartupController {
@@ -32,7 +34,7 @@ public class StartupController {
     private int initial = 0;
 
     /**
-     * Constructor initializes values and sets the screen too visible
+     * This is the Constructor method which initializes values and sets the screen too visible
      *
      * @param listOfPlayers
      * @param gameMapModel
@@ -73,12 +75,22 @@ public class StartupController {
         mapRiskModel.setPlayerModelList(listOfPlayers);
     }
 
+    /**
+     * This method takes values from the model and updates to view
+     *
+     */
     private void next() {
         mapRiskModel.setIndexOfPlayer(0);
         new PlayerGameController(environment, mapRiskModel, listOfPlayers);
         this.view.hideView();
     }
 
+    /**
+     *
+     * This method is store values to the model and updates the view according to the desired updates
+     * @param selectedArmiesAsItem
+     * @param countryName
+     */
     private void addTroops(final Object selectedArmiesAsItem, final CountryModel countryName) {
         if (selectedArmiesAsItem != null) {
             int selectedArmies = (int) selectedArmiesAsItem;

@@ -11,9 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * In MapEditController, the data flow into model object and updates the
- * view whenever data changes.
- * @author gursimransingh
+ * In MapEditController, also takes care of the movement of
+ * data into the model corresponding to the view and the controller and
+ * also takes care of updating the view whenever a
+ * change is detected.
+ *
+ * @author Gursimran
  */
 public class MapEditController {
 
@@ -25,7 +28,10 @@ public class MapEditController {
     private List<ContinentModel> updateContinentModelList;
 
     /**
-     * Constructor initializes values and sets the screen to visible
+     * This constructor initializes values to be used in for view object and
+     * the parameters to be passed on to the view classes.
+     *
+     * @param environment
      */
 
     public MapEditController(final Environment environment) {
@@ -53,7 +59,13 @@ public class MapEditController {
         view.addContinentListener(this::addContinent);
         view.showView();
     }
-
+    /**
+     * This method is to add the countries to the game and update the view window
+     * with the desired message.
+     *
+     * @param controlValue
+     * @param continentModel
+     */
     private void addContinent(final ContinentModel continentModel, final String controlValue) {
         if (controlValue != null && !controlValue.isEmpty()) {
             if (0 < Integer.parseInt(controlValue) && Integer.parseInt(controlValue) < 10) {
@@ -72,7 +84,12 @@ public class MapEditController {
             view.showMessage("Invalid", "Please enter at least one control value");
         }
     }
-
+    /**
+     * This method takes updates from the view and assigns the control
+     * value to the continents and save the values to the
+     * model.
+     * @param controlValue
+     */
     private void save(final String controlValue) {
         if (controlValue != null && !controlValue.isEmpty()) {
             if (0 < Integer.parseInt(controlValue) && Integer.parseInt(controlValue) < 10) {

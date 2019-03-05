@@ -158,7 +158,13 @@ public class MapRead {
         READ_FILE = readFile;
     }
 
-
+    /**
+     *
+     * This method is to validate the count of the countries from the list
+     * @param list
+     * @param arrayList
+     * @return
+     */
     public boolean validateReadCountry(List<CountryModel> list, List<CountryModel> arrayList)
     {
         int counter  = 0;
@@ -183,6 +189,13 @@ public class MapRead {
         return true;
     }
 
+    /**
+     * This method is to validate the count of the continents from the list
+     *
+     * @param list
+     * @param arrayList
+     * @return
+     */
     public boolean validateReadContinent(List<ContinentModel> list, List<ContinentModel> arrayList)
     {
         int counter  = 0;

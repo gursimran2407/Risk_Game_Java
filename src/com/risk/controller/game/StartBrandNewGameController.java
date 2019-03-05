@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * similar to all other controllers in the project, the StartBrandNewGameController also takes care of the movement of
- * data into the model corresponding to the view and the controller and also takes care of updating the view whenever a
+ * This class is similar to all other controllers in the project,
+ * the StartBrandNewGameController also takes care of the movement of
+ * data into the model corresponding to the view and the controller and
+ * also takes care of updating the view whenever a
  * change is detected.
  *
- * @author Karan
+ * @author Karanbir
  */
 public class StartBrandNewGameController {
 
@@ -24,7 +26,8 @@ public class StartBrandNewGameController {
     private MapRiskModel mapRiskModel = new MapRiskModel();
 
     /**
-     * Constructor initializes values and sets the screen too visible
+     * This constructor initializes values to be used in for view object and
+     * the parameters to be passed on to the view classes.
      */
     public StartBrandNewGameController(final Environment environment) {
         this.environment = environment;
@@ -35,7 +38,10 @@ public class StartBrandNewGameController {
         this.view.addCancelListener(e -> cancel());
         this.view.showView();
     }
-
+    /**
+     * This method is to load the map file from model and
+     * update the observer with the new change and updates.
+     */
     private void openMap() {
         try {
             mapRiskModel = new MapRiskModel(environment.getViewManager().openFile());
@@ -47,7 +53,8 @@ public class StartBrandNewGameController {
     }
 
     /**
-     *  Check for the player validation
+     *  This method is to check or validate the player quantity with the number of countries
+     *  in the map. And returns an error when the validation fails.
      */
     private void playerValidation(int noOfPlayers) {
         if (mapRiskModel.getCountryModelList().size() > noOfPlayers) {
@@ -68,6 +75,9 @@ public class StartBrandNewGameController {
         }
     }
 
+    /**
+     *This method is to hide the window after the user has chosen to cancel the options.
+     */
     private void cancel() {
         new MainGameController(environment);
         this.view.hideView();

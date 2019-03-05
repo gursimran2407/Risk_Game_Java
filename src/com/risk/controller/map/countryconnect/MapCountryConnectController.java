@@ -16,9 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * In MapCountryConnectController, the data flow into model object and updates the
- * view whenever data changes.
- * @author gursimransingh
+ * In MapCountryConnectController, also takes care of the movement of
+ * data into the model corresponding to the view and the controller and
+ * also takes care of updating the view whenever a
+ * change is detected.
+ *
+ * @author Shyrans
+ * @version 1.0.0
  */
 public class MapCountryConnectController implements ListSelectionListener  {
 
@@ -33,7 +37,10 @@ public class MapCountryConnectController implements ListSelectionListener  {
     private List<CountryModel> countryModelList;
     private List<CountryModel> countryLinks;
 
-    /**Constructor initializes values and sets the screen to visible
+    /**
+     * This constructor initializes values to be used in for view object and
+     * the parameters to be passed on to the view classes.
+     *
      * @param mapRiskModel
      */
     public MapCountryConnectController(final Environment environment, MapRiskModel mapRiskModel) {
@@ -52,7 +59,13 @@ public class MapCountryConnectController implements ListSelectionListener  {
 
         this.mapRiskModel.addObserver(this.view);
     }
-
+    /**
+     * This method is to the add the neighbouring countries to the existing player
+     * selected countries.
+     *
+     * @param left
+     * @param right
+     */
     private void addNeighbouringCountry(final CountryModel left, final CountryModel right) {
         if (left.equals(right)) {
             view.showMessage("Invalid", "Cannot create a self link");
@@ -62,7 +75,13 @@ public class MapCountryConnectController implements ListSelectionListener  {
 
         }
     }
-
+    /**
+     * This method is to remove the neighbouring countries from the existing selected countries
+     * of the players.
+     *
+     * @param left
+     * @param right
+     */
     private void removeNeighbouringCountry(final CountryModel left, final CountryModel right) {
         mapRiskModel.removeNeighbouringCountry(left, right);
     }
@@ -112,9 +131,10 @@ public class MapCountryConnectController implements ListSelectionListener  {
     }
 
     /**
-     * To check whether the values in the list is changed
+     * This method is to check the value changed in the index values and
+     * update the UI with the changes.
      *
-     * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
+     * @param e
      */
     @Override
     public void valueChanged(ListSelectionEvent e) {

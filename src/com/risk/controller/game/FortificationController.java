@@ -9,10 +9,13 @@ import com.risk.view.game.MoveData;
 
 
 /**
- * In FortificationController, the data flow into model object and updates the
- * view whenever data changes.
+ * In FortificationController, also takes care of the movement of
+ * data into the model corresponding to the view and the controller and
+ * also takes care of updating the view whenever a
+ * change is detected.
  *
  * @author Karandeep
+ * @version 1.0.0
  */
 
 public class FortificationController {
@@ -23,9 +26,11 @@ public class FortificationController {
     private MapRiskModel mapRiskModel = null;
 
     /**
-     * Constructor initializes values and sets the screen too visible
+     * This constructor initializes values to be used in for view object and
+     * the parameters to be passed on to the view classes.
      *
      * @param mapRiskModel
+     * @param environment
      */
     public FortificationController(final Environment environment, MapRiskModel mapRiskModel) {
         this.environment = environment;
@@ -39,7 +44,12 @@ public class FortificationController {
 
         this.mapRiskModel.addObserver(this.view);
     }
-
+    /**
+     * This constructor initializes values to be used in for view object and
+     * the parameters to be passed on to the view classes.
+     *
+     * @param moveData
+     */
     private void move(final MoveData moveData) {
         // BFS
         MapValidation val = new MapValidation();
@@ -59,7 +69,10 @@ public class FortificationController {
             this.view.hideView();
         }
     }
-
+    /**
+     * This method is to update the view class by triggering the UI.
+     * @param selectedComboBoxIndex
+     */
     private void fromChanged(final int selectedComboBoxIndex) {
         this.mapRiskModel.setSelectedComboBoxIndex(selectedComboBoxIndex);
     }

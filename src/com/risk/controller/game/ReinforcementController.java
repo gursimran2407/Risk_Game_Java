@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * In Reinforcement Controller, the data flow into model object and updates the
- * view whenever data changes.
- * @author Karandeep
+ * This class Reinforcement Controller, also takes care of the movement of
+ * data into the model corresponding to the view and the controller and
+ * also takes care of updating the view whenever a
+ * change is detected.
  *
+ * @author Karandeep
  */
 public class ReinforcementController {
 
@@ -26,9 +28,11 @@ public class ReinforcementController {
     private int noOfPlayers;
 
     /**
-     * Constructor initializes values and sets the screen too visible
+     * This constructor initializes values to be used in for view object and
+     * the parameters to be passed on to the view classes.
      *
      * @param mapRiskModel
+     * @param environment
      */
     public ReinforcementController(final Environment environment, MapRiskModel mapRiskModel) {
         this.environment = environment;
@@ -45,7 +49,13 @@ public class ReinforcementController {
             this.listOfPlayers.get(i).addObserver(this.view);
         }
     }
-
+    /**
+     * This method triggers the model class with the changes in the armies selected for each player
+     * and update return the update to view.
+     *
+     * @param numOfTroopsAsItem
+     * @param countryName
+     */
     private void setSelectedArmiesToCountries(final Object numOfTroopsAsItem, final CountryModel countryName) {
         int selectedArmies = 0;
         if (numOfTroopsAsItem != null) {
@@ -58,7 +68,8 @@ public class ReinforcementController {
     }
 
     /**
-     * Calculation of Number of Reinforcement Armies
+     * This method is to calculate the number of armies
+     * selected from reinforcement
      *
      * @return Integer
      */

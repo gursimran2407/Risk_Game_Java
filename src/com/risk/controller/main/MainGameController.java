@@ -33,7 +33,7 @@ public class MainGameController {
     }
 
     /**
-     * show play game window
+     * This method shows play game window in the UI
      */
     private void showPlayGameWindow() {
         new StartBrandNewGameController(environment);
@@ -41,7 +41,7 @@ public class MainGameController {
     }
 
     /**
-     * show edit game window
+     * This method shows edit game window in the UI
      */
     private void showEditGameWindow() {
         new MapEditController(environment);
@@ -49,7 +49,7 @@ public class MainGameController {
     }
 
     /**
-     * show create map window
+     * This method shows create map window in the UI
      */
     private void showCreateMapWindow() {
         new MapCreateContinentController(environment);
@@ -57,7 +57,7 @@ public class MainGameController {
     }
 
     /**
-     * exit the game
+     * This method exit the game completely from the window and console.
      */
     private void exitGame() {
         view.hideView();

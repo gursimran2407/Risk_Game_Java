@@ -6,7 +6,9 @@ import javax.swing.JButton;
 import com.risk.model.CountryModel;
 
 /**
- * This class tells the position of the country
+ * This gives the position of the country to the view to be
+ * displayed as per on the UI
+ *
  * @author Karandeep
  */
 
@@ -18,14 +20,16 @@ public class MapPosition extends JButton {
     private Color color;
 
     /**
-     * @return the x Position
+     * gets position of x
+     *
+     * @return xPos
      */
     public int getxPos() {
         return xPos;
     }
 
     /**
-     * Sets x
+     * Sets position x
      *
      * @param xPos the position of x
      */
@@ -34,6 +38,8 @@ public class MapPosition extends JButton {
     }
 
     /**
+     * gets the y position
+     *
      * @return the y position
      */
     public int getyPos() {
@@ -41,7 +47,7 @@ public class MapPosition extends JButton {
     }
 
     /**
-     * Sets y
+     * Sets the position of y
      *
      * @param yPos
      */
@@ -50,7 +56,8 @@ public class MapPosition extends JButton {
     }
 
     /**
-     * @return the country
+     * Gets the country
+     * @return country
      */
     public CountryModel getCountry() {
         return country;
@@ -66,6 +73,8 @@ public class MapPosition extends JButton {
     }
 
     /**
+     * gets the color
+     *
      * @return the color
      */
     public Color getColor() {

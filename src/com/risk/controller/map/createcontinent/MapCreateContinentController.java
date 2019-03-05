@@ -13,8 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Map continent Controller
- * @author gursimransingh
+ * Map create continent Controller, also takes care of the movement of
+ * data into the model corresponding to the view and the controller and
+ * also takes care of updating the view whenever a
+ * change is detected.
+ *
+ * @author Shyrans
  */
 public class MapCreateContinentController {
 
@@ -24,7 +28,10 @@ public class MapCreateContinentController {
     private IMapCreateContinentView view;
 
     /**
-     * Constructor to create map continent
+     * This constructor initializes values to be used in for view object and
+     * the parameters to be passed on to the view classes.
+     *
+     * @param environment
      */
     public MapCreateContinentController(final Environment environment) {
         this.environment = environment;
@@ -39,7 +46,13 @@ public class MapCreateContinentController {
         view.addShowMapCreateCountryListener(e -> showMapCreateCountry());
         view.showView();
     }
-
+    /**
+     * This method is to add the continents to the game and update the view window
+     * with the desired message.
+     *
+     * @param controlValue
+     * @param continentValue
+     */
     private void addContinent(final String controlValue, final String continentValue) {
         if (!("".equals(controlValue) || "".equals(continentValue))) {
             System.out.println("the input from the view is" + controlValue + continentValue);
@@ -66,7 +79,10 @@ public class MapCreateContinentController {
             view.showMessage("Please enter values in all the fields");
         }
     }
-
+    /**
+     * This method is adding colors to the continents from the input values
+     * of the players of the selected countries.
+     */
     private void showMapCreateCountry() {
         if (model.getContinentModelList().isEmpty()) {
             view.showMessage("Enter at least one Continent to the list");

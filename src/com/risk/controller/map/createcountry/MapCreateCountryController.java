@@ -12,8 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Map country Controller
- * @author Namita Faujdar
+ * Map create country Controller, also takes care of the movement of
+ * data into the model corresponding to the view and the controller and
+ * also takes care of updating the view whenever a
+ * change is detected.
+ *
+ * @author Namita
  */
 
 public class MapCreateCountryController {
@@ -28,7 +32,9 @@ public class MapCreateCountryController {
     private final Map<String, Integer> indexMap;
 
     /**
-     * Constructor initializes values and sets the screen to visible
+     * This constructor initializes values to be used in for view object and
+     * the parameters to be passed on to the view classes.
+     *
      * @param mapRiskModel
      * @param mapPointList
      * @param colorMapList
@@ -56,7 +62,13 @@ public class MapCreateCountryController {
         view.addCountryListener(this::addCountry);
         view.addShowMapCountryConnectListener(e -> showMapCountryConnect());
     }
-
+    /**
+     * This method is to add the countries to the game and update the view window
+     * with the desired message.
+     *
+     * @param countryValue
+     * @param continentModel
+     */
     private void addCountry(final String countryValue, final ContinentModel continentModel) {
         if (countryValue != null && !countryValue.equals("")) {
             if (sameCountryNameValidation(countryValue)) {
@@ -75,7 +87,10 @@ public class MapCreateCountryController {
             view.showMessage("Invalid", "Please enter a valid input");
         }
     }
-
+    /**
+     * This method is to trigger view to show the connected countries on the map
+     * of the players respective of the  selected countries
+     */
     private void showMapCountryConnect() {
         if (emptyContinentNameValidation()) {
             view.showMessage("Invalid", "Please enter at least one country for each continent");
@@ -102,8 +117,10 @@ public class MapCreateCountryController {
     }
 
     /**
-     * Check for same country validation
-     * @return boolean
+     * This check is to validate the Name and country value if
+     * it is same or not.
+     *
+     * @return countryValue
      */
     private boolean sameCountryNameValidation(final String countryValue) {
         for (final CountryModel countryModel : mapRiskModel.getCountryModelList()) {
@@ -114,9 +131,10 @@ public class MapCreateCountryController {
 
         return false;
     }
-
     /**
-     * Check for empty continent Value
+     * This method is validate the continent name if its empty or not
+     * and return the result as per.
+     *
      * @return boolean
      */
     private boolean emptyContinentNameValidation() {
