@@ -1,4 +1,4 @@
-package com.risk.controller;
+package com.risk.controller.game;
 
 import com.risk.model.GamePlayModel;
 import com.risk.view.FortificationView;

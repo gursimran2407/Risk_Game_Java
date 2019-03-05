@@ -1,4 +1,4 @@
-package com.risk.controller;
+package com.risk.controller.map.countryconnect;
 
 import com.risk.gameplayrequirements.MapValidation;
 import com.risk.gameplayrequirements.MapWrite;

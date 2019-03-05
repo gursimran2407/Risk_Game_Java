@@ -1,4 +1,4 @@
-package com.risk.controller;
+package com.risk.controller.game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

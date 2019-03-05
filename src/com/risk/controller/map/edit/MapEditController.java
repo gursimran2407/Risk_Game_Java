@@ -1,5 +1,6 @@
-package com.risk.controller;
+package com.risk.controller.map.edit;
 
+import com.risk.controller.map.countryconnect.MapCountryConnectController;
 import com.risk.gameplayrequirements.MapRead;
 import com.risk.model.ContinentModel;
 import com.risk.model.MapRiskModel;

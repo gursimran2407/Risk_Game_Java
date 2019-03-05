@@ -1,9 +1,10 @@
-package com.risk.controller;
+package com.risk.controller.game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import com.risk.controller.game.FortificationController;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;

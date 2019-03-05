@@ -1,5 +1,6 @@
-package com.risk.controller;
+package com.risk.controller.map.createcontinent;
 
+import com.risk.controller.map.createcountry.MapCreateCountryController;
 import com.risk.model.ContinentModel;
 import com.risk.model.MapRiskModel;
 import com.risk.view.MapCreateContinentView;

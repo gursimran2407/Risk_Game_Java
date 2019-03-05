@@ -1,5 +1,8 @@
-package com.risk.controller;
+package com.risk.controller.main;
 
+import com.risk.controller.map.createcontinent.MapCreateContinentController;
+import com.risk.controller.map.edit.MapEditController;
+import com.risk.controller.game.StartBrandNewGameController;
 import com.risk.view.MainGameView;
 
 import java.awt.event.ActionEvent;

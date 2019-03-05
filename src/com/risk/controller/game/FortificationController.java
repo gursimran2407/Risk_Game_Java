@@ -1,4 +1,4 @@
-package com.risk.controller;
+package com.risk.controller.game;
 
 import com.risk.gameplayrequirements.MapValidation;
 import com.risk.model.MapRiskModel;

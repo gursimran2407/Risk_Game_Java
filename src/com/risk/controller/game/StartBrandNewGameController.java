@@ -1,5 +1,6 @@
-package com.risk.controller;
+package com.risk.controller.game;
 
+import com.risk.controller.MainGame;
 import com.risk.view.BrandNewGameView;
 import com.risk.model.PlayerModel;
 import com.risk.model.MapRiskModel;

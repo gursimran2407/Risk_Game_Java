@@ -1,5 +1,6 @@
-package com.risk.controller;
+package com.risk.controller.game;
 
+import com.risk.controller.game.PlayerGameController;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
