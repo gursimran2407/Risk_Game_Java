@@ -1,4 +1,7 @@
 package com.risk.model;
+import com.risk.Environment;
+import com.risk.view.ViewManager;
+import com.risk.view.awt.AWTViewManager;
 import org.junit.Test;
 
 import com.risk.controller.game.ReinforcementController;
@@ -23,6 +26,7 @@ public class NoOfArmyReinforcementTest {
 
     private static final boolean False = false;
     MapRiskModel mapRiskModel;
+    Environment environment = new Environment(new AWTViewManager());
     ArrayList<PlayerModel> playersList = new ArrayList<>();
     ReinforcementController rC;
     MapRead mapRead;
@@ -59,7 +63,7 @@ public class NoOfArmyReinforcementTest {
             i++;
         }
 
-        rC = new ReinforcementController(mapRiskModel);
+        rC = new ReinforcementController(environment ,mapRiskModel);
         for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
             if (this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().equals(this.mapRiskModel.getPlayerTurn())) {
                 this.countriesList.add(this.mapRiskModel.getCountryModelList().get(i));
@@ -73,7 +77,7 @@ public class NoOfArmyReinforcementTest {
         if (reinforceArmies > 12) {
             reinforceArmies = 12;
         }
-        
+
         setUpIsDone = true;
     }
     /**
@@ -82,7 +86,7 @@ public class NoOfArmyReinforcementTest {
     @Test
     public void testUnlinkedContinentValidation()
     {
-        assertEquals(reinforceArmies,rC.calculateArmies());
+        assertEquals(reinforceArmies, rC.calculateArmies());
     }
 
 }

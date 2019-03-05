@@ -10,11 +10,10 @@ import java.io.File;
 
 import static org.junit.Assert.assertFalse;
 
-
+//invalid map
 public class MapUnlinkingValidation {
 
     private static boolean setUpIsDone = false;
-    GamePlayModel gamePlayModel;
     MapRiskModel mapRiskModel;
     MapValidation mapValidation;
     MapRead mapRead;

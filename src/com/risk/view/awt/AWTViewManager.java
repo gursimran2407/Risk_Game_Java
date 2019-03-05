@@ -22,7 +22,6 @@ import com.risk.view.map.createcontinent.IMapCreateContinentView;
 import com.risk.view.map.createcountry.IMapCreateCountryView;
 import com.risk.view.map.edit.IMapEditView;
 import com.risk.view.game.IBrandNewGameView;
-
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;

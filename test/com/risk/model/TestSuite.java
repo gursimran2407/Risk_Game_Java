@@ -11,10 +11,11 @@ import org.junit.runners.Suite;
         ContinentReadTest.class,
         EmptyContinentValidation.class,
         MapRiskModelSetNeighbouringCountryTest.class,
-        MoveValidationTest.class,
+        ValidMoveValidationTest.class,
         MapUnlinkingValidation.class,
         NoOfArmyReinforcementTest.class,
-
+        CheckInterlinkedContinentTest.class,
+        EmptyLinkCountryValidation.class
 })
 
 /** Test suite */

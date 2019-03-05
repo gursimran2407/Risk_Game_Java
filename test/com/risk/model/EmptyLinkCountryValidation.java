@@ -10,7 +10,7 @@ import java.io.File;
 
 import static org.junit.Assert.assertFalse;
 
-public class CountryEmptyValidation {
+public class EmptyLinkCountryValidation {
 
     private static boolean setUpIsDone = false;
     MapRiskModel mapRiskModel;
@@ -35,9 +35,8 @@ public class CountryEmptyValidation {
     }
 
     @Test
-    public void testCountryEmptyValidation()
-    {
-        assertFalse(mapValidation.emptyCountryValidation(mapRiskModel));
-    }
+    public void testContinentEmptyValidation() {
+        assertFalse(mapValidation.emptyLinkCountryValidation(mapRiskModel));
 
+    }
 }

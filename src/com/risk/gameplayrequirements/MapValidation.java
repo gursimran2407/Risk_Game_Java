@@ -117,6 +117,22 @@ public class MapValidation {
     }
 
     /**
+     * Check on empty Country Validation
+     *
+     * @param mapModel
+     * @return boolean
+     */
+    public boolean emptyCountryValidation(MapRiskModel mapModel) {
+        List<CountryModel> countriesList = mapModel.getCountryModelList();
+
+        if(countriesList.size() > 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    /**
      * Check on empty Continent Validation
      *
      * @param mapModel
