@@ -1,17 +1,17 @@
 package com.risk.controller.map.countryconnect;
 
+import com.risk.Environment;
+import com.risk.controller.main.MainGameController;
 import com.risk.gameplayrequirements.MapValidation;
 import com.risk.gameplayrequirements.MapWrite;
 import com.risk.model.CountryModel;
 import com.risk.model.MapRiskModel;
-import com.risk.view.awt.map.connectcountry.MapCountryConnectView;
+import com.risk.view.map.countryconnect.IMapCountryConnectView;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +20,12 @@ import java.util.List;
  * view whenever data changes.
  * @author gursimransingh
  */
-public class MapCountryConnectController implements ListSelectionListener, ActionListener  {
+public class MapCountryConnectController implements ListSelectionListener  {
+
+    private final Environment environment;
 
     private MapRiskModel mapRiskModel;
-    private MapCountryConnectView mapCountryConnectView;
+    private IMapCountryConnectView view;
     private CountryModel countryModel;
     private String filename = null;
     private MapWrite mapWrite;
@@ -32,95 +34,83 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
     private List<CountryModel> countryLinks;
 
     /**Constructor initializes values and sets the screen to visible
-     * @param d_mapRiskModel
+     * @param mapRiskModel
      */
-    public MapCountryConnectController(MapRiskModel d_mapRiskModel) {
-        mapRiskModel = d_mapRiskModel;
-        this.countryModelList = d_mapRiskModel.getCountryModelList();
+    public MapCountryConnectController(final Environment environment, MapRiskModel mapRiskModel) {
+        this.environment = environment;
+
+        this.mapRiskModel = mapRiskModel;
+        this.countryModelList = mapRiskModel.getCountryModelList();
         this.countryLinks = new ArrayList<>();
 
-        this.mapCountryConnectView = new MapCountryConnectView(d_mapRiskModel);
-        this.mapCountryConnectView.setActionListener(this);
-        this.mapCountryConnectView.setListSelectionListener(this);
-        this.mapCountryConnectView.setVisible(true);
-        mapRiskModel.addObserver(this.mapCountryConnectView);
+        this.view = environment.getViewManager().createMapCountryConnectView(mapRiskModel);
+        this.view.addAddNeighbouringListener(this::addNeighbouringCountry);
+        this.view.addRemoveNeighbouringListener(this::removeNeighbouringCountry);
+        this.view.addSaveListener(e -> save());
+        this.view.setListSelectionListener(this);
+        this.view.showView();
+
+        this.mapRiskModel.addObserver(this.view);
     }
 
-    /**
-     * Listener for action event set in view.
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource().equals(mapCountryConnectView.buttonAdd)) {
-            if (mapCountryConnectView.leftCountryParentList.getSelectedValue().equals(mapCountryConnectView.rightCountryParentList.getSelectedValue())) {
-                JOptionPane.showOptionDialog(null, "Cannot create a self link", "Invalid", JOptionPane.DEFAULT_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
-                return;
-            } else {
-                //If adding connection between two countries then setneighbouring countries to all the countries
-                mapRiskModel.setNeighbouringCountry((CountryModel) mapCountryConnectView.leftCountryParentList.getSelectedValue(), (CountryModel) this.mapCountryConnectView.rightCountryParentList.getSelectedValue());
-
-            }
-        } else if (e.getSource().equals(this.mapCountryConnectView.buttonSave)) {
-            MapValidation mapValidation = new MapValidation();
-            boolean flag1 = mapValidation.emptyLinkCountryValidation(mapRiskModel);
-
-            boolean flag3 = mapValidation.emptyContinentValidation(mapRiskModel);
-            boolean flag2 = mapValidation.checkInterlinkedContinent(mapRiskModel);
-            System.out.println(flag1 + " " + flag2 + " " + flag3);
-            if (!(mapValidation.emptyLinkCountryValidation(mapRiskModel))) {
-                if ((!mapValidation.checkInterlinkedContinent(mapRiskModel))) {
-                    if (!(mapValidation.emptyContinentValidation(mapRiskModel))) {
-                        if (!(mapValidation.unlinkedContinentValidation(mapRiskModel))) {
-
-                            System.out.println(" All the map validations are correct");
-                            filename = JOptionPane.showInputDialog("File Name");
-                            try {
-                                System.out.println(filename);
-                                mapWrite = new MapWrite();
-                                mapWrite.writeMapToFile(filename, mapRiskModel);
-                                JOptionPane.showMessageDialog(null, "Map has been created select it before you play");
-                                new MainGame();
-                                this.mapCountryConnectView.dispose();
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
-                        } else {
-                            System.out.println("All continents are not linked");
-                            JOptionPane.showOptionDialog(null, "All continents are not linked", "Invalid",
-                                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {},
-                                    null);
-
-                        }
-
-                    } else {
-                        System.out.println("Empty link country validation failed");
-                        JOptionPane.showOptionDialog(null, "Empty continent validation failed", "Invalid",
-                                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {},
-                                null);
-                    }
-                } else {
-                    System.out.println("ECheck interlinked Continent validation failed");
-                    JOptionPane.showOptionDialog(null, "Check interlinedContinent validation failed", "Invalid",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
-
-                }
-            } else {
-                System.out.println("Empty continent validation failed");
-                JOptionPane.showOptionDialog(null, "Empty link country validation failed", "Invalid",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
-            }
-
-        } else if (e.getSource().equals(this.mapCountryConnectView.buttonRemove)) {
-
-            mapRiskModel.removeNeighbouringCountry(
-                    (CountryModel) this.mapCountryConnectView.leftCountryParentList.getSelectedValue(),
-                    (CountryModel) this.mapCountryConnectView.rightCountryParentList.getSelectedValue());
+    private void addNeighbouringCountry(final CountryModel left, final CountryModel right) {
+        if (left.equals(right)) {
+            view.showMessage("Invalid", "Cannot create a self link");
+        } else {
+            // If adding connection between two countries then setneighbouring countries to all the countries
+            mapRiskModel.setNeighbouringCountry(left, right);
 
         }
-
     }
+
+    private void removeNeighbouringCountry(final CountryModel left, final CountryModel right) {
+        mapRiskModel.removeNeighbouringCountry(left, right);
+    }
+
+    private void save() {
+        MapValidation mapValidation = new MapValidation();
+        boolean flag1 = mapValidation.emptyLinkCountryValidation(mapRiskModel);
+
+        boolean flag3 = mapValidation.emptyContinentValidation(mapRiskModel);
+        boolean flag2 = mapValidation.checkInterlinkedContinent(mapRiskModel);
+        System.out.println(flag1 + " " + flag2 + " " + flag3);
+        if (!(mapValidation.emptyLinkCountryValidation(mapRiskModel))) {
+            if ((!mapValidation.checkInterlinkedContinent(mapRiskModel))) {
+                if (!(mapValidation.emptyContinentValidation(mapRiskModel))) {
+                    if (!(mapValidation.unlinkedContinentValidation(mapRiskModel))) {
+
+                        System.out.println(" All the map validations are correct");
+                        filename = JOptionPane.showInputDialog("File Name");
+                        try {
+                            System.out.println(filename);
+                            mapWrite = new MapWrite();
+                            mapWrite.writeMapToFile(filename, mapRiskModel);
+                            JOptionPane.showMessageDialog(null, "Map has been created select it before you play");
+                            new MainGameController(environment);
+                            this.view.hideView();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("All continents are not linked");
+                        view.showMessage("Invalid", "All continents are not linked");
+                    }
+
+                } else {
+                    System.out.println("Empty link country validation failed");
+                    view.showMessage("Invalid", "Empty continent validation failed");
+                }
+            } else {
+                System.out.println("ECheck interlinked Continent validation failed");
+                view.showMessage("Invalid", "Check interlinedContinent validation failed");
+
+            }
+        } else {
+            System.out.println("Empty continent validation failed");
+            view.showMessage("Invalid", "Empty link country validation failed");
+        }
+    }
+
     /**
      * To check whether the values in the list is changed
      *
@@ -144,23 +134,19 @@ public class MapCountryConnectController implements ListSelectionListener, Actio
             int maxRightIndex = listSelectionModel.getMaxSelectionIndex();
             int finalRightModelIndex = 0;
             for (int i = minRightIndex; i <= maxRightIndex; i++) {
-                if (this.mapCountryConnectView.leftListSelectionModel.isSelectedIndex(i)) {
+                if (this.view.getLeftListSelectionModel().isSelectedIndex(i)) {
                     finalRightModelIndex = i;
                 }
             }
             System.out.println(finalRightModelIndex);
         }
 
-        if (e.getSource().equals(this.mapCountryConnectView.leftCountryParentList)) {
-
+        if (e.getSource().equals(this.view.getLeftCountryParentList())) {
             mapRiskModel.setCountryColor(
-                    (CountryModel) this.mapCountryConnectView.leftCountryParentList.getSelectedValue(), Color.GREEN);
-
-        } else if (e.getSource().equals(this.mapCountryConnectView.rightCountryParentList)) {
-
+                    (CountryModel) this.view.getLeftCountryParentList().getSelectedValue(), Color.GREEN);
+        } else if (e.getSource().equals(this.view.getRightCountryParentList())) {
             mapRiskModel.setCountryColor(
-                    (CountryModel) this.mapCountryConnectView.rightCountryParentList.getSelectedValue(), Color.YELLOW);
-
+                    (CountryModel) this.view.getRightCountryParentList().getSelectedValue(), Color.YELLOW);
         }
     }
 }
