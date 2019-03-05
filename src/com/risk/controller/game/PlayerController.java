@@ -1,8 +1,6 @@
 package com.risk.controller.game;
 
 import com.risk.model.GamePlayModel;
-import com.risk.view.FortificationView;
-import com.risk.view.ReinforcementView;
 
 
 import java.awt.event.ActionListener;
