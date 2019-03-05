@@ -1,133 +1,96 @@
 package com.risk.controller.map.edit;
 
+import com.risk.Environment;
 import com.risk.controller.map.countryconnect.MapCountryConnectController;
 import com.risk.gameplayrequirements.MapRead;
 import com.risk.model.ContinentModel;
 import com.risk.model.MapRiskModel;
-import com.risk.view.awt.map.edit.MapEditView;
+import com.risk.view.map.edit.IMapEditView;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * In MapEditController, the data flow into model object and updates the
  * view whenever data changes.
  * @author gursimransingh
  */
-public class MapEditController implements ActionListener {
+public class MapEditController {
 
-    private MapEditView mapEditView;
+    private final Environment environment;
+
+    private IMapEditView view;
     private MapRiskModel mapRiskModel;
-    private ArrayList<ContinentModel> continentModelList;
 
-    private MapRead mapRead = new MapRead();
-    private File file;
-    private ContinentModel continentModel;
-    private ArrayList<ContinentModel> updateContinentModelList;
-    private ContinentModel updatedContinentModel;
+    private List<ContinentModel> updateContinentModelList;
 
     /**
      * Constructor initializes values and sets the screen to visible
      */
 
-    public MapEditController() {
-        file = openFileToEdit();
-        mapRead.setReadFile(file);
-        continentModelList = mapRead.getMapContinentDetails();
+    public MapEditController(final Environment environment) {
+        this.environment = environment;
+
+        final MapRead mapRead = new MapRead();
+        mapRead.setReadFile(environment.getViewManager().openFile());
+        List<ContinentModel> continentModelList = mapRead.getMapContinentDetails();
+
         mapRiskModel = new MapRiskModel();
         mapRiskModel.setCountryModelList(mapRead.getMapCountryDetails());
         mapRiskModel.setContinentModelModList(continentModelList);
         mapRiskModel.callObservers();
-        //updating the continent model list
+
+        // updating the continent model list
         updateContinentModelList = new ArrayList<>();
         continentModelList = mapRiskModel.getContinentModelList();
-        //calling view constructor
-        mapEditView = new MapEditView(continentModelList);
-        mapEditView.setActionListener(this);
-        mapEditView.setVisible(true);
-        mapRiskModel.addObserver(mapEditView);
-    }
-    /**
-     * @param e Performs action whenever there is a change in MapEditView class
-     */
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        //if add button is clicked
-        if (e.getSource().equals(mapEditView.addButton)) {
-            if (mapEditView.controlValue.getText() != null && !mapEditView.controlValue.getText().isEmpty()) {
-                if (0 < Integer.parseInt(mapEditView.controlValue.getText()) && Integer.parseInt(mapEditView.controlValue.getText()) < 10) {
+        // calling view constructor
+        view = environment.getViewManager().createMapEditView(continentModelList);
 
-                    updatedContinentModel = (ContinentModel) mapEditView.continentListCombobox.getSelectedItem();
-                    //removing the selected continent from continent model
-                    mapRiskModel.removeContinent(updatedContinentModel);
+        mapRiskModel.addObserver(view);
 
-                    updatedContinentModel.setControlValue(Integer.parseInt(mapEditView.controlValue.getText()));
-                    updateContinentModelList.add(updatedContinentModel);
-
-                    System.out.println(updateContinentModelList);
-
-                } else {
-                    JOptionPane.showOptionDialog(null, "Please enter a control value between 0 and 10", "Invalid",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-                    return;
-                }
-            } else {
-                JOptionPane.showOptionDialog(null, "Please enter at least one control value", "Invalid",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-                return;
-            }
-        }
-
-//if save button is pressed
-        else if (e.getSource().equals(mapEditView.saveButton)) {
-            if (mapEditView.controlValue.getText() != null && !mapEditView.controlValue.getText().isEmpty()) {
-                if (0 < Integer.parseInt(mapEditView.controlValue.getText()) && Integer.parseInt(mapEditView.controlValue.getText()) < 10) {
-                    if (!updateContinentModelList.isEmpty()) {
-                        mapRiskModel.setContinentModelModList(updateContinentModelList);
-                        mapRiskModel = mapRiskModel.updateCountries(mapRiskModel);
-                        new MapCountryConnectController(mapRiskModel);
-                        mapEditView.dispose();
-                        // open connectCountries Controller and pass the map model
-                    } else {
-                        JOptionPane.showOptionDialog(null, "Please add atleast one continent first.", "Invalid",
-                                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{},
-                                null);
-                        return;
-                    }
-                } else {
-                    JOptionPane.showOptionDialog(null, "Please enter a control value between 0 and 10", "Invalid",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-                    return;
-                }
-            } else {
-                JOptionPane.showOptionDialog(null, "Please enter at least one control value", "Invalid",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
-                return;
-            }
-        }
-
+        view.addSaveListener(this::save);
+        view.addContinentListener(this::addContinent);
+        view.showView();
     }
 
-    /**
-     * Choosing a file to edit
-     */
-    public File openFileToEdit() {
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
-        File file;
-        int returnValue = jfc.showOpenDialog(mapEditView);
+    private void addContinent(final ContinentModel continentModel, final String controlValue) {
+        if (controlValue != null && !controlValue.isEmpty()) {
+            if (0 < Integer.parseInt(controlValue) && Integer.parseInt(controlValue) < 10) {
+                // removing the selected continent from continent model
+                mapRiskModel.removeContinent(continentModel);
 
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File openedFile = jfc.getSelectedFile();
-            System.out.println(openedFile.getAbsolutePath());
-            file = new File(openedFile.getAbsolutePath());
-            return file;
-        } else
-            return null;
+                continentModel.setControlValue(Integer.parseInt(controlValue));
+                updateContinentModelList.add(continentModel);
 
+                System.out.println(updateContinentModelList);
+
+            } else {
+                view.showMessage("Invalid", "Please enter a control value between 0 and 10");
+            }
+        } else {
+            view.showMessage("Invalid", "Please enter at least one control value");
+        }
+    }
+
+    private void save(final String controlValue) {
+        if (controlValue != null && !controlValue.isEmpty()) {
+            if (0 < Integer.parseInt(controlValue) && Integer.parseInt(controlValue) < 10) {
+                if (!updateContinentModelList.isEmpty()) {
+                    mapRiskModel.setContinentModelModList(updateContinentModelList);
+                    mapRiskModel = mapRiskModel.updateCountries(mapRiskModel);
+
+                    new MapCountryConnectController(environment, mapRiskModel);
+                    view.hideView();
+                    // open connectCountries Controller and pass the map model
+                } else {
+                    view.showMessage("Invalid", "Please add atleast one continent first.");
+                }
+            } else {
+                view.showMessage("Invalid", "Please enter a control value between 0 and 10");
+            }
+        } else {
+            view.showMessage("Invalid", "Please enter at least one control value");
+        }
     }
 }
