@@ -20,7 +20,9 @@ import java.util.Observable;
 import java.util.function.Consumer;
 
 /**
+ * This is a view class for fortificatoin phase implementing the AWTAbstractView and IforitificationView
  * @author gursimransingh
+ *
  */
 
 public class AWTFortificationView extends AWTAbstractView implements IFortificationView {
@@ -97,6 +99,10 @@ public class AWTFortificationView extends AWTAbstractView implements IFortificat
         // this.fromCountryListComboBox.addItemListener(e -> listener.accept(fromCountryListComboBox.getSelectedIndex()));
     }
 
+    /**
+     * @param value the value to change from string to color
+     * @return Color the return colors from string
+     */
     public static Color stringToColor(final String value) {
         if (value == null) {
             return Color.black;
@@ -118,6 +124,9 @@ public class AWTFortificationView extends AWTAbstractView implements IFortificat
         }
     }
 
+    /**
+     * @param gameMapModel MapriskModel and PlayeerModel is necessary for updating the current window.
+     */
     public void updateWindow(MapRiskModel gameMapModel, PlayerModel playerModel) {
 
         welcomePanel.removeAll();
@@ -228,6 +237,11 @@ public class AWTFortificationView extends AWTAbstractView implements IFortificat
 
     }
 
+    /**
+     * The paint function is used for updating the lines on the window
+     *
+     * @param g Graphics as a parameter to paint the current window
+     */
     public void paint(final Graphics g) {
 
         super.paint(g);
@@ -266,6 +280,10 @@ public class AWTFortificationView extends AWTAbstractView implements IFortificat
 
     }
 
+
+    /**
+     * This provides a dynamic combobox of country names
+     * */
     public class CountryViewRenderer extends BasicComboBoxRenderer {
 
         /*

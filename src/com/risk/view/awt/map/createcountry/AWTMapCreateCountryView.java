@@ -41,6 +41,9 @@ public class AWTMapCreateCountryView extends AWTAbstractView implements IMapCrea
         updateScreen(null);
     }
 
+    /**
+     * The createUI method is used to intilialize the UI
+     */
     private void createUI(final List<ContinentModel> listOfContinents) {
         this.setTitle("Create Country");
         this.setName("RISK GAME");
@@ -140,7 +143,7 @@ public class AWTMapCreateCountryView extends AWTAbstractView implements IMapCrea
     }
 
     /**
-     * Inside, getter method that provides us a map model corresponding to a map name
+     * "CountryModelRenderer" changes and updates the combobox
      */
     public class CountryViewRenderer extends BasicComboBoxRenderer {
 

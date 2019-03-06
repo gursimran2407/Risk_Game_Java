@@ -34,6 +34,9 @@ public class AWTMapEditView extends AWTAbstractView implements IMapEditView {
         this.updateUI(continentModelList);
     }
 
+    /**
+     * The createUI method is used to intilialize the UI
+     */
     private void createUI() {
         this.setName("RISK GAME");
         this.setResizable(false);
@@ -107,7 +110,9 @@ public class AWTMapEditView extends AWTAbstractView implements IMapEditView {
         continentModelList.forEach(cbxContinentList::addItem);
     }
 
-    // Updating combobox as per change in continents
+    /**
+     * "CountryModelRenderer" changes and updates the combobox
+     */
     public class ContinentViewRenderer extends BasicComboBoxRenderer {
 
         public Component getListCellRendererComponent(

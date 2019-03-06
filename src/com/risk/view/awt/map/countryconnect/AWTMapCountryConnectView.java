@@ -221,7 +221,41 @@ public class AWTMapCountryConnectView extends AWTAbstractView implements IMapCou
     }
 
     /**
-     * "CountryModelRenderer" changes ....
+     * Countries are rendered as button and linked with Swing using Graphics.
+     *
+     * @see java.awt.Window#paint(java.awt.Graphics)
+     */
+    public void paint(final Graphics g) {
+
+        super.paint(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        Point[] connectorPoints = new Point[d_mapRiskModel.getCountryModelList().size()];
+
+        for (int i = 0; i < d_mapRiskModel.getCountryModelList().size(); i++) {
+            connectorPoints[i] = SwingUtilities.convertPoint(d_mapRiskModel.getCountryModelList().get(i), 0, 0, this);
+
+        }
+
+        for (int k = 0; k < d_mapRiskModel.getCountryModelList().size(); k++) {
+            if (d_mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
+                ArrayList<CountryModel> neighbourCountries = (ArrayList<CountryModel>) d_mapRiskModel.getCountryModelList().get(k).getConnectedCountryList();
+
+                for (int j = 0; j < neighbourCountries.size(); j++) {
+                    for (int i = 0; i < d_mapRiskModel.getCountryModelList().size(); i++)
+                        if (neighbourCountries.get(j).equals(d_mapRiskModel.getCountryModelList().get(i)))
+                            g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
+                                    connectorPoints[k].y + 25);
+
+                }
+            }
+        }
+
+    }
+
+    /**
+     * "CountryModelRenderer" changes and updates the combobox
      */
     class CountryModelRenderer extends JLabel implements ListCellRenderer<CountryModel> {
 
@@ -255,34 +289,5 @@ public class AWTMapCountryConnectView extends AWTAbstractView implements IMapCou
 
             return this;
         }
-    }
-
-    public void paint(final Graphics g) {
-
-        super.paint(g);
-
-        Graphics2D g2 = (Graphics2D) g;
-
-        Point[] connectorPoints = new Point[d_mapRiskModel.getCountryModelList().size()];
-
-        for (int i = 0; i < d_mapRiskModel.getCountryModelList().size(); i++) {
-            connectorPoints[i] = SwingUtilities.convertPoint(d_mapRiskModel.getCountryModelList().get(i), 0, 0, this);
-
-        }
-
-        for (int k = 0; k < d_mapRiskModel.getCountryModelList().size(); k++) {
-            if (d_mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
-                ArrayList<CountryModel> neighbourCountries = (ArrayList<CountryModel>) d_mapRiskModel.getCountryModelList().get(k).getConnectedCountryList();
-
-                for (int j = 0; j < neighbourCountries.size(); j++) {
-                    for (int i = 0; i < d_mapRiskModel.getCountryModelList().size(); i++)
-                        if (neighbourCountries.get(j).equals(d_mapRiskModel.getCountryModelList().get(i)))
-                            g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
-                                    connectorPoints[k].y + 25);
-
-                }
-            }
-        }
-
     }
 }

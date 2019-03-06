@@ -16,6 +16,7 @@ import java.util.Observable;
 import java.util.function.BiConsumer;
 
 /**
+ * The startup View Class is responsible for the the startup view
  * @author gursimransingh
  */
 

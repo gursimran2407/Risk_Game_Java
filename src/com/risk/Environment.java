@@ -3,6 +3,9 @@ package com.risk;
 import com.risk.view.ViewManager;
 
 public class Environment {
+    /**
+     * The Environment class is used to intitialize the ViewManager Class.
+     */
 
     private final ViewManager viewManager;
 

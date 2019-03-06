@@ -28,6 +28,9 @@ public class AWTMainGameView extends AWTAbstractView implements IMainGameView {
         createUI();
     }
 
+    /**
+     * The createUI method updates the UI
+     */
     private void createUI() {
 
         // Windows setup
