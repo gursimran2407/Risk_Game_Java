@@ -6,7 +6,7 @@ import com.risk.view.awt.AWTViewManager;
 /** This file is the main starting point of the program containing function
  * for main game
  *
- * @author gursimransingh
+ * @author TEAM 11
  * @version 1.0
  */
 

@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+/**
+ * The testViewManager is a class which implement ViewManager.
+ */
 public class TestsViewManager implements ViewManager {
     @Override
     public File openFile() {
