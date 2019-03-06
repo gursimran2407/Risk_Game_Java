@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 
 /**
  * Interface to add listeners
- * @author Namita Faujdar
+ * @author Shriyans
  */
 public interface IBrandNewGameView extends IView {
 

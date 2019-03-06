@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Interface to add listeners
- * @author Namita Faujdar
+ * @author Karandeep
  */
 public interface IMainGameView extends IView {
 

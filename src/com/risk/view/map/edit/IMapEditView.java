@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 /**
  * Interface to add listeners
- * @author Namita Faujdar
+ * @author Gursimran
  */
 public interface IMapEditView extends IView {
 

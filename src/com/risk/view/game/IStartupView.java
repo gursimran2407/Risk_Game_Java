@@ -8,7 +8,7 @@ import java.util.function.BiConsumer;
 
 /**
  * Interface to add listeners
- * @author Namita Faujdar
+ * @author Karan
  */
 public interface IStartupView extends IView {
 

@@ -7,7 +7,7 @@ import java.util.function.BiConsumer;
 
 /**
  * Interface to add listeners
- * @author Namita Faujdar
+ * @author Gursimran
  */
 public interface IMapCreateContinentView extends IView {
 
