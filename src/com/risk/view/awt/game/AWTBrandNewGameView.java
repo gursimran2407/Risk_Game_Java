@@ -7,7 +7,10 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.function.Consumer;
 
-
+/**
+ * This class AWTBrandNewGameView is view of the game play. It also provides
+ * the observer pattern when the data is modified.
+ */
 public class AWTBrandNewGameView extends AWTAbstractView implements IBrandNewGameView {
 
     /** The Constant serialVersionUID. */
@@ -60,17 +63,24 @@ public class AWTBrandNewGameView extends AWTAbstractView implements IBrandNewGam
 
     }
 
+    /**
+     * adds the add browse map Action Listener
+     */
     @Override
     public void addBrowseMapListener(ActionListener listener) {
         browseMapButton.addActionListener(listener);
 
     }
-
+    /**
+     * adds the add play Action Listener
+     */
     @Override
     public void addPlayListener(Consumer<Integer> listener) {
         nextButton.addActionListener(e -> listener.accept((int) numOfPlayers.getSelectedItem()));
     }
-
+    /**
+     * adds the add cancel Action Listener
+     */
     @Override
     public void addCancelListener(ActionListener listener) {
         cancelButton.addActionListener(listener);

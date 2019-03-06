@@ -283,7 +283,8 @@ public class AWTFortificationView extends AWTAbstractView implements IFortificat
 
     /**
      * This provides a dynamic combobox of country names
-     * */
+     */
+
     public class CountryViewRenderer extends BasicComboBoxRenderer {
 
         /*
