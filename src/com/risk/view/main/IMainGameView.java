@@ -4,6 +4,10 @@ import com.risk.view.IView;
 
 import java.awt.event.ActionListener;
 
+/**
+ * Interface to add listeners
+ * @author Namita Faujdar
+ */
 public interface IMainGameView extends IView {
 
     void addCreateMapListener(final ActionListener listener);

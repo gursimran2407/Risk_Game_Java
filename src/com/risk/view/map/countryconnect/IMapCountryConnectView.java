@@ -8,6 +8,10 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 import java.util.function.BiConsumer;
 
+/**
+ * Interface to add and set listeners
+ * @author Namita Faujdar
+ */
 public interface IMapCountryConnectView extends IView {
 
     void addAddNeighbouringListener(BiConsumer<CountryModel, CountryModel> listener);

@@ -8,6 +8,10 @@ import java.io.File;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+/**
+ * Interface to add listeners
+ * @author Namita Faujdar
+ */
 public interface IMapEditView extends IView {
 
     void addContinentListener(final BiConsumer<ContinentModel, String> listener);
