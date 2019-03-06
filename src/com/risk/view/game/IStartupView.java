@@ -6,6 +6,10 @@ import com.risk.view.IView;
 import java.awt.event.ActionListener;
 import java.util.function.BiConsumer;
 
+/**
+ * Interface to add listeners
+ * @author Namita Faujdar
+ */
 public interface IStartupView extends IView {
 
     void setWelcomeMessage(String message);

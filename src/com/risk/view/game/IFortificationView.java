@@ -6,6 +6,10 @@ import java.awt.event.ActionListener;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+/**
+ * Interface to add listeners
+ * @author Namita Faujdar
+ */
 public interface IFortificationView extends IView {
 
     void addMoveListener(Consumer<MoveData> listener);
