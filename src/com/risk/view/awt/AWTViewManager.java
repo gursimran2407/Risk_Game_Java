@@ -27,12 +27,15 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Invokes all view methods
+ * @author Karan
+ */
 public class AWTViewManager implements ViewManager {
 
     /**
      * Choosing a file to edit
      */
-
     @Override
     public File openFile() {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
