@@ -10,6 +10,11 @@ import java.io.File;
 
 import static org.junit.Assert.assertFalse;
 
+/**
+ * This test case is to test empty countries
+ *
+ * @author Namita Faujdar
+ */
 public class CountryEmptyValidation {
 
     private static boolean setUpIsDone = false;
@@ -18,6 +23,9 @@ public class CountryEmptyValidation {
     MapRead mapRead;
     File file;
 
+    /**
+     * set up variables
+     */
     @Before
     public void setUp()
     {
@@ -34,6 +42,9 @@ public class CountryEmptyValidation {
         setUpIsDone = true;
     }
 
+    /**
+     * Test empty countries validation
+     */
     @Test
     public void testCountryEmptyValidation()
     {

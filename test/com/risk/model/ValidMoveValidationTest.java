@@ -10,6 +10,11 @@ import java.io.File;
 
 import static org.junit.Assert.assertTrue;
 
+/**
+ * This test case is to test invalid move
+ *
+ * @author Namita Faujdar
+ */
 public class ValidMoveValidationTest {
 
     private static boolean setUpIsDone = false;
@@ -18,6 +23,9 @@ public class ValidMoveValidationTest {
     MapRead mapRead;
     File file;
 
+    /**
+     * set up variables
+     */
     @Before
     public void setUp()
     {
@@ -34,6 +42,9 @@ public class ValidMoveValidationTest {
 
     }
 
+    /**
+     * Test continent linking
+     */
     @Test
     public void testContinentLinkingValidation()
     {

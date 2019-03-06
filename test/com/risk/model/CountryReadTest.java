@@ -9,6 +9,11 @@ import org.junit.Test;
 
 import java.io.File;
 
+/**
+ * This test case is to read countries
+ *
+ * @author Namita Faujdar
+ */
 public class CountryReadTest {
 
     private static boolean setUpIsDone = false;
@@ -17,6 +22,9 @@ public class CountryReadTest {
     MapRead mapRead;
     File file;
 
+    /**
+     * set up variables
+     */
     @Before
     public void setUp()
     {
@@ -32,6 +40,9 @@ public class CountryReadTest {
         setUpIsDone = true;
     }
 
+    /**
+     * Test reading countries from file
+     */
     @Test
     public void readCountryFile()
     {

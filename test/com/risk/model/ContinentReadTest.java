@@ -9,6 +9,11 @@ import org.junit.Test;
 
 import java.io.File;
 
+/**
+ * This test case is to read continent
+ *
+ * @author Namita Faujdar
+ */
 public class ContinentReadTest {
     private static boolean setUpIsDone = false;
     MapRiskModel mapRiskModel;
@@ -16,6 +21,9 @@ public class ContinentReadTest {
     MapRead mapRead;
     File file;
 
+    /**
+     * Set up variables
+     */
     @Before
     public void setUp()
     {
@@ -31,6 +39,9 @@ public class ContinentReadTest {
         setUpIsDone = true;
     }
 
+    /**
+     * Test to read continents from file
+     */
     @Test
     public void readContinentTest()
     {

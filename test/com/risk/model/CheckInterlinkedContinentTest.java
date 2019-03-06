@@ -10,6 +10,11 @@ import java.io.File;
 
 import static org.junit.Assert.assertFalse;
 
+/**
+ * This test case is to test whether continents are linked or not
+ *
+ * @author Namita Faujdar
+ */
 public class CheckInterlinkedContinentTest {
     private static boolean setUpIsDone = false;
     MapRiskModel mapRiskModel;
@@ -17,6 +22,9 @@ public class CheckInterlinkedContinentTest {
     MapRead mapRead;
     File file;
 
+    /**
+     * Set up variables
+     */
     @Before
     public void setUp()
     {
@@ -33,8 +41,11 @@ public class CheckInterlinkedContinentTest {
         setUpIsDone = true;
     }
 
+    /**
+     * Test inter link continent
+     */
     @Test
-    public void testContinentEmptyValidation() {
+    public void testCheckInterlinked() {
         assertFalse(mapValidation.checkInterlinkedContinent(mapRiskModel));
 
     }

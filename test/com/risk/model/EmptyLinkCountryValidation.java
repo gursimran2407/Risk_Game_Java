@@ -10,6 +10,11 @@ import java.io.File;
 
 import static org.junit.Assert.assertFalse;
 
+/**
+ * This test case is to test empty links of countries
+ *
+ * @author Namita Faujdar
+ */
 public class EmptyLinkCountryValidation {
 
     private static boolean setUpIsDone = false;
@@ -18,6 +23,9 @@ public class EmptyLinkCountryValidation {
     MapRead mapRead;
     File file;
 
+    /**
+     * set up variables
+     */
     @Before
     public void setUp()
     {
@@ -34,6 +42,9 @@ public class EmptyLinkCountryValidation {
         setUpIsDone = true;
     }
 
+    /**
+     * Read file and test continent empty
+     */
     @Test
     public void testContinentEmptyValidation() {
         assertFalse(mapValidation.emptyLinkCountryValidation(mapRiskModel));

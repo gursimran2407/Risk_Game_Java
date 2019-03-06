@@ -10,7 +10,11 @@ import java.io.File;
 
 import static org.junit.Assert.assertFalse;
 
-//invalid map
+/**
+ * This test case is to test invalid map
+ *
+ * @author Namita Faujdar
+ */
 public class MapUnlinkingValidation {
 
     private static boolean setUpIsDone = false;
@@ -19,7 +23,9 @@ public class MapUnlinkingValidation {
     MapRead mapRead;
     File file;
 
-
+    /**
+     * set up variables
+     */
     @Before
     public void setUp()
     {
@@ -37,8 +43,8 @@ public class MapUnlinkingValidation {
         setUpIsDone = true;
 
     }
-    /**Test for un-linking continent validation */
 
+    /**Test for un-linking continent validation */
     @Test
     public void testMapUnlinkingValidation()
     {

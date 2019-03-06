@@ -11,6 +11,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
+ * This test case is to test neighboring countries are set
+ *
  * @author gursimransingh
  */
 public class MapRiskModelSetNeighbouringCountryTest {
@@ -21,6 +23,9 @@ public class MapRiskModelSetNeighbouringCountryTest {
     MapRead mapRead;
     File file;
 
+    /**
+     * set up variables
+     */
     @Before
     public void setUp() {
         if (setUpIsDone) {
@@ -37,7 +42,9 @@ public class MapRiskModelSetNeighbouringCountryTest {
         setUpIsDone = true;
     }
 
-    //Connecting countries of index 0 and 1.
+    /**
+     * Connecting countries of index 0 and 1.
+     */
     @Test
     public void setNeighbouringCountry() {
         assertEquals(true, mapRiskModel.setNeighbouringCountry(countryList.get(0), countryList.get(1)));
