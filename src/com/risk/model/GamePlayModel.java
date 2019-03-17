@@ -60,6 +60,7 @@ public class GamePlayModel extends Observable
         this.players = players;
     }
 
+
     public ArrayList<CardModel> getDeck() {
         return deck;
     }
@@ -76,6 +77,9 @@ public class GamePlayModel extends Observable
         this.selectedComboBoxIndex = selectedComboBoxIndex;
     }
 
+    public MapRiskModel getGameMap() {
+        return mapRiskModel;
+    }
     public int getSelectedAttackComboBoxIndex() {
         return selectedAttackComboBoxIndex;
     }
@@ -168,6 +172,28 @@ public class GamePlayModel extends Observable
         }
 
         return this.deck;
+    }
+
+    /**
+     * Gets the defend country list.
+     *
+     * @param attackCountryName the attack country name
+     * @return the defend country list
+     */
+    public ArrayList<CountryModel> getDefendCountryList(CountryModel attackCountryName) {
+        ArrayList<CountryModel> linkedCountry;
+        ArrayList<CountryModel> defenderCountryList = new ArrayList<CountryModel>();
+        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
+            if (this.mapRiskModel.getCountryModelList().get(i).equals(attackCountryName)) {
+                linkedCountry = (ArrayList<CountryModel>) this.mapRiskModel.getCountryModelList().get(i).getConnectedCountryList();
+                for (int j = 0; j < linkedCountry.size(); j++) {
+                    if (!attackCountryName.getCountryOwner().equals(linkedCountry.get(j).getCountryOwner())) {
+                        defenderCountryList.add(linkedCountry.get(j));
+                    }
+                }
+            }
+        }
+        return defenderCountryList;
     }
 
 
