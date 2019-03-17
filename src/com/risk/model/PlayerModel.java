@@ -1,22 +1,27 @@
 package com.risk.model;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Observable;
-
 
 public class PlayerModel extends Observable {
     private String playerName;
     private int numberofArmies;
     private int  remainingNumberOfArmies;
-    private String playerColor;
+    private Color playerColor;
     private int myPlayer;
+    private ArrayList<CountryModel> playerCountries  = new ArrayList<CountryModel>();
+    private ArrayList<CardModel> playerCards;
 
 
-    public PlayerModel(String playerName, int numberOfArmies, int remainingNumberOfArmies, String playerColor) {
+    public PlayerModel(String playerName, int numberOfArmies, int remainingNumberOfArmies, Color playerColor,
+                       ArrayList playerCountries, ArrayList playerCards) {
         this.playerName = playerName;
         this.remainingNumberOfArmies = remainingNumberOfArmies;
         this.numberofArmies = numberOfArmies;
         this.playerColor = playerColor;
-
+        this.playerCountries = playerCountries;
+        this.playerCards = playerCards;
     }
 
     public PlayerModel() {
@@ -59,13 +64,30 @@ public class PlayerModel extends Observable {
         this.remainingNumberOfArmies = remainingNumberOfArmies;
     }
 
-    public String getPlayerColor() {
+    public Color getPlayerColor() {
         return playerColor;
     }
 
-    public void setPlayerColor(String playerColor) {
+    public void setPlayerColor(Color playerColor) {
         this.playerColor = playerColor;
     }
+
+    public ArrayList<CountryModel> getPlayerCountries() {
+        return playerCountries;
+    }
+
+    public void setPlayerCountries(ArrayList<CountryModel> playerCountries) {
+        this.playerCountries = playerCountries;
+    }
+
+    public ArrayList<CardModel> getPlayerCards() {
+        return playerCards;
+    }
+
+    public void setPlayerCards(ArrayList<CardModel> playerCards) {
+        this.playerCards = playerCards;
+    }
+
 
     /**
      * Calling Observer.
