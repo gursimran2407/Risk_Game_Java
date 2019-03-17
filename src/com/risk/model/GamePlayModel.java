@@ -22,7 +22,7 @@ public class GamePlayModel extends Observable
 {
 
     private MapRiskModel mapRiskModel;
-    private ArrayList<PlayerModel> players = new ArrayList<>()
+    private ArrayList<PlayerModel> players = new ArrayList<>();
     private ArrayList<CardModel> deck = new ArrayList<>();
     private int selectedComboBoxIndex;
     private int selectedAttackComboBoxIndex;
