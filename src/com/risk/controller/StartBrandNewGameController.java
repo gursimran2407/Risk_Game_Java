@@ -1,10 +1,11 @@
 package com.risk.controller;
 
+import com.risk.model.*;
 import com.risk.view.BrandNewGameView;
-import com.risk.model.PlayerModel;
-import com.risk.model.MapRiskModel;
+import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -23,6 +24,8 @@ public class StartBrandNewGameController implements ActionListener {
     private ArrayList<PlayerModel> playersList = new ArrayList<>();
     private MapRiskModel mapRiskModel = new MapRiskModel();
     private int noOfPlayers;
+    private String players = "";
+    private GamePlayModel gamePlayModel = new GamePlayModel();
 
     /**
      * Constructor initializes values and sets the screen too visible
@@ -56,15 +59,36 @@ public class StartBrandNewGameController implements ActionListener {
             noOfPlayers = (int) brandNewGameView.numOfPlayers.getSelectedItem();
 
             if ( mapRiskModel.getCountryModelList().size() > noOfPlayers) {
-                System.out.println("no of players");
-                String PlayerName ;
-                for (int i=0; i<noOfPlayers; i++) {
-                    PlayerName = "Player"+ (i+1);
-                    PlayerModel pm = new PlayerModel(PlayerName, 0, 0,"");
+                System.out.println("no of players" + noOfPlayers);
+                for (int i = 0; i < noOfPlayers; i++) {
+                    if (i == 0) {
+                        players = brandNewGameView.player1.getText();
+                    } else if (i == 1) {
+                        players = brandNewGameView.player2.getText();
+                    } else if (i == 2) {
+                        players = brandNewGameView.player3.getText();
+                    } else if (i == 3) {
+                        players = brandNewGameView.player4.getText();
+                    } else if (i == 4) {
+                        players = brandNewGameView.player5.getText();
+                    }
+                    System.out.println("players " + players);
+                    if (players == null || "".equals(players.trim())) {
+                        players = "Player " + (i + 1);
+                    }
+                    PlayerModel pm = new PlayerModel(players, 0, 0, Color.WHITE, new ArrayList<CountryModel>(),
+                            new ArrayList<CardModel>());
                     playersList.add(pm);
                 }
-                new StartupController(playersList, mapRiskModel);
-                brandNewGameView.dispose();
+                gamePlayModel.setMapRiskModel(mapRiskModel);
+                gamePlayModel.setPlayers(playersList);
+                try {
+                    gamePlayModel.setDeck(gamePlayModel.getCardFromJSON());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                new StartupController(gamePlayModel);
+                this.brandNewGameView.dispose();
             } else {
                 JOptionPane.showMessageDialog(brandNewGameView,
                         "Number of cuntry in the Map is less than Number of Players. Select map or player Again!",
