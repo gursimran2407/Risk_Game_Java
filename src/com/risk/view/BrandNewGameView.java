@@ -9,25 +9,14 @@ import java.util.Observable;
 
 public class BrandNewGameView extends JFrame implements ViewInterface {
 
-    /** The browse map. */
     public JButton browse;
-
-    /** The next button. */
     public JButton nextButton;
-
-    /** The cancel button. */
     public JButton cancelButton;
-
-    /** The choose map. */
     public JComboBox<Integer> numOfPlayers;
-
     public JFileChooser chooseMap;
-
-    /** The label map file. */
-    public JLabel labelPlayers, labelMapFile;
-
-    /** The final players. */
+    public JLabel labelPlayers, labelMapFile, text, textHeading;
     public int finalPlayers;
+    public JTextField player1, player2, player3, player4, player5;
 
     /**
      * Create the application.
@@ -43,6 +32,50 @@ public class BrandNewGameView extends JFrame implements ViewInterface {
         numOfPlayers = new JComboBox<>(items);
         numOfPlayers.setBounds(202, 49, 116, 22);
         getContentPane().add(numOfPlayers);
+
+        textHeading = new JLabel("Fill the names as per the number selected");
+        textHeading.setBounds(53, 83, 311, 27);
+        getContentPane().add(textHeading);
+
+        text = new JLabel("Player 1 Name: ");
+        text.setBounds(53, 110, 311, 27);
+        getContentPane().add(text);
+
+        player1 = new JTextField();
+        player1.setBounds(202, 116, 100, 20);
+        getContentPane().add(player1);
+
+        text = new JLabel("Player 2 Name: ");
+        text.setBounds(53, 140, 311, 27);
+        getContentPane().add(text);
+
+        player2 = new JTextField();
+        player2.setBounds(202, 146, 100, 20);
+        getContentPane().add(player2);
+
+        text = new JLabel("Player 3 Name: ");
+        text.setBounds(53, 170, 311, 27);
+        getContentPane().add(text);
+
+        player3 = new JTextField();
+        player3.setBounds(202, 176, 100, 20);
+        getContentPane().add(player3);
+
+        text = new JLabel("Player 4 Name: ");
+        text.setBounds(53, 200, 311, 27);
+        getContentPane().add(text);
+
+        player4 = new JTextField();
+        player4.setBounds(202, 206, 100, 20);
+        getContentPane().add(player4);
+
+        text = new JLabel("Player 5 Name: ");
+        text.setBounds(53, 230, 311, 27);
+        getContentPane().add(text);
+
+        player5 = new JTextField();
+        player5.setBounds(202, 236, 100, 20);
+        getContentPane().add(player5);
 
         labelMapFile = new JLabel("Please Select Map File");
         labelMapFile.setBounds(53, 133, 157, 27);
