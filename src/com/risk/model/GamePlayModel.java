@@ -1,7 +1,15 @@
 package com.risk.model;
 
 
+import com.risk.gameplayrequirements.Constants;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -123,4 +131,44 @@ public class GamePlayModel extends Observable
     public void setDefeatedCountry(CountryModel defeatedCountry) {
         this.defeatedCountry = defeatedCountry;
     }
+
+    /**
+     * Function to get cards from JSON file
+     *
+     * @return Arraylist of Card Model from Json File
+     */
+    public ArrayList<CardModel> getCardFromJSON() throws org.json.simple.parser.ParseException {
+        try {
+            JSONParser parser = new JSONParser();
+            Object cards = parser.parse(new FileReader(
+                    System.getProperty("user.dir") + Constants.filePathJSOn));
+            JSONObject jsonObject = (JSONObject) cards;
+            System.out.println("jsonObject " + jsonObject.get("cards"));
+            JSONArray cardsJSON = (JSONArray) jsonObject.get("cards");
+
+            int i = 0;
+            CardModel cardModel = new CardModel();
+            for (Object o : cardsJSON) {
+                JSONObject card = (JSONObject) o;
+
+                int cardId = Integer.parseInt((String) card.get("cardId"));
+                System.out.println("cardId " + cardId);
+                cardModel.setCardId(cardId);
+
+                int cardValue = Integer.parseInt((String) card.get("cardValue"));
+                System.out.println("cardValue " + cardValue);
+                cardModel.setCardValue(cardValue);
+                this.deck.add(cardModel);
+            }
+            //Collections.shuffle(this.deck);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return this.deck;
+    }
+
+
 }

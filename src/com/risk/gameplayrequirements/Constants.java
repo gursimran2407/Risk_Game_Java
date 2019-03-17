@@ -8,4 +8,6 @@ import java.nio.file.Paths;
  */
 public class Constants {
     public static final Path filePath = Paths.get("map", "World.map");
+    public static final Path filePathJSOn = Paths.get("ConstantCard.json");
+
 }
