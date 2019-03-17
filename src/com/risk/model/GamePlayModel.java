@@ -12,83 +12,115 @@ import java.util.Observable;
 
 public class GamePlayModel extends Observable
 {
-    /** MapRiskModel
-     */
-    private MapRiskModel mapRiskModelModObj;
-    //private GameMapModel gameMapModel =  new GameMapModel() ;
 
-    /** current players playing the game*/
-    private ArrayList<PlayerModel> currentPlayerModels;
+    private MapRiskModel mapRiskModel;
+    private ArrayList<PlayerModel> players = new ArrayList<>()
+    private ArrayList<CardModel> deck = new ArrayList<>();
+    private int selectedComboBoxIndex;
+    private int selectedAttackComboBoxIndex;
+    private int selectedDefendComboBoxIndex;
+    private boolean countryOwned = false;
+    private boolean armyToMoveFlag;
+    private boolean cardToBeAssigned;
+    private StringBuilder consoleText;
+    private CountryModel defeatedCountry;
 
-    private StringBuilder consoleOutput;
-
-    /** if country owned*/
-    private boolean ifCountryOwned;
-
-    private String PhaseOfGame = null;
-
-    private ArrayList<PlayerModel> playersList = new ArrayList<PlayerModel>();
-
-    /**
-     * Default Constructor.
-     */
-    public GamePlayModel(MapRiskModel mapRiskModelModObj, ArrayList<PlayerModel> currentPlayerModels, boolean ifCountryOwned)
-    {
-        this.mapRiskModelModObj = mapRiskModelModObj;
-        this.currentPlayerModels = currentPlayerModels;
-        this.ifCountryOwned = ifCountryOwned;
+    public GamePlayModel(MapRiskModel gameMap, ArrayList<PlayerModel> players, ArrayList<CardModel> deck) {
+        this.mapRiskModel = gameMap;
+        this.players = players;
+        this.deck = deck;
+        this.consoleText = new StringBuilder("Hello to the Risk Game ! ");
     }
 
-    public GamePlayModel(File file) {
+    public GamePlayModel() {
+        this.consoleText = new StringBuilder("Hello to the Risk Game ! ");
     }
 
-    public MapRiskModel getMapRiskModelModObj() {
-        return mapRiskModelModObj;
+    public MapRiskModel getMapRiskModel() {
+        return mapRiskModel;
     }
 
-    public void setMapRiskModelModObj(MapRiskModel mapRiskModelModObj) {
-        this.mapRiskModelModObj = mapRiskModelModObj;
+    public void setMapRiskModel(MapRiskModel mapRiskModel) {
+        this.mapRiskModel = mapRiskModel;
     }
 
-    public ArrayList<PlayerModel> getCurrentPlayerModels() {
-        return currentPlayerModels;
+    public ArrayList<PlayerModel> getPlayers() {
+        return players;
     }
 
-    public void setCurrentPlayerModels(ArrayList<PlayerModel> currentPlayerModels) {
-        this.currentPlayerModels = currentPlayerModels;
+    public void setPlayers(ArrayList<PlayerModel> players) {
+        this.players = players;
     }
 
-
-    public boolean isIfCountryOwned() {
-        return ifCountryOwned;
+    public ArrayList<CardModel> getDeck() {
+        return deck;
     }
 
-    public void setIfCountryOwned(boolean ifCountryOwned) {
-        this.ifCountryOwned = ifCountryOwned;
+    public void setDeck(ArrayList<CardModel> deck) {
+        this.deck = deck;
     }
 
-    public String getPhaseOfGame() {
-        return PhaseOfGame;
+    public int getSelectedComboBoxIndex() {
+        return selectedComboBoxIndex;
     }
 
-    public void setPhaseOfGame(String phaseOfGame) {
-        PhaseOfGame = phaseOfGame;
+    public void setSelectedComboBoxIndex(int selectedComboBoxIndex) {
+        this.selectedComboBoxIndex = selectedComboBoxIndex;
     }
 
-    public ArrayList<PlayerModel> getPlayersList() {
-        return playersList;
+    public int getSelectedAttackComboBoxIndex() {
+        return selectedAttackComboBoxIndex;
     }
 
-    public void setPlayersList(ArrayList<PlayerModel> playersList) {
-        this.playersList = playersList;
+    public void setSelectedAttackComboBoxIndex(int selectedAttackComboBoxIndex) {
+        this.selectedAttackComboBoxIndex = selectedAttackComboBoxIndex;
     }
 
-    public StringBuilder getConsoleOutput() {
-        return consoleOutput;
+    public int getSelectedDefendComboBoxIndex() {
+        return selectedDefendComboBoxIndex;
     }
 
-    public void setConsoleOutput(StringBuilder consoleOutput) {
-        this.consoleOutput = consoleOutput;
+    public void setSelectedDefendComboBoxIndex(int selectedDefendComboBoxIndex) {
+        this.selectedDefendComboBoxIndex = selectedDefendComboBoxIndex;
     }
 
+    public boolean isCountryOwned() {
+        return countryOwned;
+    }
+
+    public void setCountryOwned(boolean countryOwned) {
+        this.countryOwned = countryOwned;
+    }
+
+    public boolean isArmyToMoveFlag() {
+        return armyToMoveFlag;
+    }
+
+    public void setArmyToMoveFlag(boolean armyToMoveFlag) {
+        this.armyToMoveFlag = armyToMoveFlag;
+    }
+
+    public boolean isCardToBeAssigned() {
+        return cardToBeAssigned;
+    }
+
+    public void setCardToBeAssigned(boolean cardToBeAssigned) {
+        this.cardToBeAssigned = cardToBeAssigned;
+    }
+
+    public StringBuilder getConsoleText() {
+        return consoleText;
+    }
+
+    public void setConsoleText(StringBuilder consoleText) {
+        this.consoleText = consoleText;
+    }
+
+    public CountryModel getDefeatedCountry() {
+        return defeatedCountry;
+    }
+
+    public void setDefeatedCountry(CountryModel defeatedCountry) {
+        this.defeatedCountry = defeatedCountry;
+    }
 }
