@@ -106,7 +106,6 @@ public class PlayerController implements ActionListener, ItemListener {
             this.listOfPlayers.get(i).addObserver(this.reinforcementViewObj);
         }
     }
-
     /**
      * This method is called for fortification view
      */
