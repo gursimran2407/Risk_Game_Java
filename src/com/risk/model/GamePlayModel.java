@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Observable;
 
 /**
@@ -158,6 +160,118 @@ public class GamePlayModel extends Observable
     }
 
     /**
+     * Armies deduction.
+     *
+     * @param countryForDeduction the country for deduction
+     * @param armiesToDeduct      the armies to deduct
+     * @return the country model
+     */
+    public CountryModel armiesDeduction(CountryModel countryForDeduction, int armiesToDeduct) {
+
+        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
+            if (this.mapRiskModel.getCountryModelList().get(i).getCountryName().equals(countryForDeduction.getCountryName())) {
+                if (this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies() == 1) {
+                    countryOwned = true;
+                    this.mapRiskModel.getCountryModelList().get(i)
+                            .setNumberofArmies(this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies() - armiesToDeduct);
+                } else {
+                    this.mapRiskModel.getCountryModelList().get(i)
+                            .setNumberofArmies(this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies() - armiesToDeduct);
+                }
+            }
+        }
+        for (int i = 0; i < this.getPlayers().size(); i++) {
+            if (this.getPlayers().get(i).getPlayerName().equals(countryForDeduction.getRulerName())) {
+                this.getPlayers().get(i).setNumberofArmies(this.getPlayers().get(i).getRemainingNumberOfArmies() - armiesToDeduct);
+            }
+        }
+        return countryForDeduction;
+    }
+
+    /**
+     * This method gives the Random generation of numbers within two values.
+     *
+     * @param min the min
+     * @param max the max
+     * @return the random between range
+     */
+    public int getRandomBetweenRange(double min, double max) {
+        int x = (int) ((Math.random() * ((max - min) + 1)) + min);
+        return x;
+    }
+
+
+    /**
+     * Single strike.
+     *
+     * @param attackDice    the attack dice
+     * @param attackCountry the attack country
+     * @param defendDice    the defend dice
+     * @param defendCountry the defend country
+     */
+    public boolean singleStrike(int attackDice, CountryModel attackCountry, int defendDice, CountryModel defendCountry) {
+        boolean returnValue = false;
+        Integer[] attackDiceRoll = new Integer[attackDice];
+        Integer[] defendDiceRoll = new Integer[defendDice];
+        for (int i = 0; i < attackDice; i++) {
+            attackDiceRoll[i] = getRandomBetweenRange(1, 6);
+        }
+        for (int i = 0; i < defendDice; i++) {
+            defendDiceRoll[i] = getRandomBetweenRange(1, 6);
+        }
+        Arrays.sort(attackDiceRoll, Collections.reverseOrder());
+        Arrays.sort(defendDiceRoll, Collections.reverseOrder());
+        System.out.println(Arrays.toString(attackDiceRoll));
+        System.out.println(Arrays.toString(defendDiceRoll));
+        this.consoleText.append("\n Attack country dice " + Arrays.toString(attackDiceRoll) + " \n");
+        this.consoleText.append("Defender country dice " + Arrays.toString(defendDiceRoll) + " \n");
+        for (int i = 0; i < defendDice; i++) {
+            if (attackDiceRoll[i] > defendDiceRoll[i]) {
+                armiesDeduction(defendCountry, 1);
+                returnValue = true;
+            } else {
+                armiesDeduction(attackCountry, 1);
+                returnValue = true;
+            }
+        }
+        if (countryOwned == true) {
+            this.consoleText.append("Attacker " + attackCountry.getRulerName() + " defeated Country "
+                    + defendCountry.getCountryName() + " \n");
+            for (int i = 0; i < this.getPlayers().size(); i++) {
+                if (this.getPlayers().get(i).getPlayerName().equals(defendCountry.getRulerName())) {
+                    this.getPlayers().get(i).defend(defendCountry);
+                }
+                if (this.getPlayers().get(i).getNamePlayer().equals(attackCountry.getRulerName())) {
+                    this.getPlayers().get(i).attacked(defendCountry);
+                }
+            }
+            for (int i = 0; i < this.mapRiskModel.getCountries().size(); i++) {
+                if (this.mapRiskModel.getCountries().get(i).getCountryName().equals(defendCountry.getCountryName())) {
+                    this.mapRiskModel.getCountries().get(i).setRulerName(attackCountry.getRulerName());
+                }
+            }
+
+            this.setArmyToMoveText(true);
+            this.setCardToBeAssigned(true);
+        }
+        callObservers();
+        return returnValue;
+    }
+
+    /**
+     * World coverage.
+     *
+     * @param parmPlayer the parm player
+     */
+    public boolean worldCoverage(PlayerModel parmPlayer) {
+        boolean returnvalue = true;
+        double percentage = (parmPlayer.getOwnedCountries().size() * 100) / this.mapRiskModel.getCountries().size();
+        this.getConsoleText().append("						" + " Map coverage for " + parmPlayer.getNamePlayer()
+                + " is " + percentage + "% " + "\n");
+        return returnvalue;
+    }
+
+    /**
      * Function to get cards from JSON file
      *
      * @return Arraylist of Card Model from Json File
@@ -220,6 +334,45 @@ public class GamePlayModel extends Observable
     public boolean getArmyToMoveText() {
         return this.armyToMoveFlag;
     }
+
+
+    /**
+     * Number of countries.
+     *
+     * @return the int
+     */
+    public int numberOfCountries() {
+        int numberOfCountries = 0;
+
+        for (int i = 0; i < this.getPlayers().size(); i++) {
+
+            if (this.getPlayers().get(i).getPlayerName().equals(this.getGameMap().getPlayerTurn().getPlayerName())) {
+                numberOfCountries = this.getPlayers().get(i).getPlayerCountries().size();
+            }
+        }
+        return reinforcementArmies(numberOfCountries);
+    }
+
+
+    /**
+     * Reinforcement armies.
+     *
+     * @param numberOfCountries the number of countries
+     * @return the int
+     */
+    public int reinforcementArmies(int numberOfCountries) {
+        int reinforceArmies = 0;
+        if (numberOfCountries > 3) {
+            reinforceArmies = 3 + Math.round(numberOfCountries / 3);
+        } else {
+            reinforceArmies = 3;
+        }
+        if (reinforceArmies > 12) {
+            reinforceArmies = 12;
+        }
+        return reinforceArmies;
+    }
+
 
 
 }

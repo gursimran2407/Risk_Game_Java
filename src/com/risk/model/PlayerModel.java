@@ -97,4 +97,19 @@ public class PlayerModel extends Observable {
         notifyObservers(this);
 
     }
+
+    /**
+     * Defend.
+     *
+     * @param countryForDeduction the country for deduction
+     * @return true, if successful
+     */
+    public boolean defend(CountryModel countryForDeduction) {
+        for (int i = 0; i < this.playerCountries.size(); i++) {
+            if (this.playerCountries.get(i).getCountryName().equals(countryForDeduction.getCountryName())) {
+                this.playerCountries.remove(i);
+            }
+        }
+        return true;
+    }
 }

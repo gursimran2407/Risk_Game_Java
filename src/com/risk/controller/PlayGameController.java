@@ -12,7 +12,7 @@ import com.risk.model.PlayerModel;
  * In PlayGameController, the data flow into model object and updates the view
  * whenever data changes.
  *
- * @author Karandeep
+ * @author Gursimran Singh
  * @version 1.0.0
  *
  */
