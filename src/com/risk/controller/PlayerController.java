@@ -95,15 +95,15 @@ public class PlayerController implements ActionListener, ItemListener {
             }
             this.gamePlayModel.getGameMap().getPlayerTurn().setShowReinforcementCard(true);
         }
-        theReinforcementView = new ReinforcementView(this.gamePlayModel);
-        theReinforcementView.setActionListener(this);
-        theReinforcementView.setVisible(true);
+        reinforcementViewObj = new ReinforcementView(this.gamePlayModel);
+        reinforcementViewObj.setActionListener(this);
+        reinforcementViewObj.setVisible(true);
 
-        this.gamePlayModel.getGameMap().addObserver(theReinforcementView);
-        this.gamePlayModel.addObserver(theReinforcementView);
+        this.gamePlayModel.getGameMap().addObserver(reinforcementViewObj);
+        this.gamePlayModel.addObserver(reinforcementViewObj);
         for(int i = 0; i< noOfPlayers; i++)
         {
-            this.listOfPlayers.get(i).addObserver(this.theReinforcementView);
+            this.listOfPlayers.get(i).addObserver(this.reinforcementViewObj);
         }
     }
 
