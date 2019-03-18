@@ -24,7 +24,7 @@ public class PlayerController implements ActionListener, ItemListener {
     /**
      * the game play model
      */
-    private GamePlayModel gamePlayObj;
+    private GamePlayModel gamePlayModel;
 
     /**
      * The ReinforcementController view
@@ -61,4 +61,28 @@ public class PlayerController implements ActionListener, ItemListener {
 
     }
 
+    /**
+     * Constructor for initializing values and setting the screen visibility
+     * @param gamePlayModel
+     */
+    public PlayerController(GamePlayModel gamePlayModel)
+    {
+        this.gamePlayModel = gamePlayModel;
+        this.gamePlayModel.getConsoleText()
+                .append("Initiating reinforcement for" + gamePlayModel.getGameMap().getPlayerTurn().getPlayerName());
+        reinforcement();
+    }
+
+    /**
+     * This method will call the reinforcement phase
+     */
+    private void reinforcement()
+    {
+        this.gamePlayModel.getConsoleText().setLength(0);
+       //this.gamePlayModel.callObservers(); callObserver method to be declared in GamePlayModel
+        this.gamePlayModel.getConsoleText().
+        append("Initiating reinforcement for" + gamePlayModel.getGameMap().getPlayerTurn().getPlayerName());
+
+        this.gamePlayModel.getGameMap().getPlayerTurn().setRemainingNumberOfArmies(this.gamePlayModel.);
+    }
 }
