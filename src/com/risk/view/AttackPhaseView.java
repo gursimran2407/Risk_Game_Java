@@ -12,8 +12,12 @@ import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Observable;
 
 /**
  * @author gursimransingh
@@ -93,6 +97,84 @@ public class AttackPhaseView extends JFrame implements ViewInterface, ItemListen
         graphicPanel.setLayout(null);
 
         updateWindow(gamePlayModel, playerModel);
+    }
+
+    /**
+     * This method convert string to color.
+     *
+     * @param value the value
+     * @return the color
+     */
+    public static Color stringToColor(final String value) {
+        if (value == null) {
+            return Color.black;
+        }
+        try {
+            return Color.decode(value);
+        } catch (NumberFormatException nfe) {
+            try {
+                final Field f = Color.class.getField(value);
+
+                return (Color) f.get(null);
+            } catch (Exception ce) {
+                return Color.black;
+            }
+        }
+    }
+
+    /**
+     * Countries are rendered as button and linked with Swing using Graphics.
+     *
+     * @param g the g
+     * @see java.awt.Window#paint(java.awt.Graphics)
+     */
+    public void paint(final Graphics g) {
+
+        super.paint(g);
+
+        Graphics2D g2 = (Graphics2D) g;
+
+        Point[] connectorPoints = new Point[this.mapRiskModel().size()];
+
+        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
+            connectorPoints[i] = SwingUtilities.convertPoint(this.mapRiskModel.getCountryModelList().get(i), 0, 0, this);
+
+        }
+
+        for (int k = 0; k < this.mapRiskModel.getCountryModelList().size(); k++) {
+            if (this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
+                ArrayList<CountryModel> neighbourCountries = (ArrayList<CountryModel>) this.mapRiskModel.getCountryModelList()
+                        .get(k).getConnectedCountryList();
+
+                for (int j = 0; j < neighbourCountries.size(); j++) {
+                    for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++)
+                        if (neighbourCountries.get(j).equals(this.mapRiskModel.getCountryModelList().get(i)))
+                            g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
+                                    connectorPoints[k].y + 25);
+
+                }
+            }
+        }
+
+    }
+
+    public class CountryViewRenderer extends BasicComboBoxRenderer {
+
+        /**
+         * (non-Javadoc)
+         *
+         * @see javax.swing.plaf.basic.BasicComboBoxRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+         */
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
+                                                      boolean cellHasFocus) {
+            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+            CountryModel countryModel = (CountryModel) value;
+            if (countryModel != null)
+                setText(countryModel.getCountryName());
+
+            return this;
+        }
     }
 
     private void updateWindow(GamePlayModel gamePlayModel, PlayerModel playerModel) {
@@ -245,8 +327,8 @@ public class AttackPhaseView extends JFrame implements ViewInterface, ItemListen
             defectedCountryLabel.setBounds(1300, 480, 200, 45);
             welcomePanel.add(defectedCountryLabel);
 
-            Integer[] moveTroops = new Integer[attackCountry.getArmies()];
-            for (int i = 0; i < (attackCountry.getArmies() - 1); i++) {
+            Integer[] moveTroops = new Integer[attackCountry.getNumberofArmies()];
+            for (int i = 0; i < (attackCountry.getNumberofArmies() - 1); i++) {
                 moveTroops[i] = i + 1;
             }
 
@@ -261,26 +343,26 @@ public class AttackPhaseView extends JFrame implements ViewInterface, ItemListen
         this.nextButton.setBounds(1300, 600, 150, 25);
         welcomePanel.add(this.nextButton);
 
-        int n = this.gameMapModel.getCountries().size();
+        int n = this.mapRiskModel.getCountryModelList().size();
         button = new JButton[n];
 
         PlayerModel pm = new PlayerModel();
         CountryModel cm = new CountryModel();
 
-        for (int i = 0; i < gameMapModel.getCountries().size(); i++) {
+        for (int i = 0; i < mapRiskModel.getCountryModelList().size(); i++) {
 
             button[i] = new JButton();
-            button[i].setText(gameMapModel.getCountries().get(i).getCountryName().substring(0, 3));
-            button[i].setBackground(gameMapModel.getCountries().get(i).getBackgroundColor());
-            button[i].setToolTipText("Troops: " + gameMapModel.getCountries().get(i).getArmies());
-            cm = gameMapModel.getCountries().get(i);
-            pm = gamePlayModel.getPlayer(cm);
-            Border border = BorderFactory.createLineBorder(pm.getColor(), 3);
+            button[i].setText(mapRiskModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
+            button[i].setBackground(mapRiskModel.getCountryModelList().get(i).getBackgroundColor());
+            button[i].setToolTipText("Troops: " + mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
+            cm = mapRiskModel.getCountryModelList().get(i);
+            pm = gamePlayModel.getPlayers(cm);
+            Border border = BorderFactory.createLineBorder(pm.getPlayerColor(), 3);
 
             button[i].setBorder(border);
             button[i].setOpaque(true);
-            button[i].setBounds(gameMapModel.getCountries().get(i).getXPosition() * 2,
-                    gameMapModel.getCountries().get(i).getYPosition() * 2, 50, 50);
+            button[i].setBounds(mapRiskModel.getCountryModelList().get(i).getXPosition() * 2,
+                    mapRiskModel.getCountryModelList().get(i).getYPosition() * 2, 50, 50);
 
             graphicPanel.add(button[i]);
         }
@@ -290,58 +372,59 @@ public class AttackPhaseView extends JFrame implements ViewInterface, ItemListen
     }
 
     /**
-     * Countries are rendered as button and linked with Swing using Graphics.
+     * This is actionListener method to listen the action events in the screen.
      *
-     * @param g the g
-     * @see java.awt.Window#paint(java.awt.Graphics)
+     * @param actionListener the new action listener
+     *
      */
-    public void paint(final Graphics g) {
+    @Override
+    public void setActionListener(ActionListener actionListener) {
+        this.nextButton.addActionListener(actionListener);
+        this.SingleButton.addActionListener(actionListener);
+        this.alloutButton.addActionListener(actionListener);
+        this.defendCountryListComboBox.addActionListener(actionListener);
+        this.attackCountryListComboBox.addActionListener(actionListener);
+        this.moveButton.addActionListener(actionListener);
+    }
 
-        super.paint(g);
+    @Override
+    public void itemStateChanged(ItemEvent itemEvent) {
 
-        Graphics2D g2 = (Graphics2D) g;
-
-        Point[] connectorPoints = new Point[this.mapRiskModel().size()];
-
-        for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
-            connectorPoints[i] = SwingUtilities.convertPoint(this.mapRiskModel.getCountryModelList().get(i), 0, 0, this);
-
-        }
-
-        for (int k = 0; k < this.mapRiskModel.getCountryModelList().size(); k++) {
-            if (this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
-                ArrayList<CountryModel> neighbourCountries = (ArrayList<CountryModel>) this.mapRiskModel.getCountryModelList()
-                        .get(k).getConnectedCountryList();
-
-                for (int j = 0; j < neighbourCountries.size(); j++) {
-                    for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++)
-                        if (neighbourCountries.get(j).equals(this.mapRiskModel.getCountryModelList().get(i)))
-                            g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
-                                    connectorPoints[k].y + 25);
-
-                }
-            }
+        if (itemEvent.getSource().equals(this.attackCountryListComboBox)) {
+            this.gamePlayModel.setSelectedAttackComboBoxIndex(this.attackCountryListComboBox.getSelectedIndex());
+        } else if (itemEvent.getSource().equals(this.defendCountryListComboBox)) {
+            this.gamePlayModel.setSelectedDefendComboBoxIndex(this.defendCountryListComboBox.getSelectedIndex());
         }
 
     }
 
-    public class CountryViewRenderer extends BasicComboBoxRenderer {
-
-        /**
-         * (non-Javadoc)
-         *
-         * @see javax.swing.plaf.basic.BasicComboBoxRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
-         */
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
-                                                      boolean cellHasFocus) {
-            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-            CountryModel countryModel = (CountryModel) value;
-            if (countryModel != null)
-                setText(countryModel.getCountryName());
-
-            return this;
+    @Override
+    public void update(Observable o, Object arg) {
+        welcomePanel.removeAll();
+        graphicPanel.removeAll();
+        if (o instanceof MapRiskModel) {
+            this.mapRiskModel = (MapRiskModel) o;
+        } else if (o instanceof PlayerModel) {
+            this.playerModel = (PlayerModel) o;
+        } else if (o instanceof GamePlayModel) {
+            this.gamePlayModel = (GamePlayModel) o;
+            this.mapRiskModel = this.gamePlayModel.getGameMap();
         }
+        this.updateWindow(this.gamePlayModel, this.playerModel);
+        this.revalidate();
+        this.repaint();
     }
+
+    /**
+     * Sets the item listener.
+     *
+     * @param itemListener the new item listener
+     */
+    public void setItemListener(ItemListener itemListener) {
+        this.attackCountryListComboBox.addItemListener(itemListener);
+        this.defendCountryListComboBox.addItemListener(itemListener);
+
+    }
+
 
 }

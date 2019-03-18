@@ -137,6 +137,27 @@ public class GamePlayModel extends Observable
     }
 
     /**
+     * Gets the player.
+     *
+     * @param parmCountry the parm country
+     * @return the player
+     */
+    public PlayerModel getPlayer(CountryModel parmCountry) {
+        int i, j;
+        for (i = 0; i < players.size(); i++) {
+            for (j = 0; j < players.get(i).getPlayerCountries().size(); j++) {
+                if (parmCountry.getCountryName().equals(players.get(i).getPlayerCountries().get(j).getCountryName())) {
+                    return players.get(i);
+                } else {
+                    continue;
+                }
+            }
+        }
+        return null;
+
+    }
+
+    /**
      * Function to get cards from JSON file
      *
      * @return Arraylist of Card Model from Json File
@@ -194,6 +215,10 @@ public class GamePlayModel extends Observable
             }
         }
         return defenderCountryList;
+    }
+
+    public boolean getArmyToMoveText() {
+        return this.armyToMoveFlag;
     }
 
 
