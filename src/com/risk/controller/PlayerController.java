@@ -21,28 +21,12 @@ import java.util.ArrayList;
 
 /* testing the change*/
 public class PlayerController implements ActionListener, ItemListener {
-    /**
-     * the game play model
-     */
+
     private GamePlayModel gamePlayModel;
-
-    /**
-     * The ReinforcementController view
-     */
     private ReinforcementView reinforcementViewObj;
-
-    /**
-     * The Fortication view
-     */
     private FortificationView forticationviewObj;
-
-    /** The list of players */
     private ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
-
-    /** The number of players */
     private int noOfPlayers;
-
-    /** For validation */
     private MapValidation val = new MapValidation();
 
 
@@ -50,7 +34,7 @@ public class PlayerController implements ActionListener, ItemListener {
      * This is the method that is required if we implement the Action Listener. This method will perform the action
      * after listening to the action event set in the view.
      *
-     * @param actionEvent
+     * @param actionEvent listens to event
      */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
@@ -63,7 +47,7 @@ public class PlayerController implements ActionListener, ItemListener {
 
     /**
      * Constructor for initializing values and setting the screen visibility
-     * @param gamePlayModel
+     * @param gamePlayModel Object of model class
      */
     public PlayerController(GamePlayModel gamePlayModel)
     {
@@ -106,7 +90,5 @@ public class PlayerController implements ActionListener, ItemListener {
             this.listOfPlayers.get(i).addObserver(this.reinforcementViewObj);
         }
     }
-    /**
-     * This method is called for fortification view
-     */
+
 }

@@ -69,9 +69,6 @@ public class GamePlayModel extends Observable
         this.deck = deck;
     }
 
-    public ArrayList<PlayerModel> getPlayers() {
-        return players;
-    }
     public int getSelectedComboBoxIndex() {
         return selectedComboBoxIndex;
     }
