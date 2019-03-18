@@ -134,7 +134,7 @@ public class AttackPhaseView extends JFrame implements ViewInterface, ItemListen
 
         Graphics2D g2 = (Graphics2D) g;
 
-        Point[] connectorPoints = new Point[this.mapRiskModel().size()];
+        Point[] connectorPoints = new Point[this.mapRiskModel.getCountryModelList().size()];
 
         for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
             connectorPoints[i] = SwingUtilities.convertPoint(this.mapRiskModel.getCountryModelList().get(i), 0, 0, this);
@@ -356,7 +356,7 @@ public class AttackPhaseView extends JFrame implements ViewInterface, ItemListen
             button[i].setBackground(mapRiskModel.getCountryModelList().get(i).getBackgroundColor());
             button[i].setToolTipText("Troops: " + mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
             cm = mapRiskModel.getCountryModelList().get(i);
-            pm = gamePlayModel.getPlayers(cm);
+            pm = gamePlayModel.getPlayer(cm);
             Border border = BorderFactory.createLineBorder(pm.getPlayerColor(), 3);
 
             button[i].setBorder(border);

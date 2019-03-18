@@ -52,9 +52,6 @@ public class GamePlayModel extends Observable
         this.mapRiskModel = mapRiskModel;
     }
 
-    public ArrayList<PlayerModel> getPlayers() {
-        return players;
-    }
 
     public void setPlayers(ArrayList<PlayerModel> players) {
         this.players = players;
