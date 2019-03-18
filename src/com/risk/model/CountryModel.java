@@ -24,6 +24,7 @@ public class CountryModel extends JButton {
     private int xPosition;
     private int yPosition;
     private Color backgroundColor;
+    private String rulerName;
 
     @Override
     public void setText(String text) {
@@ -41,7 +42,7 @@ public class CountryModel extends JButton {
      */
 
     public CountryModel(String countryName, int xPosition, int yPosition, PlayerModel countryOwner,
-                        String continentName, ArrayList<CountryModel> linkCountryModel, int numberofArmies) {
+                        String continentName, ArrayList<CountryModel> linkCountryModel, int numberofArmies, String rulerName) {
         this.countryName = countryName;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
@@ -51,6 +52,7 @@ public class CountryModel extends JButton {
         this.numberofArmies = numberofArmies;
         this.borderColor = Color.BLACK;
         this.backgroundColor = Color.WHITE;
+        this.rulerName = rulerName;
     }
 
     /**
@@ -215,6 +217,22 @@ public class CountryModel extends JButton {
     public void setBorderColor(Color borderColor) {
         this.setBorder(new LineBorder(borderColor));
         this.borderColor = borderColor;
+    }
+
+    /**
+     * gets country owner name
+     * @return name of the country owner
+     */
+    public String getRulerName() {
+        return rulerName;
+    }
+
+    /**
+     * sets country owner name
+     * @param rulerName name of owner
+     */
+    public void setRulerName(String rulerName) {
+        this.rulerName = rulerName;
     }
 }
 
