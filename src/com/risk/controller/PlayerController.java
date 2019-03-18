@@ -83,6 +83,7 @@ public class PlayerController implements ActionListener, ItemListener {
         this.gamePlayModel.getConsoleText().
         append("Initiating reinforcement for" + gamePlayModel.getGameMap().getPlayerTurn().getPlayerName());
 
-        this.gamePlayModel.getGameMap().getPlayerTurn().setRemainingNumberOfArmies(this.gamePlayModel.);
+        this.gamePlayModel.getGameMap().getPlayerTurn().setRemainingNumberOfArmies(this.gamePlayModel.numberOfCountries()
+        + this.gamePlayModel.con);
     }
 }
