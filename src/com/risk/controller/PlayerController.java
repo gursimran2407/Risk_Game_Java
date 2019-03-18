@@ -1,14 +1,16 @@
 package com.risk.controller;
 
+import com.risk.gameplayrequirements.MapValidation;
 import com.risk.model.GamePlayModel;
+import com.risk.model.PlayerModel;
 import com.risk.view.FortificationView;
 import com.risk.view.ReinforcementView;
 
-
-import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 /**
  * The player class in the controller package will facilitate the data flow into the
@@ -33,6 +35,15 @@ public class PlayerController implements ActionListener, ItemListener {
      * The Fortication view
      */
     private FortificationView forticationviewObj;
+
+    /** The list of players */
+    private ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
+
+    /** The number of players */
+    private int noOfPlayers;
+
+    /** For validation */
+    private MapValidation val = new MapValidation();
 
 
     /**
