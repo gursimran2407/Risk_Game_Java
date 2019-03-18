@@ -4,11 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import com.risk.model.GamePlayModel;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
 
 /**
- * In PlayerGameController, the data flow into model object and updates the view
+ * In PlayGameController, the data flow into model object and updates the view
  * whenever data changes.
  *
  * @author Karandeep
@@ -16,22 +17,20 @@ import com.risk.model.PlayerModel;
  *
  */
 
-public class PlayerGameController implements ActionListener {
+public class PlayGameController implements ActionListener {
 
-    public MapRiskModel mapRiskModel;
-    private ArrayList<PlayerModel> listOfPlayers;
+    public GamePlayModel gamePlayModel;
 
-    public PlayerGameController(MapRiskModel mapRiskModel, ArrayList<PlayerModel> listOfPlayers) {
-        this.mapRiskModel = mapRiskModel;
-        this.listOfPlayers = listOfPlayers;
+    public PlayGameController(GamePlayModel gamePlayModel) {
+        this.gamePlayModel = gamePlayModel;
         gamePlay();
     }
 
     public void gamePlay() {
 
-        this.mapRiskModel.setPlayerTurn(this.listOfPlayers.get(this.mapRiskModel.getIndexOfPlayer()));
-        new ReinforcementController(this.mapRiskModel);
-
+        this.gamePlayModel.getGameMap()
+                .setPlayerTurn(this.gamePlayModel.getPlayers().get(this.gamePlayModel.getGameMap().getIndexOfPlayer()));
+        new PlayerController(this.gamePlayModel);
     }
 
     /**

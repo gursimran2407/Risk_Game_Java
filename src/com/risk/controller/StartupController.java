@@ -225,7 +225,7 @@ public class StartupController implements ActionListener {
 
         } else if (actionEvent.getSource().equals(startupView.nextButton)) {
             this.gamePlayModel.getGameMap().setIndexOfPlayer(0);
-            new PlayerGameController(gamePlayModel);
+            new PlayGameController(gamePlayModel);
             this.startupView.dispose();
         }
     }
@@ -244,7 +244,7 @@ public class StartupController implements ActionListener {
         if (numb == 0) {
             this.gamePlayModel.getGameMap().setIndexOfPlayer(0);
             armiesNull = true;
-            new PlayerGameController(gamePlayModel);
+            new PlayGameController(gamePlayModel);
             if (initial == 1) {
                 this.startupView.dispose();
             }

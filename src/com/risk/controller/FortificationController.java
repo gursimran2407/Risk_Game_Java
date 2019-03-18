@@ -62,7 +62,7 @@ public class FortificationController implements ActionListener, ItemListener {
             if (this.mapRiskModel.getPlayerModelList().size() > index) {
                 this.mapRiskModel.setIndexOfPlayer(index);
                 this.mapRiskModel.getPlayerModelList().get(index).callObservers();
-                new PlayerGameController(this.mapRiskModel, this.mapRiskModel.getPlayerModelList());
+                new PlayGameController(this.mapRiskModel, this.mapRiskModel.getPlayerModelList());
                 this.theFortificationView.dispose();
             } else {
                 JOptionPane.showOptionDialog(null, "Bravo! Game is over! No one won!", "Valid",
