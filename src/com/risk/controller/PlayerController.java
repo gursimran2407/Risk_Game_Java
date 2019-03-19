@@ -30,6 +30,7 @@ public class PlayerController implements ActionListener, ItemListener {
     private MapValidation val = new MapValidation();
 
 
+
     /**
      * This is the method that is required if we implement the Action Listener. This method will perform the action
      * after listening to the action event set in the view.
@@ -89,6 +90,20 @@ public class PlayerController implements ActionListener, ItemListener {
         {
             this.listOfPlayers.get(i).addObserver(this.reinforcementViewObj);
         }
+    }
+
+    public void fortification()
+    {
+        this.gamePlayModel.getConsoleText().setLength(0);
+        this.gamePlayModel.getConsoleText().append("Fortification phase initializing" + gamePlayModel.getGameMap().getPlayerTurn().getPlayerName());
+
+        forticationviewObj = new FortificationView(this.gamePlayModel);
+        forticationviewObj.setActionListener(this);
+        forticationviewObj.setItemListener(this);
+        forticationviewObj.setVisible(true);
+        this.gamePlayModel.addObserver(this.forticationviewObj);
+
+
     }
 
 }
