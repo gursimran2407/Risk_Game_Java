@@ -77,7 +77,7 @@ public class PlayerController implements ActionListener, ItemListener {
             {
                this.gamePlayModel.getConsoleText().append(gamePlayModel.getGameMap().getPlayerTurn().getPlayerCards().get(i).getCardId()+ "\n");
             }
-            this.gamePlayModel.getGameMap().getPlayerTurn().setShowReinforcementCard(true);
+            this.gamePlayModel.getGameMap().getPlayerTurn().setReinforcementCard(true);
         }
         reinforcementViewObj = new ReinforcementView(this.gamePlayModel);
         reinforcementViewObj.setActionListener(this);

@@ -88,6 +88,11 @@ public class PlayerModel extends Observable {
         this.playerCards = playerCards;
     }
 
+    /**
+     * To show reinforcement card
+     */
+    public boolean showReinforcement;
+
 
     /**
      * Calling Observer.
@@ -111,5 +116,13 @@ public class PlayerModel extends Observable {
             }
         }
         return true;
+    }
+
+    /**
+     * Sets for displaying reinforcement card
+     */
+    public void setReinforcementCard(boolean showReinforcement)
+    {
+        this.showReinforcement = showReinforcement;
     }
 }
