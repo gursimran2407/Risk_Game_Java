@@ -2,6 +2,7 @@ package com.risk.view;
 
 import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.CountryModel;
+import com.risk.model.GamePlayModel;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
 
@@ -66,6 +67,9 @@ public class FortificationView extends JFrame implements ViewInterface {
         updateWindow(this.gameMapModel, this.playerModel);
         welcomePanel.setLayout(null);
         graphicPanel.setLayout(null);
+    }
+
+    public FortificationView(GamePlayModel gamePlayModel) {
     }
 
     public static Color stringToColor(final String value) {
