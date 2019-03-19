@@ -374,5 +374,11 @@ public class GamePlayModel extends Observable
     }
 
 
+    public void callObservers() {
+    }
 
+    public int continentCovered(PlayerModel playerTurn) {
+        int controlValue = 0;
+        return controlValue;
+    }
 }

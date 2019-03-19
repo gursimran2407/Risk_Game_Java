@@ -63,7 +63,7 @@ public class PlayerController implements ActionListener, ItemListener {
     private void reinforcement()
     {
         this.gamePlayModel.getConsoleText().setLength(0);
-       //this.gamePlayModel.callObservers(); callObserver method to be declared in GamePlayModel
+        this.gamePlayModel.callObservers();
         this.gamePlayModel.getConsoleText().
         append("Initiating reinforcement for" + gamePlayModel.getGameMap().getPlayerTurn().getPlayerName());
 
