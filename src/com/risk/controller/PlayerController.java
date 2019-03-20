@@ -116,4 +116,20 @@ public class PlayerController implements ActionListener, ItemListener {
 
     }
 
+    /**
+     * This method is to call attack phase
+     */
+    public void attack() {
+        this.gamePlayModel.getConsoleText().setLength(0);
+        this.gamePlayModel.getConsoleText()
+                .append("Initiating " + gamePlayModel.getGameMap().getPlayerTurn().getPlayerName() + "'s attack");
+
+        attackPhaseView = new AttackPhaseView(this.gamePlayModel);
+        this.gamePlayModel.setArmyToMoveText(false);
+        this.gamePlayModel.setCardToBeAssigned(false);
+        attackPhaseView.setActionListener(this);
+        attackPhaseView.setVisible(true);
+        this.gamePlayModel.deleteObservers();
+        this.gamePlayModel.addObserver(this.attackPhaseView);
+    }
 }
