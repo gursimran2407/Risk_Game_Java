@@ -7,6 +7,7 @@ import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
@@ -23,6 +24,7 @@ import java.util.Observable;
 
 public class ReinforcementView extends JFrame implements ViewInterface {
 
+    public GamePlayModel gamePlayModel;
     public MapRiskModel mapRiskModel;
     public PlayerModel playerModel;
 
@@ -43,7 +45,7 @@ public class ReinforcementView extends JFrame implements ViewInterface {
 
     public JButton[] button;
 
-    public ReinforcementView(MapRiskModel mapRiskModel) {
+    public ReinforcementView(GamePlayModel gamePlayModel) {
         this.mapRiskModel = mapRiskModel;
         this.setTitle("Reinforcement Phase");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,20 +69,19 @@ public class ReinforcementView extends JFrame implements ViewInterface {
         welcomePanel.setLayout(null);
         graphicPanel.setLayout(null);
 
-        updateWindow(mapRiskModel, playerModel);
+        updateWindow(gamePlayModel, playerModel);
     }
 
-    public ReinforcementView(GamePlayModel gamePlayModel) {
-    }
+
 
     /**
      * This updateWindow method is called whenever the model is updated. It updates
      * the Screen for Reinforcement Phase
      *
-     * @param mapRiskModel
+     * @param gamePlayModel
      * @param playerModel
      */
-    public void updateWindow(MapRiskModel mapRiskModel, PlayerModel playerModel) {
+    public void updateWindow(GamePlayModel gamePlayModel, PlayerModel playerModel) {
 
         Font largeFont = new Font("Serif", Font.BOLD, 18);
         Font mediumFont = new Font("Serif", Font.BOLD, 14);
@@ -133,18 +134,23 @@ public class ReinforcementView extends JFrame implements ViewInterface {
 
         int n = this.mapRiskModel.getCountryModelList().size();
         button = new JButton[n];
-
+        PlayerModel pm = new PlayerModel();
+        CountryModel cm = new CountryModel();
         for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
 
             button[i] = new JButton();
-            button[i].setText(this.mapRiskModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
-            button[i].setBackground(this.mapRiskModel.getCountryModelList().get(i).getBackgroundColor());
-            button[i].setToolTipText("Troops: " + this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
-            button[i].setBorder(
-                    new LineBorder(stringToColor(this.mapRiskModel.getCountryModelList().get(i).getCountryOwner().getPlayerColor()), 3));
+            button[i].setText(mapRiskModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
+            button[i].setBackground(mapRiskModel.getCountryModelList().get(i).getBackgroundColor());
+            button[i].setToolTipText("Troops: " + mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
+            cm = mapRiskModel.getCountryModelList().get(i);
+            pm = gamePlayModel.getPlayer(cm);
+            Color col = pm.getPlayerColor();
+            Border border = BorderFactory.createLineBorder(col, 3);
+
+            button[i].setBorder(border);
             button[i].setOpaque(true);
-            button[i].setBounds(this.mapRiskModel.getCountryModelList().get(i).getXPosition() * 2,
-                    this.mapRiskModel.getCountryModelList().get(i).getYPosition() * 2, 50, 50);
+            button[i].setBounds(mapRiskModel.getCountryModelList().get(i).getXPosition() * 2,
+                    mapRiskModel.getCountryModelList().get(i).getYPosition() * 2, 50, 50);
 
             graphicPanel.add(button[i]);
         }
@@ -222,7 +228,7 @@ public class ReinforcementView extends JFrame implements ViewInterface {
         } else if (obs instanceof PlayerModel) {
             this.playerModel = (PlayerModel) obs;
         }
-        this.updateWindow(this.mapRiskModel, this.playerModel);
+        this.updateWindow(this.gamePlayModel, this.playerModel);
         this.revalidate();
         this.repaint();
 

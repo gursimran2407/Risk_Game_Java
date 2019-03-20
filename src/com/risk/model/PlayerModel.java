@@ -13,6 +13,8 @@ public class PlayerModel extends Observable {
     private ArrayList<CountryModel> playerCountries  = new ArrayList<CountryModel>();
     private ArrayList<CardModel> playerCards;
 
+    private PlayerModel playerTurn;
+
 
     public PlayerModel(String playerName, int numberOfArmies, int remainingNumberOfArmies, Color playerColor,
                        ArrayList playerCountries, ArrayList playerCards) {

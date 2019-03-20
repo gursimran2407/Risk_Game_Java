@@ -188,6 +188,7 @@ public class GamePlayModel extends Observable
         return countryForDeduction;
     }
 
+
     /**
      * This method gives the Random generation of numbers within two values.
      *
@@ -200,7 +201,12 @@ public class GamePlayModel extends Observable
         return x;
     }
 
-
+    /**
+     * @return the playerTurn
+     */
+    public PlayerModel getPlayerTurn() {
+        return this.playerTurn;
+    }
     /**
      * Single strike.
      *

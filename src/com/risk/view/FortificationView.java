@@ -1,31 +1,60 @@
-package com.risk.view;
 
+package com.risk.view;
 import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.CountryModel;
 import com.risk.model.GamePlayModel;
 import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
 
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import javax.swing.border.BevelBorder;
+import javax.swing.text.DefaultCaret;
+
+
 /**
- * @author gursimransingh
+ * "FortificationView" class represents a view object of fortification phase.
+ *
+ * @author gursimran singh
+ *
  */
 public class FortificationView extends JFrame implements ViewInterface {
 
     public MapRiskModel gameMapModel;
     public PlayerModel playerModel;
+    public GamePlayModel gamePlayModel;
 
     public JPanel welcomePanel;
     public JPanel graphicPanel;
+
+    public JPanel consoleMainPanel;
+    public JScrollPane consolePanel;
+    public JTextArea consoleTextArea;
 
     public JLabel welcomeLabel;
     public JLabel noOfTroopsLabel;
@@ -39,37 +68,58 @@ public class FortificationView extends JFrame implements ViewInterface {
     public JComboBox<Object> fromCountryListComboBox;
     public JComboBox<Object> toCountryListComboBox;
     public Object[] fromCountryListArray;
+    private CountryViewRenderer fromCountriesViewRenderer;
     public Object[] toCountryListArray;
     public JButton[] button;
-    private CountryViewRenderer fromCountriesViewRenderer;
+    /**
+     * The to countries view renderer.
+     */
     private CountryViewRenderer toCountriesViewRenderer;
+    /** The action listener. */
     private ActionListener actionListener;
 
-    public FortificationView(MapRiskModel gameMapModel) {
-        this.gameMapModel = gameMapModel;
+    /**
+     * Constructor of FortificationView
+     *
+     * @param gamePlayModel
+     */
+    public FortificationView(GamePlayModel gamePlayModel) {
+        this.gameMapModel = gamePlayModel.getGameMap();
         this.setTitle("Fortification Phase");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(300, 200);
-        this.setSize(1600, 1000);
+        this.setSize(1600, 840);
         this.setResizable(false);
         this.setVisible(false);
 
         welcomePanel = new JPanel();
         graphicPanel = new JPanel();
         this.add(graphicPanel);
-        graphicPanel.setSize(1200, 1000);
+        graphicPanel.setSize(1200, 650);
         graphicPanel.setBackground(Color.WHITE);
         graphicPanel.setLayout(null);
+
+        this.consoleMainPanel = new JPanel();
+        this.consoleMainPanel.setBorder(new BevelBorder(1));
+        this.consoleTextArea = new JTextArea("Fortification Phase!!!\n", 10, 500);
+        this.consoleTextArea.setEditable(false);
+        this.consoleTextArea.setFocusable(false);
+        this.consoleTextArea.setVisible(true);
+        this.consoleTextArea.setForeground(Color.WHITE);
+        this.consoleTextArea.setBackground(Color.BLACK);
+        DefaultCaret caret = (DefaultCaret) this.consoleTextArea.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.OUT_BOTTOM);
+        this.consolePanel = new JScrollPane(this.consoleTextArea);
+        this.consolePanel.setPreferredSize(new Dimension(1580, 130));
+        this.consoleMainPanel.add(this.consolePanel, BorderLayout.WEST);
+        this.getContentPane().add(this.consoleMainPanel, BorderLayout.SOUTH);
 
         this.add(welcomePanel);
         this.playerModel = this.gameMapModel.getPlayerTurn();
         this.moveButton = new JButton("Move");
-        updateWindow(this.gameMapModel, this.playerModel);
+        updateWindow(gamePlayModel, this.playerModel);
         welcomePanel.setLayout(null);
         graphicPanel.setLayout(null);
-    }
-
-    public FortificationView(GamePlayModel gamePlayModel) {
     }
 
     public static Color stringToColor(final String value) {
@@ -93,7 +143,13 @@ public class FortificationView extends JFrame implements ViewInterface {
         }
     }
 
-    public void updateWindow(MapRiskModel gameMapModel, PlayerModel playerModel) {
+    /**
+     * Updates the window based on new data in fortification phase
+     *
+     * @param gamePlayModel
+     * @param playerModel
+     */
+    public void updateWindow(GamePlayModel gamePlayModel, PlayerModel playerModel) {
 
         welcomePanel.removeAll();
         graphicPanel.removeAll();
@@ -101,13 +157,18 @@ public class FortificationView extends JFrame implements ViewInterface {
         Font mediumFont = new Font("Serif", Font.BOLD, 14);
         Font smallFont = new Font("Serif", Font.BOLD, 12);
 
-        this.gameMapModel = gameMapModel;
+        this.gamePlayModel = gamePlayModel;
+        this.gameMapModel = gamePlayModel.getGameMap();
         this.playerModel = playerModel;
 
         this.welcomeLabel = new JLabel("It's " + playerModel.getPlayerName() + "'s turn");
         welcomeLabel.setBounds(1300, 80, 300, 25);
         welcomeLabel.setFont(largeFont);
         welcomePanel.add(welcomeLabel);
+
+        if (this.gamePlayModel.getConsoleText() != null) {
+            this.consoleTextArea.setText(this.gamePlayModel.getConsoleText().toString());
+        }
 
         this.fromCountryListLabel = new JLabel("From Country :");
         fromCountryListLabel.setBounds(1300, 120, 150, 25);
@@ -116,7 +177,7 @@ public class FortificationView extends JFrame implements ViewInterface {
         // from country comboBox
         ArrayList<CountryModel> fromListOfCountries = new ArrayList<CountryModel>();
         for (int i = 0; i < this.gameMapModel.getCountryModelList().size(); i++) {
-            if (playerModel.getPlayerName().equals(this.gameMapModel.getCountryModelList().get(i).getCountryOwner().getPlayerName())
+            if (playerModel.getPlayerName().equals(this.gameMapModel.getCountryModelList().get(i).getRulerName())
                     && this.gameMapModel.getCountryModelList().get(i).getNumberofArmies() >= 2) {
                 fromListOfCountries.add(this.gameMapModel.getCountryModelList().get(i));
             }
@@ -125,7 +186,7 @@ public class FortificationView extends JFrame implements ViewInterface {
         fromCountryListArray = fromListOfCountries.toArray();
 
         fromCountryListComboBox = new JComboBox(fromCountryListArray);
-        fromCountryListComboBox.setSelectedIndex(this.gameMapModel.getSelectedComboBoxIndex());
+        fromCountryListComboBox.setSelectedIndex(gamePlayModel.getSelectedComboBoxIndex());
         welcomePanel.add(this.fromCountryListComboBox);
 
         this.toCountryListLabel = new JLabel("To Country :");
@@ -136,7 +197,7 @@ public class FortificationView extends JFrame implements ViewInterface {
         ArrayList<CountryModel> toListOfCountries = new ArrayList<CountryModel>();
         for (int i = 0; i < this.gameMapModel.getCountryModelList().size(); i++) {
             if (playerModel.getPlayerName()
-                    .equals(this.gameMapModel.getCountryModelList().get(i).getCountryOwner().getPlayerName())) {
+                    .equals(this.gameMapModel.getCountryModelList().get(i).getRulerName())) {
                 toListOfCountries.add(this.gameMapModel.getCountryModelList().get(i));
             }
         }
@@ -156,6 +217,7 @@ public class FortificationView extends JFrame implements ViewInterface {
         welcomePanel.add(noOfTroopsLabel);
 
         CountryModel countryName = (CountryModel) this.fromCountryListComboBox.getSelectedItem();
+        System.out.println("country name " + countryName.getNumberofArmies());
         Integer[] troops = new Integer[countryName.getNumberofArmies() - 1];
         for (int i = 0; i < (countryName.getNumberofArmies() - 1); i++) {
             troops[i] = i + 1;
@@ -177,18 +239,23 @@ public class FortificationView extends JFrame implements ViewInterface {
         int n = this.gameMapModel.getCountryModelList().size();
         button = new JButton[n];
 
-        // graphicPanel.add(button[0]);
-        for (int i = 0; i < this.gameMapModel.getCountryModelList().size(); i++) {
+        PlayerModel pm = new PlayerModel();
+        CountryModel cm = new CountryModel();
+
+        for (int i = 0; i < gameMapModel.getCountryModelList().size(); i++) {
 
             button[i] = new JButton();
-            button[i].setText(this.gameMapModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
-            button[i].setBackground(this.gameMapModel.getCountryModelList().get(i).getBackgroundColor());
-            button[i].setToolTipText("Troops: " + this.gameMapModel.getCountryModelList().get(i).getNumberofArmies());
-            button[i].setBorder(
-                    new LineBorder(stringToColor(this.gameMapModel.getCountryModelList().get(i).getCountryOwner().getPlayerColor()), 3));
+            button[i].setText(gameMapModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
+            button[i].setBackground(gameMapModel.getCountryModelList().get(i).getBackgroundColor());
+            button[i].setToolTipText("Troops: " + gameMapModel.getCountryModelList().get(i).getNumberofArmies());
+            cm = gameMapModel.getCountryModelList().get(i);
+            pm = gamePlayModel.getPlayer(cm);
+            Border border = BorderFactory.createLineBorder(pm.getPlayerColor(), 3);
+
+            button[i].setBorder(border);
             button[i].setOpaque(true);
-            button[i].setBounds(this.gameMapModel.getCountryModelList().get(i).getXPosition() * 2,
-                    this.gameMapModel.getCountryModelList().get(i).getYPosition() * 2, 50, 50);
+            button[i].setBounds(gameMapModel.getCountryModelList().get(i).getXPosition() * 2,
+                    gameMapModel.getCountryModelList().get(i).getYPosition() * 2, 50, 50);
 
             graphicPanel.add(button[i]);
         }
@@ -198,6 +265,11 @@ public class FortificationView extends JFrame implements ViewInterface {
 
     }
 
+    /**
+     * Paint the button and links in the panel
+     *
+     * @see java.awt.Window#paint(java.awt.Graphics)
+     */
     public void paint(final Graphics g) {
 
         super.paint(g);
@@ -228,6 +300,27 @@ public class FortificationView extends JFrame implements ViewInterface {
 
     }
 
+    /**
+     *
+     */
+    @Override
+    public void update(Observable obs, Object arg) {
+        if (obs instanceof GamePlayModel) {
+            this.gamePlayModel = (GamePlayModel) obs;
+        } else if (obs instanceof GamePlayModel) {
+            this.gameMapModel = (MapRiskModel) obs;
+        } else if (obs instanceof GamePlayModel) {
+            this.playerModel = (PlayerModel) obs;
+        }
+        this.updateWindow(this.gamePlayModel, this.playerModel);
+        this.revalidate();
+        this.repaint();
+
+    }
+
+    /**
+     * Sets "moveButton" action
+     */
     @Override
     public void setActionListener(ActionListener actionListener) {
         this.actionListener = actionListener;
@@ -235,29 +328,17 @@ public class FortificationView extends JFrame implements ViewInterface {
         this.fromCountryListComboBox.addActionListener(actionListener);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
-        this.updateWindow(((MapRiskModel) o), this.playerModel);
-        this.revalidate();
-        this.repaint();
-
-    }
-
     public void setItemListener(ItemListener itemListener) {
         this.fromCountryListComboBox.addItemListener(itemListener);
 
     }
 
+    /**
+     * Provides a dynamic comboBox of country names
+     *
+     * @author GROUPE-35
+     */
     public class CountryViewRenderer extends BasicComboBoxRenderer {
-
-        /*
-         * Getter method that provides us a map model corresponding to a map name
-         *
-         * @see javax.swing.plaf.basic.BasicComboBoxRenderer#
-         * getListCellRendererComponent(javax.swing.JList, java.lang.Object, int,
-         * boolean, boolean)
-         */
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
                                                       boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
