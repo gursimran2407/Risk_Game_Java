@@ -245,9 +245,9 @@ public class MapRiskModel extends Observable {
     /**
      * Assign moving armies in fortification
      *
-     * @param armies
-     * @param fromCountryName
-     * @param toCountryName
+     * @param armies number of armies to move
+     * @param fromCountryName move armies from this country
+     * @param toCountryName get from country to this country
      */
     public void setMovingArmies(int armies, CountryModel fromCountryName, CountryModel toCountryName) {
         int previousArmies = 0;

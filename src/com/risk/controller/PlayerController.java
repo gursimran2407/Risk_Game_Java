@@ -3,6 +3,7 @@ package com.risk.controller;
 import com.risk.gameplayrequirements.MapValidation;
 import com.risk.model.GamePlayModel;
 import com.risk.model.PlayerModel;
+import com.risk.view.AttackPhaseView;
 import com.risk.view.FortificationView;
 import com.risk.view.ReinforcementView;
 
@@ -28,23 +29,8 @@ public class PlayerController implements ActionListener, ItemListener {
     private ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
     private int noOfPlayers;
     private MapValidation val = new MapValidation();
-
-
-
-    /**
-     * This is the method that is required if we implement the Action Listener. This method will perform the action
-     * after listening to the action event set in the view.
-     *
-     * @param actionEvent listens to event
-     */
-    @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-
-    }
-
-    public void itemStateChanged(ItemEvent itemEvent) {
-
-    }
+    private AttackPhaseView attackPhaseView;
+    private FortificationView fortificationView;
 
     /**
      * Constructor for initializing values and setting the screen visibility
@@ -56,6 +42,27 @@ public class PlayerController implements ActionListener, ItemListener {
         this.gamePlayModel.getConsoleText()
                 .append("Initiating reinforcement for" + gamePlayModel.getGameMap().getPlayerTurn().getPlayerName());
         reinforcement();
+    }
+
+    /**
+     * This is the method that is required if we implement the Action Listener. This method will perform the action
+     * after listening to the action event set in the view.
+     *
+     * @param actionEvent listens to event
+     */
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        if (actionEvent.getSource().equals(this.attackPhaseView.nextButton)) {
+            this.attackPhaseView.dispose();
+            fortification();
+        }
+    }
+
+    public void itemStateChanged(ItemEvent itemEvent) {
+        if (itemEvent.getSource().equals(this.fortificationView.fromCountryListComboBox)) {
+            this.gamePlayModel
+                    .setSelectedComboBoxIndex(this.fortificationView.fromCountryListComboBox.getSelectedIndex());
+        }
     }
 
     /**
@@ -92,6 +99,9 @@ public class PlayerController implements ActionListener, ItemListener {
         }
     }
 
+    /**
+     * This method is to call fortification phase
+     */
     public void fortification()
     {
         this.gamePlayModel.getConsoleText().setLength(0);
