@@ -202,12 +202,6 @@ public class GamePlayModel extends Observable
     }
 
     /**
-     * @return the playerTurn
-     */
-    public PlayerModel getPlayerTurn() {
-        return this.playerTurn;
-    }
-    /**
      * Single strike.
      *
      * @param attackDice    the attack dice
