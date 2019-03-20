@@ -103,6 +103,11 @@ public class PlayerModel extends Observable {
 
     }
 
+    public boolean attacked(CountryModel countryForAddition) {
+        this.playerCountries.add(countryForAddition);
+        return true;
+    }
+
     /**
      * Defend.
      *

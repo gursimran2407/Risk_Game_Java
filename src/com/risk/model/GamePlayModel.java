@@ -241,13 +241,13 @@ public class GamePlayModel extends Observable
                 if (this.getPlayers().get(i).getPlayerName().equals(defendCountry.getRulerName())) {
                     this.getPlayers().get(i).defend(defendCountry);
                 }
-                if (this.getPlayers().get(i).getNamePlayer().equals(attackCountry.getRulerName())) {
+                if (this.getPlayers().get(i).getPlayerName().equals(attackCountry.getRulerName())) {
                     this.getPlayers().get(i).attacked(defendCountry);
                 }
             }
-            for (int i = 0; i < this.mapRiskModel.getCountries().size(); i++) {
-                if (this.mapRiskModel.getCountries().get(i).getCountryName().equals(defendCountry.getCountryName())) {
-                    this.mapRiskModel.getCountries().get(i).setRulerName(attackCountry.getRulerName());
+            for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
+                if (this.mapRiskModel.getCountryModelList().get(i).getCountryName().equals(defendCountry.getCountryName())) {
+                    this.mapRiskModel.getCountryModelList().get(i).setRulerName(attackCountry.getRulerName());
                 }
             }
 
@@ -259,14 +259,25 @@ public class GamePlayModel extends Observable
     }
 
     /**
+     * Sets the army to move text.
+     *
+     * @param armyToMoveFlag the new army to move text
+     */
+    public void setArmyToMoveText(boolean armyToMoveFlag) {
+        this.armyToMoveFlag = armyToMoveFlag;
+        if (armyToMoveFlag == true) {
+            callObservers();
+        }
+    }
+    /**
      * World coverage.
      *
      * @param parmPlayer the parm player
      */
     public boolean worldCoverage(PlayerModel parmPlayer) {
         boolean returnvalue = true;
-        double percentage = (parmPlayer.getOwnedCountries().size() * 100) / this.mapRiskModel.getCountries().size();
-        this.getConsoleText().append("						" + " Map coverage for " + parmPlayer.getNamePlayer()
+        double percentage = (parmPlayer.getPlayerCountries().size() * 100) / this.mapRiskModel.getCountryModelList().size();
+        this.getConsoleText().append("						" + " Map coverage for " + parmPlayer.getPlayerName()
                 + " is " + percentage + "% " + "\n");
         return returnvalue;
     }
