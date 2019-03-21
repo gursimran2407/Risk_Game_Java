@@ -52,12 +52,138 @@ public class PlayerController implements ActionListener, ItemListener {
      */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(this.attackPhaseView.nextButton)) {
-            this.attackPhaseView.dispose();
-            fortification();
-        }
-    }
+        if (actionEvent.getSource().equals(this.theReinforcementView.addButton)) {
+            int selectedArmies = 0;
+            if (theReinforcementView.numOfTroopsComboBox.getSelectedItem() != null) {
+                selectedArmies = (int) theReinforcementView.numOfTroopsComboBox.getSelectedItem();
+                CountryModel countryName = (CountryModel) theReinforcementView.countryListComboBox.getSelectedItem();
+                System.out.println("countryName" + selectedArmies + countryName);
+                this.gamePlayModel.setSelectedArmiesToCountries(selectedArmies, countryName);
+            } else {
+                this.theReinforcementView.dispose();
+                attack();
 
+            }
+        } else if (actionEvent.getSource().equals(this.theReinforcementView.addMoreButton)) {
+            int cardID = Integer.parseInt(this.theReinforcementView.cardIdField.getText());
+            int cardValue = 0;
+            CardModel card = new CardModel();
+            for (int i = 0; i < this.gamePlayModel.getCards().size(); i++) {
+                if (cardID == this.gamePlayModel.getCards().get(i).getCardId()) {
+                    cardValue = this.gamePlayModel.getCards().get(i).getCardValue();
+                }
+            }
+            card.setCardId(cardID);
+            card.setCardValue(cardValue);
+            this.gamePlayModel.getGameMap().getPlayerTurn()
+                    .setremainTroop(this.gamePlayModel.getGameMap().getPlayerTurn().getremainTroop() + cardValue);
+            for (int i = 0; i < this.gamePlayModel.getPlayers().size(); i++) {
+                if (gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer()
+                        .equals(gamePlayModel.getPlayers().get(i).getNamePlayer())) {
+                    this.gamePlayModel.getPlayers().get(i).removeCard(card);
+                }
+            }
+            this.gamePlayModel.getCards().add(card);
+            this.gamePlayModel.callObservers();
+        } else if (actionEvent.getSource().equals(this.theReinforcementView.exitCardButton)) {
+            for (int i = 0; i < this.gamePlayModel.getPlayers().size(); i++) {
+                if (gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer()
+                        .equals(gamePlayModel.getPlayers().get(i).getNamePlayer())) {
+                    if (gamePlayModel.getGameMap().getPlayerTurn().getOwnedCards().size() >= 5) {
+                        this.gamePlayModel.getGameMap().getPlayerTurn().setShowReinforcementCard(true);
+                        gamePlayModel.getPlayers().get(i).setShowReinforcementCard(true);
+                        JOptionPane.showOptionDialog(null,
+                                "Maximum 5 card is allowed. Please select card id to reimburse", "Reimburse card",
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {},
+                                null);
+                    } else {
+                        this.gamePlayModel.getGameMap().getPlayerTurn().setShowReinforcementCard(false);
+                        gamePlayModel.getPlayers().get(i).setShowReinforcementCard(false);
+                        this.gamePlayModel.callObservers();
+                    }
+                }
+            }
+        } else if (actionEvent.getSource().equals(this.theAttackView.nextButton)) {
+            this.theAttackView.dispose();
+            fortification();
+        } else if (actionEvent.getSource().equals(this.theAttackView.attackCountryListComboBox)) {
+            this.gamePlayModel
+                    .setSelectedAttackComboBoxIndex(this.theAttackView.attackCountryListComboBox.getSelectedIndex());
+        } else if (actionEvent.getSource().equals(this.theAttackView.defendCountryListComboBox)) {
+            this.gamePlayModel
+                    .setSelectedDefendComboBoxIndex(this.theAttackView.defendCountryListComboBox.getSelectedIndex());
+        } else if (actionEvent.getSource().equals(this.theAttackView.SingleButton)) {
+
+            int attackDice = (int) theAttackView.numOfDiceAttackComboBox.getSelectedItem();
+            int defendDice = (int) theAttackView.numOfDiceDefendComboBox.getSelectedItem();
+            CountryModel attackCountry = (CountryModel) theAttackView.attackCountryListComboBox.getSelectedItem();
+            CountryModel defendCountry = (CountryModel) theAttackView.defendCountryListComboBox.getSelectedItem();
+            this.gamePlayModel.setDefeatedCountry(defendCountry);
+            this.gamePlayModel.singleStrike(attackDice, attackCountry, defendDice, defendCountry);
+            if (val.endOfGame(this.gamePlayModel) == true) {
+                JOptionPane.showOptionDialog(null, "Bravo! You have won! Game is over!", "Valid",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                this.theAttackView.dispose();
+            }
+
+        } else if (actionEvent.getSource().equals(this.theAttackView.alloutButton)) {
+
+            CountryModel attackCountry = (CountryModel) theAttackView.attackCountryListComboBox.getSelectedItem();
+            CountryModel defendCountry = (CountryModel) theAttackView.defendCountryListComboBox.getSelectedItem();
+            this.gamePlayModel.setDefeatedCountry(defendCountry);
+            this.gamePlayModel.alloutStrike(attackCountry, defendCountry);
+            if (val.endOfGame(this.gamePlayModel) == true) {
+                JOptionPane.showOptionDialog(null, "Bravo! You have won! Game is over!", "Valid",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                this.theAttackView.dispose();
+            }
+
+        } else if (actionEvent.getSource().equals(this.theAttackView.moveButton)) {
+
+            CountryModel attackCountry = (CountryModel) theAttackView.attackCountryListComboBox.getSelectedItem();
+            int noOfArmiesToBeMoved = (int) theAttackView.numOfArmiesToBeMovedComboBox.getSelectedItem();
+            CountryModel defendCountry = this.gamePlayModel.getDefeatedCountry();
+            this.gamePlayModel.moveArmies(attackCountry, defendCountry, noOfArmiesToBeMoved);
+
+        } else if (actionEvent.getSource().equals(this.theFortificationView.moveButton)) {
+            // BFS
+
+            if (val.checkIfValidMove(this.gamePlayModel.getGameMap(),
+                    (CountryModel) this.theFortificationView.fromCountryListComboBox.getSelectedItem(),
+                    (CountryModel) this.theFortificationView.toCountryListComboBox.getSelectedItem())) {
+                this.gamePlayModel.getGameMap().setMovingArmies(
+                        (Integer) this.theFortificationView.numOfTroopsComboBox.getSelectedItem(),
+                        (CountryModel) this.theFortificationView.fromCountryListComboBox.getSelectedItem(),
+                        (CountryModel) this.theFortificationView.toCountryListComboBox.getSelectedItem());
+            }
+
+            int index = this.gamePlayModel.getGameMap().getPlayerIndex();
+
+            this.gamePlayModel.moveDeck();
+
+            index++;
+            if (this.gamePlayModel.getPlayers().size() > index) {
+                this.gamePlayModel.getGameMap().setPlayerIndex(index);
+                this.gamePlayModel.getPlayers().get(index).callObservers();
+            } else {
+                index = 0;
+                this.gamePlayModel.getGameMap().setPlayerIndex(index);
+                this.gamePlayModel.getPlayers().get(index).callObservers();
+            }
+            if (val.endOfGame(this.gamePlayModel) == false) {
+                new GamePlayController(this.gamePlayModel);
+                this.theFortificationView.dispose();
+            } else {
+                JOptionPane.showOptionDialog(null, "Bravo! You have won! Game is over!", "Valid",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                this.theFortificationView.dispose();
+            }
+        } else if (actionEvent.getSource().equals(this.theFortificationView.fromCountryListComboBox)) {
+            this.gamePlayModel
+                    .setSelectedComboBoxIndex(this.theFortificationView.fromCountryListComboBox.getSelectedIndex());
+        }
+
+    }
     public void itemStateChanged(ItemEvent itemEvent) {
         if (itemEvent.getSource().equals(this.fortificationView.fromCountryListComboBox)) {
             this.gamePlayModel
