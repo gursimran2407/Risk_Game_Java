@@ -258,4 +258,19 @@ public class PlayerController implements ActionListener, ItemListener {
         this.gamePlayModel.deleteObservers();
         this.gamePlayModel.addObserver(this.attackPhaseView);
     }
+
+
+    /**
+     * Item Listener.
+     *
+     * @param itemEvent the item event
+     * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
+     */
+    public void itemStateChanged(ItemEvent itemEvent) {
+        if (itemEvent.getSource().equals(this.theFortificationView.fromCountryListComboBox)) {
+            this.gamePlayModel
+                    .setSelectedComboBoxIndex(this.theFortificationView.fromCountryListComboBox.getSelectedIndex());
+        }
+
+    }
 }
