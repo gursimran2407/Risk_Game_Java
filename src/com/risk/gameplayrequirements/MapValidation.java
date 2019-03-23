@@ -2,6 +2,7 @@ package com.risk.gameplayrequirements;
 
 import com.risk.model.ContinentModel;
 import com.risk.model.CountryModel;
+import com.risk.model.GamePlayModel;
 import com.risk.model.MapRiskModel;
 
 import java.util.*;
@@ -115,6 +116,23 @@ public class MapValidation {
         return emptyLinkContinent;
 
     }
+
+    /**
+     * End of game.
+     *
+     * @param gamePlayModel the game play model
+     * @return true, if successful
+     */
+    public boolean endOfGame(GamePlayModel gamePlayModel) {
+        for (int i = 0; i < gamePlayModel.getPlayers().size(); i++) {
+            if (gamePlayModel.getPlayers().get(i).getPlayerCountries().size() == gamePlayModel.getGameMap()
+                    .getCountryModelList().size()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     /**
      * Check on empty Continent Validation
