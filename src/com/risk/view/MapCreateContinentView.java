@@ -1,6 +1,5 @@
 package com.risk.view;
 
-import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.ContinentModel;
 import com.risk.model.MapRiskModel;
 
@@ -8,7 +7,6 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;

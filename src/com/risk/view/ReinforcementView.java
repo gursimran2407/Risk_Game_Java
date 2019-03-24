@@ -1,6 +1,5 @@
 package com.risk.view;
 
-import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.CountryModel;
 import com.risk.model.GamePlayModel;
 import com.risk.model.MapRiskModel;
@@ -8,7 +7,6 @@ import com.risk.model.PlayerModel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
 import java.awt.event.ActionListener;

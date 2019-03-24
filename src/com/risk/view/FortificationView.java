@@ -1,6 +1,5 @@
 
 package com.risk.view;
-import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.CountryModel;
 import com.risk.model.GamePlayModel;
 import com.risk.model.MapRiskModel;
@@ -31,7 +30,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.border.BevelBorder;
 import javax.swing.text.DefaultCaret;

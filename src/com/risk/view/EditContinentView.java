@@ -4,9 +4,7 @@ package com.risk.view;
  * @author gursimransingh
  */
 
-import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.ContinentModel;
-import com.risk.model.GamePlayModel;
 import com.risk.model.MapRiskModel;
 
 import java.awt.Component;

@@ -1,6 +1,5 @@
 package com.risk.view;
 
-import com.risk.helperInterfaces.ViewInterface;
 import com.risk.model.ContinentModel;
 import com.risk.model.MapRiskModel;
 

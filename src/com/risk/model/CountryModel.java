@@ -1,67 +1,104 @@
 package com.risk.model;
 
-import javax.swing.*;
+import java.awt.Color;
+import java.util.List;
+
+import javax.swing.JButton;
 import javax.swing.border.LineBorder;
-import java.awt.*;
-import java.util.ArrayList;
 
 /**
- * This class is a country's properties such as name, position,
- * continent name to which it belongs, connected countries, Name of owner
- * Number of armies, and color.
+ * "CountryModel" represents a country's properties such as name, position,
+ * continent name that it belongs to, countries that it connected to, owner
+ * (player who owns it) name, Number of armies in, and color.
  *
- * @author Karandeep
+ * @author Namita
  *
  */
 public class CountryModel extends JButton {
 
+    /** The country name. */
     private String countryName;
-    private PlayerModel countryOwner;
-    private String continentName;
-    private ArrayList<CountryModel> connectedCountryList;
-    private int numberofArmies;
-    private Color borderColor;
+
+    /** The x position. */
     private int xPosition;
+
+    /** The y position. */
     private int yPosition;
+
+    /** The continent name. */
+    private String continentName;
+
+    /** The linked countries. */
+    private List<CountryModel> linkedCountries;
+
+    /** The armies. */
+    private int armies;
+
+    /** The background color. */
     private Color backgroundColor;
+
+    /** The border color. */
+    private Color borderColor;
+
+    /** The ruler name. */
     private String rulerName;
 
-    @Override
-    public void setText(String text) {
-        super.setText(text);
-    }
-
     /**
-     * Constructor of CountryModel with parameters
+     * Constructor of CountryModel with parameters.
      *
-     * @param countryName
-     * @param continentName
-     * @param linkCountryModel
-     * @param countryOwner
-     * @param numberofArmies
+     * @param countryName     the country name
+     * @param xPosition       the x position
+     * @param yPosition       the y position
+     * @param continentName   the continent name
+     * @param linkedCountries the linked countries
+     * @param armies          the armies
+     * @param rulerName       the ruler name
      */
-
-    public CountryModel(String countryName, int xPosition, int yPosition, PlayerModel countryOwner,
-                        String continentName, ArrayList<CountryModel> linkCountryModel, int numberofArmies, String rulerName) {
+    public CountryModel(String countryName, int xPosition, int yPosition, String continentName, List<CountryModel> linkedCountries,
+                        int armies, String rulerName) {
         this.countryName = countryName;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-        this.countryOwner = countryOwner;
         this.continentName = continentName;
-        this.connectedCountryList = linkCountryModel;
-        this.numberofArmies = numberofArmies;
-        this.borderColor = Color.BLACK;
+        this.linkedCountries = linkedCountries;
+        this.armies = armies;
         this.backgroundColor = Color.WHITE;
+        this.borderColor = Color.BLACK;
         this.rulerName = rulerName;
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public CountryModel() {
+
+    }
+
+    public String getCountryCode() {
+        return getCountryName().length() > 4 ? getCountryName().substring(0, 3) : getCountryName();
     }
 
     /**
+     * Gets the country name.
+     *
+     * @return the country name.
+     */
+    public String getCountryName() {
+        return countryName;
+    }
+
+    /**
+     * Sets the country name.
+     *
+     * @param countryName the new country name
+     */
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    /**
+     * Gets the x position.
+     *
      * @return the X Position Value.
      */
     public int getXPosition() {
@@ -71,13 +108,15 @@ public class CountryModel extends JButton {
     /**
      * Sets the X Position Value.
      *
-     * @param xPosition
+     * @param xPosition the new x position
      */
     public void setXPosition(int xPosition) {
         this.xPosition = xPosition;
     }
 
     /**
+     * Gets the y position.
+     *
      * @return the Y Position Value.
      */
     public int getYPosition() {
@@ -87,13 +126,69 @@ public class CountryModel extends JButton {
     /**
      * Sets the Y Position Value.
      *
-     * @param yPosition
+     * @param yPosition the new y position
      */
     public void setYPosition(int yPosition) {
         this.yPosition = yPosition;
     }
 
     /**
+     * Gets the continent name.
+     *
+     * @return the Continent Name.
+     */
+    public String getcontinentName() {
+        return continentName;
+    }
+
+    /**
+     * Sets the Continent Name.
+     *
+     * @param continentName the new continent name
+     */
+    public void setContinentName(String continentName) {
+        this.continentName = continentName;
+    }
+
+    /**
+     * Gets the linked countries.
+     *
+     * @return the list of array.
+     */
+    public List<CountryModel> getLinkedCountries() {
+        return linkedCountries;
+    }
+
+    /**
+     * Sets the list of array.
+     *
+     * @param linkedCountries the new linked countries
+     */
+    public void setLinkedCountries(List<CountryModel> linkedCountries) {
+        this.linkedCountries = linkedCountries;
+    }
+
+    /**
+     * Gets the armies.
+     *
+     * @return the army number of the country.
+     */
+    public int getArmies() {
+        return armies;
+    }
+
+    /**
+     * Sets the army number of the country.
+     *
+     * @param armies the new armies
+     */
+    public void setArmies(int armies) {
+        this.armies = armies;
+    }
+
+    /**
+     * Gets the background color.
+     *
      * @return the color
      */
     public Color getBackgroundColor() {
@@ -101,9 +196,9 @@ public class CountryModel extends JButton {
     }
 
     /**
-     * Sets the color of the country
+     * Sets the color of the country.
      *
-     * @param color
+     * @param color the new background color
      */
     public void setBackgroundColor(Color color) {
         this.setBackground(color);
@@ -111,97 +206,7 @@ public class CountryModel extends JButton {
     }
 
     /**
-     * gets the name of the country
-     *
-     * @return countryName
-     */
-    public String getCountryName() {
-        return countryName;
-    }
-    /**
-     * gets the owner of the country
-     *
-     * @return countryOwner
-     */
-    public PlayerModel getCountryOwner() {
-        return countryOwner;
-    }
-    /**
-     * gets the name of the continent
-     *
-     * @return continentName
-     */
-    public String getContinentName() {
-        return continentName;
-    }
-
-    /**
-     * sets the owner of the country
-     *
-     * @return countryOwner
-     */
-    public void setCountryOwner(PlayerModel countryOwner) {
-        this.countryOwner = countryOwner;
-    }
-    /**
-     * gets the number of armies
-     *
-     * @return numberofArmies
-     */
-    public int getNumberofArmies() {
-        return numberofArmies;
-    }
-    /**
-     * sets the name of the country
-     *
-     * @return countryName
-     */
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
-    }
-    /**
-     * gets the name of the connected countries
-     *
-     * @return getConnectedCountryList
-     */
-    public ArrayList<CountryModel> getConnectedCountryList() {
-        return connectedCountryList;
-    }
-    /**
-     * sets the name of the continent
-     *
-     * @return continentName
-     */
-    public void setContinentName(String continentName) {
-        this.continentName = continentName;
-    }
-    /**
-     * sets the name of the connected countries
-     *
-     * @return setConnectedCountryList
-     */
-    public void setConnectedCountryList(ArrayList<CountryModel> linkCountryModel) {
-        this.connectedCountryList = linkCountryModel;
-    }
-    /**
-     * sets the number of armies
-     *
-     * @return numberofArmies
-     */
-    public void setNumberofArmies(int numberofArmies) {
-        this.numberofArmies = numberofArmies;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("Continent Name:\n");
-        sb.append(continentName + "\n");
-        sb.append("Country Name " + countryName);
-        return sb.toString();
-    }
-
-    /**
-     * gets the color of the border of the countries
+     * Gets the border color.
      *
      * @return the borderColor
      */
@@ -210,9 +215,9 @@ public class CountryModel extends JButton {
     }
 
     /**
-     * Sets the borderColor
+     * Sets the borderColor.
      *
-     * @param borderColor
+     * @param borderColor the new border color
      */
     public void setBorderColor(Color borderColor) {
         this.setBorder(new LineBorder(borderColor));
@@ -220,20 +225,21 @@ public class CountryModel extends JButton {
     }
 
     /**
-     * gets country owner name
-     * @return name of the country owner
+     * Gets the ruler name.
+     *
+     * @return the ruler name of the country.
      */
     public String getRulerName() {
         return rulerName;
     }
 
     /**
-     * sets country owner name
-     * @param rulerName name of owner
+     * Sets the ruler name of the country.
+     *
+     * @param rulerName the new ruler name
      */
     public void setRulerName(String rulerName) {
         this.rulerName = rulerName;
     }
+
 }
-
-

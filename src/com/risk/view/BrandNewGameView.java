@@ -1,9 +1,6 @@
 package com.risk.view;
 
-import com.risk.helperInterfaces.ViewInterface;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
