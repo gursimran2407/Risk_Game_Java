@@ -1,0 +1,44 @@
+package com.risk;
+
+import app.junit.model.*;
+import app.junit.utilities.*;
+import app.utilities.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
+
+@RunWith(Suite.class)
+@SuiteClasses({
+				UnlinkedContinentValidationTest.class,
+				CheckInterlinkedContinentTest.class,
+				EmptyContinentValidationTest.class,
+				ReadFileContinent.class,
+				ReadFileCountry.class,
+				EmptyLinkCountryValidationTest.class,
+				AddCardTest.class,
+				AddCountryToAttackerTest.class,
+				AllOutTest.class,
+				CheckSingleStrike.class,
+				ContinentCoverageTest.class,
+				GetArmiesTest.class,
+				MoveDeckTest.class,
+				MovingArmies.class,
+				ReinforcementArmyNumberTest.class,
+				RemoveCardTest.class,
+				RemoveCountryToDefeaterTest.class,
+				WorldCoverageTest.class,
+				SetNeighbouringCountriesTest.class,
+				EndOfGameTest.class,
+				GetContinentWriteTest.class,
+				GetCountryWriteTest.class,
+				GetCardForPlayerTest.class,
+				GetCards.class,
+				GetPlayerForCountryTest.class
+				})
+
+/**
+ * Test suite 
+ */
+public class TestSuite {
+	
+}
