@@ -13,7 +13,7 @@ import com.risk.utilities.ReadFile;
 /**
  * Model of whole map file that gets generated in the end
  *
- * @author Suruthi
+ * @author KaranPannu
  *
  */
 
