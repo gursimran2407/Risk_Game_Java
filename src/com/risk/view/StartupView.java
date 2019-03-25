@@ -1,61 +1,72 @@
 package com.risk.view;
 
-import com.risk.model.CountryModel;
-import com.risk.model.GamePlayModel;
-import com.risk.model.MapRiskModel;
-import com.risk.model.PlayerModel;
-
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
-import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import javax.swing.border.BevelBorder;
+import javax.swing.text.DefaultCaret;
+
+import com.risk.helperInterfaces.View;
+import com.risk.model.CountryModel;
+import com.risk.model.MapRiskModel;
+import com.risk.model.GamePlayModel;
+import com.risk.model.PlayerModel;
 
 /**
- * This class represents the armies and countries allocated to player in the starting of the game
- * @author gursimransingh
+ * This class file is the view (observer) for Start Up Phase of Game Play
+ *
+ * @author Shriyans
+ * @version 1.0.0
  */
-public class StartupView extends JFrame implements ViewInterface {
 
+public class StartUpView extends JFrame implements View {
+
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+
+
     public MapRiskModel mapRiskModel;
-    public PlayerModel playerModel;
+    private PlayerModel playerModel;
     public GamePlayModel gamePlayModel;
 
-    public JPanel welcomePanel;
-    public JPanel graphicPanel;
+    private JPanel welcomePanel;
+    private JPanel graphicPanel;
 
-    public JPanel consoleMainPanel;
-    public JScrollPane consolePanel;
-    public JTextArea consoleTextArea;
+    private JTextArea consoleTextArea;
 
     public JLabel welcomeLabel;
-    public JLabel welcomeLabel1;
-    public JLabel noOfArmiesLabel;
+    private JLabel welcomeLabel1;
 
-    public JComboBox<Integer> numOfArmiesComboBox;
+    public JComboBox<Integer> numOfTroopsComboBox;
     public JButton addButton;
 
-    public JLabel countryListLabel;
     public JComboBox<Object> countryListComboBox;
-    public Object[] countryListArray;
-    private CountryViewRenderer countriesViewRenderer;
 
     public JButton[] button;
     public JButton nextButton;
 
     /**
-     * This is the constructor for Start Up Phase View where the variables are initialized
+     * constructor for Start Up Phase View where the variables are initialized
      *
-     * @param gamePlayModel
-     * @param playerModel
+     * @param gamePlayModel Game play model
+     * @param playerModel Player model
      */
-    public StartupView(GamePlayModel gamePlayModel, PlayerModel playerModel) {
+    public StartUpView(GamePlayModel gamePlayModel, PlayerModel playerModel) {
 
         this.setTitle("Startup Phase");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,8 +83,8 @@ public class StartupView extends JFrame implements ViewInterface {
         graphicPanel.setBackground(Color.WHITE);
         graphicPanel.setLayout(null);
 
-        this.consoleMainPanel = new JPanel();
-        this.consoleMainPanel.setBorder(new BevelBorder(1));
+        JPanel consoleMainPanel = new JPanel();
+        consoleMainPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
         this.consoleTextArea = new JTextArea("Start up Phase !!!\n", 10, 500);
         this.consoleTextArea.setEditable(false);
         this.consoleTextArea.setFocusable(false);
@@ -82,16 +93,16 @@ public class StartupView extends JFrame implements ViewInterface {
         this.consoleTextArea.setBackground(Color.BLACK);
         DefaultCaret caret = (DefaultCaret) this.consoleTextArea.getCaret();
         caret.setUpdatePolicy(DefaultCaret.OUT_BOTTOM);
-        this.consolePanel = new JScrollPane(this.consoleTextArea);
-        this.consolePanel.setPreferredSize(new Dimension(1580, 130));
-        this.consoleMainPanel.add(this.consolePanel,BorderLayout.WEST);
-        this.getContentPane().add(this.consoleMainPanel,BorderLayout.SOUTH);
+        JScrollPane consolePanel = new JScrollPane(this.consoleTextArea);
+        consolePanel.setPreferredSize(new Dimension(1580, 130));
+        consoleMainPanel.add(consolePanel,BorderLayout.WEST);
+        this.getContentPane().add(consoleMainPanel,BorderLayout.SOUTH);
         this.addButton = new JButton("Add");
         this.add(welcomePanel);
         this.playerModel = playerModel;
         this.gamePlayModel = gamePlayModel;
         this.welcomeLabel = new JLabel("It's " + playerModel.getPlayerName() + "'s turn");
-        this.welcomeLabel1 = new JLabel("Remaining Armies: " + playerModel.getRemainingNumberOfArmies());
+        this.welcomeLabel1 = new JLabel("Remaining Armies: " + playerModel.getNumberofArmies());
         updateWindow(gamePlayModel, playerModel);
         welcomePanel.setLayout(null);
         graphicPanel.setLayout(null);
@@ -101,18 +112,17 @@ public class StartupView extends JFrame implements ViewInterface {
      * This updateWindow method is called whenever the model is updated. It updates
      * the Screen for Start Up Phase
      *
-     * @param gamePlayModel
-     * @param playerModel
+     * @param gamePlayModel Game play model
+     * @param playerModel Player model
      */
-    public void updateWindow(GamePlayModel gamePlayModel, PlayerModel playerModel) {
+    private void updateWindow(GamePlayModel gamePlayModel, PlayerModel playerModel) {
 
         welcomePanel.removeAll();
         graphicPanel.removeAll();
         Font largeFont = new Font("Serif", Font.BOLD, 18);
-        Font mediumFont = new Font("Serif", Font.BOLD, 14);
         Font smallFont = new Font("Serif", Font.BOLD, 12);
 
-        this.mapRiskModel = gamePlayModel.getMapRiskModel();
+        this.mapRiskModel = gamePlayModel.getGameMap();
         this.gamePlayModel = gamePlayModel;
         this.playerModel = playerModel;
 
@@ -124,40 +134,41 @@ public class StartupView extends JFrame implements ViewInterface {
             this.consoleTextArea.setText(this.gamePlayModel.getConsoleText().toString());
         }
 
-        this.noOfArmiesLabel = new JLabel("Number of Troops :");
-        noOfArmiesLabel.setBounds(1300, 140, 150, 25);
-        welcomePanel.add(noOfArmiesLabel);
+        JLabel noOfTroopsLabel = new JLabel("Number of Troops :");
+        noOfTroopsLabel.setBounds(1300, 140, 150, 25);
+        welcomePanel.add(noOfTroopsLabel);
 
-        Integer[] troops = new Integer[playerModel.getRemainingNumberOfArmies()];
-        for (int i = 0; i < playerModel.getRemainingNumberOfArmies(); i++) {
+        Integer[] troops = new Integer[playerModel.getNumberofArmies()];
+        for (int i = 0; i < playerModel.getNumberofArmies(); i++) {
             troops[i] = i + 1;
         }
 
-        numOfArmiesComboBox = new JComboBox(troops);
-        numOfArmiesComboBox.setBounds(1300, 170, 150, 25);
-        numOfArmiesComboBox.setEnabled(false);
-        welcomePanel.add(numOfArmiesComboBox);
+        numOfTroopsComboBox = new JComboBox<>(troops);
+        numOfTroopsComboBox.setBounds(1300, 170, 150, 25);
+        numOfTroopsComboBox.setEnabled(false);
+        welcomePanel.add(numOfTroopsComboBox);
 
-        welcomeLabel1 = new JLabel("Remaining Armies: " + playerModel.getRemainingNumberOfArmies());
+        welcomeLabel1 = new JLabel("Remaining Armies: " + playerModel.getNumberofArmies());
         welcomeLabel1.setBounds(1450, 170, 300, 25);
         welcomeLabel1.setFont(smallFont);
         welcomePanel.add(welcomeLabel1);
 
-        this.countryListLabel = new JLabel("Select Country :");
+        JLabel countryListLabel = new JLabel("Select Country :");
         countryListLabel.setBounds(1300, 230, 150, 25);
-        welcomePanel.add(this.countryListLabel);
+        welcomePanel.add(countryListLabel);
 
-        ArrayList<CountryModel> listOfCountries = new ArrayList<CountryModel>();
+        ArrayList<CountryModel> listOfCountries = new ArrayList<>();
         for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++) {
             if (playerModel.getPlayerName()
-                    .equals(this.mapRiskModel.getCountryModelList().get(i).getCountryOwner())) {
+                    .equals(this.mapRiskModel.getCountryModelList().get(i).getRulerName())) {
                 listOfCountries.add(this.mapRiskModel.getCountryModelList().get(i));
             }
         }
 
-        countriesViewRenderer = new CountryViewRenderer();
-        countryListArray = listOfCountries.toArray();
-        countryListComboBox = new JComboBox(countryListArray);
+        /* The countries view renderer. */
+        CountryViewRenderer countriesViewRenderer = new CountryViewRenderer();
+        Object[] countryListArray = listOfCountries.toArray();
+        countryListComboBox = new JComboBox<>(countryListArray);
         welcomePanel.add(this.countryListComboBox);
 
         if (countryListArray.length > 0) {
@@ -178,8 +189,8 @@ public class StartupView extends JFrame implements ViewInterface {
             CountryModel country = this.mapRiskModel.getCountryModelList().get(i);
 
             country.setBackground(this.mapRiskModel.getCountryModelList().get(i).getBackgroundColor());
-            country.setText(this.mapRiskModel.getCountryModelList().get(i).getCountryName().substring(0, 3));
-            country.setToolTipText("Troops: " + this.mapRiskModel.getCountryModelList().get(i).getNumberofArmies());
+            country.setText(this.mapRiskModel.getCountryModelList().get(i).getCountryCode());
+            country.setToolTipText("Troops: " + this.mapRiskModel.getCountryModelList().get(i).getArmies());
             country.setFont(smallFont);
             PlayerModel pm = this.gamePlayModel.getPlayer(country);
             Border border = BorderFactory
@@ -200,7 +211,7 @@ public class StartupView extends JFrame implements ViewInterface {
     /**
      * Countries are rendered as button and linked with Swing using Graphics.
      *
-     * @see java.awt.Window#paint(java.awt.Graphics)
+     * @see Window#paint(Graphics)
      */
     public void paint(final Graphics g) {
 
@@ -216,13 +227,13 @@ public class StartupView extends JFrame implements ViewInterface {
         }
 
         for (int k = 0; k < this.mapRiskModel.getCountryModelList().size(); k++) {
-            if (this.mapRiskModel.getCountryModelList().get(k).getConnectedCountryList() != null) {
+            if (this.mapRiskModel.getCountryModelList().get(k).getLinkedCountries() != null) {
                 ArrayList<CountryModel> neighbourCountries = (ArrayList<CountryModel>) this.mapRiskModel.getCountryModelList()
-                        .get(k).getConnectedCountryList();
+                        .get(k).getLinkedCountries();
 
-                for (int j = 0; j < neighbourCountries.size(); j++) {
+                for (CountryModel neighbourCountry : neighbourCountries) {
                     for (int i = 0; i < this.mapRiskModel.getCountryModelList().size(); i++)
-                        if (neighbourCountries.get(j).equals(this.mapRiskModel.getCountryModelList().get(i)))
+                        if (neighbourCountry.equals(this.mapRiskModel.getCountryModelList().get(i)))
                             g2.drawLine(connectorPoints[i].x + 25, connectorPoints[i].y + 25, connectorPoints[k].x + 25,
                                     connectorPoints[k].y + 25);
 
@@ -255,7 +266,7 @@ public class StartupView extends JFrame implements ViewInterface {
      * observable. so when the values are changed the view is updated automatically
      * by notifying the observer.
      *
-     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     * @see Observer#update(Observable, Object)
      */
     @Override
     public void update(Observable obs, Object arg) {
@@ -273,35 +284,12 @@ public class StartupView extends JFrame implements ViewInterface {
 
     /**
      * This is actionListener method to listen the action events in the screen
+     *
+     *
      */
     @Override
     public void setActionListener(ActionListener actionListener) {
         this.addButton.addActionListener(actionListener);
         this.nextButton.addActionListener(actionListener);
     }
-
-    /**
-     * This method convert string to color
-     *
-     * @param value
-     * @return color
-     */
-
-    public static Color stringToColor(final String value) {
-        if (value == null) {
-            return Color.black;
-        }
-        try {
-            return Color.decode(value);
-        } catch (NumberFormatException nfe) {
-            try {
-                final Field f = Color.class.getField(value);
-
-                return (Color) f.get(null);
-            } catch (Exception ce) {
-                return Color.black;
-            }
-        }
-    }
-
 }
