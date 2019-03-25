@@ -11,13 +11,13 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 /**
- * similar to all other controllers in the project, the StartBrandNewGameController also takes care of the movement of
+ * similar to all other controllers in the project, the NewGameController also takes care of the movement of
  * data into the model corresponding to the view and the controller and also takes care of updating the view whenever a
  * change is detected.
  *
  * @author Namita
  */
-public class StartBrandNewGameController implements ActionListener {
+public class NewGameController implements ActionListener {
 
     /** The view. */
     private NewGameView theView;

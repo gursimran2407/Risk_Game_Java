@@ -1,35 +1,23 @@
 package com.risk.view;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.Observable;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
-
 import com.risk.helperInterfaces.View;
 import com.risk.model.ContinentsModel;
 import com.risk.model.CountryModel;
 import com.risk.model.GameMapModel;
 
-
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Observable;
 /**
- * "CreateCountryView" class represents a view object for creating a country
- * view Properties are containing labels, text fields, buttons, combo-boxes, a
- * pane, and a panel.
+ * CreateCountryView class is representing a view object for creating a country
+ * view Properties are labels, text fields, buttons, combo-boxes, a  pane and a panel
  *
- * @author KaranPannu
+ * @author Namita Faujdar
  */
 
 public class CreateCountryView extends JFrame implements View {
@@ -168,7 +156,7 @@ public class CreateCountryView extends JFrame implements View {
      * Sets actions to "addButton" and "nextButton".
      *
      * @param actionListener the new action listener
-     * @see com.risk.helperInterfaces.View#setActionListener(java.awt.event.ActionListener)
+     * @see app.helper.View#setActionListener(java.awt.event.ActionListener)
      */
     @Override
     public void setActionListener(ActionListener actionListener) {
@@ -208,5 +196,4 @@ public class CreateCountryView extends JFrame implements View {
             return this;
         }
     }
-
 }

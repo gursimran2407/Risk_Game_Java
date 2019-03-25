@@ -1,31 +1,17 @@
 package com.risk.view;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import com.risk.helperInterfaces.View;
+import com.risk.model.CountryModel;
+import com.risk.model.GameMapModel;
+
+import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
-import javax.swing.event.ListSelectionListener;
-
-import com.risk.helperInterfaces.View;
-import com.risk.model.CountryModel;
-import com.risk.model.GameMapModel;
 
 
 /**
@@ -37,6 +23,7 @@ import com.risk.model.GameMapModel;
  *
  */
 public class ConnectCountryView extends JFrame implements View, Observer {
+
 
     /** The welcome panel. */
     private JPanel welcomePanel;

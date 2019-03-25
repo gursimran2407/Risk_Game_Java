@@ -1,8 +1,5 @@
 package com.risk.view;
 
-/**
- * @author gursimransingh
- */
 
 import java.awt.Component;
 import java.awt.Font;
@@ -19,14 +16,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
+import com.risk.helperInterfaces.View;
+import com.risk.model.ContinentsModel;
+import com.risk.model.GameMapModel;
+
+
 
 /**
  * "EditContinentView" represents a view object for editing a continent It
  * contains Labels, text fields, and buttons
  *
- * @author Jatan Gohel
+ * @author Shriyans
  */
-public class EditContinentView extends JFrame implements ViewInterface {
+public class EditContinentView extends JFrame implements View {
 
     public JLabel welcomeLabel;
     public JLabel continentListText;
