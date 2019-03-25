@@ -17,7 +17,7 @@ import org.json.simple.parser.JSONParser;
  * "GamePlayerModel" class represents an object containing current map and
  * players.
  *
- * @author KaranPannu
+ * @author Gursimran Singh
  */
 public class GamePlayModel extends Observable {
 
@@ -147,9 +147,10 @@ public class GamePlayModel extends Observable {
             JSONArray cardsJSON = (JSONArray) jsonObject.get("cards");
 
             int i = 0;
-            CardModel cardModel = new CardModel();
             for (Object o : cardsJSON) {
                 JSONObject card = (JSONObject) o;
+
+                CardModel cardModel = new CardModel();
 
                 int cardId = Integer.parseInt((String) card.get("cardId"));
                 System.out.println("cardId " + cardId);
@@ -633,6 +634,8 @@ public class GamePlayModel extends Observable {
         int x = (int) ((Math.random() * ((max - min) + 1)) + min);
         return x;
     }
+
+    ;
 
     /**
      * Method used to notify state change whenever any change is reflected by

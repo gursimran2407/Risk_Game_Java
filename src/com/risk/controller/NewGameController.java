@@ -1,23 +1,32 @@
 package com.risk.controller;
 
-import com.risk.model.*;
-import com.risk.utilities.Validation;
-import com.risk.view.NewGameView;
-import org.json.simple.parser.ParseException;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
+import org.json.simple.parser.ParseException;
+
+import com.risk.model.CardModel;
+import com.risk.model.CountryModel;
+import com.risk.model.GameMapModel;
+import com.risk.model.GamePlayModel;
+import com.risk.model.PlayerModel;
+import com.risk.utilities.Validation;
+import com.risk.view.NewGameView;
+
 /**
- * similar to all other controllers in the project, the NewGameController also takes care of the movement of
- * data into the model corresponding to the view and the controller and also takes care of updating the view whenever a
- * change is detected.
+ * In NewGameController, the data flow into model object and updates the view
+ * whenever data changes.
  *
  * @author Namita
+ *
  */
+
 public class NewGameController implements ActionListener {
 
     /** The view. */
@@ -168,6 +177,5 @@ public class NewGameController implements ActionListener {
                     "Map Loaded", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-
 
 }

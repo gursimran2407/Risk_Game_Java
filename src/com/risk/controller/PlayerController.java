@@ -164,6 +164,10 @@ public class PlayerController implements ActionListener, ItemListener {
                 }
             }
             this.gamePlayModel.getCards().add(card);
+
+            this.gamePlayModel.getConsoleText().append(
+                    "\nPlayer '" + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer() +
+                            "' will get the card '" + card.getCardId() + "' on the end of the turn\n");
             this.gamePlayModel.callObservers();
         } else if (actionEvent.getSource().equals(this.theReinforcementView.exitCardButton)) {
             for (int i = 0; i < this.gamePlayModel.getPlayers().size(); i++) {

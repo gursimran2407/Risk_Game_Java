@@ -33,7 +33,6 @@ var catSearchTags = "SearchTags";
 var highlight = "<span class=\"resultHighlight\">$&</span>";
 var camelCaseRegexp = "";
 var secondaryMatcher = "";
-
 function getName(name) {
     var anchor = "";
     var ch = '';
@@ -69,7 +68,6 @@ function getName(name) {
     }
     return anchor;
 }
-
 function getHighlightedText(item) {
     var ccMatcher = new RegExp(camelCaseRegexp);
     var label = item.replace(ccMatcher, highlight);
@@ -78,7 +76,6 @@ function getHighlightedText(item) {
     }
     return label;
 }
-
 var watermark = 'Search';
 $(function () {
     $("#search").val('');
@@ -168,12 +165,12 @@ $(function () {
         minLength: 1,
         delay: 100,
         source: function (request, response) {
-            var result = [];
-            var presult = [];
-            var tresult = [];
-            var mresult = [];
-            var tgresult = [];
-            var secondaryresult = [];
+            var result = new Array();
+            var presult = new Array();
+            var tresult = new Array();
+            var mresult = new Array();
+            var tgresult = new Array();
+            var secondaryresult = new Array();
             var displayCount = 0;
             var exactMatcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term) + "$", "i");
             camelCaseRegexp = ($.ui.autocomplete.escapeRegex(request.term)).split(/(?=[A-Z])/).join("([a-z0-9_$]*?)");
