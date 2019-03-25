@@ -1,100 +1,140 @@
 package com.risk.model;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
+
+
+/**
+ * "PlayerModel" class represents an object of a player. The properties are:
+ * Player name, player's troop number, the color in view screen (displaying)
+ * representing the player,
+ *
+ * @author KaranPannu
+ *
+ */
 public class PlayerModel extends Observable {
-    private String playerName;
-    private int numberofArmies;
-    private int  remainingNumberOfArmies;
-    private Color playerColor;
-    private int myPlayer;
-    private ArrayList<CountryModel> playerCountries  = new ArrayList<CountryModel>();
-    private ArrayList<CardModel> playerCards;
 
-    private PlayerModel playerTurn;
+    /** The name player. */
+    private String namePlayer;
 
+    /** The my troop. */
+    private int myTroop;
 
-    public PlayerModel(String playerName, int numberOfArmies, int remainingNumberOfArmies, Color playerColor,
-                       ArrayList playerCountries, ArrayList playerCards) {
-        this.playerName = playerName;
-        this.remainingNumberOfArmies = remainingNumberOfArmies;
-        this.numberofArmies = numberOfArmies;
-        this.playerColor = playerColor;
-        this.playerCountries = playerCountries;
-        this.playerCards = playerCards;
+    /** The color. */
+    private Color color;
+
+    /** The remain troop. */
+    private int remainTroop;
+
+    /** The owned countries. */
+    private List<CountryModel> ownedCountries  = new ArrayList<>();
+
+    /** The owned cards. */
+    private List<CardModel> ownedCards;
+
+    /** The show reinforcement card. */
+    private boolean showReinforcementCard;
+
+    /**
+     * Constructor of PlayerModel.
+     *
+     * @param namePlayer the name player
+     * @param myTroop the my troop
+     * @param color the color
+     * @param remainTroop the remain troop
+     * @param ownedCountries the owned countries
+     * @param ownedCards the owned cards
+     */
+    public PlayerModel(String namePlayer, int myTroop, Color color, int remainTroop, List ownedCountries, List ownedCards) {
+        this.namePlayer = namePlayer;
+        this.myTroop = myTroop;
+        this.color = color;
+        this.remainTroop = remainTroop;
+        this.ownedCountries = ownedCountries;
+        this.ownedCards = ownedCards;
     }
 
+    /**
+     * Default constructor.
+     */
     public PlayerModel() {
+        // TODO Auto-generated constructor stub
     }
 
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public int getmyPlayer() {
-        return myPlayer;
+    /**
+     * Gets the my troop.
+     *
+     * @return the value Control.
+     */
+    public int getmyTroop() {
+        return myTroop;
     }
 
     /**
      * Sets the value Control.
      *
-     * @param myPlayer
+     * @param myTroop the new my troop
      */
-    public void setmyPlayer(int myPlayer) {
-        this.myPlayer = myPlayer;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public int getNumberofArmies() {
-        return numberofArmies;
-    }
-
-    public void setNumberofArmies(int numberofArmies) {
-        this.numberofArmies = numberofArmies;
-    }
-
-    public int getRemainingNumberOfArmies() {
-        return remainingNumberOfArmies;
-    }
-
-    public void setRemainingNumberOfArmies(int remainingNumberOfArmies) {
-        this.remainingNumberOfArmies = remainingNumberOfArmies;
-    }
-
-    public Color getPlayerColor() {
-        return playerColor;
-    }
-
-    public void setPlayerColor(Color playerColor) {
-        this.playerColor = playerColor;
-    }
-
-    public ArrayList<CountryModel> getPlayerCountries() {
-        return playerCountries;
-    }
-
-    public void setPlayerCountries(ArrayList<CountryModel> playerCountries) {
-        this.playerCountries = playerCountries;
-    }
-
-    public ArrayList<CardModel> getPlayerCards() {
-        return playerCards;
-    }
-
-    public void setPlayerCards(ArrayList<CardModel> playerCards) {
-        this.playerCards = playerCards;
+    public void setmyTroop(int myTroop) {
+        this.myTroop = myTroop;
     }
 
     /**
-     * To show reinforcement card
+     * Gets the name player.
+     *
+     * @return the continent name.
      */
-    public boolean showReinforcement;
+    public String getNamePlayer() {
+        return namePlayer;
+    }
 
+    /**
+     * Sets the continent name.
+     *
+     * @param namePlayer the new name player
+     */
+    public void setNamePlayer(String namePlayer) {
+        this.namePlayer = namePlayer;
+    }
+
+    /**
+     * Gets the color.
+     *
+     * @return the continent name.
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the continent name.
+     *
+     * @param color the new color
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    /**
+     * Gets the remain troop.
+     *
+     * @return the .
+     */
+    public int getremainTroop() {
+        return remainTroop;
+    }
+
+    /**
+     * Sets the value Control.
+     *
+     * @param remainTroop the new remain troop
+     */
+    public void setremainTroop(int remainTroop) {
+        this.remainTroop = remainTroop;
+    }
 
     /**
      * Calling Observer.
@@ -105,8 +145,50 @@ public class PlayerModel extends Observable {
 
     }
 
+    /**
+     * Gets the owned countries.
+     *
+     * @return the list of array.
+     */
+    public List<CountryModel> getOwnedCountries() {
+        return ownedCountries;
+    }
+
+    /**
+     * Sets the list of array.
+     *
+     * @param ownedCountries the new owned countries
+     */
+    public void setOwnedCountries(List<CountryModel> ownedCountries) {
+        this.ownedCountries = ownedCountries;
+    }
+
+    /**
+     * Gets the owned cards.
+     *
+     * @return the list of array.
+     */
+    public List<CardModel> getOwnedCards() {
+        return ownedCards;
+    }
+
+    /**
+     * Sets the list of array.
+     *
+     * @param ownedCards the new owned cards
+     */
+    public void setOwnedCards(List<CardModel> ownedCards) {
+        this.ownedCards = ownedCards;
+    }
+
+    /**
+     * Attacked.
+     *
+     * @param countryForAddition the country for addition
+     * @return true, if successful
+     */
     public boolean attacked(CountryModel countryForAddition) {
-        this.playerCountries.add(countryForAddition);
+        this.ownedCountries.add(countryForAddition);
         return true;
     }
 
@@ -117,19 +199,57 @@ public class PlayerModel extends Observable {
      * @return true, if successful
      */
     public boolean defend(CountryModel countryForDeduction) {
-        for (int i = 0; i < this.playerCountries.size(); i++) {
-            if (this.playerCountries.get(i).getCountryName().equals(countryForDeduction.getCountryName())) {
-                this.playerCountries.remove(i);
+        for(int i=0; i< this.ownedCountries.size(); i++) {
+            if (this.ownedCountries.get(i).getCountryName().equals(countryForDeduction.getCountryName())) {
+                this.ownedCountries.remove(i);
             }
         }
         return true;
     }
 
     /**
-     * Sets for displaying reinforcement card
+     * Adds the card.
+     *
+     * @param toAddCard the to add card
+     * @return true, if successful
      */
-    public void setReinforcementCard(boolean showReinforcement)
-    {
-        this.showReinforcement = showReinforcement;
+    public boolean addCard(CardModel toAddCard) {
+        this.ownedCards.add(toAddCard);
+        return true;
+    }
+
+    /**
+     * Removes the card.
+     *
+     * @param toRemoveCard the to remove card
+     * @return true, if successful
+     */
+    public boolean removeCard(CardModel toRemoveCard) {
+        boolean returnvalue = false;
+        for(int i=0; i< this.ownedCards.size(); i++) {
+            if (this.ownedCards.get(i).getCardId() == toRemoveCard.getCardId()) {
+                this.ownedCards.remove(i);
+                returnvalue = true;
+            }
+        }
+        return returnvalue;
+    }
+
+    /**
+     * Sets the show reinforcement card.
+     *
+     * @param showReinforcementCard the new show reinforcement card
+     */
+    public void setShowReinforcementCard(boolean showReinforcementCard) {
+        this.showReinforcementCard = showReinforcementCard;
+    }
+
+    /**
+     * Gets the show reinforcement card.
+     *
+     * @return the show reinforcement card
+     */
+    public boolean getShowReinforcementCard() {
+        return this.showReinforcementCard;
     }
 }
