@@ -2,6 +2,7 @@ package com.risk.controller;
 
 import com.risk.model.*;
 import com.risk.utilities.Validation;
+import com.risk.view.NewGameView;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
@@ -159,7 +160,7 @@ public class NewGameController implements ActionListener {
             gamePlayModel.setGameMap(gameMapModel);
             gamePlayModel.setPlayers(listOfPlayers);
             gamePlayModel.setCards(gamePlayModel.getCardFromJSON());
-            new StartUpController(gamePlayModel);
+            new StartupController(gamePlayModel);
             this.theView.dispose();
         } else {
             JOptionPane.showMessageDialog(theView,
