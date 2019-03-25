@@ -1,30 +1,30 @@
 package com.risk.controller;
 
 import java.awt.event.ActionEvent;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.risk.controller.StartBrandNewGameController;
-import com.risk.view.*;
+import com.risk.view.WelcomeScreenView;
 
 /**
- * MainGame is the main class. It represents a welcome window
+ * "WelcomeScreenController" is the main class. It represents a welcome window
  * containing main buttons to edit/create map file and start playing game
  *
- * @author Gursimransingh
+ * @author gursimransingh
  */
-public class MainGame implements ActionListener {
-
+public class WelcomeScreenController implements ActionListener {
     public static void main(String[] args) {
-        new MainGame();
+        new WelcomeScreenController();
     }
 
-    private StartupView theView;
+    private WelcomeScreenView theView;
 
     /**
      * Constructor initializes values and sets the screen too visible
      */
-    public MainGame() {
-        this.theView = new StartupView();
+    public WelcomeScreenController() {
+        this.theView = new WelcomeScreenView();
 
         this.theView.setActionListener(this);
         this.theView.setVisible(true);
@@ -64,7 +64,7 @@ public class MainGame implements ActionListener {
      * show play game window
      */
     private void showPlayGameWindow() {
-        new StartBrandNewGameController();
+        new NewGameController();
         this.theView.dispose();
     }
 
@@ -72,7 +72,7 @@ public class MainGame implements ActionListener {
      * show edit game window
      */
     private void showEditGameWindow() {
-        new MapCreateContinentController();
+        new EditContinentController();
         this.theView.dispose();
     }
 
@@ -80,7 +80,7 @@ public class MainGame implements ActionListener {
      * show create map window
      */
     private void showCreateMapWindow() {
-        new MapCreateContinentController();
+        new CreateContinentController();
         this.theView.dispose();
     }
 }
