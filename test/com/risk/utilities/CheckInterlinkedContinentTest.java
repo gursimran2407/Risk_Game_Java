@@ -1,6 +1,7 @@
 package com.risk.utilities;
 
 import app.model.GameMapModel;
+import com.risk.model.GameMapModel;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -139,7 +139,7 @@ public class ReadFile {
                 }
             }
         }
-        Collection<CountryModel> c = (Collection<CountryModel>) listOfCountries.values();
+        Collection<CountryModel> c = listOfCountries.values();
         listOfCountryModel = new ArrayList<CountryModel>(c);
         return listOfCountryModel;
     }

@@ -16,5 +16,5 @@ public interface View extends Observer {
      *
      * @param actionListener
      */
-    public void setActionListener(ActionListener actionListener);
+    void setActionListener(ActionListener actionListener);
 }

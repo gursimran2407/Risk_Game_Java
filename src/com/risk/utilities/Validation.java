@@ -93,7 +93,6 @@ public class Validation {
         List<ContinentsModel> listOfContinents = mapModel.getContinents();
         List<CountryModel> listOfCountrys = mapModel.getCountries();
         List<String> Countryname = new ArrayList<String>();
-        ;
         int numb;
         boolean emptyLinkContinent = false;
         try
@@ -179,11 +178,8 @@ public class Validation {
             mapOfCountries.put(gameMapModel.getCountries().get(i), i);
         }
 
-        if (isReachable(mapOfCountries.get(fromCountryModel), mapOfCountries.get(toCountryModel), gameMapModel,
-                mapOfCountries)) {
-            return true;
-        }
-        return false;
+        return isReachable(mapOfCountries.get(fromCountryModel), mapOfCountries.get(toCountryModel), gameMapModel,
+                mapOfCountries);
     }
 
     /**
@@ -199,7 +195,7 @@ public class Validation {
     Boolean isReachable(int s, int d, GameMapModel gameMapModel, HashMap<CountryModel, Integer> mapOfCountries) {
         LinkedList<Integer> temp;
 
-        boolean visited[] = new boolean[gameMapModel.getCountries().size()];
+        boolean[] visited = new boolean[gameMapModel.getCountries().size()];
 
         // Create a queue for BFS
         LinkedList<Integer> queue = new LinkedList<Integer>();

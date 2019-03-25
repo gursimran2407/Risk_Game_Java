@@ -632,7 +632,7 @@ public class GamePlayModel extends Observable {
     public int getRandomBetweenRange(double min, double max) {
         int x = (int) ((Math.random() * ((max - min) + 1)) + min);
         return x;
-    };
+    }
 
     /**
      * Method used to notify state change whenever any change is reflected by

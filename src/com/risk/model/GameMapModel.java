@@ -231,7 +231,7 @@ public class GameMapModel extends Observable {
                 if (temp == null) {
                     temp = new ArrayList<CountryModel>();
                 }
-                temp.add((CountryModel) rightModel);
+                temp.add(rightModel);
                 this.getCountries().get(i).setLinkedCountries(temp);
                 this.setLeftModelIndex(i);
             } else if (this.getCountries().get(i).equals(rightModel)) {
@@ -239,7 +239,7 @@ public class GameMapModel extends Observable {
                 if (temp == null) {
                     temp = new ArrayList<CountryModel>();
                 }
-                temp.add((CountryModel) leftModel);
+                temp.add(leftModel);
                 this.getCountries().get(i).setLinkedCountries(temp);
                 this.setRightModelIndex(i);
             }
@@ -262,7 +262,7 @@ public class GameMapModel extends Observable {
                 if (temp == null) {
                     temp = new ArrayList<CountryModel>();
                 }
-                temp.remove((CountryModel) rightModelCountry);
+                temp.remove(rightModelCountry);
                 this.getCountries().get(i).setLinkedCountries(temp);
                 this.setLeftModelIndex(i);
             } else if (this.getCountries().get(i).equals(rightModelCountry)) {
@@ -270,7 +270,7 @@ public class GameMapModel extends Observable {
                 if (temp == null) {
                     temp = new ArrayList<CountryModel>();
                 }
-                temp.remove((CountryModel) leftModelCountry);
+                temp.remove(leftModelCountry);
                 this.getCountries().get(i).setLinkedCountries(temp);
                 this.setRightModelIndex(i);
             }
