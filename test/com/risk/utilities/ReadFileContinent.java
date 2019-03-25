@@ -1,6 +1,6 @@
 package com.risk.utilities;
 
-import app.model.GameMapModel;
+import com.risk.model.GameMapModel;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class ReadFileContinent {
 			return;
 		}
 		this.readFile = new ReadFile();
-		file = new File(Constant.FILE_LOCATION);
+		file = new File(Constant.filePath.toUri());
 		this.readFile.setFile(file);
 		val = new Validation();
 		gameMapModel = new GameMapModel(file);

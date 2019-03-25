@@ -1,8 +1,8 @@
 package com.risk.model;
 
-import app.utilities.Constant;
-import app.utilities.ReadFile;
-import app.utilities.Validation;
+import com.risk.utilities.Constant;
+import com.risk.utilities.ReadFile;
+import com.risk.utilities.Validation;
 import org.json.simple.parser.ParseException;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class GetCards {
 		}
 		// do the setup
 		readFile = new ReadFile();
-		file = new File(Constant.FILE_LOCATION);
+		file = new File(Constant.filePath.toUri());
 		readFile.setFile(file);
 		gameMapModel = new GameMapModel(file);
 		gamePlayModel = new GamePlayModel();

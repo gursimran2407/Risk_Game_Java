@@ -1,6 +1,6 @@
 package com.risk.utilities;
 
-import app.model.GameMapModel;
+import com.risk.model.GameMapModel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,7 +33,7 @@ public class CheckValidMove {
 		}
 		// do the setup
 		readFile = new ReadFile();
-		file = new File(Constant.FILE_LOCATION);
+		file = new File(Constant.filePath.toUri());
 		readFile.setFile(file);
 		val = new Validation();
 		gameMapModel = new GameMapModel(file);

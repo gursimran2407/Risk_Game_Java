@@ -1,8 +1,7 @@
 package com.risk;
 
-import app.junit.model.*;
-import app.junit.utilities.*;
-import app.utilities.*;
+import com.risk.model.*;
+import com.risk.utilities.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;

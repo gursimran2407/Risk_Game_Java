@@ -1,7 +1,7 @@
 package com.risk.model;
 
-import app.utilities.Constant;
-import app.utilities.ReadFile;
+import com.risk.utilities.Constant;
+import com.risk.utilities.ReadFile;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ public class SetNeighbouringCountriesTest {
 	    }
 	    // do the setup
 	    readFile = new ReadFile();
-	    file = new File(Constant.FILE_LOCATION);
+		file = new File(Constant.filePath.toUri());
 	    readFile.setFile(file);
 	    this.continentList = readFile.getMapContinentDetails();
 	    this.countryList = readFile.getMapCountryDetails();

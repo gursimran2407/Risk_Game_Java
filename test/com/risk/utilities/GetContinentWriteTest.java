@@ -1,9 +1,9 @@
 package com.risk.utilities;
 
-import app.model.CountryModel;
-import app.model.GameMapModel;
-import app.model.GamePlayModel;
-import app.model.PlayerModel;
+import com.risk.model.CountryModel;
+import com.risk.model.GameMapModel;
+import com.risk.model.GamePlayModel;
+import com.risk.model.PlayerModel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class GetContinentWriteTest {
 		}
 		// do the setup
 		readFile = new ReadFile();
-		file = new File(Constant.FILE_LOCATION);
+		file = new File(Constant.filePath.toUri());
 		readFile.setFile(file);
 		WriteMap writeMap = new WriteMap();
 		gameMapModel = new GameMapModel(file);
