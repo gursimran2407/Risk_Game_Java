@@ -1,61 +1,141 @@
 package com.risk.controller;
 
-import com.risk.gameplayrequirements.MapValidation;
-import com.risk.model.GamePlayModel;
-import com.risk.model.PlayerModel;
-import com.risk.view.AttackPhaseView;
-import com.risk.view.FortificationView;
-import com.risk.view.ReinforcementView;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import com.risk.model.CardModel;
+import com.risk.model.CountryModel;
+import com.risk.model.GamePlayModel;
+import com.risk.model.PlayerModel;
+import com.risk.utilities.Validation;
+import com.risk.view.AttackView;
+import com.risk.view.FortificationView;
+import com.risk.view.ReinforcementView;
 
 /**
- * The player class in the controller package will facilitate the data flow into the
- * model object and update the view whenever the data is changed.
+ * In PlayerController, the data flow into model object and updates the view
+ * whenever data changes.
  *
- * @author Karan
+ * @author KaranPannu
+ * @version 1.0.0
+ *
  */
-
-/* testing the change*/
 public class PlayerController implements ActionListener, ItemListener {
 
+    /** The game play model. */
     private GamePlayModel gamePlayModel;
-    private ReinforcementView reinforcementViewObj;
-    private FortificationView forticationviewObj;
-    private ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
+
+    /** The reinforcement view. */
+    private ReinforcementView theReinforcementView;
+
+    /** The fortification view. */
+    private FortificationView theFortificationView;
+
+    /** The attack view. */
+    private AttackView theAttackView;
+
+    /** The list of players. */
+    private List<PlayerModel> listOfPlayers = new ArrayList<>();
+
+    /** The no of players. */
     private int noOfPlayers;
-    private MapValidation val = new MapValidation();
-    private AttackPhaseView attackPhaseView;
-    private FortificationView fortificationView;
+
+    /** The val. */
+    private Validation val = new Validation();
 
     /**
-     * Constructor for initializing values and setting the screen visibility
-     * @param gamePlayModel Object of model class
+     * Constructor initializes values and sets the screen too visible.
+     *
+     * @param gamePlayModel the game play model
      */
-    public PlayerController(GamePlayModel gamePlayModel)
-    {
+    public PlayerController(GamePlayModel gamePlayModel) {
+
         this.gamePlayModel = gamePlayModel;
         this.gamePlayModel.getConsoleText()
-                .append("Initiating reinforcement for" + gamePlayModel.getGameMap().getPlayerTurn().getPlayerName());
+                .append("Initiating reinforcement for " + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer());
         reinforcement();
     }
 
     /**
-     * This is the method that is required if we implement the Action Listener. This method will perform the action
-     * after listening to the action event set in the view.
+     * This method is called in reinforcement phase.
      *
-     * @param actionEvent listens to event
+     */
+    private void reinforcement() {
+        this.gamePlayModel.getConsoleText().setLength(0);
+        this.gamePlayModel.callObservers();
+        this.gamePlayModel.getConsoleText()
+                .append("Initiating Reinforcement for " + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer());
+
+        this.gamePlayModel.getGameMap().getPlayerTurn().setremainTroop(this.gamePlayModel.numberOfCountries()
+                + this.gamePlayModel.continentCovered(gamePlayModel.getGameMap().getPlayerTurn()));
+        if (gamePlayModel.getGameMap().getPlayerTurn().getOwnedCards().size() > 0) {
+            this.gamePlayModel.getConsoleText().append("\n Reinforcement View - Please find the list of Cards: \n");
+            for (int i = 0; i < gamePlayModel.getGameMap().getPlayerTurn().getOwnedCards().size(); i++) {
+                this.gamePlayModel.getConsoleText()
+                        .append(gamePlayModel.getGameMap().getPlayerTurn().getOwnedCards().get(i).getCardId() + "\n ");
+            }
+            this.gamePlayModel.getGameMap().getPlayerTurn().setShowReinforcementCard(true);
+        }
+        theReinforcementView = new ReinforcementView(this.gamePlayModel);
+        theReinforcementView.setActionListener(this);
+        theReinforcementView.setVisible(true);
+
+        this.gamePlayModel.getGameMap().addObserver(theReinforcementView);
+        this.gamePlayModel.addObserver(theReinforcementView);
+        for (int i = 0; i < noOfPlayers; i++) {
+            this.listOfPlayers.get(i).addObserver(this.theReinforcementView);
+        }
+
+    }
+
+    /**
+     * This method is called in fortification phase.
+     */
+    private void fortification() {
+        this.gamePlayModel.getConsoleText().setLength(0);
+        this.gamePlayModel.getConsoleText()
+                .append("Initiating Fortification for " + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer());
+
+        theFortificationView = new FortificationView(this.gamePlayModel);
+        theFortificationView.setActionListener(this);
+        theFortificationView.setItemListener(this);
+        theFortificationView.setVisible(true);
+        this.gamePlayModel.addObserver(this.theFortificationView);
+    }
+
+    /**
+     * This method is called in attack phase.
+     */
+    private void attack() {
+        this.gamePlayModel.getConsoleText().setLength(0);
+        this.gamePlayModel.getConsoleText()
+                .append("Initiating " + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer() + "'s attack");
+
+        theAttackView = new AttackView(this.gamePlayModel);
+        this.gamePlayModel.setArmyToMoveText(false);
+        this.gamePlayModel.setCardToBeAssigned(false);
+        theAttackView.setActionListener(this);
+        theAttackView.setVisible(true);
+        this.gamePlayModel.deleteObservers();
+        this.gamePlayModel.addObserver(this.theAttackView);
+    }
+
+    /**
+     * This method performs action, by Listening the action event set in view.
+     *
+     * @param actionEvent the action event
      */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource().equals(this.theReinforcementView.addButton)) {
-            int selectedArmies = 0;
             if (theReinforcementView.numOfTroopsComboBox.getSelectedItem() != null) {
-                selectedArmies = (int) theReinforcementView.numOfTroopsComboBox.getSelectedItem();
+                int selectedArmies = (int) theReinforcementView.numOfTroopsComboBox.getSelectedItem();
                 CountryModel countryName = (CountryModel) theReinforcementView.countryListComboBox.getSelectedItem();
                 System.out.println("countryName" + selectedArmies + countryName);
                 this.gamePlayModel.setSelectedArmiesToCountries(selectedArmies, countryName);
@@ -120,7 +200,7 @@ public class PlayerController implements ActionListener, ItemListener {
             CountryModel defendCountry = (CountryModel) theAttackView.defendCountryListComboBox.getSelectedItem();
             this.gamePlayModel.setDefeatedCountry(defendCountry);
             this.gamePlayModel.singleStrike(attackDice, attackCountry, defendDice, defendCountry);
-            if (val.endOfGame(this.gamePlayModel) == true) {
+            if (val.endOfGame(this.gamePlayModel)) {
                 JOptionPane.showOptionDialog(null, "Bravo! You have won! Game is over!", "Valid",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
                 this.theAttackView.dispose();
@@ -132,7 +212,7 @@ public class PlayerController implements ActionListener, ItemListener {
             CountryModel defendCountry = (CountryModel) theAttackView.defendCountryListComboBox.getSelectedItem();
             this.gamePlayModel.setDefeatedCountry(defendCountry);
             this.gamePlayModel.alloutStrike(attackCountry, defendCountry);
-            if (val.endOfGame(this.gamePlayModel) == true) {
+            if (val.endOfGame(this.gamePlayModel)) {
                 JOptionPane.showOptionDialog(null, "Bravo! You have won! Game is over!", "Valid",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
                 this.theAttackView.dispose();
@@ -151,10 +231,14 @@ public class PlayerController implements ActionListener, ItemListener {
             if (val.checkIfValidMove(this.gamePlayModel.getGameMap(),
                     (CountryModel) this.theFortificationView.fromCountryListComboBox.getSelectedItem(),
                     (CountryModel) this.theFortificationView.toCountryListComboBox.getSelectedItem())) {
-                this.gamePlayModel.getGameMap().setMovingArmies(
-                        (Integer) this.theFortificationView.numOfTroopsComboBox.getSelectedItem(),
-                        (CountryModel) this.theFortificationView.fromCountryListComboBox.getSelectedItem(),
-                        (CountryModel) this.theFortificationView.toCountryListComboBox.getSelectedItem());
+                final CountryModel fromCountry = (CountryModel) this.theFortificationView.fromCountryListComboBox.getSelectedItem();
+                final CountryModel toCountry = (CountryModel) this.theFortificationView.toCountryListComboBox.getSelectedItem();
+                final Integer noOfTroops = (Integer) this.theFortificationView.numOfTroopsComboBox.getSelectedItem();
+
+                this.gamePlayModel.getGameMap().setMovingArmies(noOfTroops, fromCountry, toCountry);
+
+                this.gamePlayModel.getConsoleText().append(
+                        "\n'" + noOfTroops + "' armies moved from country '" + fromCountry + "' to country '" + toCountry + "' \n");
             }
 
             int index = this.gamePlayModel.getGameMap().getPlayerIndex();
@@ -170,7 +254,7 @@ public class PlayerController implements ActionListener, ItemListener {
                 this.gamePlayModel.getGameMap().setPlayerIndex(index);
                 this.gamePlayModel.getPlayers().get(index).callObservers();
             }
-            if (val.endOfGame(this.gamePlayModel) == false) {
+            if (!val.endOfGame(this.gamePlayModel)) {
                 new GamePlayController(this.gamePlayModel);
                 this.theFortificationView.dispose();
             } else {
@@ -184,81 +268,6 @@ public class PlayerController implements ActionListener, ItemListener {
         }
 
     }
-    public void itemStateChanged(ItemEvent itemEvent) {
-        if (itemEvent.getSource().equals(this.fortificationView.fromCountryListComboBox)) {
-            this.gamePlayModel
-                    .setSelectedComboBoxIndex(this.fortificationView.fromCountryListComboBox.getSelectedIndex());
-        }
-    }
-
-    /**
-     * This method will call the reinforcement phase
-     */
-    private void reinforcement()
-    {
-        this.gamePlayModel.getConsoleText().setLength(0);
-        this.gamePlayModel.callObservers();
-        this.gamePlayModel.getConsoleText().
-        append("Initiating reinforcement for" + gamePlayModel.getGameMap().getPlayerTurn().getPlayerName());
-
-        this.gamePlayModel.getGameMap().getPlayerTurn().setRemainingNumberOfArmies(this.gamePlayModel.numberOfCountries()
-        + this.gamePlayModel.continentCovered(gamePlayModel.getGameMap().getPlayerTurn()));
-
-        if(gamePlayModel.getGameMap().getPlayerTurn().getPlayerCards().size() > 0)
-        {
-            this.gamePlayModel.getConsoleText().append("Please fond the list of Cards: Reinforcement View \n");
-            for(int i = 0; i< gamePlayModel.getGameMap().getPlayerTurn().getPlayerCards().size();i++)
-            {
-               this.gamePlayModel.getConsoleText().append(gamePlayModel.getGameMap().getPlayerTurn().getPlayerCards().get(i).getCardId()+ "\n");
-            }
-            this.gamePlayModel.getGameMap().getPlayerTurn().setReinforcementCard(true);
-        }
-        reinforcementViewObj = new ReinforcementView(this.gamePlayModel);
-        reinforcementViewObj.setActionListener(this);
-        reinforcementViewObj.setVisible(true);
-
-        this.gamePlayModel.getGameMap().addObserver(reinforcementViewObj);
-        this.gamePlayModel.addObserver(reinforcementViewObj);
-        for(int i = 0; i< noOfPlayers; i++)
-        {
-            this.listOfPlayers.get(i).addObserver(this.reinforcementViewObj);
-        }
-    }
-
-    /**
-     * This method is to call fortification phase
-     */
-    public void fortification()
-    {
-        this.gamePlayModel.getConsoleText().setLength(0);
-        this.gamePlayModel.getConsoleText().append("Fortification phase initializing" + gamePlayModel.getGameMap().getPlayerTurn().getPlayerName());
-
-        forticationviewObj = new FortificationView(this.gamePlayModel);
-        forticationviewObj.setActionListener(this);
-        forticationviewObj.setItemListener(this);
-        forticationviewObj.setVisible(true);
-        this.gamePlayModel.addObserver(this.forticationviewObj);
-
-
-    }
-
-    /**
-     * This method is to call attack phase
-     */
-    public void attack() {
-        this.gamePlayModel.getConsoleText().setLength(0);
-        this.gamePlayModel.getConsoleText()
-                .append("Initiating " + gamePlayModel.getGameMap().getPlayerTurn().getPlayerName() + "'s attack");
-
-        attackPhaseView = new AttackPhaseView(this.gamePlayModel);
-        this.gamePlayModel.setArmyToMoveText(false);
-        this.gamePlayModel.setCardToBeAssigned(false);
-        attackPhaseView.setActionListener(this);
-        attackPhaseView.setVisible(true);
-        this.gamePlayModel.deleteObservers();
-        this.gamePlayModel.addObserver(this.attackPhaseView);
-    }
-
 
     /**
      * Item Listener.
