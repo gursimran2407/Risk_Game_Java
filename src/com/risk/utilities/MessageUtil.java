@@ -4,7 +4,7 @@ package com.risk.utilities;
 /**
  * This class prints the given message on console.
  *
- * @author  KaranPannu
+ * @author  KaranbirPannu
  */
 public class MessageUtil {
 
