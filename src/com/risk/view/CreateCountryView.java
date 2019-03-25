@@ -1,42 +1,74 @@
 package com.risk.view;
 
-import com.risk.model.CountryModel;
-
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+
+import com.risk.helperInterfaces.View;
+import com.risk.model.ContinentsModel;
+import com.risk.model.CountryModel;
+import com.risk.model.GameMapModel;
+
+
 /**
- * MapCreateCountryView class is representing a view object for creating a country
- * view Properties are labels, text fields, buttons, combo-boxes, a  pane and a panel
+ * "CreateCountryView" class represents a view object for creating a country
+ * view Properties are containing labels, text fields, buttons, combo-boxes, a
+ * pane, and a panel.
  *
- * @author Namita Faujdar
+ * @author KaranPannu
  */
 
-public class MapCreateCountryView extends JFrame implements ViewInterface {
+public class CreateCountryView extends JFrame implements View {
 
-    private JLabel welcomeLabel;
+    /** The welcome label. */
+    public JLabel welcomeLabel;
+
+    /** The country value. */
     public JTextField countryValue;
+
+    /** The continent list combobox. */
     public JComboBox continentListCombobox;
+
+    /** The country list text. */
     private JLabel countryListText;
+
+    /** The continent name label. */
     private JLabel continentNameLabel;
+
+    /** The next button. */
     public JButton nextButton;
+
+    /** The add button. */
     public JButton addButton;
+
+    /** The main panel. */
     private JPanel mainPanel;
+
+    /** The text area. */
     private JTextArea textArea;
 
     /**
-     * It creates country map
+     * Construction of "CreateCountryView".
      *
-     * @param listOfContinents continents list
+     * @param listOfContinents the list of continents
      */
-    public MapCreateCountryView(List<ContinentModel> listOfContinents) {
+    public CreateCountryView(List<ContinentsModel> listOfContinents) {
         this.setTitle("Create Country");
+
         welcomeLabel = new JLabel("Please add the Countries in the Continents you created:");
 
         countryListText = new JLabel("Country");
@@ -56,7 +88,7 @@ public class MapCreateCountryView extends JFrame implements ViewInterface {
 
         textArea = new JTextArea("Default text", 5, 5);
 
-        welcomeLabel = new JLabel("Please add the Countries in the Continents you have created:");
+        welcomeLabel = new JLabel("Please add the Countries in the Continents you created:");
         welcomeLabel.setBounds(100, 0, 600, 100);
 
         countryListText = new JLabel("Country Name: ");
@@ -77,25 +109,23 @@ public class MapCreateCountryView extends JFrame implements ViewInterface {
     }
 
     /**
-     * UpdateScreen pushes screen update after creating a country
+     * Updates the screen after creating a country.
      *
-     * @param listOfContinentModel continents list
-     * @param listOfCountryModel countries list
+     * @param listOfContinentModel the list of continent model
+     * @param listOfCountryModel the list of country model
      */
-    public void updateScreen(List<ContinentModel> listOfContinentModel, List<CountryModel> listOfCountryModel) {
+    private void updateScreen(List<ContinentsModel> listOfContinentModel, List<CountryModel> listOfCountryModel) {
         mainPanel.removeAll();
 
-        Object[] continentListArray;
-        CountryViewRenderer continentViewRenderer;
         StringBuilder textAreaText = new StringBuilder("------------------------------------------------");
 
         if (listOfCountryModel == null) {
             textArea.setText(textAreaText.toString());
         } else {
             textAreaText.setLength(0);
-            for(CountryModel obj : listOfCountryModel){
-                textAreaText.append("Country: " + obj.getCountryName() + " ,Continent: "
-                        + obj.getContinentName() + "\n");
+            for (CountryModel countryModel : listOfCountryModel) {
+                textAreaText.append("Country: " + countryModel.getCountryName() + " ,Continent: "
+                        + countryModel.getcontinentName() + "\n");
             }
         }
         textArea.setText(textAreaText.toString());
@@ -111,9 +141,11 @@ public class MapCreateCountryView extends JFrame implements ViewInterface {
         textArea.setBackground(main); // sets the background color
         textArea.setForeground(secondary);
 
-        continentViewRenderer = new CountryViewRenderer();
-        continentListArray = listOfContinentModel.toArray();
-        continentListCombobox = new JComboBox(continentListArray);
+        /* The continent view renderer. */
+        CountryViewRenderer continentViewRenderer = new CountryViewRenderer();
+        /* The continent list array. */
+        Object[] continentListArray = listOfContinentModel.toArray();
+        continentListCombobox = new JComboBox<>(continentListArray);
 
         if (continentListArray.length > 0) {
             continentListCombobox.setRenderer(continentViewRenderer);
@@ -133,7 +165,10 @@ public class MapCreateCountryView extends JFrame implements ViewInterface {
     }
 
     /**
-     * sets actions to JButton variables
+     * Sets actions to "addButton" and "nextButton".
+     *
+     * @param actionListener the new action listener
+     * @see com.risk.helperInterfaces.View#setActionListener(java.awt.event.ActionListener)
      */
     @Override
     public void setActionListener(ActionListener actionListener) {
@@ -142,30 +177,36 @@ public class MapCreateCountryView extends JFrame implements ViewInterface {
     }
 
     /**
-     * Listens to notifyObservers of Observable classes
+     * Update the view based on observer.
+     *
+     * @param obs the obs
+     * @param arg the arg
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     @Override
     public void update(Observable obs, Object arg) {
-        List<CountryModel> listOfCountryModel = ((MapRiskModel) obs).getCountryModelList();
-        List<ContinentModel> listOfContinentModel = ((MapRiskModel) obs).getContinentModelList();
+        List<CountryModel> listOfCountryModel = ((GameMapModel) obs).getCountries();
+        List<ContinentsModel> listOfContinentModel = ((GameMapModel) obs).getContinents();
         this.updateScreen(listOfContinentModel, listOfCountryModel);
         this.revalidate();
         this.repaint();
     }
 
     /**
-     * Inside, getter method that provides us a map model corresponding to a map name
+     * Inside, getter method that provides us a map model corresponding to a map
+     * name.
      */
     public class CountryViewRenderer extends BasicComboBoxRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
                                                       boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
-            ContinentModel map_model = (ContinentModel) value;
+            ContinentsModel map_model = (ContinentsModel) value;
             if (map_model != null)
                 setText(map_model.getContinentName());
 
             return this;
         }
     }
+
 }

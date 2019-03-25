@@ -1,7 +1,6 @@
 package com.risk.controller;
 
 import com.risk.model.CountryModel;
-import com.risk.view.MapCreateCountryView;
 
 import javax.swing.*;
 import java.awt.*;

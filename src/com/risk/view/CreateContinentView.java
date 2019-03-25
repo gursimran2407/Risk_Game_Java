@@ -1,44 +1,50 @@
 package com.risk.view;
 
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+
+import com.risk.helperInterfaces.View;
+import com.risk.model.ContinentsModel;
+import com.risk.model.GameMapModel;
+
 /**
- * "MapCreateContinentView" class in representing a view object for creating continent
- * These properties are labels, text fields, buttons, a pane, and a panel
+ * "CreateContinentView" class represents a view object for creating continent
+ * Properties are containing labels, text fields, buttons, a pane, and a panel
  *
- * @author gursimransingh
+ * @author KaranPannu
  */
-public class MapCreateContinentView extends JFrame implements ViewInterface {
+
+public class CreateContinentView extends JFrame implements View {
 
     /**
-     * View Properties
+     * Properties of view
      */
-
     public JLabel welcomeLabel;
     public JTextField continentValue;
     public JTextField controlValue;
-    public JLabel continentListText;
-    public JLabel controlValueText;
-    public JLabel controlValueInfoText;
-    public JTextArea observerList;
+    private JLabel continentListText;
+    private JLabel controlValueText;
+    private JLabel controlValueInfoText;
     public JButton nextButton;
     public JButton addButton;
-    public JTextArea consoleTextArea;
-    public JTextArea consoleMainPanel;
-    public JScrollPane consolePanel;
-    public JPanel mainPanel;
-    JTextArea textArea;
+    private JPanel mainPanel;
+    private JTextArea textArea;
 
     /**
      * Construction of CreateContinentView
      */
-    public MapCreateContinentView() {
+    public CreateContinentView() {
         this.setTitle("Create Continent");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(300, 200);
@@ -75,25 +81,25 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
         nextButton = new JButton("Next");
         nextButton.setBounds(200, 300, 100, 40);
 
-        updateUI(null);
+        updateScreen(null);
     }
 
     /**
-     * This method updates view for which continents belong to
+     * Updates view regarding continents belong to
      *
-     * @param listOfContinentModel
+     * @param listOfContinentModel List of continents
      */
-    public void updateUI(List<ContinentModel> listOfContinentModel) {
+    private void updateScreen(List<ContinentsModel> listOfContinentModel) {
 
-        StringBuilder textAreaText = new StringBuilder("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+        StringBuilder textAreaText = new StringBuilder("------------------------------------------------");
 
         if (listOfContinentModel == null) {
             textArea.setText(textAreaText.toString());
         } else {
             textAreaText.setLength(0);
-            for (int i = 0; i < listOfContinentModel.size(); i++) {
-                textAreaText.append("Continent Name : " + listOfContinentModel.get(i).getContinentName()
-                        + " || Control Value : " + listOfContinentModel.get(i).getControlValue() + "\n");
+            for (ContinentsModel continentsModel : listOfContinentModel) {
+                textAreaText.append("Continent name : " + continentsModel.getContinentName()
+                        + " ,Control Value : " + continentsModel.getValueControl() + "\n");
             }
         }
 
@@ -102,10 +108,10 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
         mainPanel.add(textArea);
-        textArea.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "ADDED Continents"));
+        textArea.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "Continents added list:"));
         textArea.setBounds(520, 0, 260, 650);
 
-        Color main = new Color(115, 255, 238);
+        Color main = new Color(230, 230, 255);
         Color secondary = new Color(0, 0, 26);
         textArea.setBackground(main);
         textArea.setForeground(secondary);
@@ -123,7 +129,9 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
     }
 
     /**
-     * sets actions to JButton variables
+     * Sets actions to "addButton" and "nextButton"
+     *
+     * @see app.helper.View#setActionListener(java.awt.event.ActionListener)
      */
     @Override
     public void setActionListener(ActionListener actionListener) {
@@ -132,13 +140,16 @@ public class MapCreateContinentView extends JFrame implements ViewInterface {
     }
 
     /**
-     * Listens to notifyObservers of Observable classes
+     * Update the view based on observer
+     *
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     @Override
     public void update(Observable obs, Object arg) {
-        List<ContinentModel> listOfContinentModel = ((MapRiskModel) obs).getContinentModelList();
-        this.updateUI(listOfContinentModel);
+        List<ContinentsModel> listOfContinentModel = ((GameMapModel) obs).getContinents();
+        this.updateScreen(listOfContinentModel);
         this.revalidate();
         this.repaint();
     }
+
 }
