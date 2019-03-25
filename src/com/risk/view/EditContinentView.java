@@ -1,26 +1,16 @@
 package com.risk.view;
 
 
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.Observable;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
-
 import com.risk.helperInterfaces.View;
 import com.risk.model.ContinentsModel;
 import com.risk.model.GameMapModel;
 
-
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Observable;
 
 /**
  * "EditContinentView" represents a view object for editing a continent It
@@ -31,22 +21,20 @@ import com.risk.model.GameMapModel;
 public class EditContinentView extends JFrame implements View {
 
     public JLabel welcomeLabel;
-    public JLabel continentListText;
+    private JLabel continentListText;
     public JComboBox continentListCombobox;
-    public Object[] continentListArray;
-    public JLabel controlValueText;
+    private JLabel controlValueText;
     public JTextField controlValue;
     public JButton saveButton;
     public JButton addButton;
-    public JPanel welcomePanel;
-    private ContinentViewRenderer continentViewRenderer;
+    private JPanel welcomePanel;
 
     /**
      * Constructor of EditContinentView
      *
-     * @param listOfContinents
+     * @param listOfContinents List of continents
      */
-    public EditContinentView(List<ContinentModel> listOfContinents) {
+    public EditContinentView(List<ContinentsModel> listOfContinents) {
 
         welcomeLabel = new JLabel("Please select the Continents you want in the map and the control value");
 
@@ -72,6 +60,24 @@ public class EditContinentView extends JFrame implements View {
     }
 
     /**
+     * Inner Class Continent View Renderer class that is used to generate a dynamic
+     * combobox
+     */
+    public class ContinentViewRenderer extends BasicComboBoxRenderer {
+
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
+                                                      boolean cellHasFocus) {
+            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+            ContinentsModel map_model = (ContinentsModel) value;
+            if (map_model != null)
+                setText(map_model.getContinentName());
+
+            return this;
+        }
+    }
+
+    /**
      * Sets actions to "addButton" and "saveButton"
      */
     @Override
@@ -87,22 +93,18 @@ public class EditContinentView extends JFrame implements View {
      */
     @Override
     public void update(Observable obs, Object obj) {
-        List<ContinentModel> listOfContinentModel = ((MapRiskModel) obs).getContinentModelList();
+        List<ContinentsModel> listOfContinentModel = ((GameMapModel) obs).getContinents();
         this.updateWindow(listOfContinentModel);
         this.revalidate();
         this.repaint();
     }
 
     /**
-     *
-     */
-
-    /**
      * Updating window components
      *
-     * @param listOfContinentModel
+     * @param listOfContinentModel List of continents
      */
-    private void updateWindow(List<ContinentModel> listOfContinentModel) {
+    private void updateWindow(List<ContinentsModel> listOfContinentModel) {
         welcomePanel.removeAll();
         Font largeFont = new Font("Serif", Font.BOLD, 18);
         Font mediumFont = new Font("Serif", Font.BOLD, 14);
@@ -120,9 +122,9 @@ public class EditContinentView extends JFrame implements View {
         welcomePanel.add(controlValueText);
         controlValueText.setBounds(100, 150, 200, 100);
 
-        continentViewRenderer = new ContinentViewRenderer();
-        continentListArray = listOfContinentModel.toArray();
-        continentListCombobox = new JComboBox(continentListArray);
+        ContinentViewRenderer continentViewRenderer = new ContinentViewRenderer();
+        Object[] continentListArray = listOfContinentModel.toArray();
+        continentListCombobox = new JComboBox<>(continentListArray);
 
         if (continentListArray.length > 0) {
             continentListCombobox.setRenderer(continentViewRenderer);
@@ -141,24 +143,6 @@ public class EditContinentView extends JFrame implements View {
         saveButton.setFont(smallFont);
         welcomePanel.add(saveButton);
         saveButton.setBounds(200, 250, 100, 20);
-    }
-
-    /**
-     * Inner Class Continent View Renderer class that is used to generate a dynamic
-     * combobox
-     */
-    public class ContinentViewRenderer extends BasicComboBoxRenderer {
-
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
-                                                      boolean cellHasFocus) {
-            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-            ContinentModel map_model = (ContinentModel) value;
-            if (map_model != null)
-                setText(map_model.getContinentName());
-
-            return this;
-        }
     }
 
 }
