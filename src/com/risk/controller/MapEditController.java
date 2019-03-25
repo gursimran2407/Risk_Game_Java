@@ -1,8 +1,6 @@
 package com.risk.controller;
 
 import com.risk.gameplayrequirements.MapRead;
-import com.risk.model.ContinentModel;
-import com.risk.model.MapRiskModel;
 import com.risk.view.MapEditView;
 
 import javax.swing.*;

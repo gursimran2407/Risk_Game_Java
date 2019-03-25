@@ -1,9 +1,7 @@
 package com.risk.gameplayrequirements;
 
-import com.risk.model.ContinentModel;
 import com.risk.model.CountryModel;
 import com.risk.model.GamePlayModel;
-import com.risk.model.MapRiskModel;
 
 import java.util.*;
 

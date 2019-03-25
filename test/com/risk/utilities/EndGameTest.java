@@ -6,14 +6,12 @@ import com.risk.gameplayrequirements.MapValidation;
 import com.risk.gameplayrequirements.MessageHelper;
 import com.risk.model.CountryModel;
 import com.risk.model.GamePlayModel;
-import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
 import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 /**

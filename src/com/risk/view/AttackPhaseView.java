@@ -2,7 +2,6 @@ package com.risk.view;
 
 import com.risk.model.CountryModel;
 import com.risk.model.GamePlayModel;
-import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
 
 import javax.swing.*;

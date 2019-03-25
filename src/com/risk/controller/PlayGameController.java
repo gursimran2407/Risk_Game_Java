@@ -2,11 +2,8 @@ package com.risk.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import com.risk.model.GamePlayModel;
-import com.risk.model.MapRiskModel;
-import com.risk.model.PlayerModel;
 
 /**
  * In PlayGameController, the data flow into model object and updates the view

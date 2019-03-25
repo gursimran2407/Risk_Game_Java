@@ -2,7 +2,6 @@ package com.risk.controller;
 
 import com.risk.model.CountryModel;
 import com.risk.model.GamePlayModel;
-import com.risk.model.MapRiskModel;
 import com.risk.model.PlayerModel;
 import com.risk.view.StartupView;
 
