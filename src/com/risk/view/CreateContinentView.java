@@ -111,8 +111,8 @@ public class CreateContinentView extends JFrame implements View {
         textArea.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "Continents added list:"));
         textArea.setBounds(520, 0, 260, 650);
 
-        Color main = new Color(230, 230, 255);
-        Color secondary = new Color(0, 0, 26);
+        Color main = new Color(32, 255, 9);
+        Color secondary = new Color(21, 26, 26);
         textArea.setBackground(main);
         textArea.setForeground(secondary);
 

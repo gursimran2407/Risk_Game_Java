@@ -124,7 +124,7 @@ public class CreateCountryView extends JFrame implements View {
         textArea.setBorder(new TitledBorder(new LineBorder(Color.black, 5), "Countries added list:"));
         textArea.setBounds(520, 0, 260, 650);
 
-        Color main = new Color(230, 230, 255);
+        Color main = new Color(229, 255, 27);
         Color secondary = new Color(0, 0, 26);
         textArea.setBackground(main); // sets the background color
         textArea.setForeground(secondary);
