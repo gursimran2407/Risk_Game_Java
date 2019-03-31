@@ -57,9 +57,109 @@ public class PlayerController implements ActionListener, ItemListener {
     public PlayerController(GamePlayModel gamePlayModel) {
 
         this.gamePlayModel = gamePlayModel;
-        this.gamePlayModel.getConsoleText()
-                .append("Initiating reinforcement for " + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer());
-        reinforcement();
+        if (this.gamePlayModel.getGamePhase() == null) {
+            if (val.endOfGame(this.gamePlayModel) == false) {
+                String PlayerType = this.gamePlayModel.getGameMap().getPlayerTurn().getTypePlayer();
+                if ("Human".equals(PlayerType)) {
+                    this.gamePlayModel.getGameMap().getPlayerTurn()
+                            .setStrategy(new HumanPlayerController(this.gamePlayModel));
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
+                    theReinforcementView = new ReinforcementView(this.gamePlayModel);
+                    theReinforcementView.setVisible(true);
+                    theReinforcementView.setActionListener(this);
+                    this.gamePlayModel.getGameMap().addObserver(theReinforcementView);
+                    this.gamePlayModel.addObserver(theReinforcementView);
+                } else if ("Aggressive".equals(PlayerType)) {
+                    this.gamePlayModel.getGameMap().getPlayerTurn()
+                            .setStrategy(new AgressivePlayerController(this.gamePlayModel));
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
+                } else if ("Benevolent".equals(PlayerType)) {
+                    this.gamePlayModel.getGameMap().getPlayerTurn()
+                            .setStrategy(new BenevolentPlayerController(this.gamePlayModel));
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
+                } else if ("Random".equals(PlayerType)) {
+                    this.gamePlayModel.getGameMap().getPlayerTurn()
+                            .setStrategy(new RandomPlayerController(this.gamePlayModel));
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
+                } else if ("Cheater".equals(PlayerType)) {
+                    this.gamePlayModel.getGameMap().getPlayerTurn()
+                            .setStrategy(new CheaterPlayerController(this.gamePlayModel));
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
+                }
+                if (!"Human".equals(PlayerType)) {
+                    int index = this.gamePlayModel.getGameMap().getPlayerIndex();
+
+                    index++;
+                    if (this.gamePlayModel.getPlayers().size() > index) {
+                        this.gamePlayModel.getGameMap().setPlayerIndex(index);
+                        this.gamePlayModel.getPlayers().get(index).callObservers();
+                    } else {
+                        index = 0;
+                        this.gamePlayModel.getGameMap().setPlayerIndex(index);
+                        this.gamePlayModel.getPlayers().get(index).callObservers();
+                    }
+                    new GamePlayController(this.gamePlayModel);
+                }
+            } else {
+                String nameOfWinner = val.determineWinner(this.gamePlayModel);
+                if ("draw".equals(nameOfWinner)) {
+                    System.out.println(" Game is draw ");
+                    JOptionPane.showOptionDialog(null, "The game is draw", "Valid", JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                } else {
+                    System.out.println(nameOfWinner + " is winner ");
+                    JOptionPane.showOptionDialog(null,
+                            "Bravo! You have won! Game is over!" + nameOfWinner + "is the winner", "Valid",
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                }
+            }
+        } else {
+            String PlayerType = this.gamePlayModel.getGameMap().getPlayerTurn().getTypePlayer();
+            if ("Human".equals(PlayerType)) {
+                this.gamePlayModel.getGameMap().getPlayerTurn()
+                        .setStrategy(new HumanPlayerController(this.gamePlayModel));
+                String Phase = this.gamePlayModel.getGamePhase();
+                if ("Reinforcement".equals(Phase)) {
+                    this.gamePlayModel.getGameMap().getPlayerTurn()
+                            .setStrategy(new HumanPlayerController(this.gamePlayModel));
+                    this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
+                    theReinforcementView = new ReinforcementView(this.gamePlayModel);
+                    theReinforcementView.setVisible(true);
+                    theReinforcementView.setActionListener(this);
+                    this.gamePlayModel.getGameMap().addObserver(theReinforcementView);
+                    this.gamePlayModel.addObserver(theReinforcementView);
+                } else if ("Attack".equals(Phase)) {
+                    theReinforcementView = new ReinforcementView(this.gamePlayModel);
+                    theReinforcementView.dispose();
+                    theAttackView = new AttackView(this.gamePlayModel);
+                    theAttackView.setActionListener(this);
+                    theAttackView.setVisible(true);
+                    this.gamePlayModel.deleteObservers();
+                    this.gamePlayModel.addObserver(this.theAttackView);
+                    this.gamePlayModel.setArmyToMoveText(false);
+                    this.gamePlayModel.setCardToBeAssigned(false);
+                } else if ("Fortification".equals(Phase)) {
+                    theReinforcementView = new ReinforcementView(this.gamePlayModel);
+                    theReinforcementView.dispose();
+                    theAttackView = new AttackView(this.gamePlayModel);
+                    theAttackView.dispose();
+                    theFortificationView = new FortificationView(this.gamePlayModel);
+                    theFortificationView.setActionListener(this);
+                    theFortificationView.setItemListener(this);
+                    theFortificationView.setVisible(true);
+                    this.gamePlayModel.addObserver(this.theFortificationView);
+                }
+            }
+            this.gamePlayModel.setGamePhase(null);
+        }
     }
 
     /**
