@@ -21,38 +21,18 @@ import org.json.simple.parser.JSONParser;
  */
 public class GamePlayModel extends Observable {
 
-    /** The game map model. */
     private GameMapModel gameMapModel;
-
-    /** The players. */
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
-
-    /** The deck. */
     private ArrayList<CardModel> deck = new ArrayList<CardModel>();
-
-    /** to save Selected ComboBox index. */
     private int selectedComboBoxIndex;
-
-    /** to save Selected ComboBox index. */
     private int selectedAttackComboBoxIndex;
-
-    /** to save Selected ComboBox index. */
     private int selectedDefendComboBoxIndex;
-
-    /** The country owned. */
     private boolean countryOwned = false;
-
-    /** The army to move flag. */
     private boolean armyToMoveFlag;
-
-    /** The card to be assigned. */
     private boolean cardToBeAssigned;
-
-    /** The console text. */
     private StringBuilder consoleText;
-
-    /** The defeated country. */
     private CountryModel defeatedCountry;
+    private String gamePhase = null;
 
     /**
      * Constructor.
@@ -91,6 +71,24 @@ public class GamePlayModel extends Observable {
      */
     public void setGameMap(GameMapModel gameMap) {
         this.gameMapModel = gameMap;
+    }
+
+    /**
+     * Gets the gamePhase.
+     *
+     * @return the gamePhase.
+     */
+    public String getGamePhase() {
+        return gamePhase;
+    }
+
+    /**
+     * Sets the gamePhase.
+     *
+     * @param gamePhase
+     */
+    public void setGamePhase(String gamePhase) {
+        this.gamePhase = gamePhase;
     }
 
     /**

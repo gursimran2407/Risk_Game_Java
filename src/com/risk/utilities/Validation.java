@@ -255,5 +255,14 @@ public class Validation {
         return false;
     }
 
+    public String determineWinner(GamePlayModel gamePlayModel) {
+        for (int i = 0; i < gamePlayModel.getPlayers().size(); i++) {
+            if (gamePlayModel.getPlayers().get(i).getOwnedCountries().size() == gamePlayModel.getGameMap()
+                    .getCountries().size()) {
+                return  gamePlayModel.getPlayers().get(i).getNamePlayer();
+            }
+        }
+        return "draw";
+    }
 
 }

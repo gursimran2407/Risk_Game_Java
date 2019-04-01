@@ -1,5 +1,7 @@
 package com.risk.model;
 
+import com.risk.helperInterfaces.Strategy;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,26 +19,15 @@ import java.util.Observable;
  */
 public class PlayerModel extends Observable {
 
-    /** The name player. */
     private String namePlayer;
-
-    /** The my troop. */
     private int myTroop;
-
-    /** The color. */
     private Color color;
-
-    /** The remain troop. */
     private int remainTroop;
-
-    /** The owned countries. */
     private List<CountryModel> ownedCountries  = new ArrayList<>();
-
-    /** The owned cards. */
     private List<CardModel> ownedCards;
-
-    /** The show reinforcement card. */
     private boolean showReinforcementCard;
+    private String playerType;
+    private Strategy strategy;
 
     /**
      * Constructor of PlayerModel.
@@ -48,13 +39,14 @@ public class PlayerModel extends Observable {
      * @param ownedCountries the owned countries
      * @param ownedCards the owned cards
      */
-    public PlayerModel(String namePlayer, int myTroop, Color color, int remainTroop, List ownedCountries, List ownedCards) {
+    public PlayerModel(String namePlayer, String playerType, int myTroop, Color color, int remainTroop, List ownedCountries, List ownedCards) {
         this.namePlayer = namePlayer;
         this.myTroop = myTroop;
         this.color = color;
         this.remainTroop = remainTroop;
         this.ownedCountries = ownedCountries;
         this.ownedCards = ownedCards;
+        this.playerType = playerType;
     }
 
     /**
@@ -62,6 +54,24 @@ public class PlayerModel extends Observable {
      */
     public PlayerModel() {
         // TODO Auto-generated constructor stub
+    }
+
+    /**
+     * Gets the type player.
+     *
+     * @return the player type.
+     */
+    public String getTypePlayer() {
+        return playerType;
+    }
+
+    /**
+     * Sets the Player type.
+     *
+     * @param playerType the new type player
+     */
+    public void setTypePlayer(String playerType) {
+        this.playerType = playerType;
     }
 
     /**
@@ -251,5 +261,18 @@ public class PlayerModel extends Observable {
      */
     public boolean getShowReinforcementCard() {
         return this.showReinforcementCard;
+    }
+
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+    public void executeReinforcement() {
+        this.strategy.reinforcement();
+    }
+    public void executeAttack() {
+        this.strategy.attack();
+    }
+    public void executeFortification() {
+        this.strategy.fortification();
     }
 }
