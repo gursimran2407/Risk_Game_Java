@@ -63,7 +63,7 @@ public class WelcomeScreenController implements ActionListener {
      * show play game window
      */
     private void showPlayGameWindow() {
-        new NewGameController();
+        new GameModeController();
         this.theView.dispose();
     }
 
