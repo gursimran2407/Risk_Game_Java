@@ -31,6 +31,10 @@ public class ContinentsModel {
         this.valueControl = valueControl;
     }
 
+    public ContinentsModel() {
+
+    }
+
     /**
      * Returns the continent name.
      *

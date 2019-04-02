@@ -1,16 +1,18 @@
 package com.risk.model;
 
-import java.awt.List;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Observable;
-
 import com.risk.helperInterfaces.ConstantCard;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Observable;
 
 
 /**
@@ -750,5 +752,29 @@ public class GamePlayModel extends Observable {
             this.setCardToBeAssigned(false);
         }
         return returnValue;
+    }
+
+    public void setSelectedComboBoxIndexRead(int value) {
+    }
+
+    public void setSelectedAttackComboBoxIndexRead(int value) {
+    }
+
+    public void setSelectedDefendComboBoxIndexRead(int value) {
+    }
+
+    public void setCountryOwned(Boolean flag) {
+    }
+
+    public void setArmyToMoveTextRead(Boolean flag) {
+    }
+
+    public Object getCountryOwned() {
+
+        return null;
+    }
+
+    public Object getArmyToMoveFlag() {
+        return null;
     }
 }
