@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AllOutTest {
 
@@ -46,7 +47,9 @@ public class AllOutTest {
 		countryList.add(gameMapModel.getCountries().get(0));
 		countryList.add(gameMapModel.getCountries().get(1));
 
-		countryList.get(0).setArmies(2);
+//		countryList.get(0).setArmies(3);
+		countryList.get(1).setArmies(2);
+
 
 		ArrayList<PlayerModel> pmList = new ArrayList<PlayerModel>();
 
