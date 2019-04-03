@@ -1,9 +1,13 @@
 package com.risk.controller;
 
+import com.risk.model.GamePlayModel;
+import com.risk.utilities.SaveGame;
 import com.risk.view.GameModeView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class GameModeController implements ActionListener {
 
@@ -31,8 +35,26 @@ public class GameModeController implements ActionListener {
         if (actionEvent.getSource().equals(theGameModeView.singleMode)) {
             new NewGameController();
             this.theGameModeView.dispose();
+        } else if (actionEvent.getSource().equals(theGameModeView.tournamentMode)) {
+            new TournmentDetailController();
+            this.theGameModeView.dispose();
+        } else if (actionEvent.getSource().equals(theGameModeView.loadGame)) {
+            int value = theGameModeView.chooseGame.showOpenDialog(theGameModeView);
+            if (value == JFileChooser.APPROVE_OPTION) {
+                try {
+                    File GameFile = theGameModeView.chooseGame.getSelectedFile();
+                    SaveGame readGame = new SaveGame();
+                    GamePlayModel gamePlayModel = readGame.readFROMJSONFile(GameFile);
+                    JOptionPane.showMessageDialog(theGameModeView, "Gane Loaded Successfully!", "Game Loaded",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    new GamePlayController(gamePlayModel);
+                    this.theGameModeView.dispose();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            this.theGameModeView.dispose();
         }
-        //*******************NEED TO START FROM HERE*******************************
     }
 
 }
