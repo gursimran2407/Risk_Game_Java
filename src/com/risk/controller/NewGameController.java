@@ -29,23 +29,13 @@ import com.risk.view.NewGameView;
 
 public class NewGameController implements ActionListener {
 
-    /** The view. */
     private NewGameView theView;
-
-    /** The list of players. */
     private ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
-
-    /** The game map model. */
     private GameMapModel gameMapModel = new GameMapModel();
-
-    /** The game play model. */
     private GamePlayModel gamePlayModel = new GamePlayModel();
-
-    /** The no of players. */
     private int noOfPlayers;
-
-    /** The Player name. */
-    private String PlayerName = "";
+    private String playerName = "";
+    private String playerType = "";
 
     /**
      * Constructor initializes values and sets the screen too visible.
@@ -78,26 +68,18 @@ public class NewGameController implements ActionListener {
                     boolean flag3 = MapValidation.emptyContinentValidation(this.gameMapModel);
                     boolean flag2 = MapValidation.checkInterlinkedContinent(this.gameMapModel);
                     System.out.println(flag1 + " " + flag2 + " " + flag3);
-                    if (!(MapValidation.emptyLinkCountryValidation(this.gameMapModel))) {
-                        if ((!MapValidation.checkInterlinkedContinent(this.gameMapModel))) {
+                    if (!(MapValidation.nonContinentValidation(this.gameMapModel))) {
+                        if (!(MapValidation.emptyLinkCountryValidation(this.gameMapModel))) {
                             if (!(MapValidation.emptyContinentValidation(this.gameMapModel))) {
-                                if (!(MapValidation.unlinkedContinentValidation(this.gameMapModel))) {
 
-                                    System.out.println(" All the map validations are correct");
-                                    try {
-                                        JOptionPane.showMessageDialog(theView,
-                                                "File Loaded Successfully! Click Next to Play!", "Map Loaded",
-                                                JOptionPane.INFORMATION_MESSAGE);
+                                System.out.println(" All the map validations are correct");
+                                try {
+                                    JOptionPane.showMessageDialog(theView,
+                                            "File Loaded Successfully! Click Next to Play!", "Map Loaded",
+                                            JOptionPane.INFORMATION_MESSAGE);
 
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                } else {
-                                    System.out.println("All continents are not linked");
-                                    JOptionPane.showOptionDialog(null, "All continents are not linked", "Invalid",
-                                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                                            new Object[] {}, null);
-
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
 
                             } else {
@@ -107,17 +89,17 @@ public class NewGameController implements ActionListener {
                                         new Object[] {}, null);
                             }
                         } else {
-                            System.out.println("ECheck interlinked Continent validation failed");
-                            JOptionPane.showOptionDialog(null, "Check interlinedContinent validation failed", "Invalid",
+                            System.out.println("Empty continent validation failed");
+                            JOptionPane.showOptionDialog(null, "Empty link country validation failed", "Invalid",
                                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {},
                                     null);
-
                         }
                     } else {
-                        System.out.println("Empty continent validation failed");
-                        JOptionPane.showOptionDialog(null, "Empty link country validation failed", "Invalid",
+                        System.out.println("One of the continent is invalid");
+                        JOptionPane.showOptionDialog(null, "Map is not linked properly", "Invalid",
                                 JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {},
                                 null);
+
                     }
 
                 } catch (Exception e) {
@@ -146,24 +128,65 @@ public class NewGameController implements ActionListener {
     private void playerValidation() throws ParseException {
         if (gameMapModel.getCountries().size() > noOfPlayers) {
             System.out.println("no of players" + noOfPlayers);
+            int h = 1, a = 1, b = 1, r = 1, c = 1;
             for (int i = 0; i < noOfPlayers; i++) {
                 if (i == 0) {
-                    PlayerName = theView.PlayerName1.getText();
+                    playerType = theView.playerType1.getSelectedItem().toString();
+                    playerName = theView.playerName1.getText();
                 } else if (i == 1) {
-                    PlayerName = theView.PlayerName2.getText();
+                    playerType = theView.playerType2.getSelectedItem().toString();
+                    playerName = theView.playerName2.getText();
                 } else if (i == 2) {
-                    PlayerName = theView.PlayerName3.getText();
+                    playerType = theView.playerType3.getSelectedItem().toString();
+                    playerName = theView.playerName3.getText();
                 } else if (i == 3) {
-                    PlayerName = theView.PlayerName4.getText();
+                    playerType = theView.playerType4.getSelectedItem().toString();
+                    playerName = theView.playerName4.getText();
                 } else if (i == 4) {
-                    PlayerName = theView.PlayerName5.getText();
+                    playerType = theView.playerType5.getSelectedItem().toString();
+                    playerName = theView.playerName5.getText();
                 }
-                System.out.println("PlayerName " + PlayerName);
-                if (PlayerName == null || "".equals(PlayerName.trim())) {
-                    PlayerName = "Player " + (i + 1);
+                System.out.println("playerName " + playerName);
+                if (playerType == null || "".equals(playerType.trim())) {
+                    playerType = "Human";
+                    if (playerName == null || "".equals(playerName.trim())) {
+                        playerName = "Human " + h;
+                        h++;
+                    }
+                } else if ("Human".equals(playerType)) {
+                    playerType = "Human";
+                    if (playerName == null || "".equals(playerName.trim())) {
+                        playerName = "Human " + h;
+                        h++;
+                    }
+                } else if ("Aggressive".equals(playerType)) {
+                    playerType = "Aggressive";
+                    if (playerName == null || "".equals(playerName.trim())) {
+                        playerName = "Aggressive " + a;
+                        a++;
+                    }
+                } else if ("Benevolent".equals(playerType)) {
+                    playerType = "Benevolent";
+                    if (playerName == null || "".equals(playerName.trim())) {
+                        playerName = "Benevolent " + b;
+                        b++;
+                    }
+                } else if ("Random".equals(playerType)) {
+                    playerType = "Random";
+                    if (playerName == null || "".equals(playerName.trim())) {
+                        playerName = "Random " + r;
+                        r++;
+                    }
+                } else if ("Cheater".equals(playerType)) {
+                    playerType = "Cheater";
+                    if (playerName == null || "".equals(playerName.trim())) {
+                        playerName = "Cheater " + c;
+                        c++;
+                    }
                 }
-                PlayerModel pm = new PlayerModel(PlayerName, 0, Color.WHITE, 0, new ArrayList<CountryModel>(),
-                        new ArrayList<CardModel>());
+
+                PlayerModel pm = new PlayerModel(playerName, playerType, 0, Color.WHITE, 0,
+                        new ArrayList<CountryModel>(), new ArrayList<CardModel>());
                 listOfPlayers.add(pm);
             }
             gamePlayModel.setGameMap(gameMapModel);
