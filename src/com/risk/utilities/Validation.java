@@ -265,4 +265,50 @@ public class Validation {
         return "draw";
     }
 
+    public boolean nonContinentValidation(GameMapModel mapModel) {
+        int flagIntra = 0;
+        int flagInter = 0;
+
+        for (int i = 0; i < mapModel.getContinents().size(); i++) {
+            for (int j = 0; j < mapModel.getContinents().get(i).getCoveredCountries().size(); j++) {
+                for (int k = 0; k < mapModel.getContinents().get(i).getCoveredCountries().get(j).getLinkedCountries()
+                        .size(); k++) {
+                    try
+                    {
+                        if (mapModel.getContinents().get(i).getCoveredCountries().get(j).getLinkedCountries().get(k)
+                                .getcontinentName()
+                                .equals(mapModel.getContinents().get(i).getCoveredCountries().get(j).getcontinentName())) {
+                            flagIntra++;
+                        } else {
+                            flagInter++;
+                        }
+                    }
+                    catch(Exception E)
+                    {
+                        JOptionPane.showMessageDialog(null,
+                                mapModel.getContinents().get(i).getCoveredCountries().get(j).getLinkedCountries().get(k).getCountryName()+" cannot be linked properly with " + mapModel.getContinents().get(i).getCoveredCountries().get(j).getCountryName(), "Map Loaded",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        return true;
+                    }
+                }
+                if (flagIntra < 1) {
+                    JOptionPane.showMessageDialog(null,
+                            mapModel.getContinents().get(i).getCoveredCountries().get(j)+" does not have a link within its continent!", "Map Loaded",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return true;
+                }
+                flagIntra = 0;
+            }
+            if (flagInter < 1) {
+                JOptionPane.showMessageDialog(null,
+                        mapModel.getContinents().get(i)+" does not have a link with any other continent!", "Map Loaded",
+                        JOptionPane.INFORMATION_MESSAGE);
+                return true;
+
+            }
+            flagInter = 0;
+        }
+        return false;
+    }
+
 }
