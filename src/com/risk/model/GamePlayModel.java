@@ -1,6 +1,7 @@
 package com.risk.model;
 
 import com.risk.helperInterfaces.ConstantCard;
+import com.risk.view.PlayConsoleView;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -35,6 +36,7 @@ public class GamePlayModel extends Observable {
     private StringBuilder consoleText;
     private CountryModel defeatedCountry;
     private String gamePhase = null;
+    private PlayConsoleView playConsoleView;
 
     /**
      * Constructor.
@@ -48,6 +50,8 @@ public class GamePlayModel extends Observable {
         this.players = players;
         this.deck = deck;
         this.consoleText = new StringBuilder("Hello to the Risk Game ! ");
+        this.playConsoleView = new PlayConsoleView(this.playConsoleView);
+        this.playConsoleView.setVisible(true);
     }
 
     /**
@@ -55,6 +59,17 @@ public class GamePlayModel extends Observable {
      */
     public GamePlayModel() {
         this.consoleText = new StringBuilder("Hello to the Risk Game ! ");
+        this.playConsoleView = new PlayConsoleView(this.playConsoleView);
+        this.playConsoleView.setVisible(true);
+        this.playConsoleView.append("I am alive");
+    }
+
+    /**
+     * Gets the console view
+     * @return console view object
+     */
+    public PlayConsoleView getConsole() {
+        return this.playConsoleView;
     }
 
     /**
