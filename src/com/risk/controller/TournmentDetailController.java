@@ -80,9 +80,7 @@ public class TournmentDetailController implements ActionListener {
         this.theTournamentDetailView = new TournamentDetailView();
         this.theTournamentDetailView.setActionListener(this);
         this.theTournamentDetailView.setVisible(true);
-        for (int i = 0; i < 5; i++) {
-            mapFile[i] = null;
-        }
+
     }
 
     @Override
