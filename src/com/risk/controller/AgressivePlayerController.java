@@ -40,9 +40,9 @@ public class AgressivePlayerController implements Strategy {
         this.gamePlayModel = gamePlayModel;
     }
 
-
-
-
+    /**
+     * This method will be called during fortification phase
+     */
     @Override
     public void fortification() {
         this.gamePlayModel.getConsole().append("Agressive - fortification");
@@ -82,8 +82,29 @@ public class AgressivePlayerController implements Strategy {
 
     }
 
+    /**
+     * This method will be called during attack phase
+     */
     @Override
     public void attack() {
+        this.gamePlayModel.getConsole().append("Agressive - attack");
+        this.gamePlayModel.getConsoleText().setLength(0);
+        this.gamePlayModel.getConsoleText()
+                .append("Initiating " + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer() + "'s attack");
+        this.gamePlayModel.setArmyToMoveText(false);
+        this.gamePlayModel.setCardToBeAssigned(false);
+        gamePlayModel.alloutStrike(attackerCountry, defenderCountry);
+        System.out.println("Before moving the attacker has " + attackerCountry.getArmies());
+        System.out.println("Before moving The defender has " + defenderCountry.getArmies());
+        if (attackerCountry.getArmies() > 1) {
+            int low = 1;
+            int high = attackerCountry.getArmies() - 1;
+            int movingArmies = this.gamePlayModel.getRandomBetweenRange(low, high);
+            gamePlayModel.moveArmies(attackerCountry, defenderCountry, movingArmies);
+        }
+        System.out.println("the attacker has " + attackerCountry.getArmies());
+        System.out.println("The defender has " + defenderCountry.getArmies());
+
 
     }
     /**
@@ -131,8 +152,6 @@ public class AgressivePlayerController implements Strategy {
             this.gamePlayModel.getConsole().append(
                     "Attacking from " + attackerCountry.getCountryName() + " to " + defenderCountry.getCountryName());
 
-        }
+            }
         }
 
-    }
-}
