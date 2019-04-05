@@ -10,10 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Observable;
+import java.util.*;
 
 
 /**
@@ -43,7 +40,7 @@ public class GamePlayModel extends Observable {
      *
      * @param gameMap the game map
      * @param players the players
-     * @param deck the deck
+     * @param deck    the deck
      */
     public GamePlayModel(GameMapModel gameMap, ArrayList<PlayerModel> players, ArrayList<CardModel> deck) {
         this.gameMapModel = gameMap;
@@ -66,6 +63,7 @@ public class GamePlayModel extends Observable {
 
     /**
      * Gets the console view
+     *
      * @return console view object
      */
     public PlayConsoleView getConsole() {
@@ -266,7 +264,7 @@ public class GamePlayModel extends Observable {
      * Sets the selected armies to countries.
      *
      * @param selectedArmies the selected armies
-     * @param countryName the country name
+     * @param countryName    the country name
      */
     public void setSelectedArmiesToCountries(int selectedArmies, CountryModel countryName) {
         for (int i = 0; i < this.gameMapModel.getCountries().size(); i++) {
@@ -349,9 +347,9 @@ public class GamePlayModel extends Observable {
     /**
      * Single strike.
      *
-     * @param attackDice the attack dice
+     * @param attackDice    the attack dice
      * @param attackCountry the attack country
-     * @param defendDice the defend dice
+     * @param defendDice    the defend dice
      * @param defendCountry the defend country
      */
     public boolean singleStrike(int attackDice, CountryModel attackCountry, int defendDice, CountryModel defendCountry) {
@@ -410,7 +408,7 @@ public class GamePlayModel extends Observable {
      * Armies deduction.
      *
      * @param countryForDeduction the country for deduction
-     * @param armiesToDeduct the armies to deduct
+     * @param armiesToDeduct      the armies to deduct
      * @return the country model
      */
     public CountryModel armiesDeduction(CountryModel countryForDeduction, int armiesToDeduct) {
@@ -514,8 +512,8 @@ public class GamePlayModel extends Observable {
     /**
      * Move armies.
      *
-     * @param attackCountry the attack country
-     * @param defendCountry the defend country
+     * @param attackCountry       the attack country
+     * @param defendCountry       the defend country
      * @param noOfArmiesToBeMoved the no of armies to be moved
      */
     public boolean moveArmies(CountryModel attackCountry, CountryModel defendCountry, int noOfArmiesToBeMoved) {
@@ -791,5 +789,23 @@ public class GamePlayModel extends Observable {
 
     public Object getArmyToMoveFlag() {
         return null;
+    }
+
+    public ArrayList<CountryModel> descCountry(ArrayList<CountryModel> controlledCountries) {
+        Collections.sort(controlledCountries, new Comparator<CountryModel>() {
+            public int compare(CountryModel s1, CountryModel s2) {
+                return Integer.valueOf(s2.getArmies()).compareTo(s1.getArmies());
+            }
+        });
+        return controlledCountries;
+    }
+
+    public ArrayList<CountryModel> sortCountry(ArrayList<CountryModel> controlledCountries) {
+        Collections.sort(controlledCountries, new Comparator<CountryModel>(){
+            public int compare(CountryModel s1, CountryModel s2) {
+                return Integer.valueOf(s1.getArmies()).compareTo(s2.getArmies());
+            }
+        });
+        return controlledCountries;
     }
 }
