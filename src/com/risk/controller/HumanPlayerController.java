@@ -27,16 +27,9 @@ public class HumanPlayerController implements Strategy {
                 .append("Initiating for " + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer());
     }
 
-    @Override
-    public void fortification() {
-
-    }
-
-    @Override
-    public void attack() {
-
-    }
-
+    /**
+     * reinforcement phase.
+     */
     @Override
     public void reinforcement() {
         System.out.println("Human - reinforcement");
@@ -57,4 +50,34 @@ public class HumanPlayerController implements Strategy {
             this.gamePlayModel.getGameMap().getPlayerTurn().setShowReinforcementCard(true);
         }
     }
+
+    /**
+     * attack phase.
+     */
+    @Override
+    public void attack() {
+        System.out.println("Human - attack");
+        this.gamePlayModel.getConsole()
+                .append("Initiating attack " + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer());
+
+        this.gamePlayModel.getConsoleText().setLength(0);
+        this.gamePlayModel.getConsoleText()
+                .append("Initiating " + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer() + "'s attack");
+    }
+
+    /**
+     * fortification phase
+     */
+    @Override
+    public void fortification() {
+        System.out.println("Human - fortification");
+        this.gamePlayModel.getConsole()
+                .append("Initiating fortification " + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer());
+
+        this.gamePlayModel.getConsoleText().setLength(0);
+        this.gamePlayModel.getConsoleText()
+                .append("Initiating Fortification for " + gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer());
+
+    }
+
 }
