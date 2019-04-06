@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @author gursimransingh
  */
 
-public class TournamentDetailController implements ActionListener {
+public class TournmentDetailController implements ActionListener {
 
     /**
      * The view.
@@ -58,7 +58,7 @@ public class TournamentDetailController implements ActionListener {
     /**
      * Constructor initializes values and sets the screen too visible.
      */
-    public TournamentDetailController() {
+    public TournmentDetailController() {
         this.theTournamentDetailView = new TournamentDetailView();
         this.theTournamentDetailView.setActionListener(this);
         this.theTournamentDetailView.setVisible(true);
