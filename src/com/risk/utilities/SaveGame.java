@@ -1,6 +1,5 @@
 package com.risk.utilities;
 
-import com.beust.jcommander.ParameterException;
 import com.risk.model.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,7 +12,7 @@ import java.lang.reflect.Field;
 
 public class SaveGame {
 
-    public boolean writeTOJSONFile(GamePlayModel gamePlayModel, String fileName) throws IOException, ParameterException {
+    public boolean writeTOJSONFile(GamePlayModel gamePlayModel, String fileName) throws IOException, ParseException {
         File file = new File(System.getProperty("user.dir") + "//mapfiles//" + fileName + ".json");
         try {
 
