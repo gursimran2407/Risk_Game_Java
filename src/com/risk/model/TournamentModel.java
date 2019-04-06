@@ -61,4 +61,13 @@ public class TournamentModel extends Observable {
         notifyObservers(this);
     }
 
+    /**
+     * Gets the game play.
+     *
+     * @return the gamePlayModel.
+     */
+    public ArrayList<GamePlayModel> getGamePlay() {
+        return gamePlayModels;
+    }
+
 }
