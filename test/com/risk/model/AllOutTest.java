@@ -22,8 +22,8 @@ public class AllOutTest {
 	File file;
 	ArrayList<CountryModel> countryList = new ArrayList<CountryModel>();
 	ArrayList<CountryModel> cardList = new ArrayList<CountryModel>();
-	
-	PlayerModel pm = new PlayerModel("X", 0, Color.WHITE, 0, countryList, cardList);
+
+    PlayerModel pm = new PlayerModel("X", "Human", 0, Color.WHITE, 0, countryList, cardList);
 	CardModel card ;
 
 	private static boolean setUpIsDone = false;
