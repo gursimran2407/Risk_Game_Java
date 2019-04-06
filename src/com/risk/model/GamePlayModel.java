@@ -808,4 +808,19 @@ public class GamePlayModel extends Observable {
         });
         return controlledCountries;
     }
+
+    public ArrayList<CountryModel> selectWeakestCountry(ArrayList<CountryModel> ownedCountries) {
+        Collections.sort(ownedCountries, new Comparator<CountryModel>(){
+            public int compare(CountryModel s1, CountryModel s2) {
+                return Integer.valueOf(s1.getArmies()).compareTo(s2.getArmies());
+            }
+        });
+        ArrayList<CountryModel> weakestCounty = new ArrayList<CountryModel>();
+        for (int i =0; i< ownedCountries.size(); i++) {
+            if(ownedCountries.get(0).getArmies() == ownedCountries.get(i).getArmies()) {
+                weakestCounty.add(ownedCountries.get(i));
+            }
+        }
+        return weakestCounty;
+    }
 }
