@@ -16,6 +16,9 @@ public class BenevolentPlayerController implements Strategy {
         this.gamePlayModel = gamePlayModel;
     }
 
+    /**
+     *  reinforcement phase
+     */
     @Override
     public void reinforcement() {
         this.gamePlayModel.getConsole().append("Benevolent - reinforcement");
@@ -53,16 +56,52 @@ public class BenevolentPlayerController implements Strategy {
         }
     }
 
+    /**
+     * attack phase
+     */
     @Override
     public void attack() {
-
+        this.gamePlayModel.getConsole().append("Benevolent - attack");
+        this.gamePlayModel.getConsole().append("Benevolent passes his attack");
     }
 
+    /**
+     * fortification phase
+     */
     @Override
     public void fortification() {
+        this.gamePlayModel.getConsole().append("Benevolent - fortification");
+        ArrayList<CountryModel> listofcountry = this.gamePlayModel
+                .sortCountry((ArrayList<CountryModel>) gamePlayModel.getGameMap().getPlayerTurn().getOwnedCountries());
 
+        // BFS
+        int i = 0;
+        int j = listofcountry.size() - 1;
+        boolean flag = false;
+        int armies;
+        while (flag == false) {
+            if (val.checkIfValidMove(this.gamePlayModel.getGameMap(), listofcountry.get(i), listofcountry.get(j))) {
+                flag = true;
+                armies = listofcountry.get(j).getArmies() - 1;
+                System.out.println("listofcountry " + i + " " + j);
+                this.gamePlayModel.getGameMap().setMovingArmies(armies, listofcountry.get(j), listofcountry.get(i));
+                this.gamePlayModel.getConsole().append("From " + listofcountry.get(j).getCountryName() + " armies "
+                        + armies + " has been moved to " + listofcountry.get(i).getCountryName());
+            }
+            i++;
+            j--;
+            if (i > listofcountry.size() / 2) {
+                flag = true;
+            }
+        }
     }
 
+    /**
+     * gets random number between 2 numbers
+     * @param min minimum
+     * @param max maximum
+     * @return a random number
+     */
     public int getRandomBetweenRange(double min, double max) {
         int x = (int) ((Math.random() * ((max - min) + 1)) + min);
         return x;
