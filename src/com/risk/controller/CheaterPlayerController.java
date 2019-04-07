@@ -9,22 +9,29 @@ import com.risk.utilities.Validation;
  * CheaterPlayerController allows the data flow into model object and updates the view
  * whenever data changes.
  *
- * @author Shriyans
+ * @author KaranPannu
  * @version 1.0
  */
 public class CheaterPlayerController implements Strategy {
 
-    /** The game play model */
+    /**
+     * The game play model
+     */
     private GamePlayModel gamePlayModel;
 
-    /** The validation */
+    /**
+     * The validation
+     */
     private Validation val = new Validation();
 
-    /** The index 1 and index 2 */
+    /**
+     * The index 1 and index 2
+     */
     private int index1, index2;
 
     /**
-     *  Constructor initializes values and sets screen visibility
+     * Constructor initializes values and sets screen visibility
+     *
      * @param gamePlayModel
      */
     public CheaterPlayerController(GamePlayModel gamePlayModel) {
@@ -58,6 +65,10 @@ public class CheaterPlayerController implements Strategy {
         }
 
     }
+
+    /**
+     * This method will be called during attack phase
+     */
 
     @Override
     public void attack() {
@@ -107,13 +118,48 @@ public class CheaterPlayerController implements Strategy {
         }
     }
 
+    /**
+     * This method will be called during reinforcement phase
+     */
+
     @Override
     public void reinforcement() {
+        this.gamePlayModel.getConsole().append("Cheater - reinforcement");
+
+        for (int j = 0; j < this.gamePlayModel.getPlayers().size(); j++) {
+            if (this.gamePlayModel.getPlayers().get(j).getNamePlayer()
+                    .equals(this.gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer())) {
+                for (int i = 0; i < this.gamePlayModel.getPlayers().get(j).getOwnedCountries().size(); i++) {
+                    this.gamePlayModel.getPlayers().get(j).getOwnedCountries().get(i).setArmies(
+                            this.gamePlayModel.getPlayers().get(j).getOwnedCountries().get(i).getArmies() * 2);
+                    this.gamePlayModel.getConsole().append("Country "
+                            + this.gamePlayModel.getPlayers().get(j).getOwnedCountries().get(i).getCountryName()
+                            + " got " + this.gamePlayModel.getPlayers().get(j).getOwnedCountries().get(i).getArmies()
+                            + " armies.");
+                }
+            }
+        }
+        for (int i = 0; i < this.gamePlayModel.getGameMap().getPlayerTurn().getOwnedCountries().size(); i++) {
+            this.gamePlayModel.getGameMap().getPlayerTurn().getOwnedCountries().get(i).setArmies(
+                    this.gamePlayModel.getGameMap().getPlayerTurn().getOwnedCountries().get(i).getArmies() * 2);
+            for (int j = 0; j < this.gamePlayModel.getGameMap().getCountries().size(); j++) {
+                if (this.gamePlayModel.getGameMap().getPlayerTurn().getOwnedCountries().get(i).getCountryName()
+                        .equals(this.gamePlayModel.getGameMap().getCountries().get(j).getCountryName())) {
+                    this.gamePlayModel.getGameMap().getCountries().get(j)
+                            .setArmies(this.gamePlayModel.getGameMap().getCountries().get(j).getArmies() * 2);
+                    this.gamePlayModel.getConsole()
+                            .append("Country " + this.gamePlayModel.getGameMap().getCountries().get(j).getCountryName()
+                                    + " got " + this.gamePlayModel.getGameMap().getCountries().get(j).getArmies()
+                                    + " armies.");
+                }
+            }
+        }
 
     }
 
     /**
      * This method generated random number within two values
+     *
      * @param min
      * @param max
      * @return
@@ -123,6 +169,7 @@ public class CheaterPlayerController implements Strategy {
         int x = (int) ((Math.random() * ((max - min) + 1)) + min);
         return x;
     }
+
     public int indexRandomvalues() {
         boolean flag = false;
         index2 = getRandomBetweenRange(1, this.gamePlayModel.getGameMap().getPlayerTurn().getOwnedCountries().size());
@@ -138,4 +185,5 @@ public class CheaterPlayerController implements Strategy {
             }
         }
         return index2;
+    }
 }
