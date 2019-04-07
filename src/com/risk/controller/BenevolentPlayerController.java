@@ -1,25 +1,42 @@
 package com.risk.controller;
 
+import java.util.ArrayList;
+
 import com.risk.helperInterfaces.Strategy;
 import com.risk.model.CountryModel;
 import com.risk.model.GamePlayModel;
 import com.risk.utilities.Validation;
 
-import java.util.ArrayList;
+/**
+ * This controller as any other controller class in the observer pattern will update the view whenever it is changed and is
+ * responsible for data flow into the model
+ *
+ * @author KaranbirPannu
+ *
+ */
 
 public class BenevolentPlayerController implements Strategy {
 
+    /** The game play model. */
     private GamePlayModel gamePlayModel;
+
+    /** The val. */
     private Validation val = new Validation();
 
+    /**
+     * Constructor initializes values and sets the screen too visible.
+     *
+     * @param gamePlayModel the game play model
+     */
     public BenevolentPlayerController(GamePlayModel gamePlayModel) {
+
         this.gamePlayModel = gamePlayModel;
     }
 
     /**
-     *  reinforcement phase
+     * This method is called in reinforcement phase.
+     *
      */
-    @Override
     public void reinforcement() {
         this.gamePlayModel.getConsole().append("Benevolent - reinforcement");
         this.gamePlayModel.getConsole()
@@ -57,18 +74,8 @@ public class BenevolentPlayerController implements Strategy {
     }
 
     /**
-     * attack phase
+     * This method is called in fortification phase.
      */
-    @Override
-    public void attack() {
-        this.gamePlayModel.getConsole().append("Benevolent - attack");
-        this.gamePlayModel.getConsole().append("Benevolent passes his attack");
-    }
-
-    /**
-     * fortification phase
-     */
-    @Override
     public void fortification() {
         this.gamePlayModel.getConsole().append("Benevolent - fortification");
         ArrayList<CountryModel> listofcountry = this.gamePlayModel
@@ -97,10 +104,19 @@ public class BenevolentPlayerController implements Strategy {
     }
 
     /**
-     * gets random number between 2 numbers
-     * @param min minimum
-     * @param max maximum
-     * @return a random number
+     * This method is called in attack phase.
+     */
+    public void attack() {
+        this.gamePlayModel.getConsole().append("Benevolent - attack");
+        this.gamePlayModel.getConsole().append("Benevolent passes his attack");
+    }
+
+    /**
+     * This method gives the Random generation of numbers within two values.
+     *
+     * @param min the min
+     * @param max the max
+     * @return the random between range
      */
     public int getRandomBetweenRange(double min, double max) {
         int x = (int) ((Math.random() * ((max - min) + 1)) + min);
