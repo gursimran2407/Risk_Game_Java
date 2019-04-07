@@ -1,16 +1,15 @@
 package com.risk.controller;
 
-import java.awt.Color;
+import com.risk.model.CountryModel;
+import com.risk.model.GamePlayModel;
+import com.risk.view.StartUpView;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import com.risk.controller.GamePlayController;
-import com.risk.model.CountryModel;
-import com.risk.model.GamePlayModel;
-import com.risk.view.StartUpView;
 
 /**
  * In StartUpController, the data flow into model object and updates the view
@@ -99,7 +98,7 @@ public class StartupController implements ActionListener {
      *
      * @param gamePlayModel the game play model
      */
-    StartupController(GamePlayModel gamePlayModel) {
+    public StartupController(GamePlayModel gamePlayModel) {
 
         this.gamePlayModel = gamePlayModel;
         noOfPlayers = this.gamePlayModel.getPlayers().size();
@@ -291,7 +290,7 @@ public class StartupController implements ActionListener {
      * Check if the remaining armies allocated to each player has been reached to
      * zero.
      */
-    private void checkForOverallArmies() {
+    public boolean checkForOverallArmies() {
         int numb = 0;
         for (int i = 0; i < this.gamePlayModel.getPlayers().size(); i++) {
             if (this.gamePlayModel.getPlayers().get(i).getremainTroop() != 0) {
@@ -306,6 +305,7 @@ public class StartupController implements ActionListener {
                 this.theStartUpView.dispose();
             }
         }
+        return false;
     }
 
 }
