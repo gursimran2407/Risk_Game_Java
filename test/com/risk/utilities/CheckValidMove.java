@@ -10,7 +10,7 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * CheckValidMove
- * @author team 35
+ * @author shriyans
  *
  */
 public class CheckValidMove {
@@ -24,7 +24,7 @@ public class CheckValidMove {
 	private static boolean setUpIsDone = false;
 
 	/**
-	 * Set up variables
+	 * Setting up variables
 	 */
 	@Before
 	public void setUp() {
@@ -41,7 +41,7 @@ public class CheckValidMove {
 	}
 
 	/**
-	 * Test check valid move
+	 * Test to check valid move
 	 */
 	@Test
 	public void testUnlinkedContinentVAlidation() {

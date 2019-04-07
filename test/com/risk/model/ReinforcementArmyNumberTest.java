@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  * ReinforcementArmyNumberTest
  * 
- * @author team 35
+ * @author gursimransingh
  *
  */
 public class ReinforcementArmyNumberTest {

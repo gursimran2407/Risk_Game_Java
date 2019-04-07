@@ -1,7 +1,6 @@
 package com.risk.utilities;
 
 import com.risk.model.GameMapModel;
-import com.risk.model.GameMapModel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,7 +11,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Class the Inter linked continent
  * 
- * @author suruthi
+ * @author karanpannu
  *
  */
 public class CheckInterlinkedContinentTest {

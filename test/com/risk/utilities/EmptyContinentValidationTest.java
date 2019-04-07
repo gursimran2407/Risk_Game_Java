@@ -10,7 +10,7 @@
 
  /**
   * EmptyContinentValidationTest
-  * @author team 35
+  * @author namita
   *
   */
  public class EmptyContinentValidationTest {

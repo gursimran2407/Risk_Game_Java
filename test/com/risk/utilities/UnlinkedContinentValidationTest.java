@@ -10,7 +10,7 @@
 
  /**
   * UnlinkedContinentValidationTest
-  * @author team 35
+  * @author gursimransingh
   *
   */
  public class UnlinkedContinentValidationTest {

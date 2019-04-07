@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Class for check single strike
  * 
- * @author suruthi
+ * @author shriyans
  *
  */
 

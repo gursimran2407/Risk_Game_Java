@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * SetNeighbouringCountriesTest
- * @author team 35
+ * @author karanpannu
  *
  */
 public class SetNeighbouringCountriesTest {

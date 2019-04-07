@@ -9,7 +9,7 @@ import java.io.File;
 
 /**
  * ReadFileContinent
- * @author team 35
+ * @author karanpannu
  *
  */
 public class ReadFileContinent {
