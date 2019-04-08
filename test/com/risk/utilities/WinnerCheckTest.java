@@ -1,9 +1,9 @@
-package com.risk.model;
+package com.risk.utilities;
 
-import com.risk.utilities.Constant;
-import com.risk.utilities.MessageUtil;
-import com.risk.utilities.ReadFile;
-import com.risk.utilities.Validation;
+import com.risk.model.CountryModel;
+import com.risk.model.GameMapModel;
+import com.risk.model.GamePlayModel;
+import com.risk.model.PlayerModel;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,17 +11,15 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
-public class ReinforcementArmyNumberTest {
-    GameMapModel gameMapModel;
-    GamePlayModel gamePlayModel;
+import static org.junit.Assert.assertEquals;
+
+public class WinnerCheckTest {
+    GameMapModel gameMapModel = new GameMapModel() ;
+    GamePlayModel gamePlayModel = new GamePlayModel();
     Validation val;
     ReadFile readFile;
     File file;
     ArrayList<CountryModel> countryList = new ArrayList<CountryModel>();
-    ArrayList<CountryModel> cardList = new ArrayList<CountryModel>();
-
-    PlayerModel pm = new PlayerModel("X", "Human", 0, Color.WHITE, 0, countryList, cardList);
-    CardModel card ;
 
     private static boolean setUpIsDone = false;
 
@@ -35,8 +33,9 @@ public class ReinforcementArmyNumberTest {
         }
         // do the setup
         readFile = new ReadFile();
-        file = new File(Constant.filePath.toUri());
+        file = new File(String.valueOf(Constant.filePath));
         readFile.setFile(file);
+        val = new Validation();
         gameMapModel = new GameMapModel(file);
         gamePlayModel = new GamePlayModel();
         gamePlayModel.setGameMap(gameMapModel);
@@ -46,26 +45,19 @@ public class ReinforcementArmyNumberTest {
 
         countryList.get(0).setArmies(2);
 
+        PlayerModel pm = new PlayerModel("X", "Human", 0, Color.WHITE, 0, countryList, null);
         ArrayList<PlayerModel> pmList = new ArrayList<PlayerModel>();
 
-        pmList.add(this.pm);
-        gamePlayModel.getCardFromJSON();
-        card = gamePlayModel.getCards().get(0);
-
-
+        pmList.add(pm);
 
         gamePlayModel.setPlayers(pmList);
         setUpIsDone = true;
     }
 
-    /**
-     * Test single strike
-     */
     @Test
-    public void test() {
-        if(gamePlayModel.reinforcementArmies(15) > 0) {
-            MessageUtil msg = new MessageUtil("Number of countries is calculated " );
-        }
+    public void teststartup()
+    {
+        //StartUpController statup = new StartUpController(gamePlayModel);
+        assertEquals("draw",val.determineWinner(gamePlayModel));
     }
-
 }

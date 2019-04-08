@@ -22,6 +22,7 @@ import org.junit.runners.Suite.SuiteClasses;
 				GetArmiesTest.class,
 				MoveDeckTest.class,
 				MovingArmies.class,
+				CheckValidMove.class,
 				ReinforcementArmyNumberTest.class,
 				RemoveCardTest.class,
 				RemoveCountryToDefeaterTest.class,
@@ -32,7 +33,11 @@ import org.junit.runners.Suite.SuiteClasses;
 				GetCountryWriteTest.class,
 				GetCardForPlayerTest.class,
 				GetCards.class,
-				GetPlayerForCountryTest.class
+				GetPlayerForCountryTest.class,
+				StartupTest.class,
+				WinnerCheckTest.class,
+				SaveGameTest.class,
+				LoadGameTest.class
 				})
 
 /**

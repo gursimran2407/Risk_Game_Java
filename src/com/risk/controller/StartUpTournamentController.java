@@ -83,11 +83,6 @@ public class StartUpTournamentController {
      */
     private List<CountryModel> ownedCountry4 = new ArrayList<>();
 
-    /**
-     * Initialization of controller.
-     */
-    public StartUpTournamentController() {
-    }
 
     /**
      * Constructor initializes values and sets the screen too visible.

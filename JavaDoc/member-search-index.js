@@ -20,6 +20,11 @@ memberSearchIndex = [{
     "url": "actionPerformed-java.awt.event.ActionEvent-"
 }, {
     "p": "com.risk.controller",
+    "c": "GameModeController",
+    "l": "actionPerformed(ActionEvent)",
+    "url": "actionPerformed-java.awt.event.ActionEvent-"
+}, {
+    "p": "com.risk.controller",
     "c": "GamePlayController",
     "l": "actionPerformed(ActionEvent)",
     "url": "actionPerformed-java.awt.event.ActionEvent-"
@@ -40,6 +45,11 @@ memberSearchIndex = [{
     "url": "actionPerformed-java.awt.event.ActionEvent-"
 }, {
     "p": "com.risk.controller",
+    "c": "TournmentDetailController",
+    "l": "actionPerformed(ActionEvent)",
+    "url": "actionPerformed-java.awt.event.ActionEvent-"
+}, {
+    "p": "com.risk.controller",
     "c": "WelcomeScreenController",
     "l": "actionPerformed(ActionEvent)",
     "url": "actionPerformed-java.awt.event.ActionEvent-"
@@ -51,11 +61,11 @@ memberSearchIndex = [{
     "p": "com.risk.view",
     "c": "EditContinentView",
     "l": "addButton"
-}, {"p": "com.risk.view", "c": "ReinforcementView", "l": "addButton"}, {
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "addButton"}, {
     "p": "com.risk.view",
-    "c": "StartUpView",
+    "c": "ReinforcementView",
     "l": "addButton"
-}, {
+}, {"p": "com.risk.view", "c": "StartUpView", "l": "addButton"}, {
     "p": "com.risk.model",
     "c": "PlayerModel",
     "l": "addCard(CardModel)",
@@ -64,7 +74,16 @@ memberSearchIndex = [{
     "p": "com.risk.model",
     "c": "AddCountryToAttackerTest",
     "l": "AddCountryToAttackerTest()"
-}, {"p": "com.risk.view", "c": "ReinforcementView", "l": "addMoreButton"}, {
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "addMoreButton"}, {
+    "p": "com.risk.view",
+    "c": "ReinforcementView",
+    "l": "addMoreButton"
+}, {
+    "p": "com.risk.controller",
+    "c": "AgressivePlayerController",
+    "l": "AgressivePlayerController(GamePlayModel)",
+    "url": "AgressivePlayerController-com.risk.model.GamePlayModel-"
+}, {"p": "com.risk.controller", "c": "StartUpTournamentController", "l": "allocateArmies()"}, {
     "p": "com.risk.view",
     "c": "AttackView",
     "l": "alloutButton"
@@ -74,10 +93,31 @@ memberSearchIndex = [{
     "l": "alloutStrike(CountryModel, CountryModel)",
     "url": "alloutStrike-com.risk.model.CountryModel-com.risk.model.CountryModel-"
 }, {"p": "com.risk.model", "c": "AllOutTest", "l": "AllOutTest()"}, {
+    "p": "com.risk.view",
+    "c": "PlayConsoleView",
+    "l": "append(String)",
+    "url": "append-java.lang.String-"
+}, {
     "p": "com.risk.model",
     "c": "GamePlayModel",
     "l": "armiesDeduction(CountryModel, int)",
     "url": "armiesDeduction-com.risk.model.CountryModel-int-"
+}, {
+    "p": "com.risk.controller",
+    "c": "StartUpTournamentController",
+    "l": "assignPlayerModel()"
+}, {"p": "com.risk.controller", "c": "AgressivePlayerController", "l": "attack()"}, {
+    "p": "com.risk.controller",
+    "c": "BenevolentPlayerController",
+    "l": "attack()"
+}, {"p": "com.risk.controller", "c": "CheaterPlayerController", "l": "attack()"}, {
+    "p": "com.risk.controller",
+    "c": "HumanPlayerController",
+    "l": "attack()"
+}, {"p": "com.risk.controller", "c": "RandomPlayerController", "l": "attack()"}, {
+    "p": "com.risk.helperInterfaces",
+    "c": "Strategy",
+    "l": "attack()"
 }, {"p": "com.risk.view", "c": "AttackView", "l": "attackCountryListComboBox"}, {
     "p": "com.risk.model",
     "c": "PlayerModel",
@@ -88,11 +128,28 @@ memberSearchIndex = [{
     "c": "AttackView",
     "l": "AttackView(GamePlayModel)",
     "url": "AttackView-com.risk.model.GamePlayModel-"
-}, {"p": "com.risk.view", "c": "NewGameView", "l": "browseMapButton"}, {
+}, {
+    "p": "com.risk.controller",
+    "c": "BenevolentPlayerController",
+    "l": "BenevolentPlayerController(GamePlayModel)",
+    "url": "BenevolentPlayerController-com.risk.model.GamePlayModel-"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "browseMap1Button"}, {
     "p": "com.risk.view",
-    "c": "AttackView",
+    "c": "TournamentDetailView",
+    "l": "browseMap2Button"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "browseMap3Button"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "browseMap4Button"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "browseMap5Button"}, {
+    "p": "com.risk.view",
+    "c": "NewGameView",
+    "l": "browseMapButton"
+}, {"p": "com.risk.view", "c": "AttackView", "l": "button"}, {
+    "p": "com.risk.view",
+    "c": "FortificationView",
     "l": "button"
-}, {"p": "com.risk.view", "c": "FortificationView", "l": "button"}, {
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "button"}, {
     "p": "com.risk.view",
     "c": "ReinforcementView",
     "l": "button"
@@ -104,7 +161,11 @@ memberSearchIndex = [{
     "p": "com.risk.model",
     "c": "PlayerModel",
     "l": "callObservers()"
-}, {"p": "com.risk.view", "c": "NewGameView", "l": "cancelButton"}, {
+}, {"p": "com.risk.model", "c": "TournamentModel", "l": "callObservers()"}, {
+    "p": "com.risk.view",
+    "c": "NewGameView",
+    "l": "cancelButton"
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "cardIdField"}, {
     "p": "com.risk.view",
     "c": "ReinforcementView",
     "l": "cardIdField"
@@ -113,6 +174,11 @@ memberSearchIndex = [{
     "c": "CardModel",
     "l": "CardModel(int, int)"
 }, {
+    "p": "com.risk.controller",
+    "c": "CheaterPlayerController",
+    "l": "CheaterPlayerController(GamePlayModel)",
+    "url": "CheaterPlayerController-com.risk.model.GamePlayModel-"
+}, {"p": "com.risk.controller", "c": "StartupController", "l": "checkForOverallArmies()"}, {
     "p": "com.risk.model",
     "c": "GameMapModel",
     "l": "checkForRemainArmies(int, List<PlayerModel>)",
@@ -135,16 +201,36 @@ memberSearchIndex = [{
     "p": "com.risk.utilities",
     "c": "CheckValidMove",
     "l": "CheckValidMove()"
-}, {"p": "com.risk.view", "c": "NewGameView", "l": "chooseMap"}, {
+}, {"p": "com.risk.view", "c": "GameModeView", "l": "chooseGame"}, {
+    "p": "com.risk.view",
+    "c": "NewGameView",
+    "l": "chooseMap"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "chooseMap1"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "chooseMap2"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "chooseMap3"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "chooseMap4"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "chooseMap5"}, {
+    "p": "com.risk.view",
+    "c": "PlayConsoleView",
+    "l": "colors"
+}, {
     "p": "com.risk.view",
     "c": "ConnectCountryView",
     "l": "ConnectCountryView(GameMapModel)",
     "url": "ConnectCountryView-com.risk.model.GameMapModel-"
-}, {"p": "com.risk.utilities", "c": "Constant", "l": "Constant()"}, {
-    "p": "com.risk.helperInterfaces",
-    "c": "ConstantCard",
-    "l": "ConstantCard()"
-}, {
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "consoleMainPanel"}, {
+    "p": "com.risk.view",
+    "c": "PlayConsoleView",
+    "l": "consolePanel"
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "consoleTextArea"}, {
+    "p": "com.risk.utilities",
+    "c": "Constant",
+    "l": "Constant()"
+}, {"p": "com.risk.helperInterfaces", "c": "ConstantCard", "l": "ConstantCard()"}, {
     "p": "com.risk.model",
     "c": "GamePlayModel",
     "l": "continentCoverage(ContinentsModel)",
@@ -158,7 +244,7 @@ memberSearchIndex = [{
     "p": "com.risk.view",
     "c": "EditContinentView",
     "l": "continentListCombobox"
-}, {
+}, {"p": "com.risk.model", "c": "ContinentsModel", "l": "ContinentsModel()"}, {
     "p": "com.risk.model",
     "c": "ContinentsModel",
     "l": "ContinentsModel(String, int)",
@@ -173,13 +259,17 @@ memberSearchIndex = [{
     "l": "controlValue"
 }, {"p": "com.risk.model", "c": "GameMapModel", "l": "countriesInContinent()"}, {
     "p": "com.risk.view",
+    "c": "PlayConsoleView",
+    "l": "countryListArray"
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "countryListComboBox"}, {
+    "p": "com.risk.view",
     "c": "ReinforcementView",
     "l": "countryListComboBox"
 }, {"p": "com.risk.view", "c": "StartUpView", "l": "countryListComboBox"}, {
-    "p": "com.risk.model",
-    "c": "CountryModel",
-    "l": "CountryModel()"
-}, {
+    "p": "com.risk.view",
+    "c": "PlayConsoleView",
+    "l": "countryListLabel"
+}, {"p": "com.risk.model", "c": "CountryModel", "l": "CountryModel()"}, {
     "p": "com.risk.model",
     "c": "CountryModel",
     "l": "CountryModel(String, int, int, String, List<CountryModel>, int, String)",
@@ -233,6 +323,16 @@ memberSearchIndex = [{
     "l": "defend(CountryModel)",
     "url": "defend-com.risk.model.CountryModel-"
 }, {"p": "com.risk.view", "c": "AttackView", "l": "defendCountryListComboBox"}, {
+    "p": "com.risk.model",
+    "c": "GamePlayModel",
+    "l": "descCountry(ArrayList<CountryModel>)",
+    "url": "descCountry-java.util.ArrayList-"
+}, {
+    "p": "com.risk.utilities",
+    "c": "Validation",
+    "l": "determineWinner(GamePlayModel)",
+    "url": "determineWinner-com.risk.model.GamePlayModel-"
+}, {
     "p": "com.risk.controller",
     "c": "EditContinentController",
     "l": "EditContinentController()"
@@ -265,14 +365,38 @@ memberSearchIndex = [{
     "l": "endOfGame(GamePlayModel)",
     "url": "endOfGame-com.risk.model.GamePlayModel-"
 }, {"p": "com.risk.utilities", "c": "EndOfGameTest", "l": "EndOfGameTest()"}, {
+    "p": "com.risk.model",
+    "c": "PlayerModel",
+    "l": "executeAttack()"
+}, {"p": "com.risk.model", "c": "PlayerModel", "l": "executeFortification()"}, {
+    "p": "com.risk.model",
+    "c": "PlayerModel",
+    "l": "executeReinforcement()"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "exitButton"}, {
     "p": "com.risk.view",
     "c": "WelcomeScreenView",
     "l": "exitButton"
-}, {"p": "com.risk.view", "c": "ReinforcementView", "l": "exitCardButton"}, {
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "exitCardButton"}, {
+    "p": "com.risk.view",
+    "c": "ReinforcementView",
+    "l": "exitCardButton"
+}, {"p": "com.risk.utilities", "c": "ReadFile", "l": "FILE"}, {
     "p": "com.risk.utilities",
-    "c": "ReadFile",
-    "l": "FILE"
-}, {"p": "com.risk.utilities", "c": "Constant", "l": "filePath"}, {
+    "c": "Constant",
+    "l": "filePath"
+}, {"p": "com.risk.controller", "c": "AgressivePlayerController", "l": "fortification()"}, {
+    "p": "com.risk.controller",
+    "c": "BenevolentPlayerController",
+    "l": "fortification()"
+}, {"p": "com.risk.controller", "c": "CheaterPlayerController", "l": "fortification()"}, {
+    "p": "com.risk.controller",
+    "c": "HumanPlayerController",
+    "l": "fortification()"
+}, {
+    "p": "com.risk.controller",
+    "c": "RandomPlayerController",
+    "l": "fortification()"
+}, {"p": "com.risk.helperInterfaces", "c": "Strategy", "l": "fortification()"}, {
     "p": "com.risk.view",
     "c": "FortificationView",
     "l": "FortificationView(GamePlayModel)",
@@ -294,6 +418,24 @@ memberSearchIndex = [{
     "c": "GameMapModel",
     "l": "GameMapModel(File)",
     "url": "GameMapModel-java.io.File-"
+}, {"p": "com.risk.controller", "c": "GameModeController", "l": "GameModeController()"}, {
+    "p": "com.risk.view",
+    "c": "GameModeView",
+    "l": "gameModeLabel"
+}, {"p": "com.risk.view", "c": "GameModeView", "l": "GameModeView()"}, {
+    "p": "com.risk.controller",
+    "c": "GamePlayController",
+    "l": "gamePlay()"
+}, {
+    "p": "com.risk.controller",
+    "c": "GamePlayController",
+    "l": "GamePlayController(GamePlayModel)",
+    "url": "GamePlayController-com.risk.model.GamePlayModel-"
+}, {
+    "p": "com.risk.controller",
+    "c": "GamePlayController",
+    "l": "GamePlayController(GamePlayModel, int)",
+    "url": "GamePlayController-com.risk.model.GamePlayModel-int-"
 }, {"p": "com.risk.controller", "c": "GamePlayController", "l": "gamePlayModel"}, {
     "p": "com.risk.view",
     "c": "AttackView",
@@ -315,31 +457,35 @@ memberSearchIndex = [{
     "p": "com.risk.model",
     "c": "GetArmiesTest",
     "l": "GetArmiesTest()"
-}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "getArmyToMoveText()"}, {
+}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "getArmyToMoveFlag()"}, {
+    "p": "com.risk.model",
+    "c": "GamePlayModel",
+    "l": "getArmyToMoveText()"
+}, {"p": "com.risk.model", "c": "CountryModel", "l": "getBackgroundColor()"}, {
     "p": "com.risk.model",
     "c": "CountryModel",
-    "l": "getBackgroundColor()"
-}, {"p": "com.risk.model", "c": "CountryModel", "l": "getBorderColor()"}, {
+    "l": "getBorderColor()"
+}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "getCard()"}, {
     "p": "com.risk.model",
-    "c": "GamePlayModel",
-    "l": "getCard()"
-}, {"p": "com.risk.model", "c": "GetCardForPlayerTest", "l": "GetCardForPlayerTest()"}, {
+    "c": "GetCardForPlayerTest",
+    "l": "GetCardForPlayerTest()"
+}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "getCardFromJSON()"}, {
     "p": "com.risk.model",
-    "c": "GamePlayModel",
-    "l": "getCardFromJSON()"
-}, {"p": "com.risk.model", "c": "CardModel", "l": "getCardId()"}, {
+    "c": "CardModel",
+    "l": "getCardId()"
+}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "getCards()"}, {
     "p": "com.risk.model",
-    "c": "GamePlayModel",
-    "l": "getCards()"
-}, {"p": "com.risk.model", "c": "GetCards", "l": "GetCards()"}, {
+    "c": "GetCards",
+    "l": "GetCards()"
+}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "getCardToBeAssigned()"}, {
     "p": "com.risk.model",
-    "c": "GamePlayModel",
-    "l": "getCardToBeAssigned()"
-}, {"p": "com.risk.model", "c": "CardModel", "l": "getCardValue()"}, {
-    "p": "com.risk.model",
-    "c": "PlayerModel",
+    "c": "CardModel",
+    "l": "getCardValue()"
+}, {"p": "com.risk.model", "c": "PlayerModel", "l": "getColor()"}, {
+    "p": "com.risk.utilities",
+    "c": "MapButton",
     "l": "getColor()"
-}, {"p": "com.risk.utilities", "c": "MapButton", "l": "getColor()"}, {
+}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "getConsole()"}, {
     "p": "com.risk.model",
     "c": "GamePlayModel",
     "l": "getConsoleText()"
@@ -369,11 +515,15 @@ memberSearchIndex = [{
     "p": "com.risk.model",
     "c": "CountryModel",
     "l": "getCountryName()"
-}, {"p": "com.risk.utilities", "c": "GetCountryWriteTest", "l": "GetCountryWriteTest()"}, {
+}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "getCountryOwned()"}, {
+    "p": "com.risk.utilities",
+    "c": "GetCountryWriteTest",
+    "l": "GetCountryWriteTest()"
+}, {"p": "com.risk.model", "c": "ContinentsModel", "l": "getCoveredCountries()"}, {
     "p": "com.risk.model",
-    "c": "ContinentsModel",
-    "l": "getCoveredCountries()"
-}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "getDefeatedCountry()"}, {
+    "c": "GamePlayModel",
+    "l": "getDefeatedCountry()"
+}, {
     "p": "com.risk.model",
     "c": "GamePlayModel",
     "l": "getDefendCountryList(CountryModel)",
@@ -382,11 +532,15 @@ memberSearchIndex = [{
     "p": "com.risk.model",
     "c": "GamePlayModel",
     "l": "getGameMap()"
-}, {"p": "com.risk.model", "c": "GameMapModel", "l": "getLeftModelIndex()"}, {
+}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "getGamePhase()"}, {
     "p": "com.risk.model",
-    "c": "CountryModel",
-    "l": "getLinkedCountries()"
-}, {
+    "c": "TournamentModel",
+    "l": "getGamePlay()"
+}, {"p": "com.risk.model", "c": "TournamentModel", "l": "getGamePlayModels()"}, {
+    "p": "com.risk.model",
+    "c": "GameMapModel",
+    "l": "getLeftModelIndex()"
+}, {"p": "com.risk.model", "c": "CountryModel", "l": "getLinkedCountries()"}, {
     "p": "com.risk.view",
     "c": "AttackView.CountryViewRenderer",
     "l": "getListCellRendererComponent(JList, Object, int, boolean, boolean)",
@@ -426,6 +580,10 @@ memberSearchIndex = [{
     "l": "getmyTroop()"
 }, {"p": "com.risk.model", "c": "PlayerModel", "l": "getNamePlayer()"}, {
     "p": "com.risk.model",
+    "c": "TournamentModel",
+    "l": "getNoOfGames()"
+}, {"p": "com.risk.model", "c": "TournamentModel", "l": "getNoOfTurns()"}, {
+    "p": "com.risk.model",
     "c": "PlayerModel",
     "l": "getOwnedCards()"
 }, {"p": "com.risk.model", "c": "PlayerModel", "l": "getOwnedCountries()"}, {
@@ -441,6 +599,22 @@ memberSearchIndex = [{
     "p": "com.risk.model",
     "c": "GameMapModel",
     "l": "getPlayerTurn()"
+}, {
+    "p": "com.risk.controller",
+    "c": "BenevolentPlayerController",
+    "l": "getRandomBetweenRange(double, double)"
+}, {
+    "p": "com.risk.controller",
+    "c": "CheaterPlayerController",
+    "l": "getRandomBetweenRange(double, double)"
+}, {
+    "p": "com.risk.controller",
+    "c": "RandomPlayerController",
+    "l": "getRandomBetweenRange(double, double)"
+}, {
+    "p": "com.risk.controller",
+    "c": "StartUpTournamentController",
+    "l": "getRandomBetweenRange(double, double)"
 }, {"p": "com.risk.model", "c": "GamePlayModel", "l": "getRandomBetweenRange(double, double)"}, {
     "p": "com.risk.model",
     "c": "PlayerModel",
@@ -457,15 +631,36 @@ memberSearchIndex = [{
     "p": "com.risk.model",
     "c": "PlayerModel",
     "l": "getShowReinforcementCard()"
-}, {"p": "com.risk.model", "c": "ContinentsModel", "l": "getValueControl()"}, {
-    "p": "com.risk.utilities",
-    "c": "MapButton",
-    "l": "getxPos()"
-}, {"p": "com.risk.model", "c": "CountryModel", "l": "getXPosition()"}, {
-    "p": "com.risk.utilities",
-    "c": "MapButton",
-    "l": "getyPos()"
-}, {"p": "com.risk.model", "c": "CountryModel", "l": "getYPosition()"}, {
+}, {"p": "com.risk.model", "c": "PlayerModel", "l": "getTypePlayer()"}, {
+    "p": "com.risk.model",
+    "c": "ContinentsModel",
+    "l": "getValueControl()"
+}, {"p": "com.risk.utilities", "c": "MapButton", "l": "getxPos()"}, {
+    "p": "com.risk.model",
+    "c": "CountryModel",
+    "l": "getXPosition()"
+}, {"p": "com.risk.utilities", "c": "MapButton", "l": "getyPos()"}, {
+    "p": "com.risk.model",
+    "c": "CountryModel",
+    "l": "getYPosition()"
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "graphicPanel"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "headerLabel"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "headingMap"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "headPlayerText"
+}, {
+    "p": "com.risk.controller",
+    "c": "HumanPlayerController",
+    "l": "HumanPlayerController(GamePlayModel)",
+    "url": "HumanPlayerController-com.risk.model.GamePlayModel-"
+}, {
+    "p": "com.risk.controller",
+    "c": "CheaterPlayerController",
+    "l": "indexRandomvalues()"
+}, {"p": "com.risk.controller", "c": "RandomPlayerController", "l": "indexRandomvalues()"}, {
     "p": "com.risk.controller",
     "c": "PlayerController",
     "l": "itemStateChanged(ItemEvent)",
@@ -475,16 +670,37 @@ memberSearchIndex = [{
     "c": "AttackView",
     "l": "itemStateChanged(ItemEvent)",
     "url": "itemStateChanged-java.awt.event.ItemEvent-"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "labelMapFile1"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "labelMapFile2"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "labelMapFile3"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "labelMapFile4"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "labelMapFile5"}, {
+    "p": "com.risk.view",
+    "c": "PlayConsoleView",
+    "l": "listOfCountriesLabel"
 }, {"p": "com.risk.view", "c": "ConnectCountryView", "l": "listSelectionModelLeft"}, {
     "p": "com.risk.helperInterfaces",
     "c": "ConstantCard",
     "l": "loadCardsInputStream()"
+}, {"p": "com.risk.view", "c": "GameModeView", "l": "loadGame"}, {
+    "p": "com.risk.utilities",
+    "c": "LoadGameTest",
+    "l": "LoadGameTest()"
 }, {
     "p": "com.risk.controller",
     "c": "WelcomeScreenController",
     "l": "main(String[])",
     "url": "main-java.lang.String:A-"
 }, {"p": "com.risk.utilities", "c": "MapButton", "l": "MapButton()"}, {
+    "p": "com.risk.controller",
+    "c": "TournmentDetailController",
+    "l": "mapVerification(File, int)",
+    "url": "mapVerification-java.io.File-int-"
+}, {
     "p": "com.risk.utilities",
     "c": "MessageUtil",
     "l": "MessageUtil(String)",
@@ -518,17 +734,42 @@ memberSearchIndex = [{
     "p": "com.risk.view",
     "c": "StartUpView",
     "l": "nextButton"
-}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "numberOfCountries()"}, {
+}, {
+    "p": "com.risk.utilities",
+    "c": "Validation",
+    "l": "nonContinentValidation(GameMapModel)",
+    "url": "nonContinentValidation-com.risk.model.GameMapModel-"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "noOfGames"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "noOfGamesLabel"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "noOfMaps"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "noOfMapsLabel"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "noOfPlayers"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "noOfPlayersLabel"
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "noOfTroopsLabel"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "noOfTurnsLabel"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "noOfTurnsText"}, {
+    "p": "com.risk.model",
+    "c": "GamePlayModel",
+    "l": "numberOfCountries()"
+}, {"p": "com.risk.view", "c": "AttackView", "l": "numOfArmiesToBeMovedComboBox"}, {
     "p": "com.risk.view",
     "c": "AttackView",
-    "l": "numOfArmiesToBeMovedComboBox"
-}, {"p": "com.risk.view", "c": "AttackView", "l": "numOfDiceAttackComboBox"}, {
+    "l": "numOfDiceAttackComboBox"
+}, {"p": "com.risk.view", "c": "AttackView", "l": "numOfDiceDefendComboBox"}, {
     "p": "com.risk.view",
-    "c": "AttackView",
-    "l": "numOfDiceDefendComboBox"
-}, {"p": "com.risk.view", "c": "NewGameView", "l": "numOfPlayers"}, {
+    "c": "NewGameView",
+    "l": "numOfPlayers"
+}, {"p": "com.risk.view", "c": "FortificationView", "l": "numOfTroopsComboBox"}, {
     "p": "com.risk.view",
-    "c": "FortificationView",
+    "c": "PlayConsoleView",
     "l": "numOfTroopsComboBox"
 }, {"p": "com.risk.view", "c": "ReinforcementView", "l": "numOfTroopsComboBox"}, {
     "p": "com.risk.view",
@@ -559,6 +800,11 @@ memberSearchIndex = [{
     "c": "StartUpView",
     "l": "paint(Graphics)",
     "url": "paint-java.awt.Graphics-"
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "percentage"}, {
+    "p": "com.risk.view",
+    "c": "PlayConsoleView",
+    "l": "PlayConsoleView(PlayConsoleView)",
+    "url": "PlayConsoleView-com.risk.view.PlayConsoleView-"
 }, {
     "p": "com.risk.controller",
     "c": "PlayerController",
@@ -567,29 +813,79 @@ memberSearchIndex = [{
 }, {"p": "com.risk.model", "c": "PlayerModel", "l": "PlayerModel()"}, {
     "p": "com.risk.model",
     "c": "PlayerModel",
-    "l": "PlayerModel(String, int, Color, int, List, List)",
-    "url": "PlayerModel-java.lang.String-int-java.awt.Color-int-java.util.List-java.util.List-"
-}, {"p": "com.risk.view", "c": "NewGameView", "l": "PlayerName1"}, {
+    "l": "PlayerModel(String, String, int, Color, int, List, List)",
+    "url": "PlayerModel-java.lang.String-java.lang.String-int-java.awt.Color-int-java.util.List-java.util.List-"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "playerName"}, {
     "p": "com.risk.view",
     "c": "NewGameView",
-    "l": "PlayerName2"
-}, {"p": "com.risk.view", "c": "NewGameView", "l": "PlayerName3"}, {
+    "l": "playerName1"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "playerName1"}, {
     "p": "com.risk.view",
     "c": "NewGameView",
-    "l": "PlayerName4"
-}, {"p": "com.risk.view", "c": "NewGameView", "l": "PlayerName5"}, {
+    "l": "playerName2"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "playerName2"}, {
     "p": "com.risk.view",
-    "c": "WelcomeScreenView",
-    "l": "playMapButton"
-}, {"p": "com.risk.utilities", "c": "MessageUtil", "l": "printMessage()"}, {
+    "c": "NewGameView",
+    "l": "playerName3"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "playerName3"}, {
+    "p": "com.risk.view",
+    "c": "NewGameView",
+    "l": "playerName4"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "playerName4"}, {
+    "p": "com.risk.view",
+    "c": "NewGameView",
+    "l": "playerName5"
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "playerName5"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "playerText"
+}, {"p": "com.risk.view", "c": "NewGameView", "l": "playerType1"}, {
+    "p": "com.risk.view",
+    "c": "NewGameView",
+    "l": "playerType2"
+}, {"p": "com.risk.view", "c": "NewGameView", "l": "playerType3"}, {
+    "p": "com.risk.view",
+    "c": "NewGameView",
+    "l": "playerType4"
+}, {"p": "com.risk.view", "c": "NewGameView", "l": "playerType5"}, {
+    "p": "com.risk.controller",
+    "c": "TournmentDetailController",
+    "l": "playerValidation()"
+}, {"p": "com.risk.view", "c": "WelcomeScreenView", "l": "playMapButton"}, {
     "p": "com.risk.utilities",
-    "c": "ReadFile",
-    "l": "ReadFile()"
-}, {"p": "com.risk.utilities", "c": "ReadFileContinent", "l": "ReadFileContinent()"}, {
+    "c": "MessageUtil",
+    "l": "printMessage()"
+}, {
+    "p": "com.risk.controller",
+    "c": "RandomPlayerController",
+    "l": "RandomPlayerController(GamePlayModel)",
+    "url": "RandomPlayerController-com.risk.model.GamePlayModel-"
+}, {"p": "com.risk.utilities", "c": "ReadFile", "l": "ReadFile()"}, {
     "p": "com.risk.utilities",
-    "c": "ReadFileCountry",
-    "l": "ReadFileCountry()"
-}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "reinforcementArmies(int)"}, {
+    "c": "ReadFileContinent",
+    "l": "ReadFileContinent()"
+}, {"p": "com.risk.utilities", "c": "ReadFileCountry", "l": "ReadFileCountry()"}, {
+    "p": "com.risk.utilities",
+    "c": "SaveGame",
+    "l": "readFROMJSONFile(File)",
+    "url": "readFROMJSONFile-java.io.File-"
+}, {"p": "com.risk.controller", "c": "AgressivePlayerController", "l": "reinforcement()"}, {
+    "p": "com.risk.controller",
+    "c": "BenevolentPlayerController",
+    "l": "reinforcement()"
+}, {"p": "com.risk.controller", "c": "CheaterPlayerController", "l": "reinforcement()"}, {
+    "p": "com.risk.controller",
+    "c": "HumanPlayerController",
+    "l": "reinforcement()"
+}, {
+    "p": "com.risk.controller",
+    "c": "RandomPlayerController",
+    "l": "reinforcement()"
+}, {"p": "com.risk.helperInterfaces", "c": "Strategy", "l": "reinforcement()"}, {
+    "p": "com.risk.model",
+    "c": "GamePlayModel",
+    "l": "reinforcementArmies(int)"
+}, {
     "p": "com.risk.model",
     "c": "ReinforcementArmyNumberTest",
     "l": "ReinforcementArmyNumberTest()"
@@ -598,7 +894,11 @@ memberSearchIndex = [{
     "c": "ReinforcementView",
     "l": "ReinforcementView(GamePlayModel)",
     "url": "ReinforcementView-com.risk.model.GamePlayModel-"
-}, {"p": "com.risk.view", "c": "ConnectCountryView", "l": "removeButton"}, {
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "reinnforcementCardLabel"}, {
+    "p": "com.risk.view",
+    "c": "ConnectCountryView",
+    "l": "removeButton"
+}, {
     "p": "com.risk.model",
     "c": "PlayerModel",
     "l": "removeCard(CardModel)",
@@ -624,9 +924,22 @@ memberSearchIndex = [{
     "url": "robinTroopAssignButton-int-java.lang.String-com.risk.model.CountryModel-int-java.util.List-"
 }, {"p": "com.risk.utilities", "c": "MessageUtil", "l": "salutationMessage()"}, {
     "p": "com.risk.view",
-    "c": "ConnectCountryView",
+    "c": "TournamentDetailView",
+    "l": "saveAndPlayButton"
+}, {"p": "com.risk.view", "c": "ConnectCountryView", "l": "saveButton"}, {
+    "p": "com.risk.view",
+    "c": "EditContinentView",
     "l": "saveButton"
-}, {"p": "com.risk.view", "c": "EditContinentView", "l": "saveButton"}, {
+}, {"p": "com.risk.utilities", "c": "SaveGame", "l": "SaveGame()"}, {
+    "p": "com.risk.utilities",
+    "c": "SaveGameTest",
+    "l": "SaveGameTest()"
+}, {
+    "p": "com.risk.model",
+    "c": "GamePlayModel",
+    "l": "selectWeakestCountry(ArrayList<CountryModel>)",
+    "url": "selectWeakestCountry-java.util.ArrayList-"
+}, {
     "p": "com.risk.helperInterfaces",
     "c": "View",
     "l": "setActionListener(ActionListener)",
@@ -663,6 +976,11 @@ memberSearchIndex = [{
     "url": "setActionListener-java.awt.event.ActionListener-"
 }, {
     "p": "com.risk.view",
+    "c": "GameModeView",
+    "l": "setActionListener(ActionListener)",
+    "url": "setActionListener-java.awt.event.ActionListener-"
+}, {
+    "p": "com.risk.view",
     "c": "NewGameView",
     "l": "setActionListener(ActionListener)",
     "url": "setActionListener-java.awt.event.ActionListener-"
@@ -678,6 +996,11 @@ memberSearchIndex = [{
     "url": "setActionListener-java.awt.event.ActionListener-"
 }, {
     "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "setActionListener(ActionListener)",
+    "url": "setActionListener-java.awt.event.ActionListener-"
+}, {
+    "p": "com.risk.view",
     "c": "WelcomeScreenView",
     "l": "setActionListener(ActionListener)",
     "url": "setActionListener-java.awt.event.ActionListener-"
@@ -685,6 +1008,11 @@ memberSearchIndex = [{
     "p": "com.risk.model",
     "c": "GamePlayModel",
     "l": "setArmyToMoveText(boolean)"
+}, {
+    "p": "com.risk.model",
+    "c": "GamePlayModel",
+    "l": "setArmyToMoveTextRead(Boolean)",
+    "url": "setArmyToMoveTextRead-java.lang.Boolean-"
 }, {
     "p": "com.risk.model",
     "c": "CountryModel",
@@ -756,6 +1084,11 @@ memberSearchIndex = [{
     "url": "setCountryName-java.lang.String-"
 }, {
     "p": "com.risk.model",
+    "c": "GamePlayModel",
+    "l": "setCountryOwned(Boolean)",
+    "url": "setCountryOwned-java.lang.Boolean-"
+}, {
+    "p": "com.risk.model",
     "c": "ContinentsModel",
     "l": "setCoveredCountries(CountryModel)",
     "url": "setCoveredCountries-com.risk.model.CountryModel-"
@@ -774,6 +1107,16 @@ memberSearchIndex = [{
     "c": "GamePlayModel",
     "l": "setGameMap(GameMapModel)",
     "url": "setGameMap-com.risk.model.GameMapModel-"
+}, {
+    "p": "com.risk.model",
+    "c": "GamePlayModel",
+    "l": "setGamePhase(String)",
+    "url": "setGamePhase-java.lang.String-"
+}, {
+    "p": "com.risk.model",
+    "c": "TournamentModel",
+    "l": "setGamePlayModels(ArrayList<GamePlayModel>)",
+    "url": "setGamePlayModels-java.util.ArrayList-"
 }, {
     "p": "com.risk.view",
     "c": "FortificationView",
@@ -813,6 +1156,10 @@ memberSearchIndex = [{
     "c": "GameMapModel",
     "l": "setNeighbouringCountry(CountryModel, CountryModel)",
     "url": "setNeighbouringCountry-com.risk.model.CountryModel-com.risk.model.CountryModel-"
+}, {"p": "com.risk.model", "c": "TournamentModel", "l": "setNoOfGames(int)"}, {
+    "p": "com.risk.model",
+    "c": "TournamentModel",
+    "l": "setNoOfTurns(int)"
 }, {
     "p": "com.risk.model",
     "c": "PlayerModel",
@@ -850,11 +1197,25 @@ memberSearchIndex = [{
 }, {"p": "com.risk.model", "c": "GamePlayModel", "l": "setSelectedAttackComboBoxIndex(int)"}, {
     "p": "com.risk.model",
     "c": "GamePlayModel",
-    "l": "setSelectedComboBoxIndex(int)"
+    "l": "setSelectedAttackComboBoxIndexRead(int)"
+}, {"p": "com.risk.model", "c": "GamePlayModel", "l": "setSelectedComboBoxIndex(int)"}, {
+    "p": "com.risk.model",
+    "c": "GamePlayModel",
+    "l": "setSelectedComboBoxIndexRead(int)"
 }, {"p": "com.risk.model", "c": "GamePlayModel", "l": "setSelectedDefendComboBoxIndex(int)"}, {
     "p": "com.risk.model",
+    "c": "GamePlayModel",
+    "l": "setSelectedDefendComboBoxIndexRead(int)"
+}, {"p": "com.risk.model", "c": "PlayerModel", "l": "setShowReinforcementCard(boolean)"}, {
+    "p": "com.risk.model",
     "c": "PlayerModel",
-    "l": "setShowReinforcementCard(boolean)"
+    "l": "setStrategy(Strategy)",
+    "url": "setStrategy-com.risk.helperInterfaces.Strategy-"
+}, {
+    "p": "com.risk.model",
+    "c": "PlayerModel",
+    "l": "setTypePlayer(String)",
+    "url": "setTypePlayer-java.lang.String-"
 }, {"p": "com.risk.model", "c": "AddCardTest", "l": "setUp()"}, {
     "p": "com.risk.model",
     "c": "AddCountryToAttackerTest",
@@ -901,11 +1262,19 @@ memberSearchIndex = [{
     "l": "setUp()"
 }, {"p": "com.risk.utilities", "c": "GetCountryWriteTest", "l": "setUp()"}, {
     "p": "com.risk.utilities",
-    "c": "ReadFileContinent",
+    "c": "LoadGameTest",
     "l": "setUp()"
-}, {"p": "com.risk.utilities", "c": "ReadFileCountry", "l": "setUp()"}, {
+}, {"p": "com.risk.utilities", "c": "ReadFileContinent", "l": "setUp()"}, {
     "p": "com.risk.utilities",
-    "c": "UnlinkedContinentValidationTest",
+    "c": "ReadFileCountry",
+    "l": "setUp()"
+}, {"p": "com.risk.utilities", "c": "SaveGameTest", "l": "setUp()"}, {
+    "p": "com.risk.utilities",
+    "c": "StartupTest",
+    "l": "setUp()"
+}, {"p": "com.risk.utilities", "c": "UnlinkedContinentValidationTest", "l": "setUp()"}, {
+    "p": "com.risk.utilities",
+    "c": "WinnerCheckTest",
     "l": "setUp()"
 }, {"p": "com.risk.model", "c": "ContinentsModel", "l": "setValueControl(int)"}, {
     "p": "com.risk.utilities",
@@ -919,16 +1288,36 @@ memberSearchIndex = [{
     "p": "com.risk.view",
     "c": "AttackView",
     "l": "SingleButton"
-}, {
+}, {"p": "com.risk.view", "c": "GameModeView", "l": "singleMode"}, {
     "p": "com.risk.model",
     "c": "GamePlayModel",
     "l": "singleStrike(int, CountryModel, int, CountryModel)",
     "url": "singleStrike-int-com.risk.model.CountryModel-int-com.risk.model.CountryModel-"
 }, {
+    "p": "com.risk.model",
+    "c": "GamePlayModel",
+    "l": "sortCountry(ArrayList<CountryModel>)",
+    "url": "sortCountry-java.util.ArrayList-"
+}, {
+    "p": "com.risk.controller",
+    "c": "StartupController",
+    "l": "StartupController(GamePlayModel)",
+    "url": "StartupController-com.risk.model.GamePlayModel-"
+}, {"p": "com.risk.utilities", "c": "StartupTest", "l": "StartupTest()"}, {
+    "p": "com.risk.controller",
+    "c": "StartUpTournamentController",
+    "l": "StartUpTournamentController(GamePlayModel, int)",
+    "url": "StartUpTournamentController-com.risk.model.GamePlayModel-int-"
+}, {
     "p": "com.risk.view",
     "c": "StartUpView",
     "l": "StartUpView(GamePlayModel, PlayerModel)",
     "url": "StartUpView-com.risk.model.GamePlayModel-com.risk.model.PlayerModel-"
+}, {
+    "p": "com.risk.utilities",
+    "c": "SaveGame",
+    "l": "stringToColor(String)",
+    "url": "stringToColor-java.lang.String-"
 }, {"p": "com.risk.model", "c": "AddCardTest", "l": "test()"}, {
     "p": "com.risk.model",
     "c": "AddCountryToAttackerTest",
@@ -965,6 +1354,10 @@ memberSearchIndex = [{
     "p": "com.risk.utilities",
     "c": "GetCountryWriteTest",
     "l": "test()"
+}, {"p": "com.risk.utilities", "c": "LoadGameTest", "l": "test()"}, {
+    "p": "com.risk.utilities",
+    "c": "SaveGameTest",
+    "l": "test()"
 }, {
     "p": "com.risk.model",
     "c": "SetNeighbouringCountriesTest",
@@ -973,6 +1366,10 @@ memberSearchIndex = [{
     "p": "com.risk.utilities",
     "c": "ReadFileCountry",
     "l": "testReadFileGetCountry()"
+}, {"p": "com.risk.utilities", "c": "StartupTest", "l": "teststartup()"}, {
+    "p": "com.risk.utilities",
+    "c": "WinnerCheckTest",
+    "l": "teststartup()"
 }, {"p": "com.risk", "c": "TestSuite", "l": "TestSuite()"}, {
     "p": "com.risk.utilities",
     "c": "EmptyLinkCountryValidationTest",
@@ -994,6 +1391,23 @@ memberSearchIndex = [{
     "c": "UnlinkedContinentValidationTest",
     "l": "testUnlinkedContinentVAlidation()"
 }, {"p": "com.risk.view", "c": "FortificationView", "l": "toCountryListComboBox"}, {
+    "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "TournamentDetailView()"
+}, {"p": "com.risk.view", "c": "GameModeView", "l": "tournamentMode"}, {
+    "p": "com.risk.model",
+    "c": "TournamentModel",
+    "l": "TournamentModel()"
+}, {
+    "p": "com.risk.model",
+    "c": "TournamentModel",
+    "l": "TournamentModel(ArrayList<GamePlayModel>, int, int)",
+    "url": "TournamentModel-java.util.ArrayList-int-int-"
+}, {
+    "p": "com.risk.controller",
+    "c": "TournmentDetailController",
+    "l": "TournmentDetailController()"
+}, {
     "p": "com.risk.utilities",
     "c": "Validation",
     "l": "unlinkedContinentValidation(GameMapModel)",
@@ -1034,6 +1448,11 @@ memberSearchIndex = [{
     "url": "update-java.util.Observable-java.lang.Object-"
 }, {
     "p": "com.risk.view",
+    "c": "GameModeView",
+    "l": "update(Observable, Object)",
+    "url": "update-java.util.Observable-java.lang.Object-"
+}, {
+    "p": "com.risk.view",
     "c": "NewGameView",
     "l": "update(Observable, Object)",
     "url": "update-java.util.Observable-java.lang.Object-"
@@ -1049,6 +1468,11 @@ memberSearchIndex = [{
     "url": "update-java.util.Observable-java.lang.Object-"
 }, {
     "p": "com.risk.view",
+    "c": "TournamentDetailView",
+    "l": "update(Observable, Object)",
+    "url": "update-java.util.Observable-java.lang.Object-"
+}, {
+    "p": "com.risk.view",
     "c": "WelcomeScreenView",
     "l": "update(Observable, Object)",
     "url": "update-java.util.Observable-java.lang.Object-"
@@ -1057,7 +1481,7 @@ memberSearchIndex = [{
     "c": "GameMapModel",
     "l": "updateCountries(GameMapModel)",
     "url": "updateCountries-com.risk.model.GameMapModel-"
-}, {
+}, {"p": "com.risk.view", "c": "TournamentDetailView", "l": "validateMapButton"}, {
     "p": "com.risk.utilities",
     "c": "ReadFile",
     "l": "validateReadContinent(List<ContinentsModel>, List<ContinentsModel>)",
@@ -1084,15 +1508,23 @@ memberSearchIndex = [{
     "p": "com.risk.view",
     "c": "FortificationView",
     "l": "welcomeLabel"
-}, {"p": "com.risk.view", "c": "ReinforcementView", "l": "welcomeLabel"}, {
+}, {"p": "com.risk.view", "c": "PlayConsoleView", "l": "welcomeLabel"}, {
     "p": "com.risk.view",
-    "c": "StartUpView",
+    "c": "ReinforcementView",
     "l": "welcomeLabel"
+}, {"p": "com.risk.view", "c": "StartUpView", "l": "welcomeLabel"}, {
+    "p": "com.risk.view",
+    "c": "PlayConsoleView",
+    "l": "welcomePanel"
 }, {
     "p": "com.risk.controller",
     "c": "WelcomeScreenController",
     "l": "WelcomeScreenController()"
 }, {"p": "com.risk.view", "c": "WelcomeScreenView", "l": "WelcomeScreenView()"}, {
+    "p": "com.risk.utilities",
+    "c": "WinnerCheckTest",
+    "l": "WinnerCheckTest()"
+}, {
     "p": "com.risk.model",
     "c": "GamePlayModel",
     "l": "worldCoverage(PlayerModel)",
@@ -1106,4 +1538,9 @@ memberSearchIndex = [{
     "c": "WriteMap",
     "l": "writeMapToFile(String, GameMapModel)",
     "url": "writeMapToFile-java.lang.String-com.risk.model.GameMapModel-"
+}, {
+    "p": "com.risk.utilities",
+    "c": "SaveGame",
+    "l": "writeTOJSONFile(GamePlayModel, String)",
+    "url": "writeTOJSONFile-com.risk.model.GamePlayModel-java.lang.String-"
 }]
