@@ -127,19 +127,7 @@ public class TournmentDetailController implements ActionListener {
             }
         } else if (actionEvent.getSource().equals(theTournamentDetailView.validateMapButton)) {
 
-            noOfMaps = (int) theTournamentDetailView.noOfMaps.getSelectedItem();
-            for (int i = 0; i < noOfMaps; i++) {
-                if (mapFile[i] == null) {
-                    JOptionPane.showOptionDialog(null, "Select the " + (i + 1) + " appropriate maps", "Invalid",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
-                } else {
-                    if (mapVerification(mapFile[i], i)) {
-                        if (noOfMaps == (i + 1)) {
-                            mapLoaded = true;
-                        }
-                    }
-                }
-            }
+            //To be rectified
         }
     }
 
