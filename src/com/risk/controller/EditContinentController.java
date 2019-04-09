@@ -1,20 +1,18 @@
 package com.risk.controller;
 
+import com.risk.model.ContinentsModel;
+import com.risk.model.GameMapModel;
+import com.risk.utilities.ReadFile;
+import com.risk.view.EditContinentView;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileSystemView;
-
-import com.risk.model.ContinentsModel;
-import com.risk.model.GameMapModel;
-import com.risk.utilities.ReadFile;
-import com.risk.view.EditContinentView;
 /**
  * In EditContinentController, the data flow into model object and updates the
  * view whenever data changes.
@@ -60,7 +58,7 @@ public class EditContinentController implements ActionListener {
      *
      * @return File
      */
-    private File selectFile() {
+    public File selectFile() {
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         File file;
         int returnValue = jfc.showOpenDialog(this.editContinentView);

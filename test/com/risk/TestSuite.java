@@ -1,5 +1,7 @@
 package com.risk;
 
+import com.risk.controller.FileSelectionTest;
+import com.risk.controller.SameCountryValidationTest;
 import com.risk.model.*;
 import com.risk.utilities.*;
 import org.junit.runner.RunWith;
@@ -37,7 +39,14 @@ import org.junit.runners.Suite.SuiteClasses;
 				StartupTest.class,
 				WinnerCheckTest.class,
 				SaveGameTest.class,
-				LoadGameTest.class
+				LoadGameTest.class,
+				FileSelectionTest.class,
+				SameCountryValidationTest.class,
+				ContinentCoveredTest.class,
+				DescCountryTest.class,
+				SortCountryTest.class,
+				WeakestCountryTest.class,
+				NonContinentValidationTest.class
 				})
 
 /**

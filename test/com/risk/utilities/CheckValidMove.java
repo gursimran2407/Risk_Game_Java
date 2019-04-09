@@ -1,6 +1,7 @@
 package com.risk.utilities;
 
 import com.risk.model.GameMapModel;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,7 +40,6 @@ public class CheckValidMove {
      */
     @Test
     public void testUnlinkedContinentVAlidation() {
-        assertFalse(val.checkIfValidMove(gameMapModel, gameMapModel.getCountries().get(0),
-                gameMapModel.getCountries().get(1)));
+        Assert.assertEquals(val.checkIfValidMove(gameMapModel, gameMapModel.getCountries().get(0),gameMapModel.getCountries().get(1)));
     }
 }
