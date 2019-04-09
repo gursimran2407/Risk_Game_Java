@@ -62,7 +62,7 @@ public class EndOfGameTest {
 		if(endOfGameFlag) {
 			MessageUtil msg = new MessageUtil("It is an end of game");			
 		}else {
-			MessageUtil msg = new MessageUtil("It is an not an end of game");
+			MessageUtil msg = new MessageUtil("It is not an end of game");
 		}
 	}
 }

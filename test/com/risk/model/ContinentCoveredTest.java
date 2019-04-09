@@ -10,7 +10,7 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ContinentCoveredTest {
     GameMapModel gameMapModel;
@@ -20,6 +20,7 @@ public class ContinentCoveredTest {
     File file;
     ArrayList<CountryModel> countryList = new ArrayList<CountryModel>();
     ArrayList<CountryModel> cardList = new ArrayList<CountryModel>();
+    PlayerModel playerModel;
 
     PlayerModel pm = new PlayerModel("X", "Human", 0, Color.WHITE, 0, countryList, cardList);
     CardModel card ;
@@ -53,7 +54,7 @@ public class ContinentCoveredTest {
         gamePlayModel.getCardFromJSON();
         card = gamePlayModel.getCards().get(0);
 
-
+    playerModel = new PlayerModel("X","Human",0,Color.WHITE,0, countryList,cardList);
 
         gamePlayModel.setPlayers(pmList);
         setUpIsDone = true;
@@ -65,7 +66,8 @@ public class ContinentCoveredTest {
     @Test
     public void testContinentCovered()
     {
-        //  assertFalse(gamePlayModel.continentCovered("X","Human",0,Color.WHITE,0, countryList.get(0),cardList.size()));
+        System.out.println(gamePlayModel.continentCovered(playerModel));
+        assertEquals(0,gamePlayModel.continentCovered(playerModel));
     }
 
 }
