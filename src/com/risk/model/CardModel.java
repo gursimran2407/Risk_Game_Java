@@ -6,9 +6,18 @@ package com.risk.model;
  */
 public class CardModel {
 
+    /** The card id. */
     private int cardId;
+
+    /** The card value. */
     private int cardValue;
 
+    /**
+     * Constructor of CardModel.
+     *
+     * @param cardId    the card id
+     * @param cardValue the card value
+     */
     public CardModel(int cardId, int cardValue) {
         this.cardId = cardId;
         this.cardValue = cardValue;

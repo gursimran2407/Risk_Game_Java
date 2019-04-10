@@ -18,7 +18,7 @@ public class ContinentsModel {
     private int valueControl;
 
     /** The list of countries. */
-    private ArrayList<CountryModel> listOfCountries = new ArrayList<>();
+    private ArrayList<CountryModel> listOfCountries = new ArrayList<CountryModel>();
 
     /**
      * Constructor of ContinentsModel.
@@ -32,7 +32,6 @@ public class ContinentsModel {
     }
 
     public ContinentsModel() {
-
     }
 
     /**

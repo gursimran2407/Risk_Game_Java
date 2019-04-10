@@ -5,11 +5,9 @@ import com.risk.view.PlayConsoleView;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import com.risk.view.*;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 
@@ -21,71 +19,69 @@ import java.util.*;
  */
 public class GamePlayModel extends Observable {
 
-    private GameMapModel gameMapModel;
+    /** The game map model. */
+    private GameMapModel gameMapModel =  new GameMapModel() ;
+
+    /** The players. */
     private ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();
+
+    /** The deck. */
     private ArrayList<CardModel> deck = new ArrayList<CardModel>();
+
+    /** to save Selected ComboBox index. */
     private int selectedComboBoxIndex;
+
+    /** to save Selected ComboBox index. */
     private int selectedAttackComboBoxIndex;
+
+    /** to save Selected ComboBox index. */
     private int selectedDefendComboBoxIndex;
+
+    /** The country owned. */
     private boolean countryOwned = false;
+
+    /** The army to move flag. */
     private boolean armyToMoveFlag;
+
+    /** The card to be assigned. */
     private boolean cardToBeAssigned;
+
+    /** The console text. */
     private StringBuilder consoleText;
-    private CountryModel defeatedCountry;
+
+    /** The defeated country. */
+    private CountryModel defeatedCountry = new CountryModel();
+
+    private PlayConsoleView console;
+
     private String gamePhase = null;
-    private PlayConsoleView playConsoleView;
+
 
     /**
      * Constructor.
      *
      * @param gameMap the game map
      * @param players the players
-     * @param deck    the deck
+     * @param deck the deck
      */
     public GamePlayModel(GameMapModel gameMap, ArrayList<PlayerModel> players, ArrayList<CardModel> deck) {
         this.gameMapModel = gameMap;
         this.players = players;
         this.deck = deck;
         this.consoleText = new StringBuilder("Hello to the Risk Game ! ");
-        this.playConsoleView = new PlayConsoleView(this.playConsoleView);
-        this.playConsoleView.setVisible(true);
+        this.console = new PlayConsoleView();
+        this.console.setVisible(true);
     }
 
     /**
      * Default Constructor.
      */
     public GamePlayModel() {
+        this.gameMapModel = gameMapModel;
         this.consoleText = new StringBuilder("Hello to the Risk Game ! ");
-        this.playConsoleView = new PlayConsoleView(this.playConsoleView);
-        this.playConsoleView.setVisible(true);
-        this.playConsoleView.append("I am alive");
-    }
-
-    /**
-     * Gets the console view
-     *
-     * @return console view object
-     */
-    public PlayConsoleView getConsole() {
-        return this.playConsoleView;
-    }
-
-    /**
-     * Gets the game map.
-     *
-     * @return the gameMap.
-     */
-    public GameMapModel getGameMap() {
-        return gameMapModel;
-    }
-
-    /**
-     * Sets the gameMap Model.
-     *
-     * @param gameMap the new game map
-     */
-    public void setGameMap(GameMapModel gameMap) {
-        this.gameMapModel = gameMap;
+        this.console = new PlayConsoleView();
+        this.console.setVisible(true);
+        this.console.append("I am alive");
     }
 
     /**
@@ -104,6 +100,28 @@ public class GamePlayModel extends Observable {
      */
     public void setGamePhase(String gamePhase) {
         this.gamePhase = gamePhase;
+    }
+
+    /**
+     * Gets the game map.
+     *
+     * @return the gameMap.
+     */
+    public GameMapModel getGameMap() {
+        return gameMapModel;
+    }
+
+    public PlayConsoleView getConsole() {
+        return this.console;
+    }
+
+    /**
+     * Sets the gameMap Model.
+     *
+     * @param gameMap the new game map
+     */
+    public void setGameMap(GameMapModel gameMap) {
+        this.gameMapModel = gameMap;
     }
 
     /**
@@ -134,6 +152,34 @@ public class GamePlayModel extends Observable {
     }
 
     /**
+     * Sets the countryOwned.
+     *
+     * @param countryOwned
+     * @return
+     */
+    public void setCountryOwned(Boolean countryOwned) {
+        this.countryOwned = countryOwned;
+    }
+
+    /**
+     * Gets the countryOwned.
+     *
+     * @return the countryOwned
+     */
+    public Boolean getCountryOwned() {
+        return this.countryOwned;
+    }
+
+    /**
+     * Gets the armyToMoveFlag.
+     *
+     * @return the defeated country
+     */
+    public Boolean getArmyToMoveFlag() {
+        return this.armyToMoveFlag;
+    }
+
+    /**
      * Gets the defeated country.
      *
      * @return the defeated country
@@ -148,30 +194,26 @@ public class GamePlayModel extends Observable {
      * @return the list of card.
      */
     public ArrayList<CardModel> getCardFromJSON() throws org.json.simple.parser.ParseException {
-        InputStream cardsIn = null;
-
         try {
-            cardsIn = ConstantCard.loadCardsInputStream();
-
             JSONParser parser = new JSONParser();
-            Object cards = parser.parse(new InputStreamReader(cardsIn));
+            Object cards = parser.parse(new FileReader(
+                    System.getProperty("user.dir") + "/OnlineRiskGame/src/app/helper/ConstantCard.json"));
             JSONObject jsonObject = (JSONObject) cards;
             System.out.println("jsonObject " + jsonObject.get("cards"));
             JSONArray cardsJSON = (JSONArray) jsonObject.get("cards");
+            Long lvalue;
+            int value;
 
-            int i = 0;
             for (Object o : cardsJSON) {
-                JSONObject card = (JSONObject) o;
-
                 CardModel cardModel = new CardModel();
+                JSONObject card = (JSONObject) o;
+                lvalue = (Long) card.get("cardId");
+                value = lvalue.intValue();
+                cardModel.setCardId(value);
 
-                int cardId = Integer.parseInt((String) card.get("cardId"));
-                System.out.println("cardId " + cardId);
-                cardModel.setCardId(cardId);
-
-                int cardValue = Integer.parseInt((String) card.get("cardValue"));
-                System.out.println("cardValue " + cardValue);
-                cardModel.setCardValue(cardValue);
+                lvalue = (Long) card.get("cardValue");
+                value = lvalue.intValue();
+                cardModel.setCardValue(value);
                 this.deck.add(cardModel);
             }
             //Collections.shuffle(this.deck);
@@ -179,14 +221,6 @@ public class GamePlayModel extends Observable {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (cardsIn != null) {
-                try {
-                    cardsIn.close();
-                } catch (IOException e) {
-                    // Skip
-                }
-            }
         }
 
         return this.deck;
@@ -264,7 +298,7 @@ public class GamePlayModel extends Observable {
      * Sets the selected armies to countries.
      *
      * @param selectedArmies the selected armies
-     * @param countryName    the country name
+     * @param countryName the country name
      */
     public void setSelectedArmiesToCountries(int selectedArmies, CountryModel countryName) {
         for (int i = 0; i < this.gameMapModel.getCountries().size(); i++) {
@@ -347,9 +381,9 @@ public class GamePlayModel extends Observable {
     /**
      * Single strike.
      *
-     * @param attackDice    the attack dice
+     * @param attackDice the attack dice
      * @param attackCountry the attack country
-     * @param defendDice    the defend dice
+     * @param defendDice the defend dice
      * @param defendCountry the defend country
      */
     public boolean singleStrike(int attackDice, CountryModel attackCountry, int defendDice, CountryModel defendCountry) {
@@ -365,12 +399,10 @@ public class GamePlayModel extends Observable {
         Arrays.sort(attackDiceRoll, Collections.reverseOrder());
         Arrays.sort(defendDiceRoll, Collections.reverseOrder());
         System.out.println(Arrays.toString(attackDiceRoll));
-        System.out.println(Arrays.toString(defendDiceRoll));
-
-        this.consoleText.append(
-                "\nCountry '" + attackCountry.getCountryName() + "' attacks country '" + defendCountry.getCountryName() + "' \n");
-        this.consoleText.append("\nAttack country dice " + Arrays.toString(attackDiceRoll) + " \n");
+        this.consoleText.append("\n Attack country dice " + Arrays.toString(attackDiceRoll) + " \n");
         this.consoleText.append("Defender country dice " + Arrays.toString(defendDiceRoll) + " \n");
+        this.console.append("\n Attack country dice " + Arrays.toString(attackDiceRoll) + " \n");
+        this.console.append("Defender country dice " + Arrays.toString(defendDiceRoll) + " \n");
         for (int i = 0; i < defendDice; i++) {
             if (attackDiceRoll[i] > defendDiceRoll[i]) {
                 armiesDeduction(defendCountry, 1);
@@ -380,7 +412,7 @@ public class GamePlayModel extends Observable {
                 returnValue = true;
             }
         }
-        if (countryOwned) {
+        if (countryOwned == true) {
             this.consoleText.append("Attacker " + attackCountry.getRulerName() + " defeated Country "
                     + defendCountry.getCountryName() + " \n");
             for (int i = 0; i < this.getPlayers().size(); i++) {
@@ -408,7 +440,7 @@ public class GamePlayModel extends Observable {
      * Armies deduction.
      *
      * @param countryForDeduction the country for deduction
-     * @param armiesToDeduct      the armies to deduct
+     * @param armiesToDeduct the armies to deduct
      * @return the country model
      */
     public CountryModel armiesDeduction(CountryModel countryForDeduction, int armiesToDeduct) {
@@ -444,10 +476,8 @@ public class GamePlayModel extends Observable {
         int attackTotalArmies = attackCountry.getArmies() - 1;
         int defendTotalArmies = defendCountry.getArmies();
         int attackDice, defendDice;
-
-        this.consoleText.append(
-                "\nCountry '" + attackCountry.getCountryName() + "' attacks country '" + defendCountry.getCountryName() + "' \n");
-
+        this.console.append("Attack's total army: " + attackCountry.getArmies() + " \n");
+        this.console.append("Defender's total army: " + defendCountry.getArmies() + " \n");
         while (attackTotalArmies > 0 && defendTotalArmies > 0) {
             if (attackTotalArmies > 3) {
                 attackDice = 3;
@@ -471,8 +501,8 @@ public class GamePlayModel extends Observable {
             Arrays.sort(defendDiceRoll, Collections.reverseOrder());
             System.out.println(Arrays.toString(attackDiceRoll));
             System.out.println(Arrays.toString(defendDiceRoll));
-            this.consoleText.append("Attack country dice " + Arrays.toString(attackDiceRoll) + " \n");
-            this.consoleText.append("Defender country dice " + Arrays.toString(defendDiceRoll) + " \n");
+            this.console.append("Attack country dice " + Arrays.toString(attackDiceRoll) + " \n");
+            this.console.append("Defender country dice " + Arrays.toString(defendDiceRoll) + " \n");
             for (int i = 0; (i < defendDice && i < attackDice); i++) {
                 if (attackDiceRoll[i] > defendDiceRoll[i]) {
                     armiesDeduction(defendCountry, 1);
@@ -485,8 +515,8 @@ public class GamePlayModel extends Observable {
                 }
             }
         }
-        if (countryOwned) {
-            this.consoleText.append("Attacker " + attackCountry.getRulerName() + " defeated Country "
+        if (countryOwned == true) {
+            this.consoleText.append("Attacker " + attackCountry.getRulerName() + "defeated Country "
                     + defendCountry.getCountryName() + " \n");
             for (int i = 0; i < this.getPlayers().size(); i++) {
                 if (this.getPlayers().get(i).getNamePlayer().equals(defendCountry.getRulerName())) {
@@ -512,13 +542,13 @@ public class GamePlayModel extends Observable {
     /**
      * Move armies.
      *
-     * @param attackCountry       the attack country
-     * @param defendCountry       the defend country
+     * @param attackCountry the attack country
+     * @param defendCountry the defend country
      * @param noOfArmiesToBeMoved the no of armies to be moved
      */
     public boolean moveArmies(CountryModel attackCountry, CountryModel defendCountry, int noOfArmiesToBeMoved) {
         boolean returnvalue = false;
-        this.consoleText.append(attackCountry.getRulerName() + " Armies " + noOfArmiesToBeMoved + " moved from "
+        this.consoleText.append(attackCountry.getRulerName() + " Armies " + noOfArmiesToBeMoved + " moved from"
                 + attackCountry.getCountryName() + " to " + defendCountry.getCountryName() + " \n");
         for (int i = 0; i < this.gameMapModel.getCountries().size(); i++) {
             if (this.gameMapModel.getCountries().get(i).getCountryName().equals(attackCountry.getCountryName())) {
@@ -549,6 +579,16 @@ public class GamePlayModel extends Observable {
     }
 
     /**
+     * Sets the selected combo box index.
+     *
+     * @param selectedComboBoxIndex the new selected combo box index
+     */
+    public void setSelectedComboBoxIndexRead(int selectedComboBoxIndex) {
+        this.selectedComboBoxIndex = selectedComboBoxIndex;
+
+    }
+
+    /**
      * Gets the selected combo box index.
      *
      * @return the selected combo box index
@@ -565,6 +605,16 @@ public class GamePlayModel extends Observable {
     public void setSelectedAttackComboBoxIndex(int selectedAttackComboBoxIndex) {
         this.selectedAttackComboBoxIndex = selectedAttackComboBoxIndex;
         callObservers();
+
+    }
+
+    /**
+     * Sets the selected attack combo box index.
+     *
+     * @param selectedAttackComboBoxIndex the new selected attack combo box index
+     */
+    public void setSelectedAttackComboBoxIndexRead(int selectedAttackComboBoxIndex) {
+        this.selectedAttackComboBoxIndex = selectedAttackComboBoxIndex;
 
     }
 
@@ -589,6 +639,16 @@ public class GamePlayModel extends Observable {
     }
 
     /**
+     * Sets the selected defend combo box index.
+     *
+     * @param selectedDefendComboBoxIndex the new selected defend combo box index
+     */
+    public void setSelectedDefendComboBoxIndexRead(int selectedDefendComboBoxIndex) {
+        this.selectedDefendComboBoxIndex = selectedDefendComboBoxIndex;
+
+    }
+
+    /**
      * Gets the selected defend combo box index.
      *
      * @return the selected defend combo box index
@@ -607,6 +667,15 @@ public class GamePlayModel extends Observable {
         if (armyToMoveFlag == true) {
             callObservers();
         }
+    }
+
+    /**
+     * Sets the army to move text.
+     *
+     * @param armyToMoveFlag the new army to move text
+     */
+    public void setArmyToMoveTextRead(boolean armyToMoveFlag) {
+        this.armyToMoveFlag = armyToMoveFlag;
     }
 
     /**
@@ -646,13 +715,11 @@ public class GamePlayModel extends Observable {
     public int getRandomBetweenRange(double min, double max) {
         int x = (int) ((Math.random() * ((max - min) + 1)) + min);
         return x;
-    }
-
-    ;
+    };
 
     /**
      * Method used to notify state change whenever any change is reflected by
-     * CreateContinentController via CreateContinentView.
+     * CreateContinentController via SwingCreateContinentView.
      */
     public void callObservers() {
         for (int i = 0; i < this.getPlayers().size(); i++) {
@@ -749,7 +816,7 @@ public class GamePlayModel extends Observable {
     public boolean moveDeck() {
 
         boolean returnValue = false;
-        if (this.getCardToBeAssigned()) {
+        if (this.getCardToBeAssigned() == true) {
             CardModel card;
 
             for (int i = 0; i < this.getPlayers().size(); i++) {
@@ -767,46 +834,22 @@ public class GamePlayModel extends Observable {
         return returnValue;
     }
 
-    public void setSelectedComboBoxIndexRead(int value) {
-    }
-
-    public void setSelectedAttackComboBoxIndexRead(int value) {
-    }
-
-    public void setSelectedDefendComboBoxIndexRead(int value) {
-    }
-
-    public void setCountryOwned(Boolean flag) {
-    }
-
-    public void setArmyToMoveTextRead(Boolean flag) {
-    }
-
-    public Object getCountryOwned() {
-
-        return null;
-    }
-
-    public Object getArmyToMoveFlag() {
-        return null;
-    }
-
-    public ArrayList<CountryModel> descCountry(ArrayList<CountryModel> controlledCountries) {
-        Collections.sort(controlledCountries, new Comparator<CountryModel>() {
-            public int compare(CountryModel s1, CountryModel s2) {
-                return Integer.valueOf(s2.getArmies()).compareTo(s1.getArmies());
-            }
-        });
-        return controlledCountries;
-    }
-
-    public ArrayList<CountryModel> sortCountry(ArrayList<CountryModel> controlledCountries) {
-        Collections.sort(controlledCountries, new Comparator<CountryModel>(){
+    public ArrayList<CountryModel> sortCountry(ArrayList<CountryModel> ownedCountries) {
+        Collections.sort(ownedCountries, new Comparator<CountryModel>(){
             public int compare(CountryModel s1, CountryModel s2) {
                 return Integer.valueOf(s1.getArmies()).compareTo(s2.getArmies());
             }
         });
-        return controlledCountries;
+        return ownedCountries;
+    }
+
+    public ArrayList<CountryModel> descCountry(ArrayList<CountryModel> ownedCountries) {
+        Collections.sort(ownedCountries, new Comparator<CountryModel>(){
+            public int compare(CountryModel s1, CountryModel s2) {
+                return Integer.valueOf(s2.getArmies()).compareTo(s1.getArmies());
+            }
+        });
+        return ownedCountries;
     }
 
     public ArrayList<CountryModel> selectWeakestCountry(ArrayList<CountryModel> ownedCountries) {

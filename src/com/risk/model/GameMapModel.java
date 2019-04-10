@@ -1,14 +1,13 @@
 package com.risk.model;
 
-import java.awt.Color;
+import com.risk.utilities.ReadFile;
+
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-
-import javax.swing.JOptionPane;
-
-import com.risk.utilities.ReadFile;
 
 /**
  * Model of whole map file that gets generated in the end
@@ -28,6 +27,11 @@ public class GameMapModel extends Observable {
      * List of Countries
      */
     private List<CountryModel> countryList;
+
+    /**
+     * Read file object for creating a file in parameterized constructor
+     */
+    private ReadFile readfile;
 
     /**
      * to save player's turn
@@ -87,7 +91,7 @@ public class GameMapModel extends Observable {
      * @param file
      */
     public GameMapModel(File file) {
-        ReadFile readfile = new ReadFile();
+        readfile = new ReadFile();
         try {
             readfile.setFile(file);
             this.continentList = readfile.getMapContinentDetails();
@@ -142,7 +146,11 @@ public class GameMapModel extends Observable {
         callObservers();
     }
 
+    /**
+     * Countries in continent.
+     */
     public void countriesInContinent() {
+        boolean firsttime = true;
         for (int i = 0; i < this.continentList.size(); i++) {
             for (int j = 0; j < this.countryList.size(); j++) {
                 try {
@@ -152,10 +160,14 @@ public class GameMapModel extends Observable {
                         this.continentList.get(i).setCoveredCountries(this.countryList.get(j));
                     }
                 } catch (Exception e) {
-                    JOptionPane.showOptionDialog(null, "Map parsing failed game crashed", "Invalid",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                    if (firsttime) {
+                        JOptionPane.showOptionDialog(null, "There are some possible errors in the map", "Invalid",
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {},
+                                null);
+                        firsttime = false;
+                    }
 
-                    System.exit(0);
+                    // System.exit(0);
                 }
 
             }
@@ -164,7 +176,7 @@ public class GameMapModel extends Observable {
 
     /**
      * Method used to notify state change whenever any change is reflected by
-     * CreateContinentController via CreateContinentView
+     * CreateContinentController via SwingCreateContinentView
      */
     public void callObservers() {
         setChanged();
@@ -231,7 +243,7 @@ public class GameMapModel extends Observable {
                 if (temp == null) {
                     temp = new ArrayList<CountryModel>();
                 }
-                temp.add(rightModel);
+                temp.add((CountryModel) rightModel);
                 this.getCountries().get(i).setLinkedCountries(temp);
                 this.setLeftModelIndex(i);
             } else if (this.getCountries().get(i).equals(rightModel)) {
@@ -239,7 +251,7 @@ public class GameMapModel extends Observable {
                 if (temp == null) {
                     temp = new ArrayList<CountryModel>();
                 }
-                temp.add(leftModel);
+                temp.add((CountryModel) leftModel);
                 this.getCountries().get(i).setLinkedCountries(temp);
                 this.setRightModelIndex(i);
             }
@@ -262,7 +274,7 @@ public class GameMapModel extends Observable {
                 if (temp == null) {
                     temp = new ArrayList<CountryModel>();
                 }
-                temp.remove(rightModelCountry);
+                temp.remove((CountryModel) rightModelCountry);
                 this.getCountries().get(i).setLinkedCountries(temp);
                 this.setLeftModelIndex(i);
             } else if (this.getCountries().get(i).equals(rightModelCountry)) {
@@ -270,7 +282,7 @@ public class GameMapModel extends Observable {
                 if (temp == null) {
                     temp = new ArrayList<CountryModel>();
                 }
-                temp.remove(leftModelCountry);
+                temp.remove((CountryModel) leftModelCountry);
                 this.getCountries().get(i).setLinkedCountries(temp);
                 this.setRightModelIndex(i);
             }

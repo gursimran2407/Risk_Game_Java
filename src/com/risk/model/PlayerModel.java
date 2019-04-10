@@ -19,14 +19,30 @@ import java.util.Observable;
  */
 public class PlayerModel extends Observable {
 
+    /** The name player. */
     private String namePlayer;
+
+    /** The type player. */
+    private String typePlayer;
+
+    /** The my troop. */
     private int myTroop;
+
+    /** The color. */
     private Color color;
+
+    /** The remain troop. */
     private int remainTroop;
-    private List<CountryModel> ownedCountries  = new ArrayList<>();
-    private List<CardModel> ownedCards;
+
+    /** The owned countries. */
+    private List<CountryModel> ownedCountries  = new ArrayList<CountryModel>();
+
+    /** The owned cards. */
+    private List<CardModel> ownedCards  = new ArrayList<CardModel>();
+
+    /** The show reinforcement card. */
     private boolean showReinforcementCard;
-    private String playerType;
+
     private Strategy strategy;
 
     /**
@@ -39,14 +55,14 @@ public class PlayerModel extends Observable {
      * @param ownedCountries the owned countries
      * @param ownedCards the owned cards
      */
-    public PlayerModel(String namePlayer, String playerType, int myTroop, Color color, int remainTroop, List ownedCountries, List ownedCards) {
+    public PlayerModel(String namePlayer, String typePlayer, int myTroop, Color color, int remainTroop, List ownedCountries, List ownedCards) {
         this.namePlayer = namePlayer;
+        this.typePlayer = typePlayer;
         this.myTroop = myTroop;
         this.color = color;
         this.remainTroop = remainTroop;
         this.ownedCountries = ownedCountries;
         this.ownedCards = ownedCards;
-        this.playerType = playerType;
     }
 
     /**
@@ -54,24 +70,6 @@ public class PlayerModel extends Observable {
      */
     public PlayerModel() {
         // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * Gets the type player.
-     *
-     * @return the player type.
-     */
-    public String getTypePlayer() {
-        return playerType;
-    }
-
-    /**
-     * Sets the Player type.
-     *
-     * @param playerType the new type player
-     */
-    public void setTypePlayer(String playerType) {
-        this.playerType = playerType;
     }
 
     /**
@@ -108,6 +106,24 @@ public class PlayerModel extends Observable {
      */
     public void setNamePlayer(String namePlayer) {
         this.namePlayer = namePlayer;
+    }
+
+    /**
+     * Gets the type player.
+     *
+     * @return the player type.
+     */
+    public String getTypePlayer() {
+        return typePlayer;
+    }
+
+    /**
+     * Sets the Player type.
+     *
+     * @param typePlayer the new type player
+     */
+    public void setTypePlayer(String typePlayer) {
+        this.typePlayer = typePlayer;
     }
 
     /**

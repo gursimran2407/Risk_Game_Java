@@ -1,10 +1,10 @@
 package com.risk.model;
 
-import java.awt.Color;
-import java.util.List;
-
-import javax.swing.JButton;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * "CountryModel" represents a country's properties such as name, position,
@@ -29,7 +29,7 @@ public class CountryModel extends JButton {
     private String continentName;
 
     /** The linked countries. */
-    private List<CountryModel> linkedCountries;
+    private List<CountryModel> linkedCountries = new ArrayList<CountryModel>();
 
     /** The armies. */
     private int armies;
@@ -54,7 +54,7 @@ public class CountryModel extends JButton {
      * @param armies          the armies
      * @param rulerName       the ruler name
      */
-    public CountryModel(String countryName, int xPosition, int yPosition, String continentName, List<CountryModel> linkedCountries,
+    public CountryModel(String countryName, int xPosition, int yPosition, String continentName, List linkedCountries,
                         int armies, String rulerName) {
         this.countryName = countryName;
         this.xPosition = xPosition;
@@ -71,11 +71,7 @@ public class CountryModel extends JButton {
      * Default constructor.
      */
     public CountryModel() {
-
-    }
-
-    public String getCountryCode() {
-        return getCountryName().length() > 4 ? getCountryName().substring(0, 3) : getCountryName();
+        // TODO Auto-generated constructor stub
     }
 
     /**
