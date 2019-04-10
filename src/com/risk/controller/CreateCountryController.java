@@ -133,7 +133,7 @@ public class CreateCountryController implements ViewActionListener {
      *
      * @return boolean
      */
-    private boolean sameCountryValidation() {
+    public boolean sameCountryValidation() {
         for (int i = 0; i < this.gameMapModel.getCountries().size(); i++) {
             if (this.gameMapModel.getCountries().get(i).getCountryName()
                     .equals(this.createCountryView.getCountryValue())) {

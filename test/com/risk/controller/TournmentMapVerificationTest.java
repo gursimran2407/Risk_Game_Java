@@ -48,7 +48,7 @@ public class TournmentMapVerificationTest {
      */
     @Test
     public void testReadFileGetContinent() {
-        Assert.assertEquals(true, tournmentDetailController.mapVerification(file,0));
+        Assert.assertEquals(true, tournmentDetailController.mapVerification(file));
     }
 
 }

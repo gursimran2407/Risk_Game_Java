@@ -130,7 +130,7 @@ public class TournmentDetailController implements ViewActionListener {
      * @param mapFile the map file
      * @return true, if successful
      */
-    private boolean mapVerification(File mapFile) {
+    public boolean mapVerification(File mapFile) {
         gamePlayModel = new GamePlayModel();
         boolean validMap = true;
         GameMapModel gameMapModel = new GameMapModel(mapFile);
