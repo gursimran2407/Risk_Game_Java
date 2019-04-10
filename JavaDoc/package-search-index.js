@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l": "com.risk"}, {"l": "com.risk.controller"}, {"l": "com.risk.helperInterfaces"}, {"l": "com.risk.model"}, {"l": "com.risk.utilities"}, {"l": "com.risk.view"}]
+packageSearchIndex = [{"l":"com.risk"},{"l":"com.risk.controller"},{"l":"com.risk.helperInterfaces"},{"l":"com.risk.model"},{"l":"com.risk.utilities"},{"l":"com.risk.view"}]
