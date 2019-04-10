@@ -12,9 +12,6 @@ import com.risk.model.CountryModel;
 import com.risk.utilities.SaveGame;
 import com.risk.model.GamePlayModel;
 import com.risk.utilities.Validation;
-import com.risk.view.AttackView;
-import com.risk.view.FortificationView;
-import com.risk.view.ReinforcementView;
 
 /**
  * In PlayerController, the data flow into model object and updates the view

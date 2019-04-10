@@ -2,7 +2,6 @@ package com.risk.controller;
 
 import com.risk.model.CountryModel;
 import com.risk.model.GamePlayModel;
-import com.risk.view.StartUpView;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

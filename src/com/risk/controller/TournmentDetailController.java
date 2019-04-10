@@ -2,7 +2,6 @@ package com.risk.controller;
 
 import com.risk.model.*;
 import com.risk.utilities.Validation;
-import com.risk.view.TournamentDetailView;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;

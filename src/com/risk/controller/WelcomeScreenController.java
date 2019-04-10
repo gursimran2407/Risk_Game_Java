@@ -3,8 +3,6 @@ package com.risk.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.risk.view.WelcomeScreenView;
-
 
 /**
  * "WelcomeScreenController" is the main class. It represents a welcome window

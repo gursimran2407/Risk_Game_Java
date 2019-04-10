@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultCaret;
 
-import com.risk.view.ReinforcementView.CountryViewRenderer;
+import com.risk.view.impl.swing.SwingReinforcementView.CountryViewRenderer;
 
 public class PlayConsoleView extends JFrame {
 
@@ -25,6 +25,11 @@ public class PlayConsoleView extends JFrame {
 
     public JPanel welcomePanel;
     public JPanel graphicPanel;
+
+    /*
+     * public JPanel consoleMainPanel; public JScrollPane consolePanel; public
+     * JTextArea consoleTextArea;
+     */
 
     public JLabel welcomeLabel;
     public JLabel noOfTroopsLabel;
@@ -48,7 +53,7 @@ public class PlayConsoleView extends JFrame {
     public ArrayList<Double> percentage;
     public ArrayList<Color> colors;
 
-    public PlayConsoleView(PlayConsoleView console) {
+    public PlayConsoleView() {
         this.setTitle("Action Console");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocation(50, 50);
