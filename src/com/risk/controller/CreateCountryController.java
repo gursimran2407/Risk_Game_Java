@@ -1,31 +1,37 @@
 package com.risk.controller;
 
-import com.risk.model.ContinentsModel;
-import com.risk.model.CountryModel;
-import com.risk.model.GameMapModel;
-import com.risk.view.CreateCountryView;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
+
+import com.risk.Environment;
+import com.risk.model.ContinentsModel;
+import com.risk.model.CountryModel;
+import com.risk.model.GameMapModel;
+import com.risk.view.ICreateCountryView;
+import com.risk.view.events.ViewActionEvent;
+import com.risk.view.events.ViewActionListener;
+
 /**
  * In CreateCountryController, the data flow into model object and updates the
  * view whenever data changes.
+ *
  * @version 1.0.0
  *
  */
 
-public class CreateCountryController implements ActionListener{
+public class CreateCountryController implements ViewActionListener {
+
     /** The game map model. */
     private GameMapModel gameMapModel;
 
     /** The create country view. */
-    private CreateCountryView createCountryView;
+    private ICreateCountryView createCountryView;
+
+    /** The new continent model. */
+    private ContinentsModel newContinentModel;
 
     /** The map point list. */
     private HashMap<String, ArrayList<Point>> mapPointList;
@@ -50,36 +56,34 @@ public class CreateCountryController implements ActionListener{
         this.mapPointList = mapPointList;
         this.colorMapList = colorMapList;
         this.indexMap = indexMap;
-        this.createCountryView = new CreateCountryView(this.gameMapModel.getContinents());
-        this.createCountryView.setVisible(true);
+        this.createCountryView =
+                Environment.getInstance().getViewManager().newCreateCountryView(this.gameMapModel.getContinents());
+        this.createCountryView.showView();
         this.gameMapModel.addObserver(this.createCountryView);
-        this.createCountryView.setActionListener(this);
+        this.createCountryView.addActionListener(this);
     }
 
     /**
      * This method performs action, by Listening the action event set in view.
      *
-     * @param actionEvent the action event
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     * @param event the action event
+     * @see ViewActionListener
      */
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-
+    public void actionPerformed(ViewActionEvent event) {
         CountryModel temp = new CountryModel();
 
-        if (actionEvent.getSource().equals(this.createCountryView.addButton)) {
-            if (this.createCountryView.countryValue.getText() != null
-                    && !this.createCountryView.countryValue.getText().equals("")) {
+        if (ICreateCountryView.ACTION_ADD.equals(event.getSource())) {
+            if (this.createCountryView.getCountryValue() != null
+                    && !this.createCountryView.getCountryValue().equals("")) {
 
                 if (sameCountryValidation()) {
-                    JOptionPane.showOptionDialog(null, "Please enter a different country", "Invalid",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                    createCountryView.showOptionDialog("Please enter a different country", "Invalid");
+                    return;
                 } else {
-                    /* The new continent model. */
-                    ContinentsModel newContinentModel = (ContinentsModel) this.createCountryView.continentListCombobox
-                            .getSelectedItem();
-                    temp.setContinentName(Objects.requireNonNull(newContinentModel).getContinentName());
-                    temp.setCountryName(this.createCountryView.countryValue.getText());
+                    this.newContinentModel = this.createCountryView.getContinentModel();
+                    temp.setContinentName(this.newContinentModel.getContinentName());
+                    temp.setCountryName(this.createCountryView.getCountryValue());
 
                     temp.setBackground(Color.WHITE);
                     temp.setBorderColor(Color.BLACK);
@@ -88,15 +92,20 @@ public class CreateCountryController implements ActionListener{
                 }
 
             } else {
-                JOptionPane.showOptionDialog(null, "Please enter a valid input", "Invalid", JOptionPane.DEFAULT_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                createCountryView.showOptionDialog("Please enter a valid input", "Invalid");
+                return;
             }
-        } else if (actionEvent.getSource().equals(this.createCountryView.nextButton)) {
+        } else if (ICreateCountryView.ACTION_NEXT.equals(event.getSource())) {
             if (emptyContinentValidation()) {
-                JOptionPane.showOptionDialog(null, "Please enter at least one country for each continent", "Invalid",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                createCountryView.showOptionDialog("Please enter at least one country for each continent", "Invalid");
+                return;
             } else {
+
                 for (int i = 0; i < this.gameMapModel.getCountries().size(); i++) {
+
+                    ArrayList<Point> pointList = this.mapPointList
+                            .get(this.gameMapModel.getCountries().get(i).getcontinentName());
+
                     int index = this.indexMap.get(this.gameMapModel.getCountries().get(i).getcontinentName());
 
                     System.out.println("==>" + this.mapPointList
@@ -114,7 +123,7 @@ public class CreateCountryController implements ActionListener{
                 }
 
                 new ConnectCountryController(this.gameMapModel);
-                this.createCountryView.dispose();
+                this.createCountryView.hideView();
             }
         }
     }
@@ -124,10 +133,10 @@ public class CreateCountryController implements ActionListener{
      *
      * @return boolean
      */
-    public boolean sameCountryValidation() {
+    private boolean sameCountryValidation() {
         for (int i = 0; i < this.gameMapModel.getCountries().size(); i++) {
             if (this.gameMapModel.getCountries().get(i).getCountryName()
-                    .equals(this.createCountryView.countryValue.getText())) {
+                    .equals(this.createCountryView.getCountryValue())) {
                 return true;
             }
         }
@@ -139,8 +148,8 @@ public class CreateCountryController implements ActionListener{
      *
      * @return boolean
      */
-    private boolean emptyContinentValidation() {
-        java.util.List<ContinentsModel> listOfContinents = this.gameMapModel.getContinents();
+    public boolean emptyContinentValidation() {
+        List<ContinentsModel> listOfContinents = this.gameMapModel.getContinents();
         List<CountryModel> listOfCountrys = this.gameMapModel.getCountries();
         String continentName = " ";
         for (int i = 0; i < listOfContinents.size(); i++) {

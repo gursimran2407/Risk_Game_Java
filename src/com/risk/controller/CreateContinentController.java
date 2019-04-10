@@ -1,18 +1,16 @@
-
 package com.risk.controller;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.JOptionPane;
-
+import com.risk.Environment;
 import com.risk.model.ContinentsModel;
 import com.risk.model.GameMapModel;
-import com.risk.view.CreateContinentView;
+import com.risk.view.ICreateContinentView;
+import com.risk.view.events.ViewActionEvent;
+import com.risk.view.events.ViewActionListener;
 
 /**
  * In CreateContinentController, the data flow into model object and updates the
@@ -23,53 +21,51 @@ import com.risk.view.CreateContinentView;
  *
  */
 
-public class CreateContinentController implements ActionListener {
+public class CreateContinentController implements ViewActionListener {
 
     /** The game map model. */
     private GameMapModel gameMapModel;
 
     /** The create continent view. */
-    private CreateContinentView createContinentView;
+    private ICreateContinentView createContinentView;
 
     /**
      * Constructor initializes values and sets the screen too visible.
      */
     public CreateContinentController() {
         this.gameMapModel = new GameMapModel();
-        this.createContinentView = new CreateContinentView();
+        this.createContinentView =
+                Environment.getInstance().getViewManager().newCreateContinentView();
         this.gameMapModel.addObserver(this.createContinentView);
-        this.createContinentView.setActionListener(this);
-        this.createContinentView.setVisible(true);
+        this.createContinentView.addActionListener(this);
+        this.createContinentView.showView();
     }
 
     /**
      * This method performs action, by Listening the action event set in view.
      *
-     * @param actionEvent the action event
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     * @param event the action event
+     * @see ViewActionListener
      */
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-
+    public void actionPerformed(ViewActionEvent event) {
         ContinentsModel tempContinent;
-        if (actionEvent.getSource().equals(this.createContinentView.addButton)) {
-            if (!("".equals(this.createContinentView.controlValue.getText())
-                    || this.createContinentView.controlValue.getText().isEmpty()
-                    || this.createContinentView.continentValue.getText().isEmpty()
-                    || "".equals(this.createContinentView.continentValue.getText()))) {
-                System.out.println("the input from the view is" + this.createContinentView.controlValue.getText()
-                        + this.createContinentView.continentValue.getText());
-                tempContinent = new ContinentsModel(this.createContinentView.continentValue.getText(),
-                        Integer.parseInt(this.createContinentView.controlValue.getText()));
-                if (0 < Integer.parseInt(this.createContinentView.controlValue.getText())
-                        && Integer.parseInt(this.createContinentView.controlValue.getText()) < 10) {
-                    if (this.createContinentView.continentValue != null) {
+        if (ICreateContinentView.ACTION_ADD.equals(event.getSource())) {
+            if (!("".equals(this.createContinentView.getControlValue())
+                    || this.createContinentView.getControlValue().isEmpty()
+                    || this.createContinentView.getContinentValue().isEmpty()
+                    || "".equals(this.createContinentView.getContinentValue()))) {
+                System.out.println("the input from the view is" + this.createContinentView.getControlValue()
+                        + this.createContinentView.getContinentValue());
+                tempContinent = new ContinentsModel(this.createContinentView.getContinentValue(),
+                        Integer.parseInt(this.createContinentView.getControlValue()));
+                if (0 < Integer.parseInt(this.createContinentView.getControlValue())
+                        && Integer.parseInt(this.createContinentView.getControlValue()) < 10) {
+                    if (this.createContinentView.getContinentValue() != null) {
                         for (int index = 0; index < this.gameMapModel.getContinents().size(); index++) {
                             if (this.gameMapModel.getContinents().get(index).getContinentName()
-                                    .equals(this.createContinentView.continentValue.getText())) {
-                                JOptionPane.showOptionDialog(null, "You have already added this Continent", "Invalid",
-                                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                                        new Object[] {}, null);
+                                    .equals(this.createContinentView.getContinentValue())) {
+                                createContinentView.showOptionDialog("You have already added this Continent", "Invalid");
                                 return;
                             }
                         }
@@ -77,25 +73,19 @@ public class CreateContinentController implements ActionListener {
                         this.gameMapModel.setContinents(this.gameMapModel.getContinents());
 
                     } else {
-                        JOptionPane.showOptionDialog(null, "Please enter some country name", "Invalid",
-                                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {},
-                                null);
+                        createContinentView.showOptionDialog("Please enter some country name", "Invalid");
                     }
                 } else {
-                    JOptionPane.showOptionDialog(null, "Please enter a control value between 0 and 10", "Invalid",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                    createContinentView.showOptionDialog("Please enter a control value between 0 and 10", "Invalid");
                 }
             } else {
-                JOptionPane.showOptionDialog(null, "Please enter values in all the fields", "Invalid",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                createContinentView.showOptionDialog("Please enter values in all the fields", "Invalid");
             }
-        } else if (actionEvent.getSource().equals(this.createContinentView.nextButton)) {
+        } else if (ICreateContinentView.ACTION_NEXT.equals(event.getSource())) {
             if (this.gameMapModel.getContinents().isEmpty()) {
-                JOptionPane.showOptionDialog(null, "Please enter atleast one Continent to proceed", "Invalid",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
+                createContinentView.showOptionDialog("Please enter atleast one Continent to proceed", "Invalid");
                 return;
             }
-
             ArrayList<ArrayList<Point>> pointsList = new ArrayList<>();
             ArrayList<Color> colorList = new ArrayList<>();
 
@@ -156,8 +146,7 @@ public class CreateContinentController implements ActionListener {
             }
 
             new CreateCountryController(this.gameMapModel, mapPointList, colorMapList, indexMap);
-            this.createContinentView.dispose();
+            this.createContinentView.hideView();
         }
-
     }
 }

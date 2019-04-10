@@ -3,16 +3,19 @@ package com.risk.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.risk.model.GamePlayModel;
-import com.risk.utilities.Validation;
+import javax.swing.JOptionPane;
 
-import javax.swing.*;
+import com.risk.model.GamePlayModel;
+import com.risk.model.strategy.AgressivePlayerStrategy;
+import com.risk.model.strategy.BenevolentPlayerStrategy;
+import com.risk.model.strategy.CheaterPlayerStrategy;
+import com.risk.model.strategy.RandomPlayerStrategy;
+import com.risk.utilities.Validation;
 
 /**
  * In GamePlayController, the data flow into model object and updates the view
- * whenever data changes.Trying to push the changes. Some changes not visible in Shriyans' project when he pulls.
+ * whenever data changes.
  *
- * @author KaranPannu
  * @version 1.0.0
  *
  */
@@ -20,9 +23,7 @@ import javax.swing.*;
 public class GamePlayController implements ActionListener {
 
     public GamePlayModel gamePlayModel = null;
-    /**
-     * The val.
-     */
+    /** The val. */
     private Validation val = new Validation();
     private boolean displayFlag = false;
 
@@ -51,25 +52,25 @@ public class GamePlayController implements ActionListener {
                 String PlayerType = this.gamePlayModel.getGameMap().getPlayerTurn().getTypePlayer();
                 if ("Aggressive".equals(PlayerType)) {
                     this.gamePlayModel.getGameMap().getPlayerTurn()
-                            .setStrategy(new AgressivePlayerController(this.gamePlayModel));
+                            .setStrategy(new AgressivePlayerStrategy(this.gamePlayModel));
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
                 } else if ("Benevolent".equals(PlayerType)) {
                     this.gamePlayModel.getGameMap().getPlayerTurn()
-                            .setStrategy(new BenevolentPlayerController(this.gamePlayModel));
+                            .setStrategy(new BenevolentPlayerStrategy(this.gamePlayModel));
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
                 } else if ("Random".equals(PlayerType)) {
                     this.gamePlayModel.getGameMap().getPlayerTurn()
-                            .setStrategy(new RandomPlayerController(this.gamePlayModel));
+                            .setStrategy(new RandomPlayerStrategy(this.gamePlayModel));
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
                 } else if ("Cheater".equals(PlayerType)) {
                     this.gamePlayModel.getGameMap().getPlayerTurn()
-                            .setStrategy(new CheaterPlayerController(this.gamePlayModel));
+                            .setStrategy(new CheaterPlayerStrategy(this.gamePlayModel));
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
@@ -93,26 +94,26 @@ public class GamePlayController implements ActionListener {
                 if ("draw".equals(nameOfWinner)) {
                     System.out.println(" Game is draw ");
                     JOptionPane.showOptionDialog(null, "The game is draw", "Valid", JOptionPane.DEFAULT_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                            JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
                 } else {
                     System.out.println(nameOfWinner + " is winner ");
                     JOptionPane.showOptionDialog(null,
                             "Bravo! You have won! Game is over!" + nameOfWinner + "is the winner", "Valid",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
                 }
             }
         }
-        if (!displayFlag) {
+        if (displayFlag != true) {
             String nameOfWinner = val.determineWinner(this.gamePlayModel);
             if ("draw".equals(nameOfWinner)) {
                 System.out.println(" Game is draw ");
                 JOptionPane.showOptionDialog(null, "The game is draw", "Valid", JOptionPane.DEFAULT_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                        JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
             } else {
                 System.out.println(nameOfWinner + " is winner ");
                 JOptionPane.showOptionDialog(null,
                         "Bravo! You have won! Game is over!" + nameOfWinner + "is the winner", "Valid",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
             }
         }
     }
