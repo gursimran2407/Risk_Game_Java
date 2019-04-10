@@ -196,7 +196,7 @@ public class GamePlayModel extends Observable {
         try {
             JSONParser parser = new JSONParser();
             Object cards = parser.parse(new FileReader(
-                    System.getProperty("user.dir") + "/OnlineRiskGame/src/app/helper/ConstantCard.json"));
+                    System.getProperty("user.dir") + "/ConstantCard.json"));
             JSONObject jsonObject = (JSONObject) cards;
             System.out.println("jsonObject " + jsonObject.get("cards"));
             JSONArray cardsJSON = (JSONArray) jsonObject.get("cards");
@@ -206,11 +206,11 @@ public class GamePlayModel extends Observable {
             for (Object o : cardsJSON) {
                 CardModel cardModel = new CardModel();
                 JSONObject card = (JSONObject) o;
-                lvalue = (Long) card.get("cardId");
+                lvalue =  Long.parseLong((String)card.get("cardId"));
                 value = lvalue.intValue();
                 cardModel.setCardId(value);
 
-                lvalue = (Long) card.get("cardValue");
+                lvalue = Long.parseLong((String)card.get("cardValue"));
                 value = lvalue.intValue();
                 cardModel.setCardValue(value);
                 this.deck.add(cardModel);
