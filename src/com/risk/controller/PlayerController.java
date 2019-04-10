@@ -1,11 +1,10 @@
 package com.risk.controller;
 
+import com.risk.Environment;
 import com.risk.model.CardModel;
 import com.risk.model.CountryModel;
 import com.risk.model.GamePlayModel;
-import com.risk.model.strategy.BenevolentPlayerStrategy;
-import com.risk.model.strategy.CheaterPlayerStrategy;
-import com.risk.model.strategy.RandomPlayerStrategy;
+import com.risk.model.strategy.*;
 import com.risk.utilities.SaveGame;
 import com.risk.utilities.Validation;
 import com.risk.view.IAttackView;

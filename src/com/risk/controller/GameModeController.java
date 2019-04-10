@@ -5,8 +5,6 @@ import com.risk.model.GamePlayModel;
 import com.risk.view.IGameModeView;
 import com.risk.view.events.ViewActionEvent;
 import com.risk.view.events.ViewActionListener;
-import com.risk.controller.*;
-import com.risk.view.*;
 
 /**
  * In GameModeController, the data flow into model object and updates the view
@@ -39,7 +37,7 @@ public class GameModeController implements ViewActionListener {
             new NewGameController();
             this.theGameModeView.hideView();
         } else if (IGameModeView.ACTION_TOURNAMENT_MODE.equals(event.getSource())) {
-            new TournamentDetailController();
+            new TournmentDetailController();
             this.theGameModeView.hideView();
         } else if (IGameModeView.ACTION_LOAD_GAME.equals(event.getSource())) {
             final GamePlayModel gamePlayModel = theGameModeView.loadGamePlayModel();

@@ -9,7 +9,7 @@ import com.risk.utilities.Validation;
  * view whenever data changes.
  * @author gursimransingh
  */
-public class CheaterPlayerStrategy {
+public class CheaterPlayerStrategy implements Strategy {
 
 
     /** The game play model. */

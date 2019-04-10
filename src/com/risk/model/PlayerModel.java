@@ -1,6 +1,8 @@
 package com.risk.model;
 
-import java.awt.Color;
+import com.risk.model.strategy.Strategy;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;

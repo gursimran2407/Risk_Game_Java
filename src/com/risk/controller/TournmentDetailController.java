@@ -1,18 +1,17 @@
 package com.risk.controller;
 
+import com.risk.Environment;
 import com.risk.model.*;
 import com.risk.utilities.Validation;
+import com.risk.view.ITournamentDetailView;
 import com.risk.view.events.ViewActionEvent;
 import com.risk.view.events.ViewActionListener;
 import org.json.simple.parser.ParseException;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import com.risk.view.*;
+
 
 /**
  * @author gursimransingh

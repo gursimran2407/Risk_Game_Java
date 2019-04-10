@@ -1,8 +1,9 @@
 package com.risk.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import com.risk.view.*;
+import com.risk.Environment;
+import com.risk.view.IWelcomeScreenView;
+import com.risk.view.events.ViewActionEvent;
+import com.risk.view.events.ViewActionListener;
 
 
 /**
@@ -11,41 +12,35 @@ import com.risk.view.*;
  *
  * @author gursimransingh
  */
-public class WelcomeScreenController implements ActionListener {
-    public static void main(String[] args) {
-        new WelcomeScreenController();
-    }
-
-    private WelcomeScreenView theView;
+public class WelcomeScreenController implements ViewActionListener {
+    private IWelcomeScreenView theView;
 
     /**
      * Constructor initializes values and sets the screen too visible
      */
     public WelcomeScreenController() {
-        this.theView = new WelcomeScreenView();
-
-        this.theView.setActionListener(this);
-        this.theView.setVisible(true);
-
+        this.theView = Environment.getInstance().getViewManager().newWelcomeScreenView();
+        this.theView.addActionListener(this);
+        this.theView.showView();
     }
 
     /**
      * This method performs action, by Listening the action event set in view.
      *
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     * @see ViewActionListener
      */
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(theView.createMapButton)) {
+    public void actionPerformed(ViewActionEvent event) {
+        if (IWelcomeScreenView.ACTION_CREATE_MAP.equals(event.getSource())) {
             // open new game window
             this.showCreateMapWindow();
-        } else if (actionEvent.getSource().equals(theView.editMapButton)) {
+        } else if (IWelcomeScreenView.ACTION_EDIT_MAP.equals(event.getSource())) {
             // open load game window
             this.showEditGameWindow();
-        } else if (actionEvent.getSource().equals(theView.playMapButton)) {
+        } else if (IWelcomeScreenView.ACTION_PLAY_MAP.equals(event.getSource())) {
             // open create game window
             this.showPlayGameWindow();
-        } else if (actionEvent.getSource().equals(theView.exitButton)) {
+        } else if (IWelcomeScreenView.ACTION_EXIT.equals(event.getSource())) {
             // exit game
             this.exitGame();
         }
@@ -55,7 +50,7 @@ public class WelcomeScreenController implements ActionListener {
      * exit game
      */
     private void exitGame() {
-        this.theView.dispose();
+        this.theView.hideView();
     }
 
     /**
@@ -63,7 +58,7 @@ public class WelcomeScreenController implements ActionListener {
      */
     private void showPlayGameWindow() {
         new GameModeController();
-        this.theView.dispose();
+        this.theView.hideView();
     }
 
     /**
@@ -71,7 +66,7 @@ public class WelcomeScreenController implements ActionListener {
      */
     private void showEditGameWindow() {
         new EditContinentController();
-        this.theView.dispose();
+        this.theView.hideView();
     }
 
     /**
@@ -79,6 +74,7 @@ public class WelcomeScreenController implements ActionListener {
      */
     private void showCreateMapWindow() {
         new CreateContinentController();
-        this.theView.dispose();
+        this.theView.hideView();
     }
+
 }
