@@ -1,20 +1,15 @@
 package com.risk.controller;
 
-import java.awt.Color;
-import java.util.ArrayList;
-
 import com.risk.Environment;
+import com.risk.model.*;
+import com.risk.utilities.Validation;
 import com.risk.view.INewGameView;
 import com.risk.view.events.ViewActionEvent;
 import com.risk.view.events.ViewActionListener;
 import org.json.simple.parser.ParseException;
 
-import com.risk.model.CardModel;
-import com.risk.model.CountryModel;
-import com.risk.model.GameMapModel;
-import com.risk.model.GamePlayModel;
-import com.risk.model.PlayerModel;
-import com.risk.utilities.Validation;
+import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * In NewGameController, the data flow into model object and updates the view
@@ -192,7 +187,7 @@ public class NewGameController implements ViewActionListener {
             gamePlayModel.setGameMap(gameMapModel);
             gamePlayModel.setPlayers(listOfPlayers);
             gamePlayModel.setCards(gamePlayModel.getCardFromJSON());
-            new StartUpController(gamePlayModel);
+            new StartupController(gamePlayModel);
             this.theView.hideView();
         } else {
             theView.showMessageDialog(

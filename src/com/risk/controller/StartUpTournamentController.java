@@ -12,77 +12,53 @@ import java.util.List;
  */
 public class StartUpTournamentController {
 
-
-    /**
-     * The game play model.
-     */
+    /** The game play model. */
     private GamePlayModel gamePlayModel;
 
-    /**
-     * The no of players.
-     */
+    /** The no of players. */
     private int noOfPlayers;
 
-    /**
-     * The no of country for ruler.
-     */
+    /** The no of country for ruler. */
     private int[] noOfCountryForRuler = new int[5];
 
-    /**
-     * The color for ruler.
-     */
+    /** The color for ruler. */
     private Color[] colorForRuler = new Color[5];
 
-    /**
-     * The total armies player.
-     */
+    /** The total armies player. */
     private int[] totalArmiesPlayer = new int[5];
 
-    /**
-     * The remain armies.
-     */
+    /** The remain armies. */
     private int[] remainArmies = new int[5];
 
-    /**
-     * The loop value.
-     */
+    /** The loop value. */
     private int loopValue = 0;
 
-    /**
-     * The armies null.
-     */
+    /** The armies null. */
     private boolean armiesNull = false;
 
-    /**
-     * The initial.
-     */
+    /** The initial. */
     private int initial = 0;
 
-    /**
-     * The owned country 0.
-     */
-    private java.util.List<CountryModel> ownedCountry0 = new ArrayList<>();
+    /** The owned country 0. */
+    private List<CountryModel> ownedCountry0 = new ArrayList<>();
 
-    /**
-     * The owned country 1.
-     */
-    private java.util.List<CountryModel> ownedCountry1 = new ArrayList<>();
+    /** The owned country 1. */
+    private List<CountryModel> ownedCountry1 = new ArrayList<>();
 
-    /**
-     * The owned country 2.
-     */
-    private java.util.List<CountryModel> ownedCountry2 = new ArrayList<>();
+    /** The owned country 2. */
+    private List<CountryModel> ownedCountry2 = new ArrayList<>();
 
-    /**
-     * The owned country 3.
-     */
-    private java.util.List<CountryModel> ownedCountry3 = new ArrayList<>();
+    /** The owned country 3. */
+    private List<CountryModel> ownedCountry3 = new ArrayList<>();
 
-    /**
-     * The owned country 4.
-     */
+    /** The owned country 4. */
     private List<CountryModel> ownedCountry4 = new ArrayList<>();
 
+    /**
+     * Initialization of controller.
+     */
+    public StartUpTournamentController() {
+    }
 
     /**
      * Constructor initializes values and sets the screen too visible.
@@ -247,5 +223,4 @@ public class StartUpTournamentController {
             }
         }
     }
-
 }

@@ -2,6 +2,8 @@ package com.risk.controller;
 
 import com.risk.model.*;
 import com.risk.utilities.Validation;
+import com.risk.view.events.ViewActionEvent;
+import com.risk.view.events.ViewActionListener;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
@@ -10,23 +12,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import com.risk.view.*;
 
 /**
  * @author gursimransingh
  */
 
-public class TournmentDetailController implements ActionListener {
+public class TournmentDetailController implements ViewActionListener {
 
-    /**
-     * The view.
-     */
-    private TournamentDetailView theTournamentDetailView;
+    /** The view. */
+    private ITournamentDetailView theTournamentDetailView;
 
     /** The tournament model. */
     private TournamentModel theTournamentModel = new TournamentModel();
 
     /** The map file. */
-    private File mapFile[] = new File[5];
+    private File[] mapFile = new File[5];
 
     /** The no of maps. */
     private int noOfMaps;
@@ -37,30 +38,21 @@ public class TournmentDetailController implements ActionListener {
     /** The map loaded. */
     private boolean mapLoaded = false;
 
-    /** The valid game. */
-    private boolean validGame = true;
-
-    /** The no of games. */
-    private int noOfGames;
-
     /** The no of players. */
     private int noOfPlayers;
 
     /** The Player name. */
-    private String turns, PlayerType, PlayerName;
-
-    /** The no of turns. */
-    private int noOfTurns;
-    /** The list of players. */
-    private ArrayList<PlayerModel> listOfPlayers = new ArrayList<PlayerModel>();
+    private String PlayerType, PlayerName;
 
     /**
      * Constructor initializes values and sets the screen too visible.
      */
-    public TournmentDetailController() {
-        this.theTournamentDetailView = new TournamentDetailView();
-        this.theTournamentDetailView.setActionListener(this);
-        this.theTournamentDetailView.setVisible(true);
+    TournmentDetailController() {
+        this.theTournamentDetailView =
+                Environment.getInstance().getViewManager().newTournamentDetailView();
+        this.theTournamentDetailView.addActionListener(this);
+        this.theTournamentDetailView.showView();
+
         for (int i = 0; i < 5; i++) {
             mapFile[i] = null;
         }
@@ -69,70 +61,61 @@ public class TournmentDetailController implements ActionListener {
     /**
      * This method performs action, by Listening the action event set in view.
      *
-     * @param actionEvent the action event
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     * @param event the action event
+     * @see ViewActionListener
      */
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(theTournamentDetailView.saveAndPlayButton)) {
-            validGame = true;
-            noOfGames = (int) theTournamentDetailView.noOfGames.getSelectedItem();
+    public void actionPerformed(ViewActionEvent event) {
+        if (ITournamentDetailView.ACTION_SAVE_AND_PLAY.equals(event.getSource())) {
+            /* The valid game. */
+            boolean validGame = true;
+
+            /* The no of games. */
+            int noOfGames = theTournamentDetailView.getNoOfGames();
             this.theTournamentModel.setNoOfGames(noOfGames);
-            noOfPlayers = (int) theTournamentDetailView.noOfPlayers.getSelectedItem();
+            noOfPlayers = theTournamentDetailView.getNoOfPlayers();
             try {
                 playerValidation();
             } catch (ParseException e) {
                 validGame = false;
                 e.printStackTrace();
             }
-            noOfTurns = (int) theTournamentDetailView.noOfTurnsText.getSelectedItem();
-            if (mapLoaded != true) {
+
+            /* The no of turns. */
+            int noOfTurns = theTournamentDetailView.getNoOfTurnsText();
+            if (!mapLoaded) {
                 validGame = false;
             }
-            if (validGame == true) {
+            if (validGame) {
                 for (int i = 0; i < noOfGames; i++) {
                     for (int j = 0; j < this.theTournamentModel.getGamePlay().size(); j++) {
                         new StartUpTournamentController(this.theTournamentModel.getGamePlay().get(j), noOfTurns);
                     }
                 }
-                this.theTournamentDetailView.dispose();
-            }
-        } else if (actionEvent.getSource().equals(theTournamentDetailView.exitButton)) {
-            this.theTournamentDetailView.dispose();
-        } else if (actionEvent.getSource().equals(theTournamentDetailView.browseMap1Button)) {
-            int value = theTournamentDetailView.chooseMap1.showOpenDialog(theTournamentDetailView);
-            if (value == JFileChooser.APPROVE_OPTION) {
-                mapFile[0] = theTournamentDetailView.chooseMap1.getSelectedFile();
-            }
-        } else if (actionEvent.getSource().equals(theTournamentDetailView.browseMap2Button)) {
-            int value = theTournamentDetailView.chooseMap2.showOpenDialog(theTournamentDetailView);
-            if (value == JFileChooser.APPROVE_OPTION) {
-                mapFile[1] = theTournamentDetailView.chooseMap2.getSelectedFile();
-            }
-        } else if (actionEvent.getSource().equals(theTournamentDetailView.browseMap3Button)) {
-            int value = theTournamentDetailView.chooseMap3.showOpenDialog(theTournamentDetailView);
-            if (value == JFileChooser.APPROVE_OPTION) {
-                mapFile[2] = theTournamentDetailView.chooseMap3.getSelectedFile();
-            }
-        } else if (actionEvent.getSource().equals(theTournamentDetailView.browseMap4Button)) {
-            int value = theTournamentDetailView.chooseMap4.showOpenDialog(theTournamentDetailView);
-            if (value == JFileChooser.APPROVE_OPTION) {
-                mapFile[3] = theTournamentDetailView.chooseMap4.getSelectedFile();
-            }
-        } else if (actionEvent.getSource().equals(theTournamentDetailView.browseMap5Button)) {
-            int value = theTournamentDetailView.chooseMap5.showOpenDialog(theTournamentDetailView);
-            if (value == JFileChooser.APPROVE_OPTION) {
-                mapFile[4] = theTournamentDetailView.chooseMap5.getSelectedFile();
-            }
-        } else if (actionEvent.getSource().equals(theTournamentDetailView.validateMapButton)) {
 
-            noOfMaps = (int) theTournamentDetailView.noOfMaps.getSelectedItem();
+                this.theTournamentDetailView.hideView();
+            }
+        } else if (ITournamentDetailView.ACTION_EXIT.equals(event.getSource())) {
+            this.theTournamentDetailView.hideView();
+        } else if (ITournamentDetailView.ACTION_BROWSE_MAP_1.equals(event.getSource())) {
+            mapFile[0] = theTournamentDetailView.getMap1();
+        } else if (ITournamentDetailView.ACTION_BROWSE_MAP_2.equals(event.getSource())) {
+            mapFile[1] = theTournamentDetailView.getMap2();
+        } else if (ITournamentDetailView.ACTION_BROWSE_MAP_3.equals(event.getSource())) {
+            mapFile[2] = theTournamentDetailView.getMap3();
+        } else if (ITournamentDetailView.ACTION_BROWSE_MAP_4.equals(event.getSource())) {
+            mapFile[3] = theTournamentDetailView.getMap4();
+        } else if (ITournamentDetailView.ACTION_BROWSE_MAP_5.equals(event.getSource())) {
+            mapFile[4] = theTournamentDetailView.getMap5();
+        } else if (ITournamentDetailView.ACTION_VALIDATE_MAP.equals(event.getSource())) {
+            noOfMaps = theTournamentDetailView.getNoOfMaps();
             for (int i = 0; i < noOfMaps; i++) {
                 if (mapFile[i] == null) {
-                    JOptionPane.showOptionDialog(null, "Select the " + (i + 1) + " appropriate maps", "Invalid",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                    theTournamentDetailView.showOptionDialog(
+                            "Select the " + (i + 1) + " appropriate maps",
+                            "Invalid");
                 } else {
-                    if (mapVerification(mapFile[i], i)) {
+                    if (mapVerification(mapFile[i])) {
                         if (noOfMaps == (i + 1)) {
                             mapLoaded = true;
                         }
@@ -146,10 +129,9 @@ public class TournmentDetailController implements ActionListener {
      * Map verification.
      *
      * @param mapFile the map file
-     * @param index   the index
      * @return true, if successful
      */
-    public boolean mapVerification(File mapFile, int index) {
+    private boolean mapVerification(File mapFile) {
         gamePlayModel = new GamePlayModel();
         boolean validMap = true;
         GameMapModel gameMapModel = new GameMapModel(mapFile);
@@ -167,10 +149,9 @@ public class TournmentDetailController implements ActionListener {
                     this.theTournamentModel.getGamePlay().add(gamePlayModel);
                     System.out.println(" All the map validations are correct");
                     try {
-                        JOptionPane.showMessageDialog(theTournamentDetailView,
-                                "File Loaded Successfully! Click Next to Play!", "Map Loaded",
-                                JOptionPane.INFORMATION_MESSAGE);
-
+                        theTournamentDetailView.showMessageDialog(
+                                "File Loaded Successfully! Click Next to Play!",
+                                "Map Loaded");
                     } catch (Exception e) {
                         validMap = false;
                         e.printStackTrace();
@@ -179,20 +160,23 @@ public class TournmentDetailController implements ActionListener {
                 } else {
                     validMap = false;
                     System.out.println("Empty link country validation failed");
-                    JOptionPane.showOptionDialog(null, "Empty continent validation failed", "Invalid",
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                    theTournamentDetailView.showOptionDialog(
+                            "Empty continent validation failed",
+                            "Invalid");
                 }
             } else {
                 validMap = false;
                 System.out.println("Empty continent validation failed");
-                JOptionPane.showOptionDialog(null, "Empty link country validation failed", "Invalid",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+                theTournamentDetailView.showOptionDialog(
+                        "Empty link country validation failed",
+                        "Invalid");
             }
         } else {
             validMap = false;
             System.out.println("One of the continent is invalid");
-            JOptionPane.showOptionDialog(null, "Map is not linked properly", "Invalid", JOptionPane.DEFAULT_OPTION,
-                    JOptionPane.INFORMATION_MESSAGE, null, new Object[]{}, null);
+            theTournamentDetailView.showOptionDialog(
+                    "Map is not linked properly",
+                    "Invalid");
 
         }
         return validMap;
@@ -203,19 +187,22 @@ public class TournmentDetailController implements ActionListener {
      *
      * @throws ParseException the parse exception
      */
-    public void playerValidation() throws ParseException {
+    private void playerValidation() throws ParseException {
         int a = 1, b = 1, r = 1, c = 1;
-        listOfPlayers = new ArrayList<PlayerModel>();
+
+        /* The list of players. */
+        ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
         for (int i = 0; i < noOfPlayers; i++) {
             if (i == 0) {
-                PlayerType = theTournamentDetailView.playerName1.getSelectedItem().toString();
+                PlayerType = theTournamentDetailView.getPlayer1Name();
             } else if (i == 1) {
-                PlayerType = theTournamentDetailView.playerName2.getSelectedItem().toString();
+                PlayerType = theTournamentDetailView.getPlayer2Name();
             } else if (i == 2) {
-                PlayerType = theTournamentDetailView.playerName3.getSelectedItem().toString();
+                PlayerType = theTournamentDetailView.getPlayer3Name();
             } else if (i == 3) {
-                PlayerType = theTournamentDetailView.playerName4.getSelectedItem().toString();
+                PlayerType = theTournamentDetailView.getPlayer4Name();
             }
+
             if ("Aggressive".equals(PlayerType)) {
                 PlayerName = "Aggressive " + a;
                 a++;
@@ -241,4 +228,5 @@ public class TournmentDetailController implements ActionListener {
         }
 
     }
+
 }

@@ -1,17 +1,20 @@
 package com.risk.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
-import javax.swing.JOptionPane;
-
 import com.risk.model.CardModel;
 import com.risk.model.CountryModel;
-import com.risk.utilities.SaveGame;
 import com.risk.model.GamePlayModel;
+import com.risk.model.strategy.BenevolentPlayerStrategy;
+import com.risk.model.strategy.CheaterPlayerStrategy;
+import com.risk.model.strategy.RandomPlayerStrategy;
+import com.risk.utilities.SaveGame;
 import com.risk.utilities.Validation;
+import com.risk.view.IAttackView;
+import com.risk.view.IFortificationView;
+import com.risk.view.IReinforcementView;
+import com.risk.view.events.ViewActionEvent;
+import com.risk.view.events.ViewActionListener;
+
+import javax.swing.*;
 
 /**
  * In PlayerController, the data flow into model object and updates the view
@@ -20,14 +23,22 @@ import com.risk.utilities.Validation;
  * @version 1.0.0
  *
  */
-public class PlayerController implements ActionListener, ItemListener {
+public class PlayerController implements ViewActionListener {
 
+    /** The game play model. */
     private GamePlayModel gamePlayModel;
+
+    /** The val. */
     private Validation val = new Validation();
-    private ReinforcementView theReinforcementView;
-    private FortificationView theFortificationView;
-    private AttackView theAttackView;
-    private String filename = null;
+
+    /** The reinforcement view. */
+    private IReinforcementView theReinforcementView;
+
+    /** The fortification view. */
+    private IFortificationView theFortificationView;
+
+    /** The attack view. */
+    private IAttackView theAttackView;
 
     /**
      * Constructor initializes values and sets the screen too visible.
@@ -39,38 +50,39 @@ public class PlayerController implements ActionListener, ItemListener {
 
         this.gamePlayModel = gamePlayModel;
         if (this.gamePlayModel.getGamePhase() == null) {
-            if (val.endOfGame(this.gamePlayModel) == false) {
+            if (!val.endOfGame(this.gamePlayModel)) {
                 String PlayerType = this.gamePlayModel.getGameMap().getPlayerTurn().getTypePlayer();
                 if ("Human".equals(PlayerType)) {
                     this.gamePlayModel.getGameMap().getPlayerTurn()
-                            .setStrategy(new HumanPlayerController(this.gamePlayModel));
+                            .setStrategy(new HumanPlayerStrategy(this.gamePlayModel));
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
-                    theReinforcementView = new ReinforcementView(this.gamePlayModel);
-                    theReinforcementView.setVisible(true);
-                    theReinforcementView.setActionListener(this);
+                    theReinforcementView =
+                            Environment.getInstance().getViewManager().newReinforcementView(this.gamePlayModel);
+                    theReinforcementView.addActionListener(this);
+                    theReinforcementView.showView();
                     this.gamePlayModel.getGameMap().addObserver(theReinforcementView);
                     this.gamePlayModel.addObserver(theReinforcementView);
                 } else if ("Aggressive".equals(PlayerType)) {
                     this.gamePlayModel.getGameMap().getPlayerTurn()
-                            .setStrategy(new AgressivePlayerController(this.gamePlayModel));
+                            .setStrategy(new AgressivePlayerStrategy(this.gamePlayModel));
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
                 } else if ("Benevolent".equals(PlayerType)) {
                     this.gamePlayModel.getGameMap().getPlayerTurn()
-                            .setStrategy(new BenevolentPlayerController(this.gamePlayModel));
+                            .setStrategy(new BenevolentPlayerStrategy(this.gamePlayModel));
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
                 } else if ("Random".equals(PlayerType)) {
                     this.gamePlayModel.getGameMap().getPlayerTurn()
-                            .setStrategy(new RandomPlayerController(this.gamePlayModel));
+                            .setStrategy(new RandomPlayerStrategy(this.gamePlayModel));
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
                 } else if ("Cheater".equals(PlayerType)) {
                     this.gamePlayModel.getGameMap().getPlayerTurn()
-                            .setStrategy(new CheaterPlayerController(this.gamePlayModel));
+                            .setStrategy(new CheaterPlayerStrategy(this.gamePlayModel));
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
@@ -106,36 +118,43 @@ public class PlayerController implements ActionListener, ItemListener {
             String PlayerType = this.gamePlayModel.getGameMap().getPlayerTurn().getTypePlayer();
             if ("Human".equals(PlayerType)) {
                 this.gamePlayModel.getGameMap().getPlayerTurn()
-                        .setStrategy(new HumanPlayerController(this.gamePlayModel));
+                        .setStrategy(new HumanPlayerStrategy(this.gamePlayModel));
                 String Phase = this.gamePlayModel.getGamePhase();
                 if ("Reinforcement".equals(Phase)) {
                     this.gamePlayModel.getGameMap().getPlayerTurn()
-                            .setStrategy(new HumanPlayerController(this.gamePlayModel));
+                            .setStrategy(new HumanPlayerStrategy(this.gamePlayModel));
                     this.gamePlayModel.getGameMap().getPlayerTurn().executeReinforcement();
-                    theReinforcementView = new ReinforcementView(this.gamePlayModel);
-                    theReinforcementView.setVisible(true);
-                    theReinforcementView.setActionListener(this);
+                    theReinforcementView =
+                            Environment.getInstance().getViewManager().newReinforcementView(this.gamePlayModel);
+                    theReinforcementView.addActionListener(this);
+                    theReinforcementView.showView();
                     this.gamePlayModel.getGameMap().addObserver(theReinforcementView);
                     this.gamePlayModel.addObserver(theReinforcementView);
                 } else if ("Attack".equals(Phase)) {
-                    theReinforcementView = new ReinforcementView(this.gamePlayModel);
-                    theReinforcementView.dispose();
-                    theAttackView = new AttackView(this.gamePlayModel);
-                    theAttackView.setActionListener(this);
-                    theAttackView.setVisible(true);
+                    theReinforcementView =
+                            Environment.getInstance().getViewManager().newReinforcementView(this.gamePlayModel);
+                    theReinforcementView.hideView();
+
+                    theAttackView =
+                            Environment.getInstance().getViewManager().newAttackView(this.gamePlayModel);
+                    theAttackView.addActionListener(this);
+                    theAttackView.showView();
+
                     this.gamePlayModel.deleteObservers();
                     this.gamePlayModel.addObserver(this.theAttackView);
                     this.gamePlayModel.setArmyToMoveText(false);
                     this.gamePlayModel.setCardToBeAssigned(false);
                 } else if ("Fortification".equals(Phase)) {
-                    theReinforcementView = new ReinforcementView(this.gamePlayModel);
-                    theReinforcementView.dispose();
-                    theAttackView = new AttackView(this.gamePlayModel);
-                    theAttackView.dispose();
-                    theFortificationView = new FortificationView(this.gamePlayModel);
-                    theFortificationView.setActionListener(this);
-                    theFortificationView.setItemListener(this);
-                    theFortificationView.setVisible(true);
+                    theReinforcementView =
+                            Environment.getInstance().getViewManager().newReinforcementView(this.gamePlayModel);
+                    theReinforcementView.hideView();
+                    theAttackView =
+                            Environment.getInstance().getViewManager().newAttackView(this.gamePlayModel);
+                    theAttackView.hideView();
+                    theFortificationView =
+                            Environment.getInstance().getViewManager().newFortificationView(this.gamePlayModel);
+                    theFortificationView.addActionListener(this);
+                    theFortificationView.showView();
                     this.gamePlayModel.addObserver(this.theFortificationView);
                 }
             }
@@ -146,33 +165,37 @@ public class PlayerController implements ActionListener, ItemListener {
     /**
      * This method performs action, by Listening the action event set in view.
      *
-     * @param actionEvent
+     * @param event
      *            the action event
      */
+
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(this.theReinforcementView.addButton)) {
-            int selectedArmies = 0;
-            if (theReinforcementView.numOfTroopsComboBox.getSelectedItem() != null) {
-                selectedArmies = (int) theReinforcementView.numOfTroopsComboBox.getSelectedItem();
-                CountryModel countryName = (CountryModel) theReinforcementView.countryListComboBox.getSelectedItem();
+    public void actionPerformed(ViewActionEvent event) {
+        /* The filename. */
+        String filename = null;
+        if (IReinforcementView.ACTION_ADD.equals(event.getSource())) {
+            if (theReinforcementView.getNumOfTroops() >= 0) {
+                int selectedArmies = theReinforcementView.getNumOfTroops();
+                CountryModel countryName = theReinforcementView.getCountryModel();
                 System.out.println("countryName" + selectedArmies + countryName);
                 this.gamePlayModel.setSelectedArmiesToCountries(selectedArmies, countryName);
                 this.gamePlayModel.getConsole().append(selectedArmies + " armies added to "
                         + countryName.getCountryName());
 
             } else {
-                this.theReinforcementView.dispose();
-                theAttackView = new AttackView(this.gamePlayModel);
-                theAttackView.setActionListener(this);
-                theAttackView.setVisible(true);
+                this.theReinforcementView.hideView();
+                theAttackView =
+                        Environment.getInstance().getViewManager().newAttackView(this.gamePlayModel);
+                theAttackView.addActionListener(this);
+                theAttackView.showView();
+
                 this.gamePlayModel.deleteObservers();
                 this.gamePlayModel.addObserver(this.theAttackView);
                 this.gamePlayModel.setArmyToMoveText(false);
                 this.gamePlayModel.setCardToBeAssigned(false);
             }
-        } else if (actionEvent.getSource().equals(this.theReinforcementView.addMoreButton)) {
-            int cardID = Integer.parseInt(this.theReinforcementView.cardIdField.getText());
+        } else if (IReinforcementView.ACTION_ADD_MORE.equals(event.getSource())) {
+            int cardID = this.theReinforcementView.getCardId();
             int cardValue = 0;
             CardModel card = new CardModel();
             for (int i = 0; i < this.gamePlayModel.getCards().size(); i++) {
@@ -195,7 +218,7 @@ public class PlayerController implements ActionListener, ItemListener {
             }
             this.gamePlayModel.getCards().add(card);
             this.gamePlayModel.callObservers();
-        } else if (actionEvent.getSource().equals(this.theReinforcementView.exitCardButton)) {
+        } else if (IReinforcementView.ACTION_EXIT_CARD.equals(event.getSource())) {
             for (int i = 0; i < this.gamePlayModel.getPlayers().size(); i++) {
                 if (gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer()
                         .equals(gamePlayModel.getPlayers().get(i).getNamePlayer())) {
@@ -213,62 +236,62 @@ public class PlayerController implements ActionListener, ItemListener {
                     }
                 }
             }
-        } else if (actionEvent.getSource().equals(this.theReinforcementView.saveButton)) {
+        } else if (IReinforcementView.ACTION_SAVE.equals(event.getSource())) {
             this.gamePlayModel.setGamePhase("Reinforcement");
             filename = JOptionPane.showInputDialog("File Name");
             try {
                 System.out.println(filename);
                 SaveGame save = new SaveGame();
-                if (filename == null || filename == "") {
+                if (filename == null || filename.equals("")) {
                     save.writeTOJSONFile(this.gamePlayModel, "file");
                 } else {
                     save.writeTOJSONFile(this.gamePlayModel, filename);
                 }
                 JOptionPane.showMessageDialog(null, "Play has been saved");
                 new WelcomeScreenController();
-                this.theReinforcementView.dispose();
+                this.theReinforcementView.hideView();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (actionEvent.getSource().equals(this.theAttackView.nextButton)) {
-            this.theAttackView.dispose();
-            theFortificationView = new FortificationView(this.gamePlayModel);
-            theFortificationView.setActionListener(this);
-            theFortificationView.setItemListener(this);
-            theFortificationView.setVisible(true);
+        } else if (IAttackView.ACTION_NEXT.equals(event.getSource())) {
+            this.theAttackView.hideView();
+            theFortificationView =
+                    Environment.getInstance().getViewManager().newFortificationView(this.gamePlayModel);
+            theFortificationView.addActionListener(this);
+            theFortificationView.showView();
             this.gamePlayModel.addObserver(this.theFortificationView);
 
-        } else if (actionEvent.getSource().equals(this.theAttackView.attackCountryListComboBox)) {
+        } else if (IAttackView.ACTION_ATTACK_COUNTRY_CHANGED.equals(event.getSource())) {
             this.gamePlayModel
-                    .setSelectedAttackComboBoxIndex(this.theAttackView.attackCountryListComboBox.getSelectedIndex());
-        } else if (actionEvent.getSource().equals(this.theAttackView.defendCountryListComboBox)) {
+                    .setSelectedAttackComboBoxIndex(this.theAttackView.getAttackCountryIndex());
+        } else if (IAttackView.ACTION_DEFEND_COUNTRY_CHANGED.equals(event.getSource())) {
             this.gamePlayModel
-                    .setSelectedDefendComboBoxIndex(this.theAttackView.defendCountryListComboBox.getSelectedIndex());
-        } else if (actionEvent.getSource().equals(this.theAttackView.SingleButton)) {
+                    .setSelectedDefendComboBoxIndex(this.theAttackView.getDefendCountryIndex());
+        } else if (IAttackView.ACTION_SINGLE.equals(event.getSource())) {
             this.gamePlayModel.getConsole().append(
                     "This is a Single attack from " + this.gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer());
 
             this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
 
-            int attackDice = (int) theAttackView.numOfDiceAttackComboBox.getSelectedItem();
-            int defendDice = (int) theAttackView.numOfDiceDefendComboBox.getSelectedItem();
-            CountryModel attackCountry = (CountryModel) theAttackView.attackCountryListComboBox.getSelectedItem();
-            CountryModel defendCountry = (CountryModel) theAttackView.defendCountryListComboBox.getSelectedItem();
+            int attackDice = theAttackView.getNumOfDiceAttack();
+            int defendDice = theAttackView.getNumOfDiceDefend();
+            CountryModel attackCountry = theAttackView.getAttackCountryModel();
+            CountryModel defendCountry = theAttackView.getDefendCountryModel();
             this.gamePlayModel.setDefeatedCountry(defendCountry);
             this.gamePlayModel.singleStrike(attackDice, attackCountry, defendDice, defendCountry);
-            if (val.endOfGame(this.gamePlayModel) == true) {
+            if (val.endOfGame(this.gamePlayModel)) {
                 JOptionPane.showOptionDialog(null, "Bravo! You have won! Game is over!", "Valid",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
-                this.theAttackView.dispose();
+                this.theAttackView.hideView();
             }
 
-        } else if (actionEvent.getSource().equals(this.theAttackView.alloutButton)) {
+        } else if (IAttackView.ACTION_ALLOUT.equals(event.getSource())) {
             this.gamePlayModel.getConsole().append(
                     "This is a Allout attack from " + this.gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer());
 
             this.gamePlayModel.getGameMap().getPlayerTurn().executeAttack();
-            CountryModel attackCountry = (CountryModel) theAttackView.attackCountryListComboBox.getSelectedItem();
-            CountryModel defendCountry = (CountryModel) theAttackView.defendCountryListComboBox.getSelectedItem();
+            CountryModel attackCountry = theAttackView.getAttackCountryModel();
+            CountryModel defendCountry = theAttackView.getDefendCountryModel();
             this.gamePlayModel.setDefeatedCountry(defendCountry);
             this.gamePlayModel.getConsole()
                     .append("The attacker is " + attackCountry.getCountryName());
@@ -276,16 +299,15 @@ public class PlayerController implements ActionListener, ItemListener {
                     .append("The defender is " + defendCountry.getCountryName());
 
             this.gamePlayModel.alloutStrike(attackCountry, defendCountry);
-            if (val.endOfGame(this.gamePlayModel) == true) {
+            if (val.endOfGame(this.gamePlayModel)) {
                 JOptionPane.showOptionDialog(null, "Bravo! You have won! Game is over!", "Valid",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {}, null);
-                this.theAttackView.dispose();
+                this.theAttackView.hideView();
             }
 
-        } else if (actionEvent.getSource().equals(this.theAttackView.moveButton)) {
-
-            CountryModel attackCountry = (CountryModel) theAttackView.attackCountryListComboBox.getSelectedItem();
-            int noOfArmiesToBeMoved = (int) theAttackView.numOfArmiesToBeMovedComboBox.getSelectedItem();
+        } else if (IAttackView.ACTION_MOVE.equals(event.getSource())) {
+            CountryModel attackCountry = theAttackView.getAttackCountryModel();
+            int noOfArmiesToBeMoved = theAttackView.getNumOfArmiesToBeMoved();
             CountryModel defendCountry = this.gamePlayModel.getDefeatedCountry();
             this.gamePlayModel.moveArmies(attackCountry, defendCountry, noOfArmiesToBeMoved);
             this.gamePlayModel.getConsole()
@@ -293,41 +315,41 @@ public class PlayerController implements ActionListener, ItemListener {
                             + " is moving " + noOfArmiesToBeMoved + " from " + attackCountry.getName() + " to "
                             + defendCountry.getName());
 
-        } else if (actionEvent.getSource().equals(this.theAttackView.saveButton)) {
+        } else if (IAttackView.ACTION_SAVE.equals(event.getSource())) {
             this.gamePlayModel.setGamePhase("Attack");
             filename = JOptionPane.showInputDialog("File Name");
             try {
                 System.out.println(filename);
                 SaveGame save = new SaveGame();
-                if (filename == null || filename == "") {
+                if (filename == null || filename.equals("")) {
                     save.writeTOJSONFile(this.gamePlayModel, "file");
                 } else {
                     save.writeTOJSONFile(this.gamePlayModel, filename);
                 }
                 JOptionPane.showMessageDialog(null, "Play has been saved");
                 new WelcomeScreenController();
-                this.theAttackView.dispose();
+                this.theAttackView.hideView();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (actionEvent.getSource().equals(this.theFortificationView.moveButton)) {
+        } else if (IFortificationView.ACTION_MOVE.equals(event.getSource())) {
             // BFS
             this.gamePlayModel.getGameMap().getPlayerTurn().executeFortification();
 
             if (val.checkIfValidMove(this.gamePlayModel.getGameMap(),
-                    (CountryModel) this.theFortificationView.fromCountryListComboBox.getSelectedItem(),
-                    (CountryModel) this.theFortificationView.toCountryListComboBox.getSelectedItem())) {
+                    this.theFortificationView.getFromCountryModel(),
+                    this.theFortificationView.getToCountryModel())) {
 
                 this.gamePlayModel.getGameMap().setMovingArmies(
-                        (Integer) this.theFortificationView.numOfTroopsComboBox.getSelectedItem(),
-                        (CountryModel) this.theFortificationView.fromCountryListComboBox.getSelectedItem(),
-                        (CountryModel) this.theFortificationView.toCountryListComboBox.getSelectedItem());
+                        this.theFortificationView.getNumOfTroops(),
+                        this.theFortificationView.getFromCountryModel(),
+                        this.theFortificationView.getToCountryModel());
                 this.gamePlayModel.getConsole()
                         .append("The player " + this.gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer()
                                 + " is moving "
-                                + (Integer) this.theFortificationView.numOfTroopsComboBox.getSelectedItem() + " from "
-                                + this.theFortificationView.fromCountryListComboBox.getSelectedItem() + " to "
-                                + this.theFortificationView.toCountryListComboBox.getSelectedItem());
+                                + this.theFortificationView.getNumOfTroops() + " from "
+                                + this.theFortificationView.getFromCountryModel() + " to "
+                                + this.theFortificationView.getToCountryModel());
 
             }
 
@@ -343,30 +365,33 @@ public class PlayerController implements ActionListener, ItemListener {
                 this.gamePlayModel.getGameMap().setPlayerIndex(index);
                 this.gamePlayModel.getPlayers().get(index).callObservers();
             }
-            this.theFortificationView.dispose();
+            this.theFortificationView.hideView();
             new GamePlayController(this.gamePlayModel);
 
-        } else if (actionEvent.getSource().equals(this.theFortificationView.fromCountryListComboBox)) {
+        } else if (IFortificationView.ACTION_FROM_COUNTRY_CHANGED.equals(event.getSource())) {
             this.gamePlayModel
-                    .setSelectedComboBoxIndex(this.theFortificationView.fromCountryListComboBox.getSelectedIndex());
-        } else if (actionEvent.getSource().equals(this.theFortificationView.saveButton)) {
+                    .setSelectedComboBoxIndex(this.theFortificationView.getFromCountryIndex());
+        } else if (IFortificationView.ACTION_ITEM_FROM_COUNTRY_CHANGED.equals(event.getSource())) {
+            this.gamePlayModel
+                    .setSelectedComboBoxIndex(this.theFortificationView.getFromCountryIndex());
+        } else if (IFortificationView.ACTION_SAVE.equals(event.getSource())) {
             this.gamePlayModel.setGamePhase("Fortification");
             filename = JOptionPane.showInputDialog("File Name");
             try {
                 System.out.println(filename);
                 SaveGame save = new SaveGame();
-                if (filename == null || filename == "") {
+                if (filename == null || filename.equals("")) {
                     save.writeTOJSONFile(this.gamePlayModel, "file");
                 } else {
                     save.writeTOJSONFile(this.gamePlayModel, filename);
                 }
                 JOptionPane.showMessageDialog(null, "Play has been saved");
                 new WelcomeScreenController();
-                this.theFortificationView.dispose();
+                this.theFortificationView.hideView();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (actionEvent.getSource().equals(this.theFortificationView.nextButton)) {
+        } else if (IFortificationView.ACTION_NEXT.equals(event.getSource())) {
             int index = this.gamePlayModel.getGameMap().getPlayerIndex();
 
             index++;
@@ -378,24 +403,9 @@ public class PlayerController implements ActionListener, ItemListener {
                 this.gamePlayModel.getGameMap().setPlayerIndex(index);
                 this.gamePlayModel.getPlayers().get(index).callObservers();
             }
-            this.theFortificationView.dispose();
+            this.theFortificationView.hideView();
             new GamePlayController(this.gamePlayModel);
         }
-
     }
 
-    /**
-     * Item Listener.
-     *
-     * @param itemEvent
-     *            the item event
-     * @see java.awt.event.ItemListener#itemStateChanged(java.awt.event.ItemEvent)
-     */
-    public void itemStateChanged(ItemEvent itemEvent) {
-        if (itemEvent.getSource().equals(this.theFortificationView.fromCountryListComboBox)) {
-            this.gamePlayModel
-                    .setSelectedComboBoxIndex(this.theFortificationView.fromCountryListComboBox.getSelectedIndex());
-        }
-
-    }
 }
