@@ -16,8 +16,6 @@ import java.util.Objects;
 /**
  * In CreateCountryController, the data flow into model object and updates the
  * view whenever data changes.
- *
- * @author Rohit
  * @version 1.0.0
  *
  */

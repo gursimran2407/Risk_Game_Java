@@ -40,7 +40,6 @@ import com.risk.model.PlayerModel;
  * This View provides the attackView of the Game Play. It also provides the
  * observer pattern when the data is modified
  *
- * @author Suruthi Raju
  * @version 1.0.0
  *
  */

@@ -37,9 +37,6 @@ import com.risk.model.PlayerModel;
 
 /**
  * "FortificationView" class represents a view object of fortification phase.
- *
- * @author GROUP-35
- *
  */
 public class FortificationView extends JFrame implements View {
 

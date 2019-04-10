@@ -20,7 +20,6 @@ import com.risk.view.ReinforcementView;
  * In PlayerController, the data flow into model object and updates the view
  * whenever data changes.
  *
- * @author Hamid
  * @version 1.0.0
  *
  */
