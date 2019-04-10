@@ -1,14 +1,12 @@
 package com.risk.controller;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
+import com.risk.Environment;
+import com.risk.view.INewGameView;
+import com.risk.view.events.ViewActionEvent;
+import com.risk.view.events.ViewActionListener;
 import org.json.simple.parser.ParseException;
 
 import com.risk.model.CardModel;
@@ -17,107 +15,107 @@ import com.risk.model.GameMapModel;
 import com.risk.model.GamePlayModel;
 import com.risk.model.PlayerModel;
 import com.risk.utilities.Validation;
-import com.risk.view.NewGameView;
 
 /**
  * In NewGameController, the data flow into model object and updates the view
  * whenever data changes.
  *
- * @author Namita
+ * @version 1.0.0
  *
  */
 
-public class NewGameController implements ActionListener {
+public class NewGameController implements ViewActionListener {
 
-    private NewGameView theView;
+    /** The view. */
+    private INewGameView theView;
+
+    /** The list of players. */
     private ArrayList<PlayerModel> listOfPlayers = new ArrayList<>();
+
+    /** The game map model. */
     private GameMapModel gameMapModel = new GameMapModel();
+
+    /** The game play model. */
     private GamePlayModel gamePlayModel = new GamePlayModel();
+
+    /** The no of players. */
     private int noOfPlayers;
-    private String playerName = "";
-    private String playerType = "";
+
+    /** The Player name. */
+    private String PlayerName = "";
+
+    /** The Player type. */
+    private String PlayerType = "";
 
     /**
      * Constructor initializes values and sets the screen too visible.
      */
     public NewGameController() {
-        this.theView = new NewGameView();
-        this.theView.setActionListener(this);
-        this.theView.setVisible(true);
-
+        this.theView = Environment.getInstance().getViewManager().newNewGameView();
+        this.theView.addActionListener(this);
+        this.theView.showView();
     }
 
     /**
      * This method performs action, by Listening the action event set in view.
      *
-     * @param actionEvent the action event
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     * @param event the action event
+     * @see ViewActionListener
      */
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getSource().equals(theView.browseMapButton)) {
-            int value = theView.chooseMap.showOpenDialog(theView);
-            if (value == JFileChooser.APPROVE_OPTION) {
-                try {
-                    File mapFile = theView.chooseMap.getSelectedFile();
-                    gameMapModel = new GameMapModel(mapFile);
+    public void actionPerformed(ViewActionEvent event) {
+        if (INewGameView.ACTION_BROWSE_MAP.equals(event.getSource())) {
+            try {
+                gameMapModel = theView.loadGameMapModel();
+                if (gameMapModel == null) {
+                    return;
+                }
 
-                    Validation MapValidation = new Validation();
-                    boolean flag1 = MapValidation.emptyLinkCountryValidation(this.gameMapModel);
+                Validation MapValidation = new Validation();
+                boolean flag1 = MapValidation.emptyLinkCountryValidation(this.gameMapModel);
 
-                    boolean flag3 = MapValidation.emptyContinentValidation(this.gameMapModel);
-                    boolean flag2 = MapValidation.checkInterlinkedContinent(this.gameMapModel);
-                    System.out.println(flag1 + " " + flag2 + " " + flag3);
-                    if (!(MapValidation.nonContinentValidation(this.gameMapModel))) {
-                        if (!(MapValidation.emptyLinkCountryValidation(this.gameMapModel))) {
-                            if (!(MapValidation.emptyContinentValidation(this.gameMapModel))) {
-
-                                System.out.println(" All the map validations are correct");
-                                try {
-                                    JOptionPane.showMessageDialog(theView,
-                                            "File Loaded Successfully! Click Next to Play!", "Map Loaded",
-                                            JOptionPane.INFORMATION_MESSAGE);
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-                            } else {
-                                System.out.println("Empty link country validation failed");
-                                JOptionPane.showOptionDialog(null, "Empty continent validation failed", "Invalid",
-                                        JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                                        new Object[] {}, null);
-                            }
+                boolean flag3 = MapValidation.emptyContinentValidation(this.gameMapModel);
+                boolean flag2 = MapValidation.checkInterlinkedContinent(this.gameMapModel);
+                System.out.println(flag1 + " " + flag2 + " " + flag3);
+                if (!(MapValidation.nonContinentValidation(this.gameMapModel))) {
+                    if (!(MapValidation.emptyLinkCountryValidation(this.gameMapModel))) {
+                        if (!(MapValidation.emptyContinentValidation(this.gameMapModel))) {
+                            System.out.println(" All the map validations are correct");
+                            theView.showMessageDialog(
+                                    "File Loaded Successfully! Click Next to Play!",
+                                    "Map Loaded");
                         } else {
-                            System.out.println("Empty continent validation failed");
-                            JOptionPane.showOptionDialog(null, "Empty link country validation failed", "Invalid",
-                                    JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {},
-                                    null);
+                            System.out.println("Empty link country validation failed");
+                            theView.showOptionDialog(
+                                    "Empty continent validation failed",
+                                    "Invalid");
                         }
                     } else {
-                        System.out.println("One of the continent is invalid");
-                        JOptionPane.showOptionDialog(null, "Map is not linked properly", "Invalid",
-                                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {},
-                                null);
-
+                        System.out.println("Empty continent validation failed");
+                        theView.showOptionDialog(
+                                "Empty link country validation failed",
+                                "Invalid");
                     }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } else {
+                    System.out.println("One of the continent is invalid");
+                    theView.showOptionDialog(
+                            "Map is not linked properly",
+                            "Invalid");
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } else if (actionEvent.getSource().equals(theView.nextButton)) {
-            noOfPlayers = (int) theView.numOfPlayers.getSelectedItem();
+        } else if (INewGameView.ACTION_NEXT.equals(event.getSource())) {
+            noOfPlayers = theView.getNumOfPlayers();
             try {
                 playerValidation();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        } else if (actionEvent.getSource().equals(theView.cancelButton)) {
+        } else if (INewGameView.ACTION_CANCEL.equals(event.getSource())) {
             new WelcomeScreenController();
-            this.theView.dispose();
+            this.theView.hideView();
         }
-
     }
 
     /**
@@ -131,73 +129,75 @@ public class NewGameController implements ActionListener {
             int h = 1, a = 1, b = 1, r = 1, c = 1;
             for (int i = 0; i < noOfPlayers; i++) {
                 if (i == 0) {
-                    playerType = theView.playerType1.getSelectedItem().toString();
-                    playerName = theView.playerName1.getText();
+                    PlayerType = theView.getPlayer1Type();
+                    PlayerName = theView.getPlayer1Name();
                 } else if (i == 1) {
-                    playerType = theView.playerType2.getSelectedItem().toString();
-                    playerName = theView.playerName2.getText();
+                    PlayerType = theView.getPlayer2Type();
+                    PlayerName = theView.getPlayer2Name();
                 } else if (i == 2) {
-                    playerType = theView.playerType3.getSelectedItem().toString();
-                    playerName = theView.playerName3.getText();
+                    PlayerType = theView.getPlayer3Type();
+                    PlayerName = theView.getPlayer3Name();
                 } else if (i == 3) {
-                    playerType = theView.playerType4.getSelectedItem().toString();
-                    playerName = theView.playerName4.getText();
+                    PlayerType = theView.getPlayer4Type();
+                    PlayerName = theView.getPlayer4Name();
                 } else if (i == 4) {
-                    playerType = theView.playerType5.getSelectedItem().toString();
-                    playerName = theView.playerName5.getText();
+                    PlayerType = theView.getPlayer5Type();
+                    PlayerName = theView.getPlayer5Name();
                 }
-                System.out.println("playerName " + playerName);
-                if (playerType == null || "".equals(playerType.trim())) {
-                    playerType = "Human";
-                    if (playerName == null || "".equals(playerName.trim())) {
-                        playerName = "Human " + h;
+
+                System.out.println("PlayerName " + PlayerName);
+                if (PlayerType == null || "".equals(PlayerType.trim())) {
+                    PlayerType = "Human";
+                    if (PlayerName == null || "".equals(PlayerName.trim())) {
+                        PlayerName = "Human " + h;
                         h++;
                     }
-                } else if ("Human".equals(playerType)) {
-                    playerType = "Human";
-                    if (playerName == null || "".equals(playerName.trim())) {
-                        playerName = "Human " + h;
+                } else if ("Human".equals(PlayerType)) {
+                    PlayerType = "Human";
+                    if (PlayerName == null || "".equals(PlayerName.trim())) {
+                        PlayerName = "Human " + h;
                         h++;
                     }
-                } else if ("Aggressive".equals(playerType)) {
-                    playerType = "Aggressive";
-                    if (playerName == null || "".equals(playerName.trim())) {
-                        playerName = "Aggressive " + a;
+                } else if ("Aggressive".equals(PlayerType)) {
+                    PlayerType = "Aggressive";
+                    if (PlayerName == null || "".equals(PlayerName.trim())) {
+                        PlayerName = "Aggressive " + a;
                         a++;
                     }
-                } else if ("Benevolent".equals(playerType)) {
-                    playerType = "Benevolent";
-                    if (playerName == null || "".equals(playerName.trim())) {
-                        playerName = "Benevolent " + b;
+                } else if ("Benevolent".equals(PlayerType)) {
+                    PlayerType = "Benevolent";
+                    if (PlayerName == null || "".equals(PlayerName.trim())) {
+                        PlayerName = "Benevolent " + b;
                         b++;
                     }
-                } else if ("Random".equals(playerType)) {
-                    playerType = "Random";
-                    if (playerName == null || "".equals(playerName.trim())) {
-                        playerName = "Random " + r;
+                } else if ("Random".equals(PlayerType)) {
+                    PlayerType = "Random";
+                    if (PlayerName == null || "".equals(PlayerName.trim())) {
+                        PlayerName = "Random " + r;
                         r++;
                     }
-                } else if ("Cheater".equals(playerType)) {
-                    playerType = "Cheater";
-                    if (playerName == null || "".equals(playerName.trim())) {
-                        playerName = "Cheater " + c;
+                } else if ("Cheater".equals(PlayerType)) {
+                    PlayerType = "Cheater";
+                    if (PlayerName == null || "".equals(PlayerName.trim())) {
+                        PlayerName = "Cheater " + c;
                         c++;
                     }
                 }
 
-                PlayerModel pm = new PlayerModel(playerName, playerType, 0, Color.WHITE, 0,
+                PlayerModel pm = new PlayerModel(PlayerName, PlayerType, 0, Color.WHITE, 0,
                         new ArrayList<CountryModel>(), new ArrayList<CardModel>());
                 listOfPlayers.add(pm);
             }
+
             gamePlayModel.setGameMap(gameMapModel);
             gamePlayModel.setPlayers(listOfPlayers);
             gamePlayModel.setCards(gamePlayModel.getCardFromJSON());
-            new StartupController(gamePlayModel);
-            this.theView.dispose();
+            new StartUpController(gamePlayModel);
+            this.theView.hideView();
         } else {
-            JOptionPane.showMessageDialog(theView,
+            theView.showMessageDialog(
                     "Number of cuntry in the Map is less than Number of Players. Select map or player Again!",
-                    "Map Loaded", JOptionPane.INFORMATION_MESSAGE);
+                    "Map Loaded");
         }
     }
 
