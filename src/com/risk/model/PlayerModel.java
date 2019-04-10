@@ -1,7 +1,5 @@
 package com.risk.model;
 
-import com.risk.helperInterfaces.Strategy;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
