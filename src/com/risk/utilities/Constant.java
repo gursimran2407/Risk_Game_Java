@@ -13,4 +13,5 @@ import java.nio.file.Paths;
 
 public class Constant {
     public static final Path filePath = Paths.get("mapfiles", "World.map");
+    public static final Path fileCard = Paths.get("mapfiles", "ConstantCard.json");
 }

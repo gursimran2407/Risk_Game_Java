@@ -1,9 +1,6 @@
 package com.risk;
 
-import com.risk.controller.CheckForOverallArmiesZeroTest;
-import com.risk.controller.FileSelectionTest;
-import com.risk.controller.SameCountryValidationTest;
-import com.risk.controller.TournmentMapVerificationTest;
+import com.risk.controller.*;
 import com.risk.model.*;
 import com.risk.utilities.*;
 import org.junit.runner.RunWith;
@@ -51,6 +48,7 @@ import org.junit.runners.Suite.SuiteClasses;
 				NonContinentValidationTest.class,
 				TournmentMapVerificationTest.class,
 				CheckForOverallArmiesZeroTest.class,
+				StartupControllerGetRandomTest.class
 				})
 
 /**
