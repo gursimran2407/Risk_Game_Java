@@ -414,6 +414,8 @@ public class GamePlayModel extends Observable {
         if (countryOwned == true) {
             this.consoleText.append("Attacker " + attackCountry.getRulerName() + " defeated Country "
                     + defendCountry.getCountryName() + " \n");
+            this.console.append("Attacker " + attackCountry.getRulerName() + " defeated Country "
+                    + defendCountry.getCountryName() + " \n");
             for (int i = 0; i < this.getPlayers().size(); i++) {
                 if (this.getPlayers().get(i).getNamePlayer().equals(defendCountry.getRulerName())) {
                     this.getPlayers().get(i).defend(defendCountry);
@@ -516,6 +518,8 @@ public class GamePlayModel extends Observable {
         }
         if (countryOwned == true) {
             this.consoleText.append("Attacker " + attackCountry.getRulerName() + "defeated Country "
+                    + defendCountry.getCountryName() + " \n");
+            this.console.append("Attacker " + attackCountry.getRulerName() + " defeated Country "
                     + defendCountry.getCountryName() + " \n");
             for (int i = 0; i < this.getPlayers().size(); i++) {
                 if (this.getPlayers().get(i).getNamePlayer().equals(defendCountry.getRulerName())) {

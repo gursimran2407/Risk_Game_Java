@@ -311,8 +311,8 @@ public class PlayerController implements ViewActionListener {
             this.gamePlayModel.moveArmies(attackCountry, defendCountry, noOfArmiesToBeMoved);
             this.gamePlayModel.getConsole()
                     .append("The player " + this.gamePlayModel.getGameMap().getPlayerTurn().getNamePlayer()
-                            + " is moving " + noOfArmiesToBeMoved + " from " + attackCountry.getName() + " to "
-                            + defendCountry.getName());
+                            + " is moving " + noOfArmiesToBeMoved + " from " + attackCountry.getCountryName() + " to "
+                            + defendCountry.getCountryName());
 
         } else if (IAttackView.ACTION_SAVE.equals(event.getSource())) {
             this.gamePlayModel.setGamePhase("Attack");

@@ -48,7 +48,8 @@ import org.junit.runners.Suite.SuiteClasses;
 				NonContinentValidationTest.class,
 				TournmentMapVerificationTest.class,
 				CheckForOverallArmiesZeroTest.class,
-				StartupControllerGetRandomTest.class
+				StartupControllerGetRandomTest.class,
+				PlayerModelDefendTest.class
 				})
 
 /**
